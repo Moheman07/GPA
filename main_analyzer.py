@@ -29,32 +29,98 @@ class SimpleGoldAnalyzer:
         
         try:
             symbols_list = list(self.symbols.values())
-            data = yf.download(symbols_list, period="6mo", interval="1d")
+            print(f"جلب البيانات لـ: {symbols_list}")
+            
+            data = yf.download(symbols_list, period="6mo", interval="1d", group_by='ticker')
             
             if data.empty:
                 raise ValueError("لا توجد بيانات")
                 
-            print("✅ تم جلب البيانات")
+            print(f"✅ تم جلب البيانات - الشكل: {data.shape}")
+            print(f"الأعمدة: {data.columns.names}")
+            
+            # طباعة تفاصيل البيانات للتحقق
+            if hasattr(data.columns, 'levels'):
+                print(f"المستوى الأول: {data.columns.levels[0].tolist()}")
+                print(f"المستوى الثاني: {data.columns.levels[1].tolist()}")
+            
             return data
             
         except Exception as e:
             print(f"❌ خطأ في جلب البيانات: {e}")
             return None
 
-    def calculate_simple_indicators(self, prices):
-        """حساب مؤشرات بسيطة بدون pandas_ta"""
+    def extract_gold_data(self, market_data):
+        """استخراج بيانات الذهب"""
         try:
+            print("🔍 استخراج بيانات الذهب...")
+            
+            # التحقق من هيكل البيانات
+            if hasattr(market_data.columns, 'levels') and len(market_data.columns.levels) > 1:
+                # Multi-level columns
+                gold_symbol = self.symbols['gold']
+                
+                # التحقق من وجود رمز الذهب
+                available_symbols = market_data.columns.levels[0].tolist()
+                print(f"الرموز المتاحة: {available_symbols}")
+                
+                if gold_symbol in available_symbols:
+                    gold_data = market_data[gold_symbol].copy()
+                    print(f"✅ تم استخراج بيانات الذهب: {gold_data.shape}")
+                else:
+                    # جرب GLD إذا لم يعمل GC=F
+                    if self.symbols['gold_etf'] in available_symbols:
+                        gold_data = market_data[self.symbols['gold_etf']].copy()
+                        print(f"✅ تم استخراج بيانات GLD بدلاً من GC=F: {gold_data.shape}")
+                    else:
+                        raise ValueError(f"لا يمكن العثور على {gold_symbol} أو {self.symbols['gold_etf']} في البيانات")
+            else:
+                # Single level columns (حالة رمز واحد)
+                gold_data = market_data.copy()
+                print(f"✅ بيانات مستوى واحد: {gold_data.shape}")
+            
+            # التحقق من وجود الأعمدة المطلوبة
+            required_columns = ['Open', 'High', 'Low', 'Close', 'Volume']
+            missing_columns = [col for col in required_columns if col not in gold_data.columns]
+            
+            if missing_columns:
+                print(f"⚠️ أعمدة مفقودة: {missing_columns}")
+                # إضافة الأعمدة المفقودة إذا أمكن
+                if 'Volume' in missing_columns and 'Adj Close' in gold_data.columns:
+                    gold_data['Volume'] = 0  # قيمة افتراضية للعقود الآجلة
+            
+            # تنظيف البيانات
+            gold_data = gold_data.dropna(subset=['Close'])
+            
+            print(f"✅ بيانات الذهب نظيفة: {len(gold_data)} يوم")
+            print(f"آخر سعر: ${gold_data['Close'].iloc[-1]:.2f}")
+            
+            return gold_data
+            
+        except Exception as e:
+            print(f"❌ خطأ في استخراج بيانات الذهب: {e}")
+            return None
+
+    def calculate_simple_indicators(self, prices):
+        """حساب مؤشرات بسيطة"""
+        try:
+            print("📊 حساب المؤشرات الفنية...")
             df = prices.copy()
             
+            # التأكد من وجود عمود Close
+            if 'Close' not in df.columns:
+                print(f"❌ لا يوجد عمود Close. الأعمدة المتاحة: {df.columns.tolist()}")
+                return df
+            
             # المتوسطات المتحركة
-            df['SMA_20'] = df['Close'].rolling(window=20).mean()
-            df['SMA_50'] = df['Close'].rolling(window=50).mean()
-            df['SMA_200'] = df['Close'].rolling(window=200).mean()
+            df['SMA_20'] = df['Close'].rolling(window=20, min_periods=1).mean()
+            df['SMA_50'] = df['Close'].rolling(window=50, min_periods=1).mean()
+            df['SMA_200'] = df['Close'].rolling(window=200, min_periods=1).mean()
             
             # RSI
             delta = df['Close'].diff()
-            gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
-            loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+            gain = (delta.where(delta > 0, 0)).rolling(window=14, min_periods=1).mean()
+            loss = (-delta.where(delta < 0, 0)).rolling(window=14, min_periods=1).mean()
             rs = gain / loss
             df['RSI'] = 100 - (100 / (1 + rs))
             
@@ -65,41 +131,64 @@ class SimpleGoldAnalyzer:
             df['MACD_Signal'] = df['MACD'].ewm(span=9).mean()
             
             # Bollinger Bands
-            std = df['Close'].rolling(window=20).std()
+            std = df['Close'].rolling(window=20, min_periods=1).std()
             df['BB_Upper'] = df['SMA_20'] + (std * 2)
             df['BB_Lower'] = df['SMA_20'] - (std * 2)
             
             # ATR (Average True Range)
-            high_low = df['High'] - df['Low']
-            high_close = np.abs(df['High'] - df['Close'].shift())
-            low_close = np.abs(df['Low'] - df['Close'].shift())
-            true_range = pd.DataFrame([high_low, high_close, low_close]).max()
-            df['ATR'] = true_range.rolling(14).mean()
+            if all(col in df.columns for col in ['High', 'Low']):
+                high_low = df['High'] - df['Low']
+                high_close = np.abs(df['High'] - df['Close'].shift())
+                low_close = np.abs(df['Low'] - df['Close'].shift())
+                true_range = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
+                df['ATR'] = true_range.rolling(14, min_periods=1).mean()
+            else:
+                # قيمة افتراضية للـ ATR
+                df['ATR'] = df['Close'] * 0.02
             
+            print("✅ تم حساب المؤشرات الفنية")
             return df
             
         except Exception as e:
             print(f"❌ خطأ في حساب المؤشرات: {e}")
             return prices
 
-    def analyze_correlations(self, data):
+    def analyze_correlations(self, market_data):
         """تحليل الارتباطات"""
         try:
+            print("📊 تحليل الارتباطات...")
             correlations = {}
             
-            if len(data.columns.levels) > 1:
+            if hasattr(market_data.columns, 'levels') and len(market_data.columns.levels) > 1:
                 # Multi-level columns
-                gold_prices = data[self.symbols['gold']]['Close']
+                available_symbols = market_data.columns.levels[0].tolist()
+                print(f"الرموز المتاحة للارتباط: {available_symbols}")
                 
-                for name, symbol in self.symbols.items():
-                    if name != 'gold' and symbol in data.columns.levels[0]:
-                        try:
-                            asset_prices = data[symbol]['Close']
-                            corr = gold_prices.corr(asset_prices)
-                            if not pd.isna(corr):
-                                correlations[name] = round(corr, 3)
-                        except:
-                            continue
+                # اختيار رمز الذهب المتاح
+                gold_symbol = None
+                if self.symbols['gold'] in available_symbols:
+                    gold_symbol = self.symbols['gold']
+                elif self.symbols['gold_etf'] in available_symbols:
+                    gold_symbol = self.symbols['gold_etf']
+                
+                if gold_symbol:
+                    gold_prices = market_data[gold_symbol]['Close'].dropna()
+                    print(f"استخدام {gold_symbol} للارتباطات")
+                    
+                    for name, symbol in self.symbols.items():
+                        if name not in ['gold', 'gold_etf'] and symbol in available_symbols:
+                            try:
+                                asset_prices = market_data[symbol]['Close'].dropna()
+                                # محاذاة البيانات
+                                common_index = gold_prices.index.intersection(asset_prices.index)
+                                if len(common_index) > 30:
+                                    corr = gold_prices.loc[common_index].corr(asset_prices.loc[common_index])
+                                    if not pd.isna(corr):
+                                        correlations[name] = round(corr, 3)
+                                        print(f"ارتباط مع {name}: {correlations[name]}")
+                            except Exception as e:
+                                print(f"تخطي {name}: {e}")
+                                continue
             
             return correlations
             
@@ -109,7 +198,10 @@ class SimpleGoldAnalyzer:
 
     def fetch_news(self):
         """جلب الأخبار"""
+        print("📰 جلب أخبار الذهب...")
+        
         if not self.news_api_key:
+            print("⚠️ مفتاح الأخبار غير متوفر")
             return {"status": "no_api_key", "articles": []}
         
         try:
@@ -142,6 +234,7 @@ class SimpleGoldAnalyzer:
                         'publishedAt': article.get('publishedAt', '')
                     })
             
+            print(f"✅ تم جلب {len(relevant)} خبر مهم")
             return {"status": "success", "articles": relevant[:5]}
             
         except Exception as e:
@@ -151,32 +244,41 @@ class SimpleGoldAnalyzer:
     def generate_signals(self, technical_data, correlations):
         """توليد الإشارات"""
         try:
+            print("🎯 توليد إشارات التداول...")
+            
+            if technical_data is None or technical_data.empty:
+                raise ValueError("لا توجد بيانات فنية")
+            
             latest = technical_data.iloc[-1]
             
             # حساب النقاط
             score = 0
             signals = {}
             
-            # الاتجاه
-            if pd.notna(latest['SMA_200']):
+            # الاتجاه (SMA 200)
+            if pd.notna(latest.get('SMA_200')):
                 if latest['Close'] > latest['SMA_200']:
                     signals['trend'] = "صاعد"
                     score += 2
                 else:
                     signals['trend'] = "هابط"
                     score -= 2
+            else:
+                signals['trend'] = "غير محدد"
             
-            # الزخم
-            if pd.notna(latest['MACD']) and pd.notna(latest['MACD_Signal']):
+            # الزخم (MACD)
+            if pd.notna(latest.get('MACD')) and pd.notna(latest.get('MACD_Signal')):
                 if latest['MACD'] > latest['MACD_Signal']:
                     signals['momentum'] = "إيجابي"
                     score += 1
                 else:
                     signals['momentum'] = "سلبي"
                     score -= 1
+            else:
+                signals['momentum'] = "غير محدد"
             
             # RSI
-            if pd.notna(latest['RSI']):
+            if pd.notna(latest.get('RSI')):
                 rsi = latest['RSI']
                 if rsi > 70:
                     signals['rsi'] = "ذروة شراء"
@@ -186,6 +288,19 @@ class SimpleGoldAnalyzer:
                     score += 1
                 else:
                     signals['rsi'] = f"عادي ({rsi:.1f})"
+            else:
+                signals['rsi'] = "غير محدد"
+            
+            # إشارة الارتباط مع الدولار
+            dxy_corr = correlations.get('dxy', 0)
+            if dxy_corr < -0.5:
+                signals['dxy_relationship'] = "سلبي قوي - مفيد للذهب"
+                score += 0.5
+            elif dxy_corr > 0.3:
+                signals['dxy_relationship'] = "إيجابي - غير طبيعي"
+                score -= 0.5
+            else:
+                signals['dxy_relationship'] = f"معتدل ({dxy_corr})"
             
             # الإشارة النهائية
             if score >= 2:
@@ -202,19 +317,52 @@ class SimpleGoldAnalyzer:
             current_price = latest['Close']
             atr = latest.get('ATR', current_price * 0.02)
             
-            return {
+            result = {
                 'signal': final_signal,
                 'confidence': confidence,
-                'score': score,
+                'score': round(score, 1),
                 'current_price': round(current_price, 2),
                 'stop_loss': round(current_price - (atr * 2), 2),
                 'take_profit': round(current_price + (atr * 3), 2),
-                'technical_details': signals
+                'technical_details': signals,
+                'indicators': {
+                    'rsi': round(latest.get('RSI', 0), 1),
+                    'sma_20': round(latest.get('SMA_20', 0), 2),
+                    'sma_50': round(latest.get('SMA_50', 0), 2),
+                    'sma_200': round(latest.get('SMA_200', 0), 2),
+                    'macd': round(latest.get('MACD', 0), 3),
+                    'macd_signal': round(latest.get('MACD_Signal', 0), 3)
+                }
             }
+            
+            print(f"✅ الإشارة النهائية: {final_signal} ({confidence})")
+            return result
             
         except Exception as e:
             print(f"❌ خطأ في توليد الإشارات: {e}")
             return {"error": str(e)}
+
+    def get_market_status(self):
+        """حالة السوق"""
+        try:
+            import pytz
+            ny_tz = pytz.timezone('America/New_York')
+            ny_time = datetime.now(ny_tz)
+            
+            is_weekday = ny_time.weekday() < 5
+            is_trading_hours = 9 <= ny_time.hour < 16
+            
+            return {
+                'current_time_est': ny_time.strftime('%Y-%m-%d %H:%M:%S EST'),
+                'is_trading_hours': is_weekday and is_trading_hours,
+                'status': 'Open' if (is_weekday and is_trading_hours) else 'Closed'
+            }
+        except:
+            return {
+                'current_time_est': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'is_trading_hours': False,
+                'status': 'Unknown'
+            }
 
     def run_analysis(self):
         """تشغيل التحليل الكامل"""
@@ -224,13 +372,12 @@ class SimpleGoldAnalyzer:
             # 1. جلب البيانات
             market_data = self.fetch_data()
             if market_data is None:
-                raise ValueError("فشل في جلب البيانات")
+                raise ValueError("فشل في جلب بيانات السوق")
             
             # 2. استخراج بيانات الذهب
-            if len(market_data.columns.levels) > 1:
-                gold_data = market_data[self.symbols['gold']]
-            else:
-                gold_data = market_data
+            gold_data = self.extract_gold_data(market_data)
+            if gold_data is None:
+                raise ValueError("فشل في استخراج بيانات الذهب")
             
             # 3. حساب المؤشرات
             technical_data = self.calculate_simple_indicators(gold_data)
@@ -244,7 +391,7 @@ class SimpleGoldAnalyzer:
             # 6. توليد الإشارات
             signals = self.generate_signals(technical_data, correlations)
             
-            # 7. تجميع النتائج
+            # 7. تجميع النتائج النهائية
             results = {
                 'timestamp': datetime.now().isoformat(),
                 'market_status': self.get_market_status(),
@@ -254,6 +401,7 @@ class SimpleGoldAnalyzer:
                     'confidence': signals.get('confidence'),
                     'technical_score': signals.get('score'),
                     'technical_details': signals.get('technical_details', {}),
+                    'indicators': signals.get('indicators', {}),
                     'risk_management': {
                         'stop_loss': signals.get('stop_loss'),
                         'take_profit': signals.get('take_profit')
@@ -264,6 +412,10 @@ class SimpleGoldAnalyzer:
                     'status': news_data.get('status'),
                     'articles_count': len(news_data.get('articles', [])),
                     'headlines': [article.get('title') for article in news_data.get('articles', [])]
+                },
+                'data_info': {
+                    'symbols_analyzed': list(self.symbols.keys()),
+                    'data_points': len(technical_data) if technical_data is not None else 0
                 }
             }
             
@@ -274,31 +426,18 @@ class SimpleGoldAnalyzer:
             return results
             
         except Exception as e:
+            print(f"❌ فشل التحليل: {e}")
+            
+            # حفظ تقرير الخطأ
             error_result = {
                 'timestamp': datetime.now().isoformat(),
                 'status': 'error',
-                'error': str(e)
+                'error': str(e),
+                'market_status': self.get_market_status()
             }
+            
             self.save_results(error_result)
-            print(f"❌ فشل التحليل: {e}")
             return error_result
-
-    def get_market_status(self):
-        """حالة السوق"""
-        from datetime import datetime
-        import pytz
-        
-        ny_tz = pytz.timezone('America/New_York')
-        ny_time = datetime.now(ny_tz)
-        
-        is_weekday = ny_time.weekday() < 5
-        is_trading_hours = 9 <= ny_time.hour < 16
-        
-        return {
-            'current_time_est': ny_time.strftime('%Y-%m-%d %H:%M:%S EST'),
-            'is_trading_hours': is_weekday and is_trading_hours,
-            'status': 'Open' if (is_weekday and is_trading_hours) else 'Closed'
-        }
 
     def save_results(self, results):
         """حفظ النتائج في JSON"""
@@ -317,21 +456,53 @@ class SimpleGoldAnalyzer:
             
             print(f"💾 تم حفظ النتائج في: {timestamped_file}")
             
+            # التحقق من إنشاء الملف
+            if os.path.exists(timestamped_file):
+                file_size = os.path.getsize(timestamped_file)
+                print(f"📁 حجم الملف: {file_size} بايت")
+            else:
+                print("❌ لم يتم إنشاء الملف!")
+            
         except Exception as e:
             print(f"❌ خطأ في حفظ النتائج: {e}")
 
 def main():
     """الدالة الرئيسية"""
+    print("=" * 50)
+    print("🏆 محلل الذهب المتقدم")
+    print("=" * 50)
+    
     analyzer = SimpleGoldAnalyzer()
     results = analyzer.run_analysis()
     
     # طباعة ملخص سريع
-    if 'gold_analysis' in results:
+    print("\n" + "=" * 50)
+    print("📋 ملخص النتائج:")
+    print("=" * 50)
+    
+    if results.get('status') != 'error' and 'gold_analysis' in results:
         gold = results['gold_analysis']
-        print(f"\n📊 الملخص:")
-        print(f"   السعر: ${gold.get('price_usd', 'N/A')}")
-        print(f"   الإشارة: {gold.get('signal', 'N/A')}")
-        print(f"   الثقة: {gold.get('confidence', 'N/A')}")
+        print(f"💰 السعر: ${gold.get('price_usd', 'N/A')}")
+        print(f"🎯 الإشارة: {gold.get('signal', 'N/A')}")
+        print(f"🔍 الثقة: {gold.get('confidence', 'N/A')}")
+        print(f"📊 النقاط: {gold.get('technical_score', 'N/A')}")
+        
+        # عرض المؤشرات
+        indicators = gold.get('indicators', {})
+        print(f"📈 RSI: {indicators.get('rsi', 'N/A')}")
+        print(f"📊 SMA 200: ${indicators.get('sma_200', 'N/A')}")
+        
+        # إدارة المخاطر
+        risk = gold.get('risk_management', {})
+        print(f"🛑 وقف الخسارة: ${risk.get('stop_loss', 'N/A')}")
+        print(f"🎯 جني الأرباح: ${risk.get('take_profit', 'N/A')}")
+        
+    else:
+        print(f"❌ حالة: {results.get('status', 'غير معروف')}")
+        if 'error' in results:
+            print(f"الخطأ: {results['error']}")
+    
+    print("=" * 50)
 
 if __name__ == "__main__":
     main()
