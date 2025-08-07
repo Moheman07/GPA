@@ -1,61 +1,43 @@
 {
-  "timestamp": "2025-08-07T09:29:14.722155",
-  "last_update": "2025-08-07 09:29 UTC",
+  "timestamp": "2025-08-07T09:37:39.051955",
   "market_status": {
-    "current_time_utc": "2025-08-07 09:29:14 UTC",
-    "ny_time": "2025-08-07 05:29:14 EST",
-    "london_time": "2025-08-07 10:29:14 GMT",
     "ny_market_status": "Closed",
     "london_market_status": "Open",
-    "is_major_trading_session": true,
-    "market_overlap": false
+    "is_major_trading_session": true
   },
   "gold_analysis": {
     "price_usd": 3453.4,
-    "signal": "Weak Buy",
-    "confidence": "Medium",
-    "action_recommendation": "شراء حذر بحجم صغير",
-    "technical_score": 1.35,
+    "signal": "Buy",
+    "confidence": "High",
+    "action_recommendation": "شراء بحجم متوسط",
+    "technical_score": 2.1,
     "component_analysis": {
-      "trend": 0,
+      "trend": 3,
       "momentum": 3,
       "volume": 1,
       "fibonacci": 1,
-      "correlation": 2
+      "correlation": 1
     },
     "technical_details": {
+      "long_term_trend": "صاعد قوي",
       "macd": "إيجابي متزايد",
-      "rsi_status": "طبيعي (61.8)",
-      "roc": "زخم صاعد قوي",
-      "volume_confirmation": "حجم مؤكد للاتجاه",
-      "fibonacci_position": "فوق 61.8% - قوة",
-      "dollar_relationship": "ارتباط سلبي قوي جداً - مفيد للذهب"
+      "roc": "زخم صاعد قوي"
     },
     "advanced_indicators": {
       "rsi": 61.8,
       "williams_r": -8.2,
-      "roc": 2.99,
-      "bb_width": 5.03,
-      "atr_percent": 1.33,
-      "strength_index": 5.68
+      "roc": 2.99
     },
     "risk_management": {
       "stop_loss_levels": {
         "conservative": 3384.54,
-        "moderate": 3361.59,
-        "aggressive": 3338.63
+        "moderate": 3361.59
       },
       "profit_targets": {
         "target_1": 3545.21,
-        "target_2": 3614.07,
-        "target_3": 3682.94
+        "target_2": 3614.07
       },
-      "position_size_recommendation": "صغير جداً (ثقة منخفضة)",
-      "risk_reward_ratios": {
-        "conservative": 1.33,
-        "moderate": 1.75,
-        "aggressive": 2.0
-      }
+      "position_size_recommendation": "متوسط"
     }
   },
   "fibonacci_levels": {
@@ -68,77 +50,78 @@
     "fib_78_6": 3291.17
   },
   "volume_analysis": {
-    "current_volume": 95828,
-    "avg_volume_20": 12115,
-    "volume_ratio": 7.91,
+    "current_volume": 97131,
+    "avg_volume_20": 12180,
+    "volume_ratio": 7.97,
     "volume_strength": "قوي"
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.942,
-      "vix": -0.175,
-      "treasury": 0.13,
-      "oil": -0.344,
-      "spy": 0.303,
-      "usdeur": 0.921
+      "dxy": -0.638,
+      "vix": 0.233,
+      "treasury": 0.418,
+      "oil": -0.653,
+      "spy": 0.337,
+      "usdeur": 0.672
     },
     "strength_analysis": {
-      "dxy": "قوي جداً",
+      "dxy": "قوي",
       "vix": "ضعيف",
-      "treasury": "ضعيف",
-      "oil": "متوسط",
+      "treasury": "متوسط",
+      "oil": "قوي",
       "spy": "متوسط",
-      "usdeur": "قوي جداً"
+      "usdeur": "قوي"
     }
   },
   "news_analysis": {
     "status": "success",
     "high_impact_news": [
       {
-        "title": "Get the Facts: How Bureau of Labor Statistics reports influence U.S. economy",
-        "source": "Biztoc.com",
-        "publishedAt": "2025-08-06T09:20:50Z",
+        "title": "RBI keeps repo rate unchanged at 5.5%: Will there be an impact on personal loans?",
+        "source": "Livemint",
+        "publishedAt": "2025-08-06T09:35:39Z",
         "impact": "عالي"
       },
       {
-        "title": "Goldman Sachs trims India’s growth outlook on tariff worries, warns of rare low inflation risk",
-        "source": "The Times of India",
-        "publishedAt": "2025-08-06T09:08:48Z",
+        "title": "EPA Set to Cancel $7 Billion in Solar Project Grants",
+        "source": "OilPrice.com",
+        "publishedAt": "2025-08-06T09:34:42Z",
+        "impact": "عالي"
+      },
+      {
+        "title": "Trump Tariff Deadline Nears; Trump Fed Governor Decision Soon",
+        "source": "Omny.fm",
+        "publishedAt": "2025-08-06T09:33:23Z",
         "impact": "عالي"
       }
     ],
-    "medium_impact_news": [],
-    "total_analyzed": 19
+    "medium_impact_news": [
+      {
+        "title": "Royal Gold subsidiary signs stream agreement for gold deliveries from Kansanshi mine",
+        "source": "Mining Technology",
+        "publishedAt": "2025-08-06T09:35:47Z",
+        "impact": "متوسط"
+      },
+      {
+        "title": "Trump’s tariffs are bringing in tens of billions of dollars a month. What’s the government doing with all that money?",
+        "source": "CNN",
+        "publishedAt": "2025-08-06T09:30:41Z",
+        "impact": "متوسط"
+      },
+      {
+        "title": "There’s a price to pay for ardent rate cutters put in charge of central banks",
+        "source": "Livemint",
+        "publishedAt": "2025-08-06T09:30:07Z",
+        "impact": "متوسط"
+      }
+    ]
   },
   "summary": {
-    "signal": "Weak Buy",
+    "signal": "Buy",
     "price": 3453.4,
-    "confidence": "Medium",
-    "action": "شراء حذر بحجم صغير",
+    "confidence": "High",
+    "action": "شراء بحجم متوسط",
     "rsi": 61.8,
-    "trend": "N/A"
-  },
-  "alerts": [
-    {
-      "type": "price_alert",
-      "message": "الذهب عند مستوى مرتفع: $3453.4",
-      "severity": "medium"
-    },
-    {
-      "type": "volume_alert",
-      "message": "حجم تداول عالي جداً: 7.91x",
-      "severity": "high"
-    }
-  ],
-  "trend_history": {},
-  "economic_calendar": {
-    "upcoming_events": [
-      "FOMC Meeting",
-      "CPI Release",
-      "NFP Report",
-      "GDP Data",
-      "Central Bank Announcements"
-    ],
-    "impact_on_gold": "high"
+    "trend": "صاعد قوي"
   }
 }
