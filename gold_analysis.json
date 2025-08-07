@@ -1,58 +1,146 @@
 {
-  "timestamp": "2025-08-07T07:17:23.756216",
-  "last_update": "2025-08-07 07:17 UTC",
+  "timestamp": "2025-08-07T07:35:05.825105",
+  "last_update": "2025-08-07 07:35 UTC",
   "market_status": {
-    "current_time_est": "2025-08-07 03:17:23 EST",
-    "is_trading_hours": false,
-    "status": "Closed"
+    "current_time_utc": "2025-08-07 07:35:05 UTC",
+    "ny_time": "2025-08-07 03:35:05 EST",
+    "london_time": "2025-08-07 08:35:05 GMT",
+    "ny_market_status": "Closed",
+    "london_market_status": "Open",
+    "is_major_trading_session": true,
+    "market_overlap": false
   },
   "gold_analysis": {
-    "price_usd": 3456.3,
-    "signal": "Buy",
-    "confidence": "High",
-    "technical_score": 3.5,
-    "technical_details": {
-      "trend": "صاعد",
-      "momentum": "إيجابي",
-      "rsi": "عادي (62.1)",
-      "dxy_relationship": "سلبي قوي - مفيد للذهب"
+    "price_usd": 3459.6,
+    "signal": "Weak Buy",
+    "confidence": "Medium",
+    "action_recommendation": "شراء حذر بحجم صغير",
+    "technical_score": 1.35,
+    "component_analysis": {
+      "trend": 0,
+      "momentum": 3,
+      "volume": 1,
+      "fibonacci": 1,
+      "correlation": 2
     },
-    "indicators": {
-      "rsi": 62.1,
-      "sma_20": 3359.24,
-      "sma_50": 3348.53,
-      "sma_200": 3202.34,
-      "macd": 13.629,
-      "macd_signal": 5.496
+    "technical_details": {
+      "macd": "إيجابي متزايد",
+      "rsi_status": "طبيعي (62.4)",
+      "roc": "زخم صاعد قوي",
+      "volume_confirmation": "حجم مؤكد للاتجاه",
+      "fibonacci_position": "فوق 61.8% - قوة",
+      "dollar_relationship": "ارتباط سلبي قوي جداً - مفيد للذهب"
+    },
+    "advanced_indicators": {
+      "rsi": 62.4,
+      "williams_r": -0.0,
+      "roc": 3.18,
+      "bb_width": 5.12,
+      "atr_percent": 1.3,
+      "strength_index": 5.98
     },
     "risk_management": {
-      "stop_loss": 3366.34,
-      "take_profit": 3591.24
+      "stop_loss_levels": {
+        "conservative": 3391.89,
+        "moderate": 3369.31,
+        "aggressive": 3346.74
+      },
+      "profit_targets": {
+        "target_1": 3549.89,
+        "target_2": 3617.6,
+        "target_3": 3685.31
+      },
+      "position_size_recommendation": "صغير جداً (ثقة منخفضة)",
+      "risk_reward_ratios": {
+        "conservative": 1.33,
+        "moderate": 1.75,
+        "aggressive": 2.0
+      }
     }
   },
+  "fibonacci_levels": {
+    "high": 3459.6,
+    "low": 3242.4,
+    "fib_23_6": 3408.34,
+    "fib_38_2": 3376.63,
+    "fib_50_0": 3351.0,
+    "fib_61_8": 3325.37,
+    "fib_78_6": 3288.88
+  },
+  "volume_analysis": {
+    "current_volume": 61508,
+    "avg_volume_20": 10399,
+    "volume_ratio": 5.91,
+    "volume_strength": "قوي"
+  },
   "market_correlations": {
-    "dxy": -0.942,
-    "vix": -0.168,
-    "treasury": 0.13,
-    "oil": -0.344,
-    "spy": 0.303
+    "correlations": {
+      "dxy": -0.942,
+      "vix": -0.174,
+      "treasury": 0.13,
+      "oil": -0.344,
+      "spy": 0.303,
+      "usdeur": 0.921
+    },
+    "strength_analysis": {
+      "dxy": "قوي جداً",
+      "vix": "ضعيف",
+      "treasury": "ضعيف",
+      "oil": "متوسط",
+      "spy": "متوسط",
+      "usdeur": "قوي جداً"
+    }
   },
   "news_analysis": {
     "status": "success",
-    "articles_count": 5,
-    "headlines": [
-      "Bank of New York Mellon Corp Has $203,000 Holdings in Equinox Gold Corp. (NYSEAMERICAN:EQX)",
-      "Bank of New York Mellon Corp Acquires 20,436 Shares of New Gold Inc. (NYSE:NGD)",
-      "Inflation forecasts leave little room for further RBI rate cuts",
-      "India holds rates as expected but flags tariff risks",
-      "UBS Group Initiates Coverage on Kinross Gold (NYSE:KGC)"
-    ]
+    "high_impact_news": [
+      {
+        "title": "CREDAI, NAREDCO seek interest rate cut in RBI's next policy to boost housing sales during festivals",
+        "source": "The Times of India",
+        "publishedAt": "2025-08-06T07:32:09Z",
+        "impact": "عالي"
+      },
+      {
+        "title": "RBI MPC Decision: Stance Expected, Central Bank In 'Wait And Watch' Mode, Say Experts",
+        "source": "Ndtvprofit.com",
+        "publishedAt": "2025-08-06T07:12:47Z",
+        "impact": "عالي"
+      },
+      {
+        "title": "Inflation forecasts leave little room for further RBI rate cuts",
+        "source": "The Times of India",
+        "publishedAt": "2025-08-06T07:10:17Z",
+        "impact": "عالي"
+      }
+    ],
+    "medium_impact_news": [
+      {
+        "title": "Avantax Advisory Services Inc. Acquires 140 Shares of Wheaton Precious Metals Corp. (NYSE:WPM)",
+        "source": "ETF Daily News",
+        "publishedAt": "2025-08-06T07:34:58Z",
+        "impact": "متوسط"
+      },
+      {
+        "title": "West Red Lake Gold Provides Madsen Mine Operations Update",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-06T07:30:37Z",
+        "impact": "متوسط"
+      },
+      {
+        "title": "West Red Lake Gold Provides Madsen Mine Operations Update",
+        "source": "GlobeNewswire",
+        "publishedAt": "2025-08-06T07:30:00Z",
+        "impact": "متوسط"
+      }
+    ],
+    "total_analyzed": 19
   },
   "summary": {
-    "signal": "Buy",
-    "price": 3456.3,
-    "confidence": "High",
-    "rsi": 62.1,
-    "trend": "صاعد"
+    "signal": "Weak Buy",
+    "price": 3459.6,
+    "confidence": "Medium",
+    "action": "شراء حذر بحجم صغير",
+    "rsi": 62.4,
+    "trend": "N/A"
   }
 }
