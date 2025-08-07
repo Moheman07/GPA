@@ -1,17 +1,17 @@
 {
-  "timestamp": "2025-08-07T07:35:05.825105",
-  "last_update": "2025-08-07 07:35 UTC",
+  "timestamp": "2025-08-07T09:18:38.729937",
+  "last_update": "2025-08-07 09:18 UTC",
   "market_status": {
-    "current_time_utc": "2025-08-07 07:35:05 UTC",
-    "ny_time": "2025-08-07 03:35:05 EST",
-    "london_time": "2025-08-07 08:35:05 GMT",
+    "current_time_utc": "2025-08-07 09:18:38 UTC",
+    "ny_time": "2025-08-07 05:18:38 EST",
+    "london_time": "2025-08-07 10:18:38 GMT",
     "ny_market_status": "Closed",
     "london_market_status": "Open",
     "is_major_trading_session": true,
     "market_overlap": false
   },
   "gold_analysis": {
-    "price_usd": 3459.6,
+    "price_usd": 3453.2,
     "signal": "Weak Buy",
     "confidence": "Medium",
     "action_recommendation": "شراء حذر بحجم صغير",
@@ -25,30 +25,30 @@
     },
     "technical_details": {
       "macd": "إيجابي متزايد",
-      "rsi_status": "طبيعي (62.4)",
+      "rsi_status": "طبيعي (61.8)",
       "roc": "زخم صاعد قوي",
       "volume_confirmation": "حجم مؤكد للاتجاه",
       "fibonacci_position": "فوق 61.8% - قوة",
       "dollar_relationship": "ارتباط سلبي قوي جداً - مفيد للذهب"
     },
     "advanced_indicators": {
-      "rsi": 62.4,
-      "williams_r": -0.0,
-      "roc": 3.18,
-      "bb_width": 5.12,
-      "atr_percent": 1.3,
-      "strength_index": 5.98
+      "rsi": 61.8,
+      "williams_r": -8.3,
+      "roc": 2.99,
+      "bb_width": 5.03,
+      "atr_percent": 1.33,
+      "strength_index": 5.67
     },
     "risk_management": {
       "stop_loss_levels": {
-        "conservative": 3391.89,
-        "moderate": 3369.31,
-        "aggressive": 3346.74
+        "conservative": 3384.34,
+        "moderate": 3361.39,
+        "aggressive": 3338.43
       },
       "profit_targets": {
-        "target_1": 3549.89,
-        "target_2": 3617.6,
-        "target_3": 3685.31
+        "target_1": 3545.01,
+        "target_2": 3613.87,
+        "target_3": 3682.74
       },
       "position_size_recommendation": "صغير جداً (ثقة منخفضة)",
       "risk_reward_ratios": {
@@ -59,18 +59,18 @@
     }
   },
   "fibonacci_levels": {
-    "high": 3459.6,
+    "high": 3470.3,
     "low": 3242.4,
-    "fib_23_6": 3408.34,
-    "fib_38_2": 3376.63,
-    "fib_50_0": 3351.0,
-    "fib_61_8": 3325.37,
-    "fib_78_6": 3288.88
+    "fib_23_6": 3416.52,
+    "fib_38_2": 3383.24,
+    "fib_50_0": 3356.35,
+    "fib_61_8": 3329.46,
+    "fib_78_6": 3291.17
   },
   "volume_analysis": {
-    "current_volume": 61508,
-    "avg_volume_20": 10399,
-    "volume_ratio": 5.91,
+    "current_volume": 94149,
+    "avg_volume_20": 12031,
+    "volume_ratio": 7.83,
     "volume_strength": "قوي"
   },
   "market_correlations": {
@@ -95,52 +95,21 @@
     "status": "success",
     "high_impact_news": [
       {
-        "title": "CREDAI, NAREDCO seek interest rate cut in RBI's next policy to boost housing sales during festivals",
+        "title": "Goldman Sachs trims India’s growth outlook on tariff worries, warns of rare low inflation risk",
         "source": "The Times of India",
-        "publishedAt": "2025-08-06T07:32:09Z",
-        "impact": "عالي"
-      },
-      {
-        "title": "RBI MPC Decision: Stance Expected, Central Bank In 'Wait And Watch' Mode, Say Experts",
-        "source": "Ndtvprofit.com",
-        "publishedAt": "2025-08-06T07:12:47Z",
-        "impact": "عالي"
-      },
-      {
-        "title": "Inflation forecasts leave little room for further RBI rate cuts",
-        "source": "The Times of India",
-        "publishedAt": "2025-08-06T07:10:17Z",
+        "publishedAt": "2025-08-06T09:08:48Z",
         "impact": "عالي"
       }
     ],
-    "medium_impact_news": [
-      {
-        "title": "Avantax Advisory Services Inc. Acquires 140 Shares of Wheaton Precious Metals Corp. (NYSE:WPM)",
-        "source": "ETF Daily News",
-        "publishedAt": "2025-08-06T07:34:58Z",
-        "impact": "متوسط"
-      },
-      {
-        "title": "West Red Lake Gold Provides Madsen Mine Operations Update",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-06T07:30:37Z",
-        "impact": "متوسط"
-      },
-      {
-        "title": "West Red Lake Gold Provides Madsen Mine Operations Update",
-        "source": "GlobeNewswire",
-        "publishedAt": "2025-08-06T07:30:00Z",
-        "impact": "متوسط"
-      }
-    ],
+    "medium_impact_news": [],
     "total_analyzed": 19
   },
   "summary": {
     "signal": "Weak Buy",
-    "price": 3459.6,
+    "price": 3453.2,
     "confidence": "Medium",
     "action": "شراء حذر بحجم صغير",
-    "rsi": 62.4,
+    "rsi": 61.8,
     "trend": "N/A"
   }
 }
