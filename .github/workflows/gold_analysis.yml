@@ -10,9 +10,12 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    
+    permissions:
+      contents: write  # مهم لرفع الملفات للمستودع
+      
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
       
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -29,17 +32,57 @@ jobs:
         NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
       run: python main_analyzer.py
         
-    - name: Upload Results
+    - name: List generated files
+      run: |
+        echo "الملفات المُنشأة:"
+        ls -la *.json || echo "لا توجد ملفات JSON"
+        
+    - name: Upload to Artifacts (نسخة احتياطية)
       uses: actions/upload-artifact@v4
       with:
         name: gold-analysis-${{ github.run_number }}
         path: "*.json"
         retention-days: 30
         
-    - name: Commit Results
+    - name: Configure Git
       run: |
         git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config --local user.name "Gold Analysis Bot"
+        
+    - name: Add and commit files
+      run: |
+        # إضافة جميع ملفات JSON
         git add *.json
-        git diff --staged --quiet || git commit -m "Update: Gold analysis $(date)"
-        git push || echo "No changes to push"
+        
+        # التحقق من وجود تغييرات
+        if git diff --staged --quiet; then
+          echo "لا توجد تغييرات للرفع"
+        else
+          # إنشاء رسالة الـ commit مع النتائج
+          if [ -f "gold_analysis_latest.json" ]; then
+            SIGNAL=$(python -c "import json; data=json.load(open('gold_analysis_latest.json')); print(data.get('gold_analysis', {}).get('signal', 'N/A'))")
+            PRICE=$(python -c "import json; data=json.load(open('gold_analysis_latest.json')); print(data.get('gold_analysis', {}).get('price_usd', 'N/A'))")
+            git commit -m "🔄 Gold Analysis Update: $SIGNAL signal at \$$PRICE ($(date +'%Y-%m-%d %H:%M UTC'))"
+          else
+            git commit -m "🔄 Gold Analysis Update ($(date +'%Y-%m-%d %H:%M UTC'))"
+          fi
+          
+          # رفع التغييرات
+          git push origin HEAD:${{ github.ref_name }}
+          echo "✅ تم رفع الملفات للمستودع بنجاح"
+        fi
+
+    - name: Create/Update README with results
+      if: success()
+      run: |
+        # إنشاء أو تحديث README مع آخر النتائج
+        python create_readme.py
+        
+        # رفع README إذا تم تحديثه
+        if git diff --quiet README.md; then
+          echo "لا توجد تحديثات على README"
+        else
+          git add README.md
+          git commit -m "📊 Update README with latest analysis"
+          git push origin HEAD:${{ github.ref_name }}
+        fi
