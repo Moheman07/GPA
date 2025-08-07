@@ -1,17 +1,42 @@
 {
-  "timestamp_utc": "2025-08-07T10:40:20.626221",
+  "timestamp_utc": "2025-08-07T10:56:15.849248",
   "signal": "Buy",
-  "total_score": 1.3,
+  "total_score": 1.26,
   "components": {
     "trend_score": 2,
     "momentum_score": 1,
     "correlation_score": 1,
-    "news_score": 0
+    "news_score": -0.38
   },
   "market_data": {
     "gold_price": 310.5,
     "dxy": 98.18,
     "vix": 16.77
   },
-  "news_headlines": []
+  "news_analysis": {
+    "status": "success",
+    "news_sentiment_score": -0.38,
+    "headlines": [
+      {
+        "title": "Gold Futures Pull Back From Recent Highs as Risk Sentiment Grows",
+        "source": "Biztoc.com"
+      },
+      {
+        "title": "Rupee recovers 15 paise to settle at 87.73 against US dollar",
+        "source": "BusinessLine"
+      },
+      {
+        "title": "Gold ETF Sales Skyrocket Amid Price Surge",
+        "source": "Biztoc.com"
+      },
+      {
+        "title": "Playful Astronomy-Inspired Timepieces - Swatch Introduces NEW MISSION TO EARTHPHASE - MOONSHINE GOLD (TrendHunter.com)",
+        "source": "Trendhunter.com"
+      },
+      {
+        "title": "5 affordable new cars that Consumer Reports recommends",
+        "source": "Biztoc.com"
+      }
+    ]
+  }
 }
