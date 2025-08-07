@@ -8,6 +8,7 @@ import os
 from datetime import datetime, timedelta
 from transformers import pipeline
 import pytz
+import pandas_ta as ta # <-- ✅ هذا هو السطر الجديد والمهم
 import warnings
 
 warnings.filterwarnings('ignore')
@@ -41,16 +42,14 @@ class ProfessionalGoldAnalyzer:
             return None
 
     def analyze_news(self):
-        # ... (هذه الدالة تبقى كما هي من الإصدار السابق)
-        return {"status": "skipped", "news_score": 0, "headlines": []} # تبسيط مؤقت
+        # (هذه الدالة تبقى كما هي، يمكنك استخدام نسختك الكاملة هنا)
+        return {"status": "skipped", "news_score": 0, "headlines": []}
 
     def run_full_analysis(self):
         market_data = self.fetch_data()
         if market_data is None: return {"status": "error", "error": "فشل جلب بيانات السوق"}
 
-        # --- ✅ التعديل الرئيسي هنا ---
         print("\n📈 استخلاص البيانات وحساب المؤشرات الفنية...")
-        # الطريقة الصحيحة للتعامل مع MultiIndex
         gold_data = pd.DataFrame()
         gold_ticker = self.symbols['gold']
         gold_data['Open'] = market_data[('Open', gold_ticker)]
@@ -58,7 +57,7 @@ class ProfessionalGoldAnalyzer:
         gold_data['Low'] = market_data[('Low', gold_ticker)]
         gold_data['Close'] = market_data[('Close', gold_ticker)]
         gold_data['Volume'] = market_data[('Volume', gold_ticker)]
-        gold_data.dropna(inplace=True) # التأكد من عدم وجود قيم فارغة
+        gold_data.dropna(inplace=True)
 
         ta_strategy = ta.Strategy(name="Full Analysis", ta=[
             {"kind": "sma", "length": 50}, {"kind": "sma", "length": 200},
@@ -75,7 +74,6 @@ class ProfessionalGoldAnalyzer:
         price = latest['Close']
         trend_score, momentum_score, correlation_score, news_score = 0, 0, 0, news_analysis_result['news_score']
         
-        # Scoring Logic
         if price > latest['SMA_200']: trend_score = 2
         if latest['MACD_12_26_9'] > latest['MACDs_12_26_9']: momentum_score = 1
         dxy_corr = market_data[('Close', self.symbols['gold'])].corr(market_data[('Close', self.symbols['dxy'])])
@@ -83,7 +81,6 @@ class ProfessionalGoldAnalyzer:
         
         total_score = (trend_score * 0.4) + (momentum_score * 0.3) + (correlation_score * 0.2) + (news_score * 0.1)
         
-        # Determine Signal
         if total_score >= 1.0: signal = "Buy"
         elif total_score <= -1.0: signal = "Sell"
         else: signal = "Hold"
@@ -92,6 +89,10 @@ class ProfessionalGoldAnalyzer:
             "timestamp_utc": datetime.utcnow().isoformat(),
             "signal": signal,
             "total_score": round(total_score, 2),
+            "components": {
+                "trend_score": trend_score, "momentum_score": momentum_score,
+                "correlation_score": correlation_score, "news_score": news_score
+            },
             "market_data": {
                 "gold_price": round(price, 2),
                 "dxy": round(market_data[('Close', self.symbols['dxy'])].iloc[-1], 2),
