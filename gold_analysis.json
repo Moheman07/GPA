@@ -1,41 +1,41 @@
 {
-  "timestamp_utc": "2025-08-07T17:26:05.743547",
+  "timestamp_utc": "2025-08-07T20:12:44.612564",
   "signal": "Buy",
-  "total_score": 1.25,
+  "total_score": 1.23,
   "components": {
     "trend_score": 2,
     "momentum_score": 1,
     "correlation_score": 1,
-    "news_score": -0.52
+    "news_score": -0.74
   },
   "market_data": {
-    "gold_price": 311.86,
-    "dxy": 98.29,
-    "vix": 17.28
+    "gold_price": 313.06,
+    "dxy": 98.11,
+    "vix": 16.98
   },
   "news_analysis": {
     "status": "success",
-    "news_sentiment_score": -0.52,
+    "news_sentiment_score": -0.74,
     "headlines": [
       {
-        "title": "Trump is meeting about his next Fed pick. It may be a temporary assignment | CNN Business",
-        "source": "CNN"
-      },
-      {
-        "title": "New Casio G-Shock Black and Gold watches coming to more countries",
-        "source": "Notebookcheck.net"
-      },
-      {
-        "title": "Wednesday assorted links",
+        "title": "Hassett Accuses Fed Of Political Bias In Interest Rate Decisions",
         "source": "Biztoc.com"
       },
       {
-        "title": "Trump is meeting about his next Fed pick. It may be a temporary assignment",
+        "title": "Get the Facts: How Bureau of Labor Statistics reports influence U.S. economy",
         "source": "Biztoc.com"
       },
       {
-        "title": "Trade and tariffs, the new 'Russian' classic",
-        "source": "The Times of India"
+        "title": "The Treasury Is Sitting On A $750 Billion Gold Hoard–Officially Valued At $11 Billion",
+        "source": "Forbes"
+      },
+      {
+        "title": "Moses Moody shares hilarious story about his first encounter with Steph Curry",
+        "source": "Nbcsportsbayarea.com"
+      },
+      {
+        "title": "Trump faces a variety of choices as he seeks to fill Fed vacancies",
+        "source": "Biztoc.com"
       }
     ]
   }
