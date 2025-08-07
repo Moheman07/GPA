@@ -1,41 +1,41 @@
 {
-  "timestamp_utc": "2025-08-07T14:01:09.479135",
+  "timestamp_utc": "2025-08-07T17:26:05.743547",
   "signal": "Buy",
-  "total_score": 1.27,
+  "total_score": 1.25,
   "components": {
     "trend_score": 2,
     "momentum_score": 1,
     "correlation_score": 1,
-    "news_score": -0.28
+    "news_score": -0.52
   },
   "market_data": {
-    "gold_price": 311.76,
-    "dxy": 98.21,
-    "vix": NaN
+    "gold_price": 311.86,
+    "dxy": 98.29,
+    "vix": 17.28
   },
   "news_analysis": {
     "status": "success",
-    "news_sentiment_score": -0.28,
+    "news_sentiment_score": -0.52,
     "headlines": [
       {
-        "title": "Gold Steadies as Markets Weigh Geopolitics, Tariffs, Rates Path",
+        "title": "Trump is meeting about his next Fed pick. It may be a temporary assignment | CNN Business",
+        "source": "CNN"
+      },
+      {
+        "title": "New Casio G-Shock Black and Gold watches coming to more countries",
+        "source": "Notebookcheck.net"
+      },
+      {
+        "title": "Wednesday assorted links",
         "source": "Biztoc.com"
       },
       {
-        "title": "US stocks open higher on Fed rate cut hopes; earnings in focus",
+        "title": "Trump is meeting about his next Fed pick. It may be a temporary assignment",
+        "source": "Biztoc.com"
+      },
+      {
+        "title": "Trade and tariffs, the new 'Russian' classic",
         "source": "The Times of India"
-      },
-      {
-        "title": "RBI speak: What the central bank said on growth, inflation, and tariff",
-        "source": "Livemint"
-      },
-      {
-        "title": "What Dividend Investors Are Forgetting About The Powell Drama",
-        "source": "Forbes"
-      },
-      {
-        "title": "WATCH: Adam Schiff reportedly under federal criminal investigation for alleged mortgage fraud",
-        "source": "Wnd.com"
       }
     ]
   }
