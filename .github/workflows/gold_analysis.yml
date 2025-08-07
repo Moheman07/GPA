@@ -2,9 +2,9 @@ name: Gold Analysis Bot
 
 on:
   schedule:
-    - cron: '35 13 * * 1-5'  # 9:35 AM EST
-    - cron: '00 17 * * 1-5'  # 1:00 PM EST  
-    - cron: '55 19 * * 1-5'  # 3:55 PM EST
+    - cron: '35 13 * * 1-5'
+    - cron: '00 17 * * 1-5'
+    - cron: '55 19 * * 1-5'
   workflow_dispatch:
 
 jobs:
@@ -39,4 +39,4 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: 'Update daily analysis file'
-        file_pattern: 'gold_analysis.json'
+        file_pattern: 'gold_analysis.json' # تأكد من أن هذا يطابق اسم ملف المخرجات
