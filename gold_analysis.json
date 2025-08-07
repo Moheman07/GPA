@@ -1,17 +1,17 @@
 {
-  "timestamp": "2025-08-07T09:18:38.729937",
-  "last_update": "2025-08-07 09:18 UTC",
+  "timestamp": "2025-08-07T09:29:14.722155",
+  "last_update": "2025-08-07 09:29 UTC",
   "market_status": {
-    "current_time_utc": "2025-08-07 09:18:38 UTC",
-    "ny_time": "2025-08-07 05:18:38 EST",
-    "london_time": "2025-08-07 10:18:38 GMT",
+    "current_time_utc": "2025-08-07 09:29:14 UTC",
+    "ny_time": "2025-08-07 05:29:14 EST",
+    "london_time": "2025-08-07 10:29:14 GMT",
     "ny_market_status": "Closed",
     "london_market_status": "Open",
     "is_major_trading_session": true,
     "market_overlap": false
   },
   "gold_analysis": {
-    "price_usd": 3453.2,
+    "price_usd": 3453.4,
     "signal": "Weak Buy",
     "confidence": "Medium",
     "action_recommendation": "شراء حذر بحجم صغير",
@@ -33,22 +33,22 @@
     },
     "advanced_indicators": {
       "rsi": 61.8,
-      "williams_r": -8.3,
+      "williams_r": -8.2,
       "roc": 2.99,
       "bb_width": 5.03,
       "atr_percent": 1.33,
-      "strength_index": 5.67
+      "strength_index": 5.68
     },
     "risk_management": {
       "stop_loss_levels": {
-        "conservative": 3384.34,
-        "moderate": 3361.39,
-        "aggressive": 3338.43
+        "conservative": 3384.54,
+        "moderate": 3361.59,
+        "aggressive": 3338.63
       },
       "profit_targets": {
-        "target_1": 3545.01,
-        "target_2": 3613.87,
-        "target_3": 3682.74
+        "target_1": 3545.21,
+        "target_2": 3614.07,
+        "target_3": 3682.94
       },
       "position_size_recommendation": "صغير جداً (ثقة منخفضة)",
       "risk_reward_ratios": {
@@ -68,15 +68,15 @@
     "fib_78_6": 3291.17
   },
   "volume_analysis": {
-    "current_volume": 94149,
-    "avg_volume_20": 12031,
-    "volume_ratio": 7.83,
+    "current_volume": 95828,
+    "avg_volume_20": 12115,
+    "volume_ratio": 7.91,
     "volume_strength": "قوي"
   },
   "market_correlations": {
     "correlations": {
       "dxy": -0.942,
-      "vix": -0.174,
+      "vix": -0.175,
       "treasury": 0.13,
       "oil": -0.344,
       "spy": 0.303,
@@ -95,6 +95,12 @@
     "status": "success",
     "high_impact_news": [
       {
+        "title": "Get the Facts: How Bureau of Labor Statistics reports influence U.S. economy",
+        "source": "Biztoc.com",
+        "publishedAt": "2025-08-06T09:20:50Z",
+        "impact": "عالي"
+      },
+      {
         "title": "Goldman Sachs trims India’s growth outlook on tariff worries, warns of rare low inflation risk",
         "source": "The Times of India",
         "publishedAt": "2025-08-06T09:08:48Z",
@@ -106,10 +112,33 @@
   },
   "summary": {
     "signal": "Weak Buy",
-    "price": 3453.2,
+    "price": 3453.4,
     "confidence": "Medium",
     "action": "شراء حذر بحجم صغير",
     "rsi": 61.8,
     "trend": "N/A"
+  },
+  "alerts": [
+    {
+      "type": "price_alert",
+      "message": "الذهب عند مستوى مرتفع: $3453.4",
+      "severity": "medium"
+    },
+    {
+      "type": "volume_alert",
+      "message": "حجم تداول عالي جداً: 7.91x",
+      "severity": "high"
+    }
+  ],
+  "trend_history": {},
+  "economic_calendar": {
+    "upcoming_events": [
+      "FOMC Meeting",
+      "CPI Release",
+      "NFP Report",
+      "GDP Data",
+      "Central Bank Announcements"
+    ],
+    "impact_on_gold": "high"
   }
 }
