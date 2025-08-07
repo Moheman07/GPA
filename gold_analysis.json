@@ -1,41 +1,41 @@
 {
-  "timestamp_utc": "2025-08-07T12:55:04.920937",
+  "timestamp_utc": "2025-08-07T14:01:09.479135",
   "signal": "Buy",
-  "total_score": 1.23,
+  "total_score": 1.27,
   "components": {
     "trend_score": 2,
     "momentum_score": 1,
     "correlation_score": 1,
-    "news_score": -0.7
+    "news_score": -0.28
   },
   "market_data": {
-    "gold_price": 310.5,
-    "dxy": 98.18,
-    "vix": 16.77
+    "gold_price": 311.76,
+    "dxy": 98.21,
+    "vix": NaN
   },
   "news_analysis": {
     "status": "success",
-    "news_sentiment_score": -0.7,
+    "news_sentiment_score": -0.28,
     "headlines": [
       {
-        "title": "Leading economist issues stark recession warning for struggling US economy",
+        "title": "Gold Steadies as Markets Weigh Geopolitics, Tariffs, Rates Path",
         "source": "Biztoc.com"
       },
       {
-        "title": "Trump says four candidates in running for Fed chair, rules out Bessent",
-        "source": "Biztoc.com"
+        "title": "US stocks open higher on Fed rate cut hopes; earnings in focus",
+        "source": "The Times of India"
       },
       {
-        "title": "The Current Inflation Rate Is 2.7%. Here's How That Could Affect This Leading Retail Stock",
-        "source": "Biztoc.com"
+        "title": "RBI speak: What the central bank said on growth, inflation, and tariff",
+        "source": "Livemint"
       },
       {
-        "title": "Walmart is selling 'exquisite' $110 gold-plated crystal earrings for just $18, and they 'look like real diamonds'",
-        "source": "Biztoc.com"
+        "title": "What Dividend Investors Are Forgetting About The Powell Drama",
+        "source": "Forbes"
       },
       {
-        "title": "Trump says four candidates in running for Fed chair, rules out Bessent - Al Jazeera",
-        "source": "Slashdot.org"
+        "title": "WATCH: Adam Schiff reportedly under federal criminal investigation for alleged mortgage fraud",
+        "source": "Wnd.com"
       }
     ]
   }
