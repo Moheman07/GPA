@@ -1,7 +1,7 @@
+numpy<2.0
 requests
 python-dotenv
 pandas
-numpy
 yfinance
 pandas-ta
 transformers
