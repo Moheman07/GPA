@@ -1,0 +1,10 @@
+yfinance
+pandas
+pandas_ta
+pytz
+python-dotenv
+requests
+transformers[torch]   # أو transformers[cpu] إذا كنت تستخدم runners بدون GPU
+tqdm
+# (اختياري) لتفعيل back‑testing
+vectorbt
