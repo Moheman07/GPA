@@ -3,6 +3,7 @@ python-dotenv
 pandas
 numpy
 yfinance
+pandas-ta
 transformers
 torch
 sentencepiece
