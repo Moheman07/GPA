@@ -1,0 +1,11 @@
+# ملفات البيئة المحلية
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# ملفات مؤقتة
+*.log
+*.pickle
