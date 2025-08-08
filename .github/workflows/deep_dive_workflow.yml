@@ -19,24 +19,17 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          # ✅ السطر الذي يحل مشكلة بطء التثبيت
+          # التخزين المؤقت سيعمل الآن بشكل صحيح
           cache: 'pip'
-          # ✅ تحديد مكان ملف المكتبات داخل المجلد الفرعي
-          cache-dependency-path: GPA/requirements.txt
 
       - name: Install dependencies
-        # ✅ الدخول إلى المجلد الصحيح قبل التثبيت
-        working-directory: ./GPA
         run: pip install -r requirements.txt
         
       - name: Run Deep Dive Analysis
-        # ✅ الدخول إلى المجلد الصحيح قبل تشغيل السكربت
-        working-directory: ./GPA
         run: python hybrid_analyzer.py deep
         
       - name: Commit Deep Dive Results
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'Update deep dive analysis'
-          # ✅ تحديد المسار الصحيح للملف الذي سيتم حفظه
-          file_pattern: 'GPA/deep_analysis.json'
+          file_pattern: 'deep_analysis.json'
