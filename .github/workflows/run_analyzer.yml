@@ -1,11 +1,10 @@
-name: Gold Analysis Auto-Commit
+name: Professional Gold Analysis
 
 on:
   schedule:
-    - cron: '0 */3 * * 1-5'  # كل 3 ساعات في أيام الأسبوع
-  workflow_dispatch:
-  push:
-    branches: [ main, master ]
+    # يعمل مرة واحدة يوميًا (من الإثنين للجمعة) الساعة 21:00 UTC (بعد إغلاق سوق نيويورك)
+    - cron: '0 21 * * 1-5'
+  workflow_dispatch: # يسمح بالتشغيل اليدوي
 
 permissions:
   contents: write
@@ -15,35 +14,29 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
       
-    - name: Set up Python
+    - name: Set up Python with Caching
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+        # ✅ تفعيل التخزين المؤقت لتسريع تثبيت المكتبات
+        cache: 'pip'
         
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
         
-    - name: Run Analysis
+    - name: Run Professional Analysis
       env:
         NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+      # تأكد من أن اسم السكربت هنا يطابق اسم ملفك (مثلاً main_analyzer.py)
       run: python main_analyzer.py
         
-    - name: Commit and Push Results
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "Gold Analysis Bot"
-        
-        # إضافة الملف
-        git add gold_analysis.json
-        
-        # التحقق من وجود تغييرات
-        if git diff --staged --quiet; then
-          echo "لا توجد تغييرات للحفظ"
-        else
-          git commit -m "🔄 Update gold analysis - $(date +'%Y-%m-%d %H:%M UTC')"
-          git push
-        fi
+    - name: Commit and Push All Results
+      # هذا الأكشن أفضل وأكثر أمانًا
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: '🏆 Update Professional Gold Analysis Report'
+        # ✅ يقوم بحفظ كل الملفات الناتجة تلقائيًا
+        file_pattern: 'gold_analysis_pro.json gold_analysis_history.db gold_analysis_pro.log'
