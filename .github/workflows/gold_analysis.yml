@@ -1,26 +1,110 @@
-name: Gold Test - No AI
+name: Gold Analysis - No AI
 on:
   workflow_dispatch:
 jobs:
-  test:
+  analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+        cache: 'pip'
     - run: |
-        pip install yfinance pandas numpy pandas-ta requests
-        echo "Testing basic gold analysis..."
-        python -c "
+        pip install yfinance pandas numpy pandas-ta requests pytz
+    - name: Create Simplified Script
+      run: |
+        cat > simple_analyzer.py << 'EOF'
         import yfinance as yf
         import pandas as pd
         import numpy as np
+        import json
+        from datetime import datetime
+        import pandas_ta as ta
         
-        print('📊 Testing yfinance...')
-        data = yf.download('GLD', period='5d', progress=False)
-        print(f'✅ Got {len(data)} days of data')
-        print(f'Latest price: \${data['Close'].iloc[-1]:.2f}')
-        "
-        echo "✅ Basic test passed!"
+        print("🚀 Starting simplified gold analysis...")
+        
+        try:
+            # جلب بيانات الذهب
+            symbols = ['GLD', 'DX-Y.NYB', '^VIX']
+            data = yf.download(symbols, period='6mo', progress=False)
+            
+            if data.empty:
+                raise Exception("No data received")
+            
+            # حساب مؤشرات بسيطة
+            gold_data = data[('Close', 'GLD')].dropna()
+            gold_data = pd.DataFrame({'Close': gold_data})
+            
+            gold_data['SMA_20'] = ta.sma(gold_data['Close'], length=20)
+            gold_data['SMA_50'] = ta.sma(gold_data['Close'], length=50)
+            gold_data['RSI'] = ta.rsi(gold_data['Close'], length=14)
+            
+            gold_data = gold_data.dropna()
+            latest = gold_data.iloc[-1]
+            
+            # حساب إشارة بسيطة
+            current_price = latest['Close']
+            score = 0
+            
+            if current_price > latest['SMA_50']: score += 1
+            if current_price > latest['SMA_20']: score += 1  
+            if 30 < latest['RSI'] < 70: score += 1
+            
+            if score >= 2:
+                signal = "Buy"
+            elif score <= 0:
+                signal = "Sell"
+            else:
+                signal = "Hold"
+            
+            # إنشاء النتيجة
+            result = {
+                "timestamp": datetime.utcnow().isoformat(),
+                "signal": signal,
+                "score": score,
+                "gold_price": round(current_price, 2),
+                "rsi": round(latest['RSI'], 2),
+                "sma_20": round(latest['SMA_20'], 2),
+                "sma_50": round(latest['SMA_50'], 2),
+                "data_points": len(gold_data),
+                "status": "success"
+            }
+            
+            # حفظ النتيجة
+            with open('gold_simple_result.json', 'w') as f:
+                json.dump(result, f, indent=2)
+                
+            print(f"✅ Analysis completed!")
+            print(f"Signal: {signal}")
+            print(f"Price: ${current_price:.2f}")
+            print(f"Score: {score}/3")
+            
+        except Exception as e:
+            print(f"❌ Error: {e}")
+            result = {"status": "error", "error": str(e)}
+            with open('gold_simple_result.json', 'w') as f:
+                json.dump(result, f, indent=2)
+        EOF
+        
+    - run: python simple_analyzer.py
+    
+    - name: Check Results
+      run: |
+        if [ -f "gold_simple_result.json" ]; then
+          echo "✅ Results created"
+          cat gold_simple_result.json
+        else
+          echo "❌ No results file"
+        fi
+        
+    - name: Commit Results
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "Gold Bot"
+        git add gold_simple_result.json
+        git commit -m "🤖 Simple Gold Analysis - $(date)" || echo "No changes"
+        git push || echo "Push failed"
