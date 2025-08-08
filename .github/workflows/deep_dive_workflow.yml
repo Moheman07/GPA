@@ -2,7 +2,7 @@ name: Deep Dive Runner (Once a Day)
 
 on:
   schedule:
-    - cron: '0 21 * * 1-5' # الساعة 5 مساءً بتوقيت نيويورك (بعد إغلاق السوق)
+    - cron: '0 21 * * 1-5' # الساعة 5 مساءً بتوقيت نيويورك
   workflow_dispatch:
 
 jobs:
@@ -14,15 +14,29 @@ jobs:
       NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+
+      - name: Set up Python with dependency caching
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          # ✅ السطر الذي يحل مشكلة بطء التثبيت
           cache: 'pip'
-      - run: pip install -r requirements.txt
+          # ✅ تحديد مكان ملف المكتبات داخل المجلد الفرعي
+          cache-dependency-path: GPA/requirements.txt
+
+      - name: Install dependencies
+        # ✅ الدخول إلى المجلد الصحيح قبل التثبيت
+        working-directory: ./GPA
+        run: pip install -r requirements.txt
+        
       - name: Run Deep Dive Analysis
-        run: python hybrid_analyzer.py deep # <-- لاحظ كيف نمرر الوضع هنا
+        # ✅ الدخول إلى المجلد الصحيح قبل تشغيل السكربت
+        working-directory: ./GPA
+        run: python hybrid_analyzer.py deep
+        
       - name: Commit Deep Dive Results
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'Update deep dive analysis'
-          file_pattern: 'deep_analysis.json'
+          # ✅ تحديد المسار الصحيح للملف الذي سيتم حفظه
+          file_pattern: 'GPA/deep_analysis.json'
