@@ -608,7 +608,7 @@ class ProfessionalGoldAnalyzer:
                 'volume_analysis': volume_analysis,
                 'market_correlations': correlations,
                 'news_analysis': news_data,
-                'summary': {
+                           'summary': {
                     'signal': signals.get('signal', 'N/A'),
                     'price': signals.get('current_price', 'N/A'),
                     'confidence': signals.get('confidence', 'N/A'),
