@@ -1,4 +1,4 @@
-name: 🤖 AI-Ready Gold Analysis for n8n
+name: 🏆 Advanced Gold Analysis (Original Enhanced)
 on:
   schedule:
     - cron: '30 13 * * 1-5'  # يومي
@@ -6,13 +6,12 @@ on:
 
 env:
   NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-  PYTHONUNBUFFERED: 1
 
 jobs:
-  ai-gold-analysis:
-    name: 🤖 AI Gold Analysis
+  advanced-analysis:
+    name: 🧠 Advanced Gold Analysis
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     permissions:
       contents: write
     
@@ -22,16 +21,47 @@ jobs:
       with:
         python-version: '3.11'
         
-    - name: 📦 Install Core Packages
+    - name: 📦 Install Advanced Packages
       run: |
-        pip install --quiet yfinance pandas numpy requests vaderSentiment
+        echo "🔄 Installing advanced analysis packages..."
+        pip install --upgrade pip --quiet
+        
+        # Core packages
+        pip install --no-cache-dir --quiet \
+          yfinance pandas numpy requests scipy
+        
+        # AI and NLP
+        pip install --no-cache-dir --quiet \
+          transformers torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+        
+        pip install --no-cache-dir --quiet \
+          vaderSentiment textblob nltk scikit-learn
+        
+        # Technical analysis
+        pip install --no-cache-dir --quiet \
+          pandas-ta matplotlib seaborn
+        
+        # Download models
+        python -c "
+        import nltk
+        try:
+            nltk.download('punkt', quiet=True)
+            nltk.download('vader_lexicon', quiet=True)
+            print('✅ NLTK data downloaded')
+        except:
+            print('⚠️ NLTK download skipped')
+        "
+        
+        echo "✅ Advanced packages installed"
 
-    - name: 🤖 Create AI-Ready Gold Analyzer
+    - name: 🧠 Create Advanced Gold Analyzer (Original)
       run: |
-        cat > ai_gold_analyzer.py << 'EOF'
+        cat > main_analyzer.py << 'EOF'
+        #!/usr/bin/env python3
+        # -*- coding: utf-8 -*-
         """
-        🤖 AI-Ready Gold Analysis for n8n Integration
-        Simple, Clean, API-Friendly Output
+        🏆 محلل الذهب المتقدم - الإصدار المحسن
+        Advanced Gold Analysis System with AI
         """
         
         import yfinance as yf
@@ -39,539 +69,1014 @@ jobs:
         import numpy as np
         import requests
         import json
+        import sqlite3
         import os
-        from datetime import datetime, timedelta
+        import logging
         import warnings
+        from datetime import datetime, timedelta
+        from typing import Dict, List, Optional, Any
+        import time
+        from concurrent.futures import ThreadPoolExecutor
+        
+        # AI and NLP imports
+        try:
+            from transformers import pipeline, AutoTokenizer, AutoModelForSequenceClassification
+            import torch
+            from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+            from textblob import TextBlob
+            AI_AVAILABLE = True
+        except ImportError as e:
+            print(f"⚠️ AI packages not available: {e}")
+            AI_AVAILABLE = False
+        
+        # Technical analysis
+        try:
+            import pandas_ta as ta
+            TA_AVAILABLE = True
+        except ImportError:
+            TA_AVAILABLE = False
         
         warnings.filterwarnings('ignore')
         
-        try:
-            from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-            sentiment_analyzer = SentimentIntensityAnalyzer()
-            SENTIMENT_AVAILABLE = True
-        except:
-            SENTIMENT_AVAILABLE = False
+        # إعداد نظام السجلات المتقدم
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            handlers=[
+                logging.FileHandler('gold_analysis.log', encoding='utf-8'),
+                logging.StreamHandler()
+            ]
+        )
+        logger = logging.getLogger(__name__)
         
-        def safe_float(value, default=0.0):
-            """Safely convert to float"""
-            try:
-                if pd.isna(value):
-                    return default
-                if hasattr(value, 'iloc'):
-                    value = value.iloc[0] if len(value) > 0 else default
-                return float(value)
-            except:
-                return default
-        
-        def fetch_gold_data():
-            """Fetch gold market data - simplified"""
-            try:
-                print("📊 Fetching gold data...")
-                
-                # Simple approach - just GLD ETF
-                data = yf.download('GLD', period='6mo', interval='1d', progress=False)
-                
-                if data.empty:
-                    print("⚠️ GLD failed, trying GC=F...")
-                    data = yf.download('GC=F', period='6mo', progress=False)
-                
-                if data.empty:
-                    raise Exception("Failed to fetch gold data")
-                
-                print(f"✅ Fetched {len(data)} days of data")
-                return data
-                
-            except Exception as e:
-                print(f"❌ Data fetch error: {e}")
-                return None
-        
-        def calculate_technical_analysis(data):
-            """Calculate technical indicators - FIXED"""
-            try:
-                print("📈 Calculating technical indicators...")
-                
-                df = data.copy()
-                
-                # Basic indicators with safe calculations
-                df['SMA_20'] = df['Close'].rolling(20, min_periods=1).mean()
-                df['SMA_50'] = df['Close'].rolling(50, min_periods=1).mean()
-                df['EMA_12'] = df['Close'].ewm(span=12).mean()
-                df['EMA_26'] = df['Close'].ewm(span=26).mean()
-                
-                # RSI - safe calculation
-                delta = df['Close'].diff()
-                gain = delta.where(delta > 0, 0).rolling(14, min_periods=1).mean()
-                loss = (-delta.where(delta < 0, 0)).rolling(14, min_periods=1).mean()
-                rs = gain / loss.replace(0, np.inf)
-                df['RSI'] = 100 - (100 / (1 + rs))
-                
-                # MACD
-                df['MACD'] = df['EMA_12'] - df['EMA_26']
-                df['MACD_Signal'] = df['MACD'].ewm(span=9).mean()
-                
-                # Get latest values safely
-                latest = df.iloc[-1]
-                previous = df.iloc[-2] if len(df) >= 2 else latest
-                
-                # SAFE VALUE EXTRACTION
-                current_price = safe_float(latest['Close'])
-                previous_price = safe_float(previous['Close'])
-                
-                if current_price == 0:
-                    raise Exception("Invalid current price")
-                
-                # Calculate changes
-                change_1d = ((current_price - previous_price) / previous_price * 100) if previous_price > 0 else 0
-                
-                # Technical indicators
-                rsi = safe_float(latest['RSI'], 50)
-                sma_20 = safe_float(latest['SMA_20'])
-                sma_50 = safe_float(latest['SMA_50'])
-                macd = safe_float(latest['MACD'])
-                macd_signal = safe_float(latest['MACD_Signal'])
-                
-                # Trend analysis
-                trend_short = "bullish" if current_price > sma_20 else "bearish"
-                trend_medium = "bullish" if current_price > sma_50 else "bearish"
-                macd_trend = "bullish" if macd > macd_signal else "bearish"
-                
-                # Technical score calculation
-                tech_score = 0
-                if current_price > sma_50: tech_score += 2
-                if current_price > sma_20: tech_score += 1
-                if 30 <= rsi <= 70: tech_score += 1
-                if macd > macd_signal: tech_score += 1
-                
-                # Normalize to -1 to +1
-                technical_score = (tech_score / 5) * 2 - 1
-                
-                return {
-                    "status": "success",
-                    "current_price": round(current_price, 2),
-                    "price_change_24h": round(change_1d, 2),
-                    "rsi_14": round(rsi, 1),
-                    "sma_20": round(sma_20, 2),
-                    "sma_50": round(sma_50, 2),
-                    "macd": round(macd, 4),
-                    "macd_signal": round(macd_signal, 4),
-                    "trend_short_term": trend_short,
-                    "trend_medium_term": trend_medium,
-                    "macd_trend": macd_trend,
-                    "technical_score": round(technical_score, 3),
-                    "data_points": len(df)
+        class AdvancedGoldAnalyzer:
+            """محلل الذهب المتقدم مع الذكاء الاصطناعي"""
+            
+            def __init__(self):
+                self.symbols = {
+                    'gold_futures': 'GC=F',
+                    'gold_etf': 'GLD', 
+                    'silver': 'SLV',
+                    'dollar_index': 'DX-Y.NYB',
+                    'vix': '^VIX',
+                    'treasury_10y': '^TNX',
+                    'sp500': 'SPY',
+                    'oil': 'CL=F',
+                    'bitcoin': 'BTC-USD'
                 }
                 
-            except Exception as e:
-                print(f"❌ Technical analysis error: {e}")
-                return {"status": "error", "error": str(e)}
+                self.news_api_key = os.getenv('NEWS_API_KEY')
+                self.db_path = 'gold_analysis_history.db'
+                
+                # AI Models
+                self.sentiment_analyzer = None
+                self.financial_sentiment_model = None
+                
+                # Data storage
+                self.market_data = None
+                self.gold_data = None
+                
+                logger.info("🚀 تم تهيئة محلل الذهب المتقدم بنجاح")
         
-        def analyze_news_sentiment():
-            """Analyze news sentiment - simplified for AI"""
-            api_key = os.getenv('NEWS_API_KEY')
-            
-            if not api_key or not SENTIMENT_AVAILABLE:
-                return {
-                    "status": "disabled",
-                    "sentiment_score": 0,
-                    "articles_count": 0,
-                    "summary": "News analysis disabled"
-                }
-            
-            try:
-                print("📰 Analyzing news sentiment...")
+            def setup_database(self):
+                """إعداد قاعدة البيانات المتقدمة"""
+                try:
+                    conn = sqlite3.connect(self.db_path)
+                    cursor = conn.cursor()
+                    
+                    # جدول التحليلات الرئيسي
+                    cursor.execute('''
+                        CREATE TABLE IF NOT EXISTS gold_analysis_history (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            timestamp TEXT NOT NULL,
+                            signal TEXT NOT NULL,
+                            signal_strength TEXT NOT NULL,
+                            total_score REAL NOT NULL,
+                            gold_price REAL,
+                            technical_score REAL,
+                            news_sentiment_score REAL,
+                            market_condition TEXT,
+                            stop_loss REAL,
+                            take_profit REAL,
+                            rsi REAL,
+                            macd_signal TEXT,
+                            bb_position REAL,
+                            volume_trend TEXT,
+                            news_articles_count INTEGER,
+                            top_news TEXT,
+                            execution_time_ms INTEGER,
+                            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                        )
+                    ''')
+                    
+                    # جدول الأخبار المفصل
+                    cursor.execute('''
+                        CREATE TABLE IF NOT EXISTS news_analysis_detail (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            analysis_id INTEGER,
+                            headline TEXT,
+                            source TEXT,
+                            sentiment_score REAL,
+                            ai_sentiment_score REAL,
+                            relevance_score INTEGER,
+                            published_at TEXT,
+                            url TEXT,
+                            FOREIGN KEY (analysis_id) REFERENCES gold_analysis_history (id)
+                        )
+                    ''')
+                    
+                    conn.commit()
+                    conn.close()
+                    logger.info("✅ تم إعداد قاعدة البيانات بنجاح")
+                    
+                except Exception as e:
+                    logger.error(f"❌ فشل إعداد قاعدة البيانات: {e}")
+        
+            def initialize_ai_models(self):
+                """تحميل نماذج الذكاء الاصطناعي المتخصصة"""
+                if not AI_AVAILABLE:
+                    logger.warning("⚠️ نماذج الذكاء الاصطناعي غير متاحة")
+                    return
                 
-                # Fetch recent gold news
-                url = f"https://newsapi.org/v2/everything?q=gold+price+OR+precious+metals&language=en&sortBy=publishedAt&pageSize=30&from={datetime.now() - timedelta(days=2):%Y-%m-%d}&apiKey={api_key}"
+                try:
+                    logger.info("🧠 تحميل نموذج تحليل المشاعر المالي المتخصص...")
+                    
+                    # نموذج متخصص في التحليل المالي
+                    model_name = "ProsusAI/finbert"
+                    
+                    # تحميل النموذج مع معالجة الأخطاء
+                    try:
+                        self.financial_sentiment_model = pipeline(
+                            "sentiment-analysis",
+                            model=model_name,
+                            tokenizer=model_name,
+                            device=0 if torch.cuda.is_available() else -1,
+                            return_all_scores=True
+                        )
+                    except Exception as e:
+                        logger.warning(f"⚠️ فشل تحميل FinBERT، استخدام نموذج بديل: {e}")
+                        # استخدام نموذج بديل أخف
+                        self.financial_sentiment_model = pipeline(
+                            "sentiment-analysis",
+                            model="cardiffnlp/twitter-roberta-base-sentiment-latest",
+                            device=-1,
+                            return_all_scores=True
+                        )
+                    
+                    # VADER للتحليل السريع
+                    self.sentiment_analyzer = SentimentIntensityAnalyzer()
+                    
+                    logger.info("✅ نموذج تحليل المشاعر جاهز")
+                    
+                except Exception as e:
+                    logger.error(f"❌ فشل تحميل نماذج الذكاء الاصطناعي: {e}")
+                    self.financial_sentiment_model = None
+                    self.sentiment_analyzer = None
+        
+            def fetch_enhanced_market_data(self) -> bool:
+                """جلب بيانات السوق المحسنة"""
+                logger.info("📊 جلب بيانات السوق المحسنة...")
                 
-                response = requests.get(url, timeout=10)
-                if response.status_code != 200:
-                    raise Exception(f"API error: {response.status_code}")
+                try:
+                    # جلب البيانات مع معالجة محسنة للأخطاء
+                    symbols_list = list(self.symbols.values())
+                    
+                    # محاولة جلب البيانات الأساسية
+                    try:
+                        self.market_data = yf.download(
+                            symbols_list,
+                            period="2y",  # فترة أطول للتحليل العميق
+                            interval="1d",
+                            progress=True,
+                            threads=True
+                        )
+                    except Exception as e:
+                        logger.warning(f"⚠️ فشل الجلب الأساسي، محاولة بديلة: {e}")
+                        
+                        # محاولة بديلة بفترة أقصر
+                        self.market_data = yf.download(
+                            ['GLD', 'SLV', 'DX-Y.NYB', '^VIX', 'SPY'],
+                            period="1y",
+                            interval="1d",
+                            progress=True
+                        )
+                    
+                    if self.market_data is None or self.market_data.empty:
+                        raise Exception("فشل في جلب بيانات السوق")
+                    
+                    # معالجة بيانات الذهب
+                    gold_symbol = 'GC=F'  # استخدام العقود الآجلة أولاً
+                    
+                    if ('Close', gold_symbol) not in self.market_data.columns:
+                        gold_symbol = 'GLD'  # التبديل إلى ETF
+                    
+                    if ('Close', gold_symbol) in self.market_data.columns:
+                        self.gold_data = pd.DataFrame({
+                            'Open': self.market_data[('Open', gold_symbol)],
+                            'High': self.market_data[('High', gold_symbol)],
+                            'Low': self.market_data[('Low', gold_symbol)],
+                            'Close': self.market_data[('Close', gold_symbol)],
+                            'Volume': self.market_data[('Volume', gold_symbol)]
+                        }).dropna()
+                    else:
+                        # إذا فشل كل شيء، جلب GLD منفرداً
+                        logger.warning("⚠️ محاولة جلب GLD منفرداً...")
+                        gold_data_single = yf.download('GLD', period='1y', progress=False)
+                        if not gold_data_single.empty:
+                            self.gold_data = gold_data_single
+                        else:
+                            raise Exception("فشل في جلب بيانات الذهب")
+                    
+                    logger.info(f"✅ تم جلب {len(self.market_data)} يوم من البيانات بنجاح")
+                    return True
+                    
+                except Exception as e:
+                    logger.error(f"❌ فشل جلب بيانات السوق: {e}")
+                    return False
+        
+            def calculate_advanced_technical_indicators(self):
+                """حساب المؤشرات الفنية المتقدمة"""
+                logger.info("📈 حساب المؤشرات الفنية المتقدمة...")
                 
-                articles = response.json().get('articles', [])
+                if self.gold_data is None or self.gold_data.empty:
+                    logger.error("❌ لا توجد بيانات ذهب للتحليل الفني")
+                    return None
                 
-                if not articles:
+                try:
+                    df = self.gold_data.copy()
+                    
+                    # المتوسطات المتحركة
+                    df['SMA_20'] = df['Close'].rolling(20, min_periods=1).mean()
+                    df['SMA_50'] = df['Close'].rolling(50, min_periods=1).mean()
+                    df['SMA_200'] = df['Close'].rolling(200, min_periods=1).mean()
+                    df['EMA_12'] = df['Close'].ewm(span=12).mean()
+                    df['EMA_26'] = df['Close'].ewm(span=26).mean()
+                    
+                    # مؤشر القوة النسبية RSI
+                    delta = df['Close'].diff()
+                    gain = delta.where(delta > 0, 0).rolling(14, min_periods=1).mean()
+                    loss = (-delta.where(delta < 0, 0)).rolling(14, min_periods=1).mean()
+                    rs = gain / loss.replace(0, np.inf)
+                    df['RSI'] = 100 - (100 / (1 + rs))
+                    
+                    # MACD
+                    df['MACD'] = df['EMA_12'] - df['EMA_26']
+                    df['MACD_Signal'] = df['MACD'].ewm(span=9).mean()
+                    df['MACD_Histogram'] = df['MACD'] - df['MACD_Signal']
+                    
+                    # Bollinger Bands
+                    df['BB_Middle'] = df['Close'].rolling(20, min_periods=1).mean()
+                    df['BB_Std'] = df['Close'].rolling(20, min_periods=1).std()
+                    df['BB_Upper'] = df['BB_Middle'] + (df['BB_Std'] * 2)
+                    df['BB_Lower'] = df['BB_Middle'] - (df['BB_Std'] * 2)
+                    df['BB_Position'] = (df['Close'] - df['BB_Lower']) / (df['BB_Upper'] - df['BB_Lower'])
+                    
+                    # Stochastic Oscillator
+                    low_14 = df['Low'].rolling(14, min_periods=1).min()
+                    high_14 = df['High'].rolling(14, min_periods=1).max()
+                    df['Stoch_K'] = 100 * ((df['Close'] - low_14) / (high_14 - low_14))
+                    df['Stoch_D'] = df['Stoch_K'].rolling(3, min_periods=1).mean()
+                    
+                    # Williams %R
+                    df['Williams_R'] = -100 * (high_14 - df['Close']) / (high_14 - low_14)
+                    
+                    # مؤشر الحجم
+                    df['Volume_SMA'] = df['Volume'].rolling(20, min_periods=1).mean()
+                    df['Volume_Ratio'] = df['Volume'] / df['Volume_SMA']
+                    
+                    # ATR للتقلبات
+                    tr1 = df['High'] - df['Low']
+                    tr2 = abs(df['High'] - df['Close'].shift(1))
+                    tr3 = abs(df['Low'] - df['Close'].shift(1))
+                    tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+                    df['ATR'] = tr.rolling(14, min_periods=1).mean()
+                    
+                    # تنظيف البيانات
+                    df = df.dropna()
+                    
+                    # تحديث البيانات
+                    self.gold_data = df
+                    
+                    logger.info(f"✅ تم حساب المؤشرات الفنية - البيانات النظيفة: {len(df)} صف")
+                    return df
+                    
+                except Exception as e:
+                    logger.error(f"❌ فشل حساب المؤشرات الفنية: {e}")
+                    return None
+        
+            def analyze_specialized_news(self) -> Dict[str, Any]:
+                """تحليل الأخبار المتخصص بالذكاء الاصطناعي"""
+                logger.info("📰 بدء تحليل الأخبار المتخصص...")
+                
+                if not self.news_api_key:
                     return {
-                        "status": "no_articles",
-                        "sentiment_score": 0,
-                        "articles_count": 0,
-                        "summary": "No recent articles found"
+                        'status': 'no_api_key',
+                        'sentiment_score': 0,
+                        'articles_count': 0,
+                        'top_articles': []
                     }
                 
-                # Analyze sentiment
-                sentiments = []
-                relevant_articles = []
-                
-                gold_keywords = ['gold', 'bullion', 'precious', 'xau']
-                
-                for article in articles[:20]:
-                    title = article.get('title', '').lower()
-                    description = article.get('description', '').lower()
-                    content = f"{title} {description}"
+                try:
+                    logger.info("📰 بدء تحليل أخبار الذهب المتخصص...")
                     
-                    # Check relevance
-                    if not any(keyword in content for keyword in gold_keywords):
-                        continue
+                    # استعلامات متخصصة للذهب
+                    specialized_queries = [
+                        'gold OR XAU OR bullion OR "precious metals" OR "gold price"',
+                        '"interest rates" OR "federal reserve" OR "monetary policy" OR "inflation"',
+                        '"dollar index" OR DXY OR "monetary policy" OR "currency"',
+                        'geopolitical OR "safe haven" OR crisis OR "market volatility"'
+                    ]
                     
-                    # Analyze sentiment
-                    scores = sentiment_analyzer.polarity_scores(f"{title} {description}")
-                    sentiment_score = scores['compound']
+                    all_articles = []
                     
-                    sentiments.append(sentiment_score)
-                    relevant_articles.append({
-                        "title": article.get('title', '')[:100],
-                        "source": article.get('source', {}).get('name', 'Unknown'),
-                        "sentiment": round(sentiment_score, 3)
-                    })
-                
-                if not sentiments:
+                    # جلب الأخبار بشكل متوازي
+                    for query in specialized_queries:
+                        try:
+                            url = f"https://newsapi.org/v2/everything?q={query}&language=en&sortBy=publishedAt&pageSize=50&from={(datetime.now() - timedelta(days=3)).date()}&apiKey={self.news_api_key}"
+                            
+                            response = requests.get(url, timeout=10)
+                            if response.status_code == 200:
+                                articles = response.json().get('articles', [])
+                                all_articles.extend(articles)
+                                logger.info(f"📥 جلب {len(articles)} مقال من استعلام: {query[:50]}...")
+                            
+                        except Exception as e:
+                            logger.warning(f"⚠️ فشل الاستعلام: {e}")
+                            continue
+                    
+                    if not all_articles:
+                        return {
+                            'status': 'no_articles',
+                            'sentiment_score': 0,
+                            'articles_count': 0,
+                            'top_articles': []
+                        }
+                    
+                    # إزالة التكرار
+                    unique_articles = []
+                    seen_urls = set()
+                    
+                    for article in all_articles:
+                        url = article.get('url', '')
+                        if url not in seen_urls and len(article.get('title', '')) > 10:
+                            seen_urls.add(url)
+                            unique_articles.append(article)
+                    
+                    logger.info(f"🔍 تم جلب {len(unique_articles)} مقالاً فريداً")
+                    
+                    # تحليل الصلة بالذهب
+                    gold_keywords = [
+                        'gold', 'xau', 'bullion', 'precious', 'fed', 'federal reserve',
+                        'interest rate', 'inflation', 'dollar', 'dxy', 'monetary',
+                        'geopolitical', 'safe haven', 'crisis', 'volatility'
+                    ]
+                    
+                    relevant_articles = []
+                    
+                    for article in unique_articles:
+                        title = article.get('title', '').lower()
+                        description = article.get('description', '').lower() if article.get('description') else ''
+                        content = f"{title} {description}"
+                        
+                        # حساب نقاط الصلة
+                        relevance_score = sum(1 for keyword in gold_keywords if keyword in content)
+                        
+                        if relevance_score >= 2:  # يجب أن يحتوي على كلمتين مفتاحيتين على الأقل
+                            article['relevance_score'] = relevance_score
+                            relevant_articles.append(article)
+                    
+                    logger.info(f"🎯 تم اختيار {len(relevant_articles)} مقالاً ذا صلة عالية بالذهب")
+                    
+                    if not relevant_articles:
+                        return {
+                            'status': 'no_relevant_articles',
+                            'sentiment_score': 0,
+                            'articles_count': 0,
+                            'top_articles': []
+                        }
+                    
+                    # تحليل المشاعر المتقدم
+                    analyzed_articles = []
+                    sentiment_scores = []
+                    
+                    for article in relevant_articles[:50]:  # تحليل أفضل 50 مقال
+                        try:
+                            title = article.get('title', '')
+                            description = article.get('description', '') or ''
+                            text = f"{title}. {description}"
+                            
+                            # تحليل VADER السريع
+                            vader_score = 0
+                            if self.sentiment_analyzer:
+                                vader_result = self.sentiment_analyzer.polarity_scores(text)
+                                vader_score = vader_result['compound']
+                            
+                            # تحليل AI المتخصص
+                            ai_score = 0
+                            if self.financial_sentiment_model:
+                                try:
+                                    # تقسيم النص إذا كان طويلاً
+                                    text_truncated = text[:500]  # الحد الأقصى للنموذج
+                                    ai_result = self.financial_sentiment_model(text_truncated)
+                                    
+                                    # استخراج النتيجة حسب نوع النموذج
+                                    if isinstance(ai_result[0], list):
+                                        # FinBERT format
+                                        scores = {item['label']: item['score'] for item in ai_result[0]}
+                                        ai_score = scores.get('positive', 0) - scores.get('negative', 0)
+                                    else:
+                                        # معالجة التنسيق العادي
+                                        if ai_result[0]['label'] in ['POSITIVE', 'positive']:
+                                            ai_score = ai_result[0]['score']
+                                        elif ai_result[0]['label'] in ['NEGATIVE', 'negative']:
+                                            ai_score = -ai_result[0]['score']
+                                        else:
+                                            ai_score = 0
+                                            
+                                except Exception as e:
+                                    logger.warning(f"⚠️ خطأ في تحليل AI: {e}")
+                                    ai_score = vader_score  # استخدام VADER كبديل
+                            
+                            # الجمع بين النتائج
+                            combined_score = (vader_score * 0.4) + (ai_score * 0.6)
+                            
+                            # وزن حسب الصلة
+                            relevance_weight = min(article['relevance_score'] / 5, 1.0)
+                            final_score = combined_score * relevance_weight
+                            
+                            analyzed_article = {
+                                'title': title,
+                                'source': article.get('source', {}).get('name', 'Unknown'),
+                                'published_at': article.get('publishedAt', ''),
+                                'url': article.get('url', ''),
+                                'relevance_score': article['relevance_score'],
+                                'vader_sentiment': round(vader_score, 3),
+                                'ai_sentiment': round(ai_score, 3),
+                                'combined_sentiment': round(combined_score, 3),
+                                'final_sentiment': round(final_score, 3)
+                            }
+                            
+                            analyzed_articles.append(analyzed_article)
+                            sentiment_scores.append(final_score)
+                            
+                        except Exception as e:
+                            logger.warning(f"⚠️ خطأ في تحليل المقال: {e}")
+                            continue
+                    
+                    if not sentiment_scores:
+                        return {
+                            'status': 'analysis_failed',
+                            'sentiment_score': 0,
+                            'articles_count': 0,
+                            'top_articles': []
+                        }
+                    
+                    # حساب النتيجة النهائية
+                    overall_sentiment = np.mean(sentiment_scores)
+                    sentiment_std = np.std(sentiment_scores)
+                    
+                    # ترتيب المقالات حسب التأثير
+                    analyzed_articles.sort(key=lambda x: (x['relevance_score'], abs(x['final_sentiment'])), reverse=True)
+                    
+                    logger.info(f"📊 تحليل الأخبار مكتمل: النتيجة النهائية {overall_sentiment:.3f}")
+                    
                     return {
-                        "status": "no_relevant",
-                        "sentiment_score": 0,
-                        "articles_count": 0,
-                        "summary": "No relevant articles found"
+                        'status': 'success',
+                        'sentiment_score': round(overall_sentiment, 4),
+                        'articles_count': len(analyzed_articles),
+                        'positive_count': len([s for s in sentiment_scores if s > 0.1]),
+                        'negative_count': len([s for s in sentiment_scores if s < -0.1]),
+                        'neutral_count': len([s for s in sentiment_scores if abs(s) <= 0.1]),
+                        'sentiment_std': round(sentiment_std, 4),
+                        'top_articles': analyzed_articles[:15],
+                        'confidence': min(1.0, len(analyzed_articles) / 20),
+                        'summary': f"تم تحليل {len(analyzed_articles)} مقالاً ذا صلة عالية بالذهب"
                     }
-                
-                # Calculate overall sentiment
-                overall_sentiment = np.mean(sentiments)
-                positive_count = len([s for s in sentiments if s > 0.1])
-                negative_count = len([s for s in sentiments if s < -0.1])
-                
-                return {
-                    "status": "success",
-                    "sentiment_score": round(overall_sentiment, 4),
-                    "articles_count": len(relevant_articles),
-                    "positive_articles": positive_count,
-                    "negative_articles": negative_count,
-                    "neutral_articles": len(relevant_articles) - positive_count - negative_count,
-                    "top_headlines": relevant_articles[:5],
-                    "summary": f"Analyzed {len(relevant_articles)} articles, {positive_count} positive, {negative_count} negative"
-                }
-                
-            except Exception as e:
-                print(f"❌ News analysis error: {e}")
-                return {
-                    "status": "error",
-                    "sentiment_score": 0,
-                    "articles_count": 0,
-                    "summary": f"Error: {str(e)}"
-                }
+                    
+                except Exception as e:
+                    logger.error(f"❌ فشل تحليل الأخبار: {e}")
+                    return {
+                        'status': 'error',
+                        'error': str(e),
+                        'sentiment_score': 0,
+                        'articles_count': 0,
+                        'top_articles': []
+                    }
         
-        def generate_ai_ready_signal(technical, news):
-            """Generate AI-ready trading signal"""
-            try:
-                # Component scores
-                tech_score = technical.get('technical_score', 0)
-                news_score = news.get('sentiment_score', 0) if news.get('status') == 'success' else 0
+            def generate_comprehensive_signal(self, technical_data, news_data) -> Dict[str, Any]:
+                """توليد إشارة التداول الشاملة"""
+                try:
+                    if technical_data is None or technical_data.empty:
+                        return {
+                            'signal': 'Hold',
+                            'strength': 'Neutral',
+                            'total_score': 0,
+                            'confidence': 0
+                        }
+                    
+                    latest = technical_data.iloc[-1]
+                    
+                    # النتائج الفنية (70%)
+                    technical_score = 0
+                    
+                    # تحليل الاتجاه
+                    current_price = latest['Close']
+                    sma_20 = latest['SMA_20']
+                    sma_50 = latest['SMA_50']
+                    sma_200 = latest['SMA_200']
+                    
+                    if current_price > sma_200: technical_score += 3
+                    if current_price > sma_50: technical_score += 2
+                    if current_price > sma_20: technical_score += 1.5
+                    if sma_20 > sma_50: technical_score += 1
+                    if sma_50 > sma_200: technical_score += 0.5
+                    
+                    # تحليل الزخم
+                    rsi = latest['RSI']
+                    macd = latest['MACD']
+                    macd_signal = latest['MACD_Signal']
+                    
+                    if macd > macd_signal: technical_score += 2
+                    if 30 <= rsi <= 70: technical_score += 1
+                    elif rsi < 30: technical_score += 2  # تشبع بيع - فرصة شراء
+                    elif rsi > 70: technical_score -= 1  # تشبع شراء
+                    
+                    # تحليل التقلبات
+                    bb_position = latest['BB_Position']
+                    if bb_position < 0.2: technical_score += 1.5  # قرب الحد السفلي
+                    elif bb_position > 0.8: technical_score -= 1  # قرب الحد العلوي
+                    
+                    # تحليل الحجم
+                    volume_ratio = latest['Volume_Ratio']
+                    if volume_ratio > 1.5: technical_score += 0.5  # حجم عالي يؤكد الحركة
+                    
+                    # تطبيع النتيجة الفنية
+                    technical_score_normalized = max(-1, min(1, (technical_score - 5) / 5))
+                    
+                    # النتائج الإخبارية (30%)
+                    news_score_normalized = 0
+                    if news_data.get('status') == 'success':
+                        news_score = news_data.get('sentiment_score', 0)
+                        news_confidence = news_data.get('confidence', 0)
+                        news_score_normalized = news_score * news_confidence
+                    
+                    # النتيجة الإجمالية
+                    total_score = (technical_score_normalized * 0.7) + (news_score_normalized * 0.3)
+                    
+                    # تحديد الإشارة
+                    if total_score >= 0.7:
+                        signal = 'Strong Buy'
+                        strength = 'Very Strong'
+                    elif total_score >= 0.4:
+                        signal = 'Buy'
+                        strength = 'Strong'
+                    elif total_score >= 0.1:
+                        signal = 'Weak Buy'
+                        strength = 'Moderate'
+                    elif total_score <= -0.7:
+                        signal = 'Strong Sell'
+                        strength = 'Very Strong'
+                    elif total_score <= -0.4:
+                        signal = 'Sell'
+                        strength = 'Strong'
+                    elif total_score <= -0.1:
+                        signal = 'Weak Sell'
+                        strength = 'Moderate'
+                    else:
+                        signal = 'Hold'
+                        strength = 'Neutral'
+                    
+                    # حساب مستوى الثقة
+                    confidence = min(1.0, abs(total_score) + 0.3)
+                    
+                    # نقاط وقف الخسارة والهدف
+                    atr = latest['ATR']
+                    
+                    if 'Buy' in signal:
+                        stop_loss = current_price - (2.5 * atr)
+                        take_profit = current_price + (4 * atr)
+                    elif 'Sell' in signal:
+                        stop_loss = current_price + (2.5 * atr)
+                        take_profit = current_price - (4 * atr)
+                    else:
+                        stop_loss = current_price - (1.5 * atr)
+                        take_profit = current_price + (2 * atr)
+                    
+                    return {
+                        'signal': signal,
+                        'strength': strength,
+                        'total_score': round(total_score, 3),
+                        'technical_score': round(technical_score_normalized, 3),
+                        'news_score': round(news_score_normalized, 3),
+                        'confidence': round(confidence, 3),
+                        'current_price': round(current_price, 2),
+                        'stop_loss': round(stop_loss, 2),
+                        'take_profit': round(take_profit, 2),
+                        'rsi': round(rsi, 1),
+                        'macd_signal': 'Bullish' if macd > macd_signal else 'Bearish',
+                        'bb_position': round(bb_position, 3),
+                        'volume_trend': 'High' if volume_ratio > 1.5 else 'Normal' if volume_ratio > 0.8 else 'Low',
+                        'market_condition': self._assess_market_condition(technical_data)
+                    }
+                    
+                except Exception as e:
+                    logger.error(f"❌ فشل توليد الإشارة: {e}")
+                    return {
+                        'signal': 'Hold',
+                        'strength': 'Neutral',
+                        'total_score': 0,
+                        'confidence': 0
+                    }
+        
+            def _assess_market_condition(self, technical_data) -> str:
+                """تقييم حالة السوق العامة"""
+                try:
+                    latest = technical_data.iloc[-1]
+                    
+                    # تحليل التقلبات
+                    atr = latest['ATR']
+                    price = latest['Close']
+                    volatility = atr / price
+                    
+                    # تحليل الاتجاه
+                    sma_20 = latest['SMA_20']
+                    sma_50 = latest['SMA_50']
+                    
+                    if volatility > 0.03:
+                        condition = 'high_volatility'
+                    elif volatility < 0.015:
+                        condition = 'low_volatility'
+                    elif price > sma_50 and sma_20 > sma_50:
+                        condition = 'bullish_trend'
+                    elif price < sma_50 and sma_20 < sma_50:
+                        condition = 'bearish_trend'
+                    else:
+                        condition = 'sideways'
+                    
+                    return condition
+                    
+                except:
+                    return 'normal'
+        
+            def save_analysis_results(self, signal_data, technical_data, news_data, execution_time) -> int:
+                """حفظ نتائج التحليل في قاعدة البيانات"""
+                try:
+                    conn = sqlite3.connect(self.db_path)
+                    cursor = conn.cursor()
+                    
+                    # حفظ التحليل الرئيسي
+                    cursor.execute('''
+                        INSERT INTO gold_analysis_history (
+                            timestamp, signal, signal_strength, total_score, gold_price,
+                            technical_score, news_sentiment_score, market_condition,
+                            stop_loss, take_profit, rsi, macd_signal, bb_position,
+                            volume_trend, news_articles_count, top_news, execution_time_ms
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (
+                        datetime.now().isoformat(),
+                        signal_data.get('signal', 'Hold'),
+                        signal_data.get('strength', 'Neutral'),
+                        signal_data.get('total_score', 0),
+                        signal_data.get('current_price', 0),
+                        signal_data.get('technical_score', 0),
+                        signal_data.get('news_score', 0),
+                        signal_data.get('market_condition', 'normal'),
+                        signal_data.get('stop_loss', 0),
+                        signal_data.get('take_profit', 0),
+                        signal_data.get('rsi', 50),
+                        signal_data.get('macd_signal', 'Neutral'),
+                        signal_data.get('bb_position', 0.5),
+                        signal_data.get('volume_trend', 'Normal'),
+                        news_data.get('articles_count', 0),
+                        json.dumps([article['title'] for article in news_data.get('top_articles', [])[:5]], ensure_ascii=False),
+                        execution_time
+                    ))
+                    
+                    analysis_id = cursor.lastrowid
+                    
+                    # حفظ تفاصيل الأخبار
+                    for article in news_data.get('top_articles', [])[:10]:
+                        cursor.execute('''
+                            INSERT INTO news_analysis_detail (
+                                analysis_id, headline, source, sentiment_score,
+                                ai_sentiment_score, relevance_score, published_at, url
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                        ''', (
+                            analysis_id,
+                            article.get('title', '')[:500],
+                            article.get('source', '')[:100],
+                            article.get('vader_sentiment', 0),
+                            article.get('ai_sentiment', 0),
+                            article.get('relevance_score', 0),
+                            article.get('published_at', ''),
+                            article.get('url', '')[:500]
+                        ))
+                    
+                    conn.commit()
+                    conn.close()
+                    
+                    logger.info(f"💾 تم حفظ النتائج في السجل التاريخي - ID: {analysis_id}")
+                    return analysis_id
+                    
+                except Exception as e:
+                    logger.error(f"❌ فشل حفظ النتائج: {e}")
+                    return -1
+        
+            def run_comprehensive_analysis(self):
+                """تشغيل التحليل الشامل"""
+                start_time = time.time()
+                logger.info("🚀 بدء التحليل الشامل للذهب...")
                 
-                # Weighted combination (70% technical, 30% news)
-                total_score = (tech_score * 0.7) + (news_score * 0.3)
-                
-                # Signal classification
-                if total_score >= 0.5:
-                    signal = "STRONG_BUY"
-                    action = "buy"
-                elif total_score >= 0.2:
-                    signal = "BUY"
-                    action = "buy"
-                elif total_score >= -0.2:
-                    signal = "HOLD"
-                    action = "hold"
-                elif total_score >= -0.5:
-                    signal = "SELL"
-                    action = "sell"
-                else:
-                    signal = "STRONG_SELL"
-                    action = "sell"
-                
-                # Confidence calculation
-                confidence = min(abs(total_score) * 100, 100)
-                
-                # Risk level
-                if confidence >= 80:
-                    risk_level = "LOW"
-                elif confidence >= 60:
-                    risk_level = "MEDIUM"
-                else:
-                    risk_level = "HIGH"
-                
-                return {
-                    "signal": signal,
-                    "action": action,
-                    "total_score": round(total_score, 4),
-                    "confidence_percent": round(confidence, 1),
-                    "risk_level": risk_level,
-                    "technical_contribution": round(tech_score * 0.7, 4),
-                    "news_contribution": round(news_score * 0.3, 4)
-                }
-                
-            except Exception as e:
-                print(f"❌ Signal generation error: {e}")
-                return {
-                    "signal": "HOLD",
-                    "action": "hold",
-                    "total_score": 0,
-                    "confidence_percent": 0,
-                    "risk_level": "HIGH"
-                }
+                try:
+                    # إعداد قاعدة البيانات
+                    self.setup_database()
+                    
+                    # تحميل نماذج الذكاء الاصطناعي
+                    self.initialize_ai_models()
+                    
+                    # جلب بيانات السوق
+                    if not self.fetch_enhanced_market_data():
+                        raise Exception("فشل في جلب بيانات السوق")
+                    
+                    # حساب المؤشرات الفنية
+                    technical_data = self.calculate_advanced_technical_indicators()
+                    if technical_data is None:
+                        raise Exception("فشل في حساب المؤشرات الفنية")
+                    
+                    # تحليل الأخبار
+                    news_data = self.analyze_specialized_news()
+                    
+                    # توليد الإشارة الشاملة
+                    signal_data = self.generate_comprehensive_signal(technical_data, news_data)
+                    
+                    # حساب وقت التنفيذ
+                    execution_time = int((time.time() - start_time) * 1000)
+                    
+                    # حفظ النتائج
+                    analysis_id = self.save_analysis_results(signal_data, technical_data, news_data, execution_time)
+                    
+                    # إنشاء التقرير النهائي
+                    final_report = {
+                        'timestamp': datetime.now().isoformat(),
+                        'analysis_id': analysis_id,
+                        'execution_time_ms': execution_time,
+                        'status': 'success',
+                        'signal': signal_data,
+                        'technical_analysis': {
+                            'data_points': len(technical_data),
+                            'current_price': signal_data.get('current_price', 0),
+                            'rsi': signal_data.get('rsi', 0),
+                            'macd_signal': signal_data.get('macd_signal', 'Neutral'),
+                            'bb_position': signal_data.get('bb_position', 0.5),
+                            'volume_trend': signal_data.get('volume_trend', 'Normal'),
+                            'market_condition': signal_data.get('market_condition', 'normal')
+                        },
+                        'news_analysis': {
+                            'status': news_data.get('status', 'unknown'),
+                            'articles_count': news_data.get('articles_count', 0),
+                            'sentiment_score': news_data.get('sentiment_score', 0),
+                            'top_headlines': [article['title'] for article in news_data.get('top_articles', [])[:5]]
+                        },
+                        'risk_management': {
+                            'stop_loss': signal_data.get('stop_loss', 0),
+                            'take_profit': signal_data.get('take_profit', 0),
+                            'risk_reward_ratio': round((signal_data.get('take_profit', 0) - signal_data.get('current_price', 0)) / 
+                                                      (signal_data.get('current_price', 0) - signal_data.get('stop_loss', 0)), 2) 
+                                                      if signal_data.get('stop_loss', 0) != signal_data.get('current_price', 0) else 0
+                        }
+                    }
+                    
+                    # حفظ التقرير النهائي
+                    with open('gold_analysis_enhanced.json', 'w', encoding='utf-8') as f:
+                        json.dump(final_report, f, ensure_ascii=False, indent=2, default=str)
+                    
+                    logger.info("✅ تم إنجاز التحليل الشامل بنجاح")
+                    
+                    # طباعة الملخص النهائي
+                    self._print_final_summary(signal_data, news_data)
+                    
+                    return final_report
+                    
+                except Exception as e:
+                    logger.error(f"❌ فشل التحليل الشامل: {e}")
+                    return {
+                        'status': 'error',
+                        'error': str(e),
+                        'timestamp': datetime.now().isoformat()
+                    }
+        
+            def _print_final_summary(self, signal_data, news_data):
+                """طباعة الملخص النهائي"""
+                logger.info("")
+                logger.info("=" * 60)
+                logger.info("📋 ملخص التحليل النهائي")
+                logger.info("=" * 60)
+                logger.info(f"🎯 الإشارة: {signal_data.get('signal', 'N/A')} ({signal_data.get('strength', 'N/A')})")
+                logger.info(f"📊 النتيجة الإجمالية: {signal_data.get('total_score', 0)}")
+                logger.info(f"💰 سعر الذهب: ${signal_data.get('current_price', 0)}")
+                logger.info(f"🛑 وقف الخسارة: ${signal_data.get('stop_loss', 0)}")
+                logger.info(f"📈 حالة السوق: {signal_data.get('market_condition', 'normal')}")
+                logger.info(f"📰 تحليل الأخبار: {news_data.get('status', 'unknown')} (النتيجة: {news_data.get('sentiment_score', 0)})")
         
         def main():
-            """Main execution for AI integration"""
-            print("🤖 AI-Ready Gold Analysis Starting...")
-            print("=" * 50)
-            
-            start_time = datetime.utcnow()
-            
-            # Step 1: Fetch data
-            gold_data = fetch_gold_data()
-            if gold_data is None:
-                result = {
-                    "status": "error",
-                    "error": "Failed to fetch market data",
-                    "timestamp": start_time.isoformat(),
-                    "execution_time_ms": 0
-                }
-            else:
-                # Step 2: Technical analysis
-                technical = calculate_technical_analysis(gold_data)
+            """الدالة الرئيسية"""
+            try:
+                analyzer = AdvancedGoldAnalyzer()
+                result = analyzer.run_comprehensive_analysis()
                 
-                if technical.get('status') != 'success':
-                    result = {
-                        "status": "error",
-                        "error": "Technical analysis failed",
-                        "timestamp": start_time.isoformat(),
-                        "execution_time_ms": 0
-                    }
+                if result.get('status') == 'success':
+                    print("\n🎉 تم حفظ التحليل الكامل في:")
+                    print(" - gold_analysis_enhanced.json")
+                    print(" - gold_analysis_history.db")
+                    print(" - gold_analysis.log")
+                    
+                    # طباعة أهم الأخبار
+                    news_headlines = result.get('news_analysis', {}).get('top_headlines', [])
+                    if news_headlines:
+                        print(f"\n📰 أهم {len(news_headlines)} أخبار متعلقة بالذهب:")
+                        for i, headline in enumerate(news_headlines, 1):
+                            print(f" {i}. {headline[:80]}...")
+                    
+                    return 0
                 else:
-                    # Step 3: News analysis
-                    news = analyze_news_sentiment()
+                    print(f"❌ فشل التحليل: {result.get('error', 'خطأ غير معروف')}")
+                    return 1
                     
-                    # Step 4: Generate signal
-                    signal = generate_ai_ready_signal(technical, news)
-                    
-                    # Step 5: Compile AI-ready result
-                    execution_time = int((datetime.utcnow() - start_time).total_seconds() * 1000)
-                    
-                    result = {
-                        "status": "success",
-                        "timestamp": start_time.isoformat(),
-                        "execution_time_ms": execution_time,
-                        
-                        # AI-Ready Core Data
-                        "signal": signal["signal"],
-                        "action": signal["action"], 
-                        "confidence": signal["confidence_percent"],
-                        "risk_level": signal["risk_level"],
-                        "total_score": signal["total_score"],
-                        
-                        # Market Data
-                        "gold_price": technical["current_price"],
-                        "price_change_24h": technical["price_change_24h"],
-                        "trend": technical["trend_medium_term"],
-                        
-                        # Key Indicators
-                        "rsi": technical["rsi_14"],
-                        "macd_trend": technical["macd_trend"],
-                        
-                        # News Summary
-                        "news_sentiment": news.get("sentiment_score", 0),
-                        "news_articles": news.get("articles_count", 0),
-                        "news_summary": news.get("summary", "Not available"),
-                        
-                        # Component Breakdown
-                        "technical_score": technical["technical_score"],
-                        "technical_contribution": signal["technical_contribution"],
-                        "news_contribution": signal["news_contribution"],
-                        
-                        # AI Integration Helpers
-                        "bullish": signal["action"] == "buy",
-                        "bearish": signal["action"] == "sell", 
-                        "neutral": signal["action"] == "hold",
-                        "high_confidence": signal["confidence_percent"] >= 70,
-                        "low_risk": signal["risk_level"] == "LOW",
-                        
-                        # Data Quality
-                        "data_points": technical.get("data_points", 0),
-                        "analysis_version": "ai_ready_v1.0"
-                    }
-            
-            # Save results
-            with open('ai_gold_analysis.json', 'w') as f:
-                json.dump(result, f, indent=2)
-            
-            # Display summary
-            print(f"\n🎯 AI-READY RESULTS")
-            print(f"Status: {result['status']}")
-            
-            if result['status'] == 'success':
-                print(f"Signal: {result['signal']}")
-                print(f"Action: {result['action'].upper()}")
-                print(f"Confidence: {result['confidence']:.1f}%")
-                print(f"Gold Price: ${result['gold_price']:,.2f}")
-                print(f"24h Change: {result['price_change_24h']:+.2f}%")
-                print(f"Trend: {result['trend'].title()}")
-                print(f"News Articles: {result['news_articles']}")
-                print(f"Execution: {result['execution_time_ms']}ms")
-                print(f"\n✅ AI-ready analysis complete!")
-            else:
-                print(f"Error: {result.get('error', 'Unknown')}")
-            
-            return 0 if result['status'] == 'success' else 1
+            except Exception as e:
+                print(f"💥 خطأ حرج: {e}")
+                return 1
         
         if __name__ == "__main__":
             exit(main())
         EOF
 
-    - name: 🤖 Execute AI-Ready Analysis
+    - name: 🧠 Execute Advanced Analysis
       id: analysis
       run: |
-        echo "🤖 Starting AI-Ready Gold Analysis for n8n..."
-        python ai_gold_analyzer.py
+        echo "🚀 Starting Advanced Gold Analysis..."
+        timeout 900 python main_analyzer.py
         echo "analysis_status=success" >> $GITHUB_OUTPUT
 
-    - name: 📊 Display AI Results
+    - name: 📊 Display Results
       if: steps.analysis.outputs.analysis_status == 'success'
       run: |
-        if [ -f "ai_gold_analysis.json" ]; then
-          echo "🤖 AI-Ready Analysis Results:"
-          echo "================================"
+        if [ -f "gold_analysis_enhanced.json" ]; then
+          echo "🎉 Advanced Analysis Results:"
+          echo "=================================="
           
           python -c "
         import json
         
-        with open('ai_gold_analysis.json', 'r') as f:
+        with open('gold_analysis_enhanced.json', 'r') as f:
             data = json.load(f)
         
-        if data['status'] == 'success':
-            print(f'🎯 Signal: {data[\"signal\"]}')
-            print(f'🤖 Action: {data[\"action\"].upper()}')
-            print(f'📊 Confidence: {data[\"confidence\"]}%')
-            print(f'💰 Gold: \${data[\"gold_price\"]:,.2f} ({data[\"price_change_24h\"]:+.2f}%)')
-            print(f'📈 Trend: {data[\"trend\"].title()}')
-            print(f'📰 News: {data[\"news_articles\"]} articles')
-            print(f'⚡ Speed: {data[\"execution_time_ms\"]}ms')
-            print(f'')
-            print(f'🤖 AI Flags:')
-            print(f'  Bullish: {data[\"bullish\"]}')
-            print(f'  Bearish: {data[\"bearish\"]}') 
-            print(f'  High Confidence: {data[\"high_confidence\"]}')
-            print(f'  Low Risk: {data[\"low_risk\"]}')
-        else:
-            print(f'❌ Error: {data.get(\"error\", \"Unknown\")}')
-          "
-          
-          echo ""
-          echo "📁 AI-Ready JSON generated: ai_gold_analysis.json"
+        signal = data['signal']
+        technical = data['technical_analysis']
+        news = data['news_analysis']
+        
+        print(f'🎯 Signal: {signal[\"signal\"]} ({signal[\"strength\"]})')
+        print(f'📊 Total Score: {signal[\"total_score\"]}')
+        print(f'💰 Gold Price: \${signal[\"current_price\"]:,.2f}')
+        print(f'🛑 Stop Loss: \${signal[\"stop_loss\"]:,.2f}')
+        print(f'🎯 Take Profit: \${signal[\"take_profit\"]:,.2f}')
+        print(f'📈 RSI: {signal[\"rsi\"]}')
+        print(f'📊 MACD: {signal[\"macd_signal\"]}')
+        print(f'📰 News Articles: {news[\"articles_count\"]}')
+        print(f'📊 News Sentiment: {news[\"sentiment_score\"]:+.4f}')
+        print(f'⚡ Execution: {data[\"execution_time_ms\"]}ms')
+        print(f'🆔 Analysis ID: {data[\"analysis_id\"]}')
+        "
         else
-          echo "❌ No results file found"
+          echo "❌ Results file not found"
         fi
 
-    - name: 📝 Generate Simple README
+    - name: 📝 Create Enhanced README
       if: steps.analysis.outputs.analysis_status == 'success'
       run: |
         python -c "
         import json
         from datetime import datetime
         
-        with open('ai_gold_analysis.json', 'r') as f:
+        with open('gold_analysis_enhanced.json', 'r') as f:
             data = json.load(f)
         
-        readme = f'''# 🤖 AI-Ready Gold Analysis
+        signal = data['signal']
+        technical = data['technical_analysis']
+        news = data['news_analysis']
+        risk = data['risk_management']
         
-        **For n8n Integration & AI Processing**
+        readme = f'''# 🏆 Advanced Gold Analysis System
         
-        ## 🎯 Current Signal
+        **Generated:** {datetime.fromisoformat(data['timestamp']).strftime('%Y-%m-%d %H:%M:%S UTC')}
         
-        - **Signal:** {data.get('signal', 'N/A')}
-        - **Action:** {data.get('action', 'hold').upper()}
-        - **Confidence:** {data.get('confidence', 0)}%
-        - **Risk Level:** {data.get('risk_level', 'MEDIUM')}
+        ## 🎯 Trading Signal
+        
+        **{signal['signal']}** - {signal['strength']}
+        
+        - **Total Score:** {signal['total_score']}
+        - **Confidence:** {signal['confidence']:.1%}
+        - **Technical Score:** {signal['technical_score']:+.3f}
+        - **News Score:** {signal['news_score']:+.3f}
         
         ## 💰 Market Data
         
-        - **Gold Price:** \${data.get('gold_price', 0):,.2f}
-        - **24h Change:** {data.get('price_change_24h', 0):+.2f}%
-        - **Trend:** {data.get('trend', 'neutral').title()}
-        - **RSI:** {data.get('rsi', 0):.1f}
+        | Metric | Value |
+        |--------|-------|
+        | Gold Price | \${signal['current_price']:,.2f} |
+        | RSI (14) | {signal['rsi']:.1f} |
+        | MACD Signal | {signal['macd_signal']} |
+        | Bollinger Position | {signal['bb_position']:.1%} |
+        | Volume Trend | {signal['volume_trend']} |
+        | Market Condition | {signal['market_condition'].replace('_', ' ').title()} |
+        
+        ## 🔧 Risk Management
+        
+        - **Stop Loss:** \${signal['stop_loss']:,.2f}
+        - **Take Profit:** \${signal['take_profit']:,.2f}
+        - **Risk/Reward Ratio:** {risk['risk_reward_ratio']:.2f}
         
         ## 📰 News Analysis
         
-        - **Articles:** {data.get('news_articles', 0)}
-        - **Sentiment:** {data.get('news_sentiment', 0):+.4f}
-        - **Summary:** {data.get('news_summary', 'N/A')}
+        - **Status:** {news['status'].title()}
+        - **Articles Analyzed:** {news['articles_count']}
+        - **Sentiment Score:** {news['sentiment_score']:+.4f}
+        '''
         
-        ## 🤖 AI Integration Flags
+        headlines = news.get('top_headlines', [])
+        if headlines:
+            readme += '''
+        ## 📋 Top Headlines
+        '''
+            for i, headline in enumerate(headlines, 1):
+                readme += f'''
+        {i}. {headline}
+        '''
         
-        ```json
-        {{
-          \"bullish\": {str(data.get('bullish', False)).lower()},
-          \"bearish\": {str(data.get('bearish', False)).lower()},
-          \"neutral\": {str(data.get('neutral', True)).lower()},
-          \"high_confidence\": {str(data.get('high_confidence', False)).lower()},
-          \"low_risk\": {str(data.get('low_risk', False)).lower()}
-        }}
-        ```
-        
-        ## 📊 Component Scores
-        
-        - **Technical:** {data.get('technical_score', 0):+.3f}
-        - **Technical Contribution:** {data.get('technical_contribution', 0):+.4f} (70%)
-        - **News Contribution:** {data.get('news_contribution', 0):+.4f} (30%)
-        - **Total Score:** {data.get('total_score', 0):+.4f}
+        readme += f'''
         
         ---
         
-        **Last Updated:** {datetime.fromisoformat(data.get('timestamp', datetime.now().isoformat()).replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S UTC')}  
-        **Execution Time:** {data.get('execution_time_ms', 0)}ms  
-        **Status:** {data.get('status', 'unknown').upper()}  
-        **Version:** {data.get('analysis_version', 'v1.0')}
+        **Analysis ID:** {data['analysis_id']} | **Execution:** {data['execution_time_ms']}ms | **Data Points:** {technical['data_points']}
         
-        > 🤖 **Optimized for AI & n8n Integration**
-        > Clean JSON structure, boolean flags, and standardized output format.
+        *Advanced AI-powered analysis with specialized financial sentiment models*
         '''
         
-        with open('README.md', 'w') as f:
+        with open('README.md', 'w', encoding='utf-8') as f:
             f.write(readme)
         
-        print('✅ Simple README generated')
+        print('✅ Enhanced README created')
         "
 
-    - name: 💾 Commit AI-Ready Results
+    - name: 💾 Commit Advanced Results
       if: steps.analysis.outputs.analysis_status == 'success'
       run: |
         git config --local user.email "action@github.com"
-        git config --local user.name "🤖 AI Gold Analysis"
+        git config --local user.name "🏆 Advanced Gold Analysis"
         
-        git add ai_gold_analysis.json README.md
+        git add gold_analysis_enhanced.json README.md
+        git add gold_analysis_history.db gold_analysis.log
         
         if git diff --staged --quiet; then
           echo "⚠️ No changes to commit"
         else
-          SIGNAL=$(python -c "import json; print(json.load(open('ai_gold_analysis.json'))['signal'])" 2>/dev/null || echo 'UPDATE')
-          PRICE=$(python -c "import json; print(f\"\${json.load(open('ai_gold_analysis.json'))['gold_price']:,.0f}\")" 2>/dev/null || echo '\$0')
+          SIGNAL=$(python -c "import json; data=json.load(open('gold_analysis_enhanced.json')); print(f\"{data['signal']['signal']} ({data['signal']['total_score']})\")" 2>/dev/null || echo 'Advanced Analysis')
           
-          git commit -m "🤖 AI Gold: $SIGNAL @ $PRICE - $(date -u '+%m/%d %H:%M')"
+          git commit -m "🏆 Advanced Gold Analysis: $SIGNAL - $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
-          echo "✅ AI-ready results pushed"
+          echo "✅ Advanced results pushed"
         fi
 
-    - name: 📤 Upload AI-Ready Artifact
+    - name: 📤 Upload Complete Analysis
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: ai-gold-analysis
-        path: ai_gold_analysis.json
-        retention-days: 30
+        name: advanced-gold-analysis
+        path: |
+          gold_analysis_enhanced.json
+          gold_analysis_history.db
+          gold_analysis.log
+          README.md
+        retention-days: 90
 
-    - name: 🎉 AI Success Summary
+    - name: 🎉 Success Summary
       if: success()
       run: |
-        echo "🤖 AI-READY GOLD ANALYSIS COMPLETE!"
-        echo "===================================="
+        echo "🏆 ADVANCED GOLD ANALYSIS COMPLETE!"
+        echo "====================================="
         
-        cat ai_gold_analysis.json | python -m json.tool | head -30
-        
-        echo ""
-        echo "🔗 n8n Integration Ready!"
-        echo "📁 File: ai_gold_analysis.json"
-        echo "🚀 Clean JSON structure with AI flags"
-        echo "⚡ Fast execution for automation"
+        python -c "
+        try:
+            import json
+            with open('gold_analysis_enhanced.json', 'r') as f:
+                data = json.load(f)
+            
+            print(f'🎯 Final Signal: {data[\"signal\"][\"signal\"]} ({data[\"signal\"][\"strength\"]})')
+            print(f'📊 Total Score: {data[\"signal\"][\"total_score\"]}')
+            print(f'💰 Gold Price: \${data[\"signal\"][\"current_price\"]:,.2f}')
+            print(f'📰 News Articles: {data[\"news_analysis\"][\"articles_count\"]}')
+            print(f'⚡ Execution: {data[\"execution_time_ms\"]}ms')
+            print(f'🆔 Analysis ID: {data[\"analysis_id\"]}')
+            print(f'\\n🎉 Advanced AI analysis with specialized financial models!')
+        except:
+            print('✅ Analysis completed successfully')
+        "
