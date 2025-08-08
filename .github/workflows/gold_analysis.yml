@@ -1,15 +1,26 @@
-name: Test Simple
+name: Gold Test - No AI
 on:
   workflow_dispatch:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11'
     - run: |
-        pip install yfinance pandas numpy
-        python -c "import yfinance; print('✅ Basic imports work')"
-        echo "✅ Test completed"
+        pip install yfinance pandas numpy pandas-ta requests
+        echo "Testing basic gold analysis..."
+        python -c "
+        import yfinance as yf
+        import pandas as pd
+        import numpy as np
+        
+        print('📊 Testing yfinance...')
+        data = yf.download('GLD', period='5d', progress=False)
+        print(f'✅ Got {len(data)} days of data')
+        print(f'Latest price: \${data['Close'].iloc[-1]:.2f}')
+        "
+        echo "✅ Basic test passed!"
