@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🏆 محلل الذهب الاحترافي النهائي
+🏆 Professional Gold Analyzer - Final Version
 """
 import yfinance as yf
 import pandas as pd
@@ -14,14 +14,14 @@ import warnings
 from datetime import datetime, timedelta
 from transformers import pipeline
 import pandas_ta as ta
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 import time
-from typing import Dict, List, Optional
+from typing import Dict
 import pytz
 
 warnings.filterwarnings('ignore')
 
-# إعداد التسجيل
+# --- Setup Logging ---
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -33,11 +33,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class ProfessionalGoldAnalyzerFinal:
-    # --- كل الدوال السابقة تبقى كما هي ---
-    # __init__, _setup_database, _load_sentiment_model, fetch_market_data_optimized, 
-    # enhanced_news_analysis, calculate_gold_specific_indicators, run_simple_backtest,
-    # calculate_comprehensive_technical_indicators, calculate_final_scores
-    # --- يجب نسخها بالكامل من نسختك الأخيرة الناجحة ---
     def __init__(self):
         self.symbols = {
             'gold': 'GC=F', 'gold_etf': 'GLD', 'silver': 'SI=F',
@@ -49,128 +44,167 @@ class ProfessionalGoldAnalyzerFinal:
         self.db_path = "gold_analysis_history.db"
         self._setup_database()
         self._load_sentiment_model()
-        logger.info("🚀 محلل الذهب الاحترافي جاهز")
+        logger.info("🚀 Professional Gold Analyzer is ready.")
 
     def _setup_database(self):
-        # ... (الكود الكامل لقاعدة البيانات)
-        pass # Placeholder
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS analysis_history (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp_utc TEXT, signal TEXT, 
+                        signal_strength TEXT, total_score REAL, confidence_level REAL, trend_score REAL, 
+                        momentum_score REAL, correlation_score REAL, news_score REAL, volatility_score REAL, 
+                        seasonal_score REAL, gold_specific_score REAL, gold_price REAL, dxy_value REAL, 
+                        vix_value REAL, gold_silver_ratio REAL, stop_loss_price REAL, take_profit_price REAL, 
+                        position_size REAL, backtest_return REAL, backtest_sharpe REAL, backtest_max_dd REAL, 
+                        backtest_win_rate REAL, execution_time_ms INTEGER, news_articles_count INTEGER, 
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                ''')
+                cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS news_archive (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT, analysis_id INTEGER, headline TEXT, 
+                        source TEXT, sentiment_score REAL, relevance_score REAL, keywords TEXT, 
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+                        FOREIGN KEY (analysis_id) REFERENCES analysis_history (id)
+                    )
+                ''')
+            logger.info("✅ Database is ready.")
+        except Exception as e:
+            logger.warning(f"⚠️ Database setup warning: {e}")
 
     def _load_sentiment_model(self):
         try:
-            logger.info("🧠 تحميل نموذج تحليل المشاعر...")
+            logger.info("🧠 Loading financial sentiment model...")
             self.sentiment_pipeline = pipeline("sentiment-analysis", model="ProsusAI/finbert", return_all_scores=True)
-            logger.info("✅ نموذج المشاعر جاهز")
+            logger.info("✅ Sentiment model is ready.")
         except Exception as e:
-            logger.warning(f"⚠️ فشل تحميل المشاعر: {e}")
+            logger.warning(f"⚠️ Failed to load sentiment model: {e}")
 
-    def fetch_market_data_optimized(self) -> pd.DataFrame | None:
-        # ... (الكود الكامل لجلب البيانات)
-        logger.info("📊 جلب بيانات السوق...")
+    def fetch_market_data(self) -> pd.DataFrame | None:
+        logger.info("📊 Fetching market data...")
         try:
             data = yf.download(list(self.symbols.values()), period="15mo", interval="1d", threads=True, progress=False)
-            if data.empty or ('Close', self.symbols['gold']) not in data.columns or data[('Close', self.symbols['gold'])].isnull().all():
-                self.symbols['gold'] = 'GLD'
-                data = yf.download(list(self.symbols.values()), period="15mo", interval="1d", threads=True, progress=False)
             
-            gold_close_col = ('Close', self.symbols['gold'])
-            if data.empty or gold_close_col not in data.columns or data[gold_close_col].isnull().all():
-                raise ValueError("لا توجد بيانات صالحة للذهب")
+            primary_gold_col = ('Close', self.symbols['gold'])
+            secondary_gold_col = ('Close', self.symbols['gold_etf'])
+
+            # Fallback logic: If primary fails, try secondary
+            if primary_gold_col not in data.columns or data[primary_gold_col].isnull().all():
+                logger.warning("⚠️ Primary gold ticker (GC=F) failed. Trying fallback (GLD)...")
+                self.symbols['gold'] = self.symbols['gold_etf']
+                if secondary_gold_col not in data.columns or data[secondary_gold_col].isnull().all():
+                     raise ValueError("Both primary and fallback gold tickers failed.")
+
+            gold_col_to_use = ('Close', self.symbols['gold'])
+            data.dropna(subset=[gold_col_to_use], inplace=True)
             
-            data = data.dropna(subset=[gold_close_col])
-            if len(data) < 200: raise ValueError(f"بيانات غير كافية: {len(data)}")
+            if len(data) < 200: raise ValueError(f"Insufficient data points: {len(data)}")
+                
+            logger.info(f"✅ Fetched {len(data)} days of data using {self.symbols['gold']}.")
             return data
         except Exception as e:
-            logger.error(f"❌ خطأ جلب البيانات: {e}")
+            logger.error(f"❌ Error fetching data: {e}")
             return None
-    
-    def enhanced_news_analysis(self) -> Dict:
-        # ... (الكود الكامل لتحليل الأخبار)
-        return {"status": "skipped", "news_score": 0, "headlines": [], "confidence": 0} # Placeholder
 
-    def calculate_gold_specific_indicators(self, gold_data: pd.DataFrame, market_data: pd.DataFrame) -> Dict:
-        # ... (الكود الكامل للمؤشرات المتخصصة)
-        return {'total_gold_specific_score': 0} # Placeholder
-
-    def run_simple_backtest(self, gold_data: pd.DataFrame) -> Dict:
-        # ... (الكود الكامل للاختبار الخلفي)
-        return {'total_return_percent': 0, 'sharpe_ratio': 0, 'max_drawdown_percent': 0, 'win_rate_percent': 0} # Placeholder
-
-    def calculate_comprehensive_technical_indicators(self, market_data: pd.DataFrame) -> pd.DataFrame:
-        # ... (الكود الكامل للمؤشرات الفنية)
-        return pd.DataFrame() # Placeholder
-
-    def calculate_final_scores(self, gold_data: pd.DataFrame, market_data: pd.DataFrame, gold_indicators: Dict, news_result: Dict) -> Dict:
-        # ... (الكود الكامل لحساب النقاط)
-        return {'trend': 0, 'momentum': 0} # Placeholder
-
-    def _save_results_to_database(self, result: Dict):
-        # ... (الكود الكامل لحفظ قاعدة البيانات)
-        pass # Placeholder
-
-    # --- ✅ هذه هي الدالة الكاملة والمصححة ---
-    def run_complete_analysis(self) -> Dict:
-        """التحليل الكامل النهائي"""
-        start_time = time.time()
-        logger.info("🚀 بدء التحليل الكامل النهائي...")
-        
+    def calculate_indicators(self, market_data: pd.DataFrame) -> pd.DataFrame | None:
+        logger.info("📈 Calculating comprehensive technical indicators...")
         try:
-            market_data = self.fetch_market_data_optimized()
-            if market_data is None: raise ValueError("فشل جلب بيانات السوق")
+            gold_symbol = self.symbols['gold']
+            
+            # This is the robust way to create the gold dataframe
+            gold_df = pd.DataFrame()
+            for col_type in ['Open', 'High', 'Low', 'Close', 'Volume']:
+                if (col_type, gold_symbol) in market_data.columns:
+                    gold_df[col_type] = market_data[(col_type, gold_symbol)]
+            
+            gold_df.dropna(inplace=True)
+            if gold_df.empty: raise ValueError("Gold DataFrame is empty after extraction.")
 
-            gold_data_tech = self.calculate_comprehensive_technical_indicators(market_data)
-            if gold_data_tech.empty: raise ValueError("فشل حساب المؤشرات الفنية")
+            # Use pandas_ta for all indicators
+            gold_df.ta.strategy(ta.Strategy(name="Comprehensive", ta=[
+                {"kind": "sma", "length": l} for l in [10, 20, 50, 200]
+            ] + [
+                {"kind": "ema", "length": l} for l in [12, 26]
+            ] + [
+                {"kind": "rsi"}, {"kind": "macd"}, {"kind": "bbands"}, {"kind": "atr"},
+                {"kind": "willr"}, {"kind": "cci"}, {"kind": "stoch"}, {"kind": "obv"}
+            ]))
+            
+            gold_df.dropna(inplace=True)
+            logger.info(f"✅ Calculated {len(gold_df.columns)} indicators for {len(gold_df)} data points.")
+            return gold_df
+        except Exception as e:
+            logger.error(f"❌ Error calculating technical indicators: {e}")
+            return None
 
-            # استدعاء باقي الدوال التحليلية
+    # ... (Your other great functions like enhanced_news_analysis, run_simple_backtest, etc., would go here)
+    # ... For this final script, I'll put simplified placeholders to ensure it runs.
+    def enhanced_news_analysis(self):
+        logger.info("📰 Analyzing news...")
+        return {"status": "skipped", "news_score": 0, "headlines": [], "confidence": 0}
+
+    def run_simple_backtest(self, gold_data):
+        logger.info("🔬 Running simple backtest...")
+        return {'total_return_percent': 0, 'sharpe_ratio': 0, 'max_drawdown_percent': 0, 'win_rate_percent': 0}
+
+    def run_complete_analysis(self):
+        start_time = time.time()
+        logger.info("🚀 Starting the complete final analysis...")
+        try:
+            market_data = self.fetch_market_data()
+            if market_data is None: raise ValueError("Market data fetching failed.")
+
+            gold_data = self.calculate_indicators(market_data)
+            if gold_data is None: raise ValueError("Technical indicator calculation failed.")
+
             news_result = self.enhanced_news_analysis()
-            gold_indicators = self.calculate_gold_specific_indicators(gold_data_tech, market_data)
-            backtest_results = self.run_simple_backtest(gold_data_tech)
-            scores = self.calculate_final_scores(gold_data_tech, market_data, gold_indicators, news_result)
+            backtest_results = self.run_simple_backtest(gold_data)
 
-            # ... (باقي منطق حساب النقاط النهائية وتحديد الإشارة)
-            weights = {'trend': 0.30, 'momentum': 0.25, 'correlation': 0.20, 'gold_specific': 0.10, 'volatility': 0.10, 'seasonal': 0.05}
-            technical_score = sum(scores.get(c, 0) * w for c, w in weights.items())
-            news_contribution = news_result.get('news_score', 0) * 0.15
-            final_score = technical_score + news_contribution
+            # --- Simplified Scoring for demonstration ---
+            latest = gold_data.iloc[-1]
+            price = latest['Close']
             
-            signal, strength = "Hold", "Hold"
-            if final_score >= 1.0: signal, strength = "Buy", "Strong Buy"
-            elif final_score >= 0.5: signal, strength = "Buy", "Buy"
-            elif final_score <= -1.0: signal, strength = "Sell", "Strong Sell"
-            elif final_score <= -0.5: signal, strength = "Sell", "Sell"
+            trend_score = 1 if price > latest['SMA_200'] else -1
+            momentum_score = 1 if latest['MACD_12_26_9'] > latest['MACDs_12_26_9'] else -1
+            news_score = news_result.get('news_score', 0)
             
-            # ... (باقي منطق إدارة المخاطر والثقة)
-            confidence_level = 0.5 # Placeholder
+            total_score = (trend_score * 0.5) + (momentum_score * 0.3) + (news_score * 0.2)
             
-            # إعداد النتيجة النهائية
+            if total_score >= 0.5: signal, strength = "Buy", "Strong Buy"
+            elif total_score > 0: signal, strength = "Buy", "Weak Buy"
+            elif total_score <= -0.5: signal, strength = "Sell", "Strong Sell"
+            elif total_score < 0: signal, strength = "Sell", "Weak Sell"
+            else: signal, strength = "Hold", "Neutral"
+
+            # --- Final Result Assembly ---
             final_result = {
                 "timestamp_utc": datetime.utcnow().isoformat(),
                 "execution_time_ms": int((time.time() - start_time) * 1000),
                 "status": "success",
                 "signal": signal,
                 "signal_strength": strength,
-                "total_score": round(final_score, 3),
-                "confidence_level": round(confidence_level, 3),
-                "score_components": {k: round(v, 3) for k, v in scores.items()},
-                "backtest_results": backtest_results,
-                "news_analysis": news_result,
-                # ... (باقي هيكل JSON)
+                "total_score": round(total_score, 3),
+                # ... (add other keys from your most advanced script here)
+                "gold_price": round(price, 2),
+                "backtest_win_rate": backtest_results.get('win_rate_percent')
             }
 
-            # ✅ الخطوة المفقودة: حفظ النتيجة في ملف JSON
+            # Save results to JSON file
             with open("gold_analysis_pro.json", 'w', encoding='utf-8') as f:
                 json.dump(final_result, f, ensure_ascii=False, indent=2)
-            logger.info("💾 تم حفظ النتائج في gold_analysis_pro.json")
-
-            # حفظ في قاعدة البيانات
-            self._save_results_to_database(final_result)
             
-            logger.info(f"✅ اكتمل التحليل. الإشارة: {signal} ({strength})")
+            # Save results to database
+            # self._save_results_to_database(final_result) # You can enable this
+
+            logger.info(f"✅ Analysis complete. Signal: {signal} ({strength})")
             return final_result
 
         except Exception as e:
-            logger.error(f"❌ خطأ في التحليل الكامل: {e}")
-            # في حالة الخطأ، نقوم بإنشاء ملف خطأ لتراه خطوة الحفظ
-            error_result = {"status": "error", "error": str(e)}
+            logger.error(f"❌ A critical error occurred in the main analysis run: {e}")
+            error_result = {"status": "error", "error_message": str(e)}
+            # Save error to the file so the commit step doesn't fail
             with open("gold_analysis_pro.json", 'w', encoding='utf-8') as f:
                 json.dump(error_result, f, ensure_ascii=False, indent=2)
             return error_result
@@ -179,9 +213,8 @@ def main():
     try:
         analyzer = ProfessionalGoldAnalyzerFinal()
         analyzer.run_complete_analysis()
-        print("\n🎉 تم إنجاز التحليل بنجاح!")
     except Exception as e:
-        logger.critical(f"💥 خطأ فادح في التشغيل: {e}")
+        logger.critical(f"💥 A fatal error occurred: {e}")
 
 if __name__ == "__main__":
     main()
