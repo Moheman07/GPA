@@ -1,0 +1,72 @@
+{
+  "timestamp": "2025-08-08T20:55:36.861379",
+  "market_status": {
+    "ny_market_status": "Closed"
+  },
+  "gold_analysis": {
+    "signal": "Buy",
+    "confidence": "High",
+    "total_score": 2.1,
+    "component_scores": {
+      "trend": 3,
+      "momentum": 3,
+      "volume": 1,
+      "fibonacci": 1,
+      "correlation": 1
+    },
+    "current_price": 3457.0,
+    "risk_management": {
+      "stop_loss_moderate": 3361.61,
+      "take_profit_target_1": 3600.08
+    }
+  },
+  "market_correlations": {
+    "correlations": {
+      "dxy": -0.644,
+      "vix": 0.241,
+      "treasury": 0.409,
+      "oil": -0.653,
+      "spy": 0.335,
+      "usdeur": 0.678
+    },
+    "strength_analysis": {
+      "dxy": "قوي",
+      "vix": "ضعيف",
+      "treasury": "متوسط",
+      "oil": "قوي",
+      "spy": "متوسط",
+      "usdeur": "قوي"
+    }
+  },
+  "news_analysis": {
+    "status": "success",
+    "high_impact_news": [
+      {
+        "title": "14 Years After Durbin, Court Kills Debit Swipe Fee Caps",
+        "source": "pymnts.com"
+      },
+      {
+        "title": "Trump Names America First Economist Stephen Miran to Fill Seat on Federal Reserve Board",
+        "source": "Breitbart News"
+      },
+      {
+        "title": "Consumers fear inflation as tariffs hit home: Federal Reserve report",
+        "source": "Biztoc.com"
+      }
+    ],
+    "medium_impact_news": [
+      {
+        "title": "EPA terminates $7 billion Biden-era grant program, cutting solar access to thousands of US households",
+        "source": "New York Post"
+      },
+      {
+        "title": "Apple CEO Tim Cook Gives President Trump A US-Made Glass Ornament With 24k Gold Base",
+        "source": "redmondpie.com"
+      },
+      {
+        "title": "Chase Home Lending is offering a 'mortgage rate sale' until August 18",
+        "source": "Yahoo Entertainment"
+      }
+    ]
+  }
+}
