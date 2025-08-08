@@ -22,15 +22,19 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
+          # تأكد من أن ملف المكتبات موجود في المسار الصحيح
+          cache-dependency-path: requirements.txt
 
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
       - name: Run Professional Analyzer
-        run: python analyzer.py
+        # --- ✅ تم تصحيح اسم الملف هنا ---
+        run: python main_analyzer.py
 
       - name: Commit and Push Results
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: '🏆 Update Professional Gold Analysis'
+          # ✅ هذا يجب أن يطابق اسم الملف الذي ينتجه السكربت
           file_pattern: 'gold_analysis.json'
