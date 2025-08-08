@@ -1,42 +1,53 @@
-name: Professional Gold Analysis
+name: Professional Gold Analysis Runner
 
 on:
+  # يسمح بالتشغيل اليدوي من تبويب Actions
+  workflow_dispatch:
+  
   schedule:
-    # يعمل مرة واحدة يوميًا (من الإثنين للجمعة) الساعة 21:00 UTC (بعد إغلاق سوق نيويورك)
+    # يعمل مرة واحدة يوميًا (من الإثنين للجمعة) الساعة 21:00 بتوقيت UTC
+    # (أي بعد ساعة من إغلاق سوق نيويورك)
     - cron: '0 21 * * 1-5'
-  workflow_dispatch: # يسمح بالتشغيل اليدوي
-
-permissions:
-  contents: write
 
 jobs:
-  analyze:
+  run-and-commit-analysis:
     runs-on: ubuntu-latest
     
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+    # إعطاء صلاحية للكتابة في المستودع لحفظ النتائج
+    permissions:
+      contents: write
       
-    - name: Set up Python with Caching
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-        # ✅ تفعيل التخزين المؤقت لتسريع تثبيت المكتبات
-        cache: 'pip'
-        
-    - name: Install Dependencies
-      run: pip install -r requirements.txt
-        
-    - name: Run Professional Analysis
-      env:
-        NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-      # تأكد من أن اسم السكربت هنا يطابق اسم ملفك (مثلاً main_analyzer.py)
-      run: python main_analyzer.py
-        
-    - name: Commit and Push All Results
-      # هذا الأكشن أفضل وأكثر أمانًا
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: '🏆 Update Professional Gold Analysis Report'
-        # ✅ يقوم بحفظ كل الملفات الناتجة تلقائيًا
-        file_pattern: 'gold_analysis_pro.json gold_analysis_history.db gold_analysis_pro.log'
+    # تمرير مفتاح الأخبار السري إلى السكربت
+    env:
+      NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+
+    steps:
+      # الخطوة 1: سحب الكود من المستودع
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # الخطوة 2: إعداد بيئة بايثون مع التخزين المؤقت للسرعة
+      - name: Set up Python with dependency caching
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip' # تفعيل التخزين المؤقت
+
+      # الخطوة 3: تثبيت كل المكتبات المطلوبة
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # الخطوة 4: تشغيل سكربت التحليل الرئيسي
+      - name: Run Professional Gold Analyzer
+        # تأكد من أن اسم هذا الملف يطابق اسم السكربت في مستودعك
+        run: python main_analyzer.py
+
+      # الخطوة 5: حفظ كل الملفات الناتجة في المستودع
+      - name: Commit and Push Results
+        # هذه الخطوة تعمل فقط إذا نجحت الخطوة السابقة
+        if: success()
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: '🏆 Update Professional Gold Analysis Report'
+          # ✅ يقوم بحفظ كل الملفات التي ينتجها السكربت بالأسماء الصحيحة
+          file_pattern: 'gold_analysis_enhanced.json gold_analysis_history.db gold_analysis.log'
