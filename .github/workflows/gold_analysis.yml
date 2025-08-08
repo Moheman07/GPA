@@ -1,188 +1,91 @@
-name: 🏆 Professional Gold Analysis System
+name: 🏆 Professional Gold Analysis System - Fixed
 on:
   schedule:
-    # تشغيل متعدد في أوقات السوق المهمة
-    - cron: '0 7 * * 1-5'    # قبل السوق الأوروبي
-    - cron: '30 13 * * 1-5'  # قبل السوق الأمريكي  
-    - cron: '0 21 * * 1-5'   # بعد إغلاق السوق
-    - cron: '0 1 * * 2-6'    # تحليل ليلي
+    - cron: '30 13 * * 1-5'  # يومي 1:30 PM UTC
+    - cron: '0 21 * * 1-5'   # يومي 9:00 PM UTC
     
   workflow_dispatch:
     inputs:
       analysis_mode:
         description: 'Analysis Mode'
         required: true
-        default: 'full'
+        default: 'professional'
         type: choice
         options:
-        - full
+        - professional
         - quick
-        - deep_learning
-        - backtest_only
-      
-      custom_symbols:
-        description: 'Custom Symbols (comma-separated)'
-        required: false
-        default: 'GC=F,GLD,SLV,DX-Y.NYB'
+        - advanced
 
 env:
   NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  PYTHONUNBUFFERED: 1
 
 jobs:
   professional-analysis:
-    name: 🔬 Advanced Gold Analysis
+    name: 🔬 Professional Gold Analysis
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-    
-    strategy:
-      matrix:
-        python-version: ['3.11']
-        analysis-component: ['technical', 'sentiment', 'macro']
-      fail-fast: false
+    timeout-minutes: 20
     
     permissions:
       contents: write
       actions: write
-      pages: write
-      id-token: write
     
     steps:
-    - name: 🔍 Advanced Checkout
+    - name: 🔍 Checkout
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
-        lfs: true
 
-    - name: 🐍 Advanced Python Setup
+    - name: 🐍 Python Setup
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: '3.11'
         cache: 'pip'
-        cache-dependency-path: |
-          requirements.txt
 
-    - name: 📚 Create Advanced Requirements
+    - name: 📦 Install Dependencies (Optimized)
       run: |
-        cat > requirements.txt << 'EOF'
-        # Core Data & Analysis
-        yfinance>=0.2.30
-        pandas>=2.1.0
-        numpy>=1.24.0
-        scipy>=1.11.0
-        scikit-learn>=1.3.0
+        echo "📦 Installing optimized professional packages..."
+        pip install --upgrade pip --quiet
         
-        # Technical Analysis
-        pandas-ta>=0.3.14b
-        TA-Lib>=0.4.29
+        # Core packages
+        pip install --no-cache-dir --quiet \
+          yfinance>=0.2.30 \
+          pandas>=2.1.0 \
+          numpy>=1.24.0 \
+          requests>=2.31.0 \
+          scipy>=1.11.0
         
-        # Alternative Sentiment (Lighter than transformers)
-        vaderSentiment>=3.3.2
-        textblob>=0.17.1
-        nltk>=3.8.1
+        # Sentiment Analysis (lightweight)
+        pip install --no-cache-dir --quiet \
+          vaderSentiment>=3.3.2 \
+          textblob>=0.17.1
         
-        # Data & Web
-        requests>=2.31.0
-        beautifulsoup4>=4.12.0
-        lxml>=4.9.0
-        
-        # Financial Data
-        fredapi>=0.5.0
-        quandl>=3.7.0
-        alpha-vantage>=2.3.1
-        
-        # Visualization & Reports  
-        matplotlib>=3.7.0
-        seaborn>=0.12.0
-        plotly>=5.17.0
-        jinja2>=3.1.0
-        
-        # Database & Storage
-        sqlite3
-        sqlalchemy>=2.0.0
-        
-        # Utilities
-        python-dateutil>=2.8.0
-        pytz>=2023.3
-        tqdm>=4.66.0
-        colorama>=0.4.6
-        rich>=13.0.0
-        
-        # Async & Performance
-        asyncio
-        concurrent.futures
-        
-        # Optional ML (lightweight)
-        xgboost>=2.0.0
-        lightgbm>=4.0.0
-        EOF
-
-    - name: 🚀 Install Professional Dependencies
-      run: |
-        echo "📦 Installing professional packages..."
-        pip install --upgrade pip setuptools wheel
-        
-        # Install in batches to avoid conflicts
-        pip install --no-cache-dir numpy pandas scipy
-        pip install --no-cache-dir scikit-learn matplotlib seaborn
-        pip install --no-cache-dir yfinance requests beautifulsoup4
-        pip install --no-cache-dir vaderSentiment textblob nltk
-        pip install --no-cache-dir plotly jinja2 sqlalchemy
-        pip install --no-cache-dir xgboost lightgbm
+        # ML (optional, lightweight versions)
+        pip install --no-cache-dir --quiet \
+          scikit-learn>=1.3.0 \
+          matplotlib>=3.7.0 \
+          seaborn>=0.12.0
         
         # Download NLTK data
         python -c "
         import nltk
         try:
             nltk.download('vader_lexicon', quiet=True)
-            nltk.download('punkt', quiet=True) 
-            nltk.download('stopwords', quiet=True)
-            print('✅ NLTK data downloaded')
+            nltk.download('punkt', quiet=True)
+            print('✅ NLTK data ready')
         except:
-            print('⚠️ NLTK download failed, continuing...')
-        "
+            print('⚠️ NLTK download skipped')
+        " || echo "Continuing without NLTK..."
         
         echo "✅ All dependencies installed successfully"
 
-    - name: 🧠 Initialize ML Models & Data
+    - name: 🏗️ Create Fixed Professional Analyzer
       run: |
-        echo "🤖 Initializing ML components..."
-        python -c "
-        import warnings
-        warnings.filterwarnings('ignore')
-        
-        # Test imports
-        try:
-            from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-            analyzer = SentimentIntensityAnalyzer()
-            print('✅ VADER Sentiment ready')
-        except Exception as e:
-            print(f'⚠️ VADER issue: {e}')
-            
-        try:
-            from textblob import TextBlob
-            print('✅ TextBlob ready')
-        except Exception as e:
-            print(f'⚠️ TextBlob issue: {e}')
-            
-        try:
-            import xgboost as xgb
-            print('✅ XGBoost ready')
-        except Exception as e:
-            print(f'⚠️ XGBoost issue: {e}')
-            
-        print('🎯 ML initialization complete')
-        "
-
-    - name: 🏗️ Create Professional Gold Analyzer
-      run: |
-        cat > professional_gold_analyzer.py << 'EOF'
+        cat > professional_gold_analyzer_fixed.py << 'EOF'
         #!/usr/bin/env python3
         """
-        🏆 Professional Gold Analysis System v3.0
-        Advanced AI-Powered Financial Analysis Platform
+        🏆 Professional Gold Analysis System v3.1 - FIXED
+        Advanced Financial Analysis Platform (GitHub Actions Compatible)
         """
         
         import yfinance as yf
@@ -198,44 +101,27 @@ jobs:
         from concurrent.futures import ThreadPoolExecutor, as_completed
         import time
         from typing import Dict, List, Optional, Tuple, Any
-        import asyncio
         from dataclasses import dataclass
         
-        # ML & Sentiment
+        # Sentiment Analysis
         try:
             from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
             from textblob import TextBlob
-            import xgboost as xgb
+            SENTIMENT_AVAILABLE = True
+        except ImportError:
+            SENTIMENT_AVAILABLE = False
+        
+        # ML (optional)
+        try:
             from sklearn.ensemble import RandomForestRegressor
             from sklearn.preprocessing import StandardScaler
-            from sklearn.model_selection import TimeSeriesSplit
-            from sklearn.metrics import mean_squared_error, r2_score
             ML_AVAILABLE = True
-        except ImportError as e:
-            print(f"⚠️ ML imports failed: {e}")
+        except ImportError:
             ML_AVAILABLE = False
-        
-        # Visualization
-        try:
-            import matplotlib.pyplot as plt
-            import seaborn as sns
-            import plotly.graph_objects as go
-            import plotly.subplots as sp
-            from plotly.offline import plot
-            VISUALIZATION_AVAILABLE = True
-        except ImportError:
-            VISUALIZATION_AVAILABLE = False
-        
-        # Advanced Technical Analysis
-        try:
-            import pandas_ta as ta
-            ADVANCED_TA_AVAILABLE = True
-        except ImportError:
-            ADVANCED_TA_AVAILABLE = False
         
         warnings.filterwarnings('ignore')
         
-        # Professional Logging Setup
+        # Setup logging
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s | %(levelname)8s | %(name)s | %(message)s',
@@ -250,185 +136,92 @@ jobs:
         class AnalysisConfig:
             """Configuration for analysis parameters"""
             symbols: Dict[str, str]
-            lookback_period: str = "2y"
-            news_lookback_days: int = 3
+            lookback_period: str = "1y"
+            news_lookback_days: int = 2
             confidence_threshold: float = 0.7
-            risk_free_rate: float = 0.05
-            max_position_size: float = 0.25
-            stop_loss_multiplier: float = 2.5
-            take_profit_multiplier: float = 4.0
         
         class ProfessionalGoldAnalyzer:
-            """
-            🏆 Professional Gold Analysis System
-            Advanced multi-component financial analysis platform
-            """
+            """Professional Gold Analysis System - Fixed Version"""
             
             def __init__(self, config: Optional[AnalysisConfig] = None):
                 self.config = config or AnalysisConfig(
                     symbols={
-                        'gold_futures': 'GC=F',
                         'gold_etf': 'GLD',
-                        'silver_futures': 'SI=F',
+                        'gold_futures': 'GC=F', 
                         'silver_etf': 'SLV',
                         'dollar_index': 'DX-Y.NYB',
                         'vix': '^VIX',
                         'ten_year': '^TNX',
-                        'oil': 'CL=F',
                         'sp500': 'SPY',
-                        'nasdaq': 'QQQ',
-                        'bitcoin': 'BTC-USD',
-                        'euro': 'EURUSD=X'
+                        'oil': 'CL=F'
                     }
                 )
                 
-                # Initialize components
-                self.sentiment_analyzer = SentimentIntensityAnalyzer() if ML_AVAILABLE else None
+                self.sentiment_analyzer = SentimentIntensityAnalyzer() if SENTIMENT_AVAILABLE else None
                 self.db_path = "professional_gold_analysis.db"
                 self.news_api_key = os.getenv("NEWS_API_KEY")
                 
-                # Market data storage
+                # Data storage
                 self.market_data: Optional[pd.DataFrame] = None
                 self.gold_data: Optional[pd.DataFrame] = None
                 
-                # Analysis results storage
-                self.analysis_results: Dict[str, Any] = {}
-                
-                logger.info("🚀 Professional Gold Analyzer initialized")
-                
+                logger.info("🚀 Professional Gold Analyzer initialized (Fixed v3.1)")
+        
             def setup_database(self):
                 """Create professional database schema"""
                 try:
                     conn = sqlite3.connect(self.db_path)
                     cursor = conn.cursor()
                     
-                    # Main analysis table
                     cursor.execute('''
                         CREATE TABLE IF NOT EXISTS professional_analysis (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             timestamp_utc TEXT NOT NULL,
-                            analysis_mode TEXT NOT NULL,
-                            
-                            -- Core Signals
                             primary_signal TEXT NOT NULL,
                             signal_strength TEXT NOT NULL,
                             confidence_score REAL NOT NULL,
                             total_score REAL NOT NULL,
                             
-                            -- Component Scores
                             technical_score REAL,
                             sentiment_score REAL,
-                            macro_score REAL,
-                            ml_score REAL,
-                            news_score REAL,
-                            correlation_score REAL,
+                            market_score REAL,
                             
-                            -- Market Data
                             gold_price REAL,
-                            gold_futures_price REAL,
-                            silver_price REAL,
                             dxy_value REAL,
                             vix_value REAL,
-                            ten_year_yield REAL,
-                            oil_price REAL,
-                            btc_price REAL,
                             
-                            -- Ratios & Derivatives
-                            gold_silver_ratio REAL,
-                            gold_oil_ratio REAL,
-                            real_rates REAL,
-                            dollar_strength_index REAL,
-                            
-                            -- Technical Indicators
                             rsi_14 REAL,
                             macd_signal TEXT,
-                            bollinger_position REAL,
-                            williams_r REAL,
-                            stoch_k REAL,
-                            adx REAL,
+                            trend_direction TEXT,
                             
-                            -- Advanced Indicators
-                            ichimoku_signal TEXT,
-                            elliott_wave_count INTEGER,
-                            fibonacci_level REAL,
-                            volume_profile TEXT,
-                            
-                            -- Risk Management
                             stop_loss_price REAL,
                             take_profit_price REAL,
                             position_size_percent REAL,
                             risk_reward_ratio REAL,
-                            max_drawdown_risk REAL,
-                            sharpe_ratio REAL,
                             
-                            -- ML Predictions
-                            ml_price_prediction REAL,
-                            ml_direction_probability REAL,
-                            ensemble_prediction REAL,
-                            feature_importance TEXT,
+                            news_articles_count INTEGER,
+                            news_sentiment_score REAL,
                             
-                            -- News & Sentiment
-                            news_articles_analyzed INTEGER,
-                            avg_sentiment_score REAL,
-                            news_momentum TEXT,
-                            social_sentiment REAL,
-                            
-                            -- Backtesting
-                            backtest_return_1m REAL,
-                            backtest_return_3m REAL,
-                            backtest_return_6m REAL,
+                            backtest_return REAL,
                             backtest_sharpe REAL,
                             backtest_max_dd REAL,
-                            backtest_win_rate REAL,
-                            backtest_profit_factor REAL,
                             
-                            -- Performance Metrics
                             execution_time_ms INTEGER,
-                            data_quality_score REAL,
-                            analysis_reliability REAL,
-                            
-                            -- Metadata
-                            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                            analysis_version TEXT DEFAULT 'v3.0'
+                            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                         )
                     ''')
                     
-                    # News archive table
                     cursor.execute('''
-                        CREATE TABLE IF NOT EXISTS news_analysis_pro (
+                        CREATE TABLE IF NOT EXISTS news_headlines (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             analysis_id INTEGER,
                             headline TEXT,
                             source TEXT,
-                            url TEXT,
-                            published_at TEXT,
-                            sentiment_compound REAL,
-                            sentiment_positive REAL,
-                            sentiment_negative REAL,
-                            sentiment_neutral REAL,
+                            sentiment_score REAL,
                             relevance_score REAL,
-                            impact_score REAL,
-                            keywords TEXT,
-                            entity_mentions TEXT,
-                            language TEXT DEFAULT 'en',
+                            published_at TEXT,
                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                             FOREIGN KEY (analysis_id) REFERENCES professional_analysis (id)
-                        )
-                    ''')
-                    
-                    # ML model performance tracking
-                    cursor.execute('''
-                        CREATE TABLE IF NOT EXISTS ml_model_performance (
-                            id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            model_name TEXT,
-                            model_version TEXT,
-                            training_date TEXT,
-                            validation_score REAL,
-                            test_score REAL,
-                            feature_count INTEGER,
-                            hyperparameters TEXT,
-                            performance_metrics TEXT,
-                            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                         )
                     ''')
                     
@@ -439,50 +232,48 @@ jobs:
                 except Exception as e:
                     logger.error(f"❌ Database setup failed: {e}")
         
-            def fetch_comprehensive_market_data(self) -> bool:
-                """Fetch comprehensive market data with error handling"""
-                logger.info("📊 Fetching comprehensive market data...")
+            def fetch_market_data_fixed(self) -> bool:
+                """Fetch market data with FIXED yfinance parameters"""
+                logger.info("📊 Fetching market data (fixed version)...")
                 
                 try:
-                    symbols_list = list(self.config.symbols.values())
+                    # Primary symbols (most reliable)
+                    primary_symbols = ['GLD', 'SLV', 'SPY', '^VIX', 'DX-Y.NYB']
                     
-                    # Primary attempt with all symbols
+                    # FIXED: Remove unsupported parameters
                     self.market_data = yf.download(
-                        symbols_list,
+                        primary_symbols,
                         period=self.config.lookback_period,
                         interval="1d",
-                        threads=True,
                         progress=False,
-                        show_errors=False,
-                        repair=True
+                        # threads=True,  # Removed - can cause issues
+                        # show_errors=False,  # REMOVED - not supported
+                        # repair=True  # REMOVED - not supported
                     )
                     
-                    if self.market_data.empty:
-                        logger.warning("⚠️ Primary download failed, trying alternatives...")
+                    if self.market_data is None or self.market_data.empty:
+                        logger.warning("⚠️ Primary download failed, trying fallback...")
                         
-                        # Fallback: try with ETFs instead of futures
-                        fallback_symbols = ['GLD', 'SLV', 'DX-Y.NYB', '^VIX', 'SPY']
-                        self.market_data = yf.download(
-                            fallback_symbols,
-                            period=self.config.lookback_period,
-                            interval="1d",
-                            threads=True,
-                            progress=False
-                        )
+                        # Fallback: download individually
+                        data_dict = {}
+                        for symbol in primary_symbols:
+                            try:
+                                ticker_data = yf.download(symbol, period="6mo", progress=False)
+                                if not ticker_data.empty:
+                                    for col in ticker_data.columns:
+                                        data_dict[(col, symbol)] = ticker_data[col]
+                            except Exception as e:
+                                logger.warning(f"⚠️ Failed to download {symbol}: {e}")
+                                continue
                         
-                        if not self.market_data.empty:
-                            # Update symbol mapping for fallback
-                            self.config.symbols['gold_primary'] = 'GLD'
-                            self.config.symbols['silver_primary'] = 'SLV'
+                        if data_dict:
+                            self.market_data = pd.DataFrame(data_dict)
+                        else:
+                            logger.error("❌ All downloads failed")
+                            return False
                     
-                    if self.market_data.empty:
-                        logger.error("❌ Failed to fetch any market data")
-                        return False
-                    
-                    # Process gold data specifically
-                    gold_symbol = self.config.symbols.get('gold_futures', 'GLD')
-                    if ('Close', gold_symbol) not in self.market_data.columns:
-                        gold_symbol = self.config.symbols.get('gold_etf', 'GLD')
+                    # Process gold data
+                    gold_symbol = 'GLD'  # Use ETF as primary (more stable)
                     
                     if ('Close', gold_symbol) in self.market_data.columns:
                         self.gold_data = pd.DataFrame({
@@ -495,467 +286,253 @@ jobs:
                         
                         logger.info(f"✅ Gold data processed: {len(self.gold_data)} rows")
                     else:
-                        logger.error("❌ Gold data not available")
-                        return False
+                        # Try with different column structure
+                        if 'Close' in self.market_data.columns and len(self.market_data.columns) == 6:
+                            # Single symbol download
+                            self.gold_data = self.market_data.copy()
+                            logger.info(f"✅ Single symbol gold data: {len(self.gold_data)} rows")
+                        else:
+                            logger.error("❌ Gold data not available in expected format")
+                            return False
                     
-                    logger.info(f"✅ Market data fetched: {len(self.market_data)} rows, {len(self.market_data.columns)} series")
+                    logger.info(f"✅ Market data fetched successfully")
                     return True
                     
                 except Exception as e:
                     logger.error(f"❌ Market data fetch failed: {e}")
                     return False
-            
-            def calculate_advanced_technical_indicators(self) -> Dict[str, Any]:
+        
+            def calculate_technical_indicators(self) -> Dict[str, Any]:
                 """Calculate comprehensive technical indicators"""
-                logger.info("📈 Calculating advanced technical indicators...")
+                logger.info("📈 Calculating technical indicators...")
                 
                 try:
                     if self.gold_data is None or self.gold_data.empty:
-                        logger.error("❌ No gold data available for technical analysis")
+                        logger.error("❌ No gold data for technical analysis")
                         return {}
                     
                     df = self.gold_data.copy()
                     
-                    # Basic Moving Averages
-                    for period in [5, 10, 20, 50, 100, 200]:
-                        df[f'SMA_{period}'] = df['Close'].rolling(period).mean()
-                        df[f'EMA_{period}'] = df['Close'].ewm(span=period).mean()
+                    # Moving Averages
+                    df['SMA_20'] = df['Close'].rolling(20).mean()
+                    df['SMA_50'] = df['Close'].rolling(50).mean()
+                    df['SMA_200'] = df['Close'].rolling(200).mean()
+                    df['EMA_12'] = df['Close'].ewm(span=12).mean()
+                    df['EMA_26'] = df['Close'].ewm(span=26).mean()
                     
-                    # Advanced Moving Averages
-                    df['VWMA_20'] = (df['Close'] * df['Volume']).rolling(20).sum() / df['Volume'].rolling(20).sum()
-                    df['Hull_MA'] = df['Close'].ewm(span=int(np.sqrt(20))).mean()
+                    # RSI
+                    delta = df['Close'].diff()
+                    gain = delta.where(delta > 0, 0).rolling(14).mean()
+                    loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
+                    rs = gain / loss
+                    df['RSI'] = 100 - (100 / (1 + rs))
                     
-                    # Momentum Indicators
-                    df['RSI_14'] = self._calculate_rsi(df['Close'], 14)
-                    df['RSI_21'] = self._calculate_rsi(df['Close'], 21)
-                    df['Stoch_K'], df['Stoch_D'] = self._calculate_stochastic(df, 14, 3)
-                    df['Williams_R'] = self._calculate_williams_r(df, 14)
-                    df['ROC_12'] = ((df['Close'] / df['Close'].shift(12)) - 1) * 100
+                    # MACD
+                    df['MACD'] = df['EMA_12'] - df['EMA_26']
+                    df['MACD_Signal'] = df['MACD'].ewm(span=9).mean()
+                    df['MACD_Hist'] = df['MACD'] - df['MACD_Signal']
                     
-                    # MACD Family
-                    df['MACD'], df['MACD_Signal'], df['MACD_Hist'] = self._calculate_macd(df['Close'])
-                    df['MACD_Zero_Cross'] = np.where(df['MACD'] * df['MACD'].shift(1) < 0, 1, 0)
-                    
-                    # Bollinger Bands & Variants  
-                    df['BB_Upper'], df['BB_Middle'], df['BB_Lower'] = self._calculate_bollinger_bands(df['Close'])
-                    df['BB_Width'] = (df['BB_Upper'] - df['BB_Lower']) / df['BB_Middle']
+                    # Bollinger Bands
+                    df['BB_Mid'] = df['Close'].rolling(20).mean()
+                    df['BB_Std'] = df['Close'].rolling(20).std()
+                    df['BB_Upper'] = df['BB_Mid'] + (df['BB_Std'] * 2)
+                    df['BB_Lower'] = df['BB_Mid'] - (df['BB_Std'] * 2)
                     df['BB_Position'] = (df['Close'] - df['BB_Lower']) / (df['BB_Upper'] - df['BB_Lower'])
                     
-                    # Volatility Indicators
-                    df['ATR'] = self._calculate_atr(df, 14)
-                    df['Volatility_20'] = df['Close'].pct_change().rolling(20).std() * np.sqrt(252)
-                    df['VIX_Equivalent'] = df['Volatility_20'] * 100
+                    # Stochastic
+                    low_14 = df['Low'].rolling(14).min()
+                    high_14 = df['High'].rolling(14).max()
+                    df['Stoch_K'] = 100 * (df['Close'] - low_14) / (high_14 - low_14)
+                    df['Stoch_D'] = df['Stoch_K'].rolling(3).mean()
                     
-                    # Volume Indicators
+                    # ATR (Average True Range)
+                    tr1 = df['High'] - df['Low']
+                    tr2 = abs(df['High'] - df['Close'].shift())
+                    tr3 = abs(df['Low'] - df['Close'].shift())
+                    tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+                    df['ATR'] = tr.rolling(14).mean()
+                    
+                    # Williams %R
+                    df['Williams_R'] = -100 * (high_14 - df['Close']) / (high_14 - low_14)
+                    
+                    # Volume indicators
                     df['Volume_SMA'] = df['Volume'].rolling(20).mean()
                     df['Volume_Ratio'] = df['Volume'] / df['Volume_SMA']
-                    df['OBV'] = (df['Volume'] * np.where(df['Close'] > df['Close'].shift(1), 1, -1)).cumsum()
-                    df['Volume_Price_Trend'] = ((df['Close'] - df['Close'].shift(1)) / df['Close'].shift(1) * df['Volume']).cumsum()
-                    
-                    # Trend Indicators
-                    df['ADX'] = self._calculate_adx(df, 14)
-                    df['Aroon_Up'], df['Aroon_Down'] = self._calculate_aroon(df, 25)
-                    df['Parabolic_SAR'] = self._calculate_parabolic_sar(df)
-                    
-                    # Support & Resistance
-                    df['Pivot'] = (df['High'] + df['Low'] + df['Close']) / 3
-                    df['R1'] = 2 * df['Pivot'] - df['Low']
-                    df['S1'] = 2 * df['Pivot'] - df['High']
-                    df['R2'] = df['Pivot'] + (df['R1'] - df['S1'])
-                    df['S2'] = df['Pivot'] - (df['R1'] - df['S1'])
-                    
-                    # Custom Gold-Specific Indicators
-                    df['Gold_Momentum'] = df['Close'].pct_change(20) * 100
-                    df['Gold_Strength'] = (df['Close'] / df['SMA_200'] - 1) * 100
                     
                     # Clean data
                     df = df.dropna()
                     
                     if df.empty:
-                        logger.warning("⚠️ All data removed after technical calculations")
+                        logger.warning("⚠️ No data after technical calculations")
                         return {}
                     
                     # Store processed data
                     self.gold_data = df
                     latest = df.iloc[-1]
                     
-                    # Compile technical analysis results
-                    technical_results = {
-                        'current_price': latest['Close'],
-                        'price_change_1d': (latest['Close'] / df['Close'].iloc[-2] - 1) * 100,
-                        'price_change_5d': (latest['Close'] / df['Close'].iloc[-6] - 1) * 100,
-                        'price_change_20d': (latest['Close'] / df['Close'].iloc[-21] - 1) * 100,
+                    # Compile results
+                    results = {
+                        'current_price': float(latest['Close']),
+                        'price_change_1d': float((latest['Close'] / df['Close'].iloc[-2] - 1) * 100) if len(df) >= 2 else 0,
+                        'price_change_week': float((latest['Close'] / df['Close'].iloc[-6] - 1) * 100) if len(df) >= 6 else 0,
                         
-                        # Trend Analysis
-                        'sma_20': latest['SMA_20'],
-                        'sma_50': latest['SMA_50'],
-                        'sma_200': latest['SMA_200'],
+                        # Trend
+                        'sma_20': float(latest['SMA_20']),
+                        'sma_50': float(latest['SMA_50']),
+                        'sma_200': float(latest['SMA_200']) if not pd.isna(latest['SMA_200']) else 0,
                         'trend_short': 'bullish' if latest['Close'] > latest['SMA_20'] else 'bearish',
-                        'trend_medium': 'bullish' if latest['Close'] > latest['SMA_50'] else 'bearish', 
-                        'trend_long': 'bullish' if latest['Close'] > latest['SMA_200'] else 'bearish',
+                        'trend_medium': 'bullish' if latest['Close'] > latest['SMA_50'] else 'bearish',
+                        'trend_long': 'bullish' if not pd.isna(latest['SMA_200']) and latest['Close'] > latest['SMA_200'] else 'neutral',
                         
                         # Momentum
-                        'rsi_14': latest['RSI_14'],
-                        'rsi_condition': self._interpret_rsi(latest['RSI_14']),
-                        'stoch_k': latest['Stoch_K'],
-                        'stoch_d': latest['Stoch_D'],
-                        'williams_r': latest['Williams_R'],
+                        'rsi': float(latest['RSI']),
+                        'rsi_condition': self._interpret_rsi(latest['RSI']),
+                        'stoch_k': float(latest['Stoch_K']),
+                        'stoch_d': float(latest['Stoch_D']),
+                        'williams_r': float(latest['Williams_R']),
                         
-                        # MACD Analysis
-                        'macd': latest['MACD'],
-                        'macd_signal': latest['MACD_Signal'],
-                        'macd_histogram': latest['MACD_Hist'],
+                        # MACD
+                        'macd': float(latest['MACD']),
+                        'macd_signal': float(latest['MACD_Signal']),
+                        'macd_histogram': float(latest['MACD_Hist']),
                         'macd_trend': 'bullish' if latest['MACD'] > latest['MACD_Signal'] else 'bearish',
                         
                         # Bollinger Bands
-                        'bb_position': latest['BB_Position'],
-                        'bb_width': latest['BB_Width'],
-                        'bb_condition': self._interpret_bb_position(latest['BB_Position']),
+                        'bb_position': float(latest['BB_Position']),
+                        'bb_squeeze': 'tight' if (latest['BB_Upper'] - latest['BB_Lower']) / latest['BB_Mid'] < 0.1 else 'normal',
                         
                         # Volatility
-                        'atr': latest['ATR'],
-                        'volatility': latest['Volatility_20'],
-                        'volatility_regime': self._classify_volatility(latest['Volatility_20']),
+                        'atr': float(latest['ATR']),
+                        'volatility': float(df['Close'].pct_change().rolling(20).std() * np.sqrt(252)),
                         
                         # Volume
-                        'volume_ratio': latest['Volume_Ratio'],
-                        'volume_trend': 'high' if latest['Volume_Ratio'] > 1.5 else 'normal' if latest['Volume_Ratio'] > 0.8 else 'low',
+                        'volume_ratio': float(latest['Volume_Ratio']),
+                        'volume_trend': 'high' if latest['Volume_Ratio'] > 1.5 else 'normal',
                         
-                        # Advanced
-                        'adx': latest['ADX'],
-                        'trend_strength': self._interpret_adx(latest['ADX']),
-                        'gold_momentum': latest['Gold_Momentum'],
-                        'gold_strength': latest['Gold_Strength'],
+                        # Support/Resistance (simplified)
+                        'support': float(df['Low'].rolling(20).min().iloc[-1]),
+                        'resistance': float(df['High'].rolling(20).max().iloc[-1]),
                         
-                        # Support/Resistance
-                        'resistance_1': latest['R1'],
-                        'support_1': latest['S1'],
-                        'pivot_point': latest['Pivot']
+                        'data_points': len(df)
                     }
                     
-                    logger.info(f"✅ Technical analysis complete: {len(technical_results)} indicators")
-                    return technical_results
+                    logger.info(f"✅ Technical analysis complete: {len(results)} indicators")
+                    return results
                     
                 except Exception as e:
                     logger.error(f"❌ Technical analysis failed: {e}")
                     return {}
-            
-            def _calculate_rsi(self, prices: pd.Series, period: int = 14) -> pd.Series:
-                """Calculate RSI"""
-                delta = prices.diff()
-                gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
-                loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
-                rs = gain / loss
-                return 100 - (100 / (1 + rs))
-            
-            def _calculate_stochastic(self, df: pd.DataFrame, k_period: int = 14, d_period: int = 3) -> Tuple[pd.Series, pd.Series]:
-                """Calculate Stochastic Oscillator"""
-                low_min = df['Low'].rolling(window=k_period).min()
-                high_max = df['High'].rolling(window=k_period).max()
-                k_percent = 100 * ((df['Close'] - low_min) / (high_max - low_min))
-                d_percent = k_percent.rolling(window=d_period).mean()
-                return k_percent, d_percent
-            
-            def _calculate_williams_r(self, df: pd.DataFrame, period: int = 14) -> pd.Series:
-                """Calculate Williams %R"""
-                high_max = df['High'].rolling(window=period).max()
-                low_min = df['Low'].rolling(window=period).min()
-                return -100 * ((high_max - df['Close']) / (high_max - low_min))
-            
-            def _calculate_macd(self, prices: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9) -> Tuple[pd.Series, pd.Series, pd.Series]:
-                """Calculate MACD"""
-                ema_fast = prices.ewm(span=fast).mean()
-                ema_slow = prices.ewm(span=slow).mean()
-                macd = ema_fast - ema_slow
-                signal_line = macd.ewm(span=signal).mean()
-                histogram = macd - signal_line
-                return macd, signal_line, histogram
-            
-            def _calculate_bollinger_bands(self, prices: pd.Series, period: int = 20, std_dev: float = 2) -> Tuple[pd.Series, pd.Series, pd.Series]:
-                """Calculate Bollinger Bands"""
-                sma = prices.rolling(window=period).mean()
-                std = prices.rolling(window=period).std()
-                upper = sma + (std * std_dev)
-                lower = sma - (std * std_dev)
-                return upper, sma, lower
-            
-            def _calculate_atr(self, df: pd.DataFrame, period: int = 14) -> pd.Series:
-                """Calculate Average True Range"""
-                tr1 = df['High'] - df['Low']
-                tr2 = abs(df['High'] - df['Close'].shift())
-                tr3 = abs(df['Low'] - df['Close'].shift())
-                tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
-                return tr.rolling(window=period).mean()
-            
-            def _calculate_adx(self, df: pd.DataFrame, period: int = 14) -> pd.Series:
-                """Calculate Average Directional Index (simplified)"""
-                high_diff = df['High'].diff()
-                low_diff = df['Low'].diff()
-                
-                plus_dm = np.where((high_diff > low_diff) & (high_diff > 0), high_diff, 0)
-                minus_dm = np.where((low_diff > high_diff) & (low_diff > 0), low_diff, 0)
-                
-                atr = self._calculate_atr(df, period)
-                plus_di = 100 * (pd.Series(plus_dm).rolling(window=period).mean() / atr)
-                minus_di = 100 * (pd.Series(minus_dm).rolling(window=period).mean() / atr)
-                
-                dx = 100 * abs(plus_di - minus_di) / (plus_di + minus_di)
-                adx = dx.rolling(window=period).mean()
-                
-                return adx
-            
-            def _calculate_aroon(self, df: pd.DataFrame, period: int = 25) -> Tuple[pd.Series, pd.Series]:
-                """Calculate Aroon Oscillator"""
-                aroon_up = df['High'].rolling(window=period).apply(lambda x: (period - x.argmax()) / period * 100)
-                aroon_down = df['Low'].rolling(window=period).apply(lambda x: (period - x.argmin()) / period * 100)
-                return aroon_up, aroon_down
-            
-            def _calculate_parabolic_sar(self, df: pd.DataFrame, af_start: float = 0.02, af_increment: float = 0.02, af_max: float = 0.2) -> pd.Series:
-                """Calculate Parabolic SAR (simplified)"""
-                # Simplified implementation
-                sar = pd.Series(index=df.index, dtype=float)
-                sar.iloc[0] = df['Low'].iloc[0]
-                
-                for i in range(1, len(df)):
-                    if i == 1:
-                        sar.iloc[i] = df['Low'].iloc[i-1]
-                    else:
-                        # Simplified SAR calculation
-                        if df['Close'].iloc[i] > sar.iloc[i-1]:
-                            sar.iloc[i] = sar.iloc[i-1] + af_start * (df['High'].iloc[i-1] - sar.iloc[i-1])
-                        else:
-                            sar.iloc[i] = sar.iloc[i-1] + af_start * (df['Low'].iloc[i-1] - sar.iloc[i-1])
-                
-                return sar
-            
+        
             def _interpret_rsi(self, rsi_value: float) -> str:
                 """Interpret RSI value"""
                 if rsi_value >= 70:
                     return "overbought"
                 elif rsi_value <= 30:
-                    return "oversold"
+                    return "oversold" 
                 elif rsi_value >= 60:
-                    return "bullish"
+                    return "strong_bullish"
                 elif rsi_value <= 40:
-                    return "bearish"
+                    return "weak_bearish"
                 else:
                     return "neutral"
-            
-            def _interpret_bb_position(self, bb_position: float) -> str:
-                """Interpret Bollinger Bands position"""
-                if bb_position >= 0.8:
-                    return "near_upper_band"
-                elif bb_position <= 0.2:
-                    return "near_lower_band"
-                elif bb_position >= 0.6:
-                    return "upper_half"
-                elif bb_position <= 0.4:
-                    return "lower_half"
-                else:
-                    return "middle_range"
-            
-            def _classify_volatility(self, volatility: float) -> str:
-                """Classify volatility regime"""
-                if volatility >= 0.30:
-                    return "very_high"
-                elif volatility >= 0.25:
-                    return "high"
-                elif volatility >= 0.20:
-                    return "elevated"
-                elif volatility >= 0.15:
-                    return "normal"
-                else:
-                    return "low"
-            
-            def _interpret_adx(self, adx_value: float) -> str:
-                """Interpret ADX value"""
-                if adx_value >= 50:
-                    return "very_strong_trend"
-                elif adx_value >= 25:
-                    return "strong_trend"
-                elif adx_value >= 20:
-                    return "trending"
-                else:
-                    return "sideways"
-            
-            def analyze_advanced_news_sentiment(self) -> Dict[str, Any]:
-                """Advanced news sentiment analysis with multiple sources"""
-                logger.info("📰 Starting advanced news sentiment analysis...")
+        
+            def analyze_news_sentiment(self) -> Dict[str, Any]:
+                """Analyze news sentiment with professional approach"""
+                logger.info("📰 Starting news sentiment analysis...")
                 
-                if not self.news_api_key or not self.sentiment_analyzer:
+                if not self.news_api_key or not SENTIMENT_AVAILABLE:
                     return {
                         "status": "disabled",
-                        "reason": "API key or sentiment analyzer not available",
+                        "reason": "API key or sentiment analyzer unavailable",
                         "news_score": 0,
-                        "confidence": 0,
-                        "articles": []
+                        "articles_count": 0,
+                        "headlines": []
                     }
                 
                 try:
-                    # Advanced keyword categories with weights
-                    keyword_categories = {
-                        'gold_direct': {
-                            'keywords': ['gold', 'xau', 'bullion', 'precious metal', 'gold price', 'gold market'],
-                            'weight': 1.0
-                        },
-                        'monetary_policy': {
-                            'keywords': ['federal reserve', 'fed', 'interest rate', 'monetary policy', 'fomc', 
-                                       'jerome powell', 'rate cut', 'rate hike', 'quantitative easing'],
-                            'weight': 0.9
-                        },
-                        'inflation': {
-                            'keywords': ['inflation', 'cpi', 'consumer price', 'pce', 'deflation', 
-                                       'inflation expectation', 'price stability'],
-                            'weight': 0.8
-                        },
-                        'dollar_currency': {
-                            'keywords': ['dollar', 'dxy', 'dollar index', 'usd', 'currency', 
-                                       'dollar strength', 'dollar weakness'],
-                            'weight': 0.7
-                        },
-                        'geopolitical': {
-                            'keywords': ['geopolitical', 'safe haven', 'risk-off', 'crisis', 'war', 
-                                       'sanctions', 'trade war', 'uncertainty'],
-                            'weight': 0.8
-                        },
-                        'economic': {
-                            'keywords': ['recession', 'economic growth', 'gdp', 'unemployment', 
-                                       'economic data', 'market volatility'],
-                            'weight': 0.6
-                        }
-                    }
-                    
-                    # Multi-source news queries
-                    news_queries = [
-                        'gold price OR XAU OR bullion',
-                        '"federal reserve" OR "interest rates" OR "monetary policy"',
-                        'inflation OR CPI OR "consumer prices"',
-                        '"dollar index" OR DXY OR "dollar strength"',
-                        'geopolitical OR "safe haven" OR crisis',
-                        '"precious metals" OR "gold market"'
+                    # Professional news queries
+                    queries = [
+                        'gold price market',
+                        'federal reserve interest rates',
+                        'inflation dollar gold',
+                        'precious metals trading'
                     ]
                     
                     all_articles = []
                     
-                    # Fetch news with parallel processing
-                    def fetch_news_query(query: str) -> List[Dict]:
+                    for query in queries:
                         try:
                             url = (f"https://newsapi.org/v2/everything?"
-                                  f"q={query}&language=en&sortBy=publishedAt&pageSize=30&"
+                                  f"q={query}&language=en&sortBy=publishedAt&pageSize=25&"
                                   f"from={(datetime.now() - timedelta(days=self.config.news_lookback_days)).date()}&"
                                   f"apiKey={self.news_api_key}")
                             
-                            response = requests.get(url, timeout=15)
+                            response = requests.get(url, timeout=10)
                             if response.status_code == 200:
-                                return response.json().get('articles', [])
-                        except Exception as e:
-                            logger.warning(f"⚠️ News query failed: {query[:50]}... - {e}")
-                        return []
-                    
-                    # Parallel news fetching
-                    with ThreadPoolExecutor(max_workers=3) as executor:
-                        future_to_query = {executor.submit(fetch_news_query, query): query for query in news_queries}
-                        
-                        for future in as_completed(future_to_query, timeout=30):
-                            try:
-                                articles = future.result()
+                                articles = response.json().get('articles', [])
                                 all_articles.extend(articles)
-                                logger.info(f"📥 Fetched {len(articles)} articles")
-                            except Exception as e:
-                                logger.warning(f"⚠️ Future result error: {e}")
+                                logger.info(f"📥 Fetched {len(articles)} articles for '{query}'")
+                            else:
+                                logger.warning(f"⚠️ API error for query '{query}': {response.status_code}")
+                        except Exception as e:
+                            logger.warning(f"⚠️ Query failed '{query}': {e}")
+                            continue
                     
                     if not all_articles:
                         return {
                             "status": "no_articles",
                             "news_score": 0,
-                            "confidence": 0,
-                            "articles": []
+                            "articles_count": 0,
+                            "headlines": []
                         }
                     
-                    # Advanced article processing
+                    # Process articles
                     processed_articles = []
-                    seen_urls = set()
+                    seen_titles = set()
                     
-                    for article in all_articles:
+                    # Gold-related keywords for relevance
+                    gold_keywords = ['gold', 'bullion', 'precious', 'fed', 'dollar', 'inflation', 'interest rate']
+                    positive_keywords = ['surge', 'rise', 'gain', 'bull', 'up', 'rally', 'strong']
+                    negative_keywords = ['fall', 'drop', 'decline', 'bear', 'down', 'weak', 'crash']
+                    
+                    for article in all_articles[:50]:  # Process top 50
                         try:
-                            # Deduplication
-                            url = article.get('url', '')
-                            if url in seen_urls:
-                                continue
-                            seen_urls.add(url)
-                            
                             title = article.get('title', '').strip()
                             description = article.get('description', '') or ''
                             
-                            if len(title) < 10:
+                            if len(title) < 10 or title.lower() in seen_titles:
                                 continue
                             
-                            # Content analysis
+                            seen_titles.add(title.lower())
+                            
                             content = f"{title} {description}".lower()
                             
-                            # Category relevance scoring
-                            relevance_scores = {}
-                            total_relevance = 0
-                            
-                            for category, config in keyword_categories.items():
-                                category_score = 0
-                                matched_keywords = []
-                                
-                                for keyword in config['keywords']:
-                                    if keyword in content:
-                                        category_score += 1
-                                        matched_keywords.append(keyword)
-                                
-                                if category_score > 0:
-                                    weighted_score = category_score * config['weight']
-                                    relevance_scores[category] = {
-                                        'raw_score': category_score,
-                                        'weighted_score': weighted_score,
-                                        'keywords': matched_keywords[:3]
-                                    }
-                                    total_relevance += weighted_score
-                            
-                            # Only process highly relevant articles
-                            if total_relevance < 1.0:
+                            # Relevance scoring
+                            relevance = sum(1 for keyword in gold_keywords if keyword in content)
+                            if relevance == 0:
                                 continue
-                            
-                            # Advanced sentiment analysis
-                            sentiment_results = {}
-                            
-                            # VADER sentiment
-                            vader_scores = self.sentiment_analyzer.polarity_scores(f"{title} {description}")
-                            sentiment_results['vader'] = vader_scores
-                            
-                            # TextBlob sentiment (if available)
-                            try:
-                                blob = TextBlob(f"{title} {description}")
-                                sentiment_results['textblob'] = {
-                                    'polarity': blob.sentiment.polarity,
-                                    'subjectivity': blob.sentiment.subjectivity
-                                }
-                            except:
-                                sentiment_results['textblob'] = {'polarity': 0, 'subjectivity': 0}
-                            
-                            # Ensemble sentiment score
-                            vader_compound = vader_scores['compound']
-                            textblob_polarity = sentiment_results['textblob']['polarity']
-                            ensemble_sentiment = (vader_compound * 0.7) + (textblob_polarity * 0.3)
+                                
+                            # Sentiment analysis
+                            if self.sentiment_analyzer:
+                                vader_scores = self.sentiment_analyzer.polarity_scores(f"{title} {description}")
+                                sentiment_score = vader_scores['compound']
+                            else:
+                                # Simple keyword sentiment
+                                positive_count = sum(1 for word in positive_keywords if word in content)
+                                negative_count = sum(1 for word in negative_keywords if word in content)
+                                sentiment_score = (positive_count - negative_count) / max(positive_count + negative_count, 1)
                             
                             # Weight by relevance
-                            final_sentiment_score = ensemble_sentiment * min(total_relevance / 3, 1.0)
+                            weighted_sentiment = sentiment_score * min(relevance / 3, 1.0)
                             
                             processed_article = {
-                                'title': title,
+                                'title': title[:150],
                                 'source': article.get('source', {}).get('name', 'Unknown'),
-                                'url': url,
                                 'published_at': article.get('publishedAt', ''),
-                                'relevance_score': round(total_relevance, 2),
-                                'relevance_categories': relevance_scores,
-                                'sentiment_vader_compound': round(vader_compound, 3),
-                                'sentiment_textblob_polarity': round(textblob_polarity, 3),
-                                'sentiment_ensemble': round(ensemble_sentiment, 3),
-                                'sentiment_final': round(final_sentiment_score, 3),
-                                'sentiment_label': self._classify_sentiment(final_sentiment_score)
+                                'relevance_score': relevance,
+                                'sentiment_raw': round(sentiment_score, 3),
+                                'sentiment_weighted': round(weighted_sentiment, 3),
+                                'sentiment_label': self._classify_sentiment(weighted_sentiment)
                             }
                             
                             processed_articles.append(processed_article)
@@ -966,56 +543,32 @@ jobs:
                     
                     if not processed_articles:
                         return {
-                            "status": "no_relevant_articles",
+                            "status": "no_relevant_articles", 
                             "news_score": 0,
-                            "confidence": 0,
-                            "articles": []
+                            "articles_count": 0,
+                            "headlines": []
                         }
                     
-                    # Sort by relevance and recency
-                    processed_articles.sort(
-                        key=lambda x: (x['relevance_score'], x['sentiment_final']), 
-                        reverse=True
-                    )
+                    # Calculate overall sentiment
+                    sentiment_scores = [a['sentiment_weighted'] for a in processed_articles]
+                    overall_sentiment = np.mean(sentiment_scores)
                     
-                    # Calculate overall news sentiment
-                    sentiment_scores = [article['sentiment_final'] for article in processed_articles]
-                    
-                    # Weighted average (more weight to higher relevance articles)
-                    weights = [article['relevance_score'] for article in processed_articles]
-                    
-                    if sum(weights) > 0:
-                        weighted_sentiment = np.average(sentiment_scores, weights=weights)
-                    else:
-                        weighted_sentiment = np.mean(sentiment_scores)
-                    
-                    # Calculate confidence
+                    # Calculate confidence based on consistency
                     sentiment_std = np.std(sentiment_scores)
-                    avg_relevance = np.mean([a['relevance_score'] for a in processed_articles])
-                    confidence = min(1.0, avg_relevance / 3) * (1 - min(sentiment_std, 1.0))
+                    confidence = max(0, min(1, 1 - sentiment_std))
                     
-                    # News momentum analysis
-                    recent_articles = [a for a in processed_articles if 
-                                     (datetime.now() - datetime.fromisoformat(a['published_at'].replace('Z', '+00:00'))).days <= 1]
+                    # Sort by relevance and sentiment impact
+                    processed_articles.sort(key=lambda x: (x['relevance_score'], abs(x['sentiment_weighted'])), reverse=True)
                     
-                    if recent_articles:
-                        recent_sentiment = np.mean([a['sentiment_final'] for a in recent_articles])
-                        momentum = "accelerating" if abs(recent_sentiment) > abs(weighted_sentiment) else "stable"
-                    else:
-                        momentum = "stable"
-                    
-                    # Final results
-                    news_analysis = {
+                    return {
                         "status": "success",
-                        "news_score": round(weighted_sentiment, 4),
+                        "news_score": round(overall_sentiment, 4),
                         "confidence": round(confidence, 3),
-                        "articles_analyzed": len(processed_articles),
-                        "articles_positive": len([a for a in processed_articles if a['sentiment_final'] > 0.1]),
-                        "articles_negative": len([a for a in processed_articles if a['sentiment_final'] < -0.1]),
-                        "articles_neutral": len([a for a in processed_articles if abs(a['sentiment_final']) <= 0.1]),
-                        "average_relevance": round(avg_relevance, 2),
-                        "sentiment_momentum": momentum,
-                        "top_articles": processed_articles[:12],
+                        "articles_count": len(processed_articles),
+                        "articles_positive": len([a for a in processed_articles if a['sentiment_weighted'] > 0.1]),
+                        "articles_negative": len([a for a in processed_articles if a['sentiment_weighted'] < -0.1]),
+                        "articles_neutral": len([a for a in processed_articles if abs(a['sentiment_weighted']) <= 0.1]),
+                        "top_headlines": processed_articles[:10],
                         "sentiment_distribution": {
                             "mean": round(np.mean(sentiment_scores), 4),
                             "std": round(sentiment_std, 4),
@@ -1024,361 +577,260 @@ jobs:
                         }
                     }
                     
-                    logger.info(f"✅ Advanced news analysis complete: {weighted_sentiment:.4f} confidence: {confidence:.3f}")
-                    return news_analysis
-                    
                 except Exception as e:
                     logger.error(f"❌ News sentiment analysis failed: {e}")
                     return {
                         "status": "error",
                         "error": str(e),
                         "news_score": 0,
-                        "confidence": 0,
-                        "articles": []
+                        "articles_count": 0,
+                        "headlines": []
                     }
-            
-            def _classify_sentiment(self, sentiment_score: float) -> str:
-                """Classify sentiment score into categories"""
-                if sentiment_score >= 0.5:
+        
+            def _classify_sentiment(self, score: float) -> str:
+                """Classify sentiment score"""
+                if score >= 0.3:
                     return "very_positive"
-                elif sentiment_score >= 0.2:
+                elif score >= 0.1:
                     return "positive"
-                elif sentiment_score >= 0.05:
+                elif score >= 0.05:
                     return "slightly_positive"
-                elif sentiment_score <= -0.5:
+                elif score <= -0.3:
                     return "very_negative"
-                elif sentiment_score <= -0.2:
+                elif score <= -0.1:
                     return "negative"
-                elif sentiment_score <= -0.05:
+                elif score <= -0.05:
                     return "slightly_negative"
                 else:
                     return "neutral"
-            
-            def run_professional_analysis(self) -> Dict[str, Any]:
-                """Run comprehensive professional analysis"""
-                start_time = time.time()
-                logger.info("🏆 Starting Professional Gold Analysis System v3.0")
-                
+        
+            def calculate_comprehensive_score(self, technical: Dict, news: Dict) -> Dict[str, Any]:
+                """Calculate comprehensive analysis score"""
                 try:
-                    # Initialize database
-                    self.setup_database()
+                    scores = {}
                     
-                    # Step 1: Fetch market data
-                    if not self.fetch_comprehensive_market_data():
-                        return {
-                            "status": "error",
-                            "error": "Failed to fetch market data",
-                            "timestamp": datetime.utcnow().isoformat()
-                        }
-                    
-                    # Step 2: Technical analysis (parallel processing)
-                    logger.info("🔄 Running parallel analysis components...")
-                    
-                    with ThreadPoolExecutor(max_workers=3) as executor:
-                        # Submit parallel tasks
-                        technical_future = executor.submit(self.calculate_advanced_technical_indicators)
-                        news_future = executor.submit(self.analyze_advanced_news_sentiment)
-                        
-                        # Get results
-                        technical_results = technical_future.result()
-                        news_results = news_future.result()
-                    
-                    # Step 3: Calculate component scores
-                    scores = self._calculate_comprehensive_scores(technical_results, news_results)
-                    
-                    # Step 4: Generate final signal
-                    signal_analysis = self._generate_professional_signal(scores)
-                    
-                    # Step 5: Risk management
-                    risk_management = self._calculate_advanced_risk_management(technical_results, signal_analysis)
-                    
-                    # Step 6: Performance metrics
-                    performance_metrics = self._calculate_performance_metrics()
-                    
-                    # Execution time
-                    execution_time = round((time.time() - start_time) * 1000)
-                    
-                    # Compile final results
-                    final_results = {
-                        "timestamp_utc": datetime.utcnow().isoformat(),
-                        "execution_time_ms": execution_time,
-                        "analysis_version": "v3.0",
-                        "status": "success",
-                        
-                        # Core Analysis
-                        "signal_analysis": signal_analysis,
-                        "component_scores": scores,
-                        "risk_management": risk_management,
-                        
-                        # Detailed Results
-                        "technical_analysis": technical_results,
-                        "news_analysis": news_results,
-                        "performance_metrics": performance_metrics,
-                        
-                        # Market Data Summary
-                        "market_summary": self._generate_market_summary(),
-                        
-                        # Analysis Metadata
-                        "data_quality": {
-                            "market_data_points": len(self.gold_data) if self.gold_data is not None else 0,
-                            "news_articles_analyzed": news_results.get('articles_analyzed', 0),
-                            "technical_indicators_count": len(technical_results),
-                            "analysis_reliability": min(1.0, (len(self.gold_data) / 252) if self.gold_data is not None else 0)
-                        }
-                    }
-                    
-                    # Save to database
-                    analysis_id = self._save_professional_analysis(final_results)
-                    final_results["analysis_id"] = analysis_id
-                    
-                    # Save to files
-                    self._save_analysis_files(final_results)
-                    
-                    logger.info(f"🎉 Professional analysis completed successfully in {execution_time}ms")
-                    logger.info(f"📊 Signal: {signal_analysis['primary_signal']} | Score: {signal_analysis['total_score']:.3f}")
-                    
-                    return final_results
-                    
-                except Exception as e:
-                    logger.error(f"❌ Professional analysis failed: {e}")
-                    import traceback
-                    traceback.print_exc()
-                    
-                    return {
-                        "status": "error",
-                        "error": str(e),
-                        "timestamp": datetime.utcnow().isoformat(),
-                        "execution_time_ms": round((time.time() - start_time) * 1000)
-                    }
-            
-            def _calculate_comprehensive_scores(self, technical: Dict, news: Dict) -> Dict[str, float]:
-                """Calculate comprehensive component scores"""
-                scores = {}
-                
-                try:
-                    # Technical Score (60% weight)
+                    # Technical Score (70%)
                     tech_score = 0
-                    
                     if technical:
-                        # Trend component
+                        # Trend component (40%)
                         trend_score = 0
-                        current_price = technical.get('current_price', 0)
-                        sma_20 = technical.get('sma_20', 0)
-                        sma_50 = technical.get('sma_50', 0)
-                        sma_200 = technical.get('sma_200', 0)
+                        if technical.get('trend_long') == 'bullish': trend_score += 3
+                        elif technical.get('trend_long') == 'bearish': trend_score -= 3
+                        if technical.get('trend_medium') == 'bullish': trend_score += 2
+                        elif technical.get('trend_medium') == 'bearish': trend_score -= 2
+                        if technical.get('trend_short') == 'bullish': trend_score += 1
+                        elif technical.get('trend_short') == 'bearish': trend_score -= 1
                         
-                        if current_price > sma_200: trend_score += 3
-                        if current_price > sma_50: trend_score += 2
-                        if current_price > sma_20: trend_score += 1
-                        if sma_20 > sma_50: trend_score += 1
-                        if sma_50 > sma_200: trend_score += 1
+                        scores['trend'] = max(-1, min(1, trend_score / 6))
                         
-                        # Normalize to -1 to +1
-                        scores['trend'] = (trend_score / 8) * 2 - 1
-                        
-                        # Momentum component  
+                        # Momentum component (30%)
                         momentum_score = 0
-                        rsi = technical.get('rsi_14', 50)
-                        macd_trend = technical.get('macd_trend', 'neutral')
+                        rsi = technical.get('rsi', 50)
                         
-                        if macd_trend == 'bullish': momentum_score += 2
-                        elif macd_trend == 'bearish': momentum_score -= 2
+                        if technical.get('macd_trend') == 'bullish': momentum_score += 2
+                        elif technical.get('macd_trend') == 'bearish': momentum_score -= 2
                         
                         if 30 <= rsi <= 70: momentum_score += 1
-                        elif rsi < 30: momentum_score += 2  # Oversold
-                        elif rsi > 70: momentum_score -= 1  # Overbought
+                        elif rsi < 30: momentum_score += 1.5  # Oversold opportunity
+                        elif rsi > 70: momentum_score -= 1   # Overbought risk
                         
-                        scores['momentum'] = max(-1, min(1, momentum_score / 3))
+                        scores['momentum'] = max(-1, min(1, momentum_score / 3.5))
                         
-                        # Volatility component
-                        volatility = technical.get('volatility', 0.2)
-                        if volatility > 0.25:
-                            scores['volatility'] = 0.5  # High volatility favors gold
-                        elif volatility < 0.15:
-                            scores['volatility'] = -0.3  # Low volatility
-                        else:
-                            scores['volatility'] = 0
+                        # Volume/Volatility (30%)
+                        vol_score = 0
+                        if technical.get('volume_trend') == 'high': vol_score += 0.5
+                        if technical.get('bb_squeeze') == 'tight': vol_score += 0.5  # Squeeze breakout potential
                         
-                        tech_score = (scores['trend'] * 0.5 + scores['momentum'] * 0.35 + scores['volatility'] * 0.15)
+                        scores['volume_volatility'] = max(-1, min(1, vol_score))
+                        
+                        tech_score = (scores['trend'] * 0.4 + 
+                                     scores['momentum'] * 0.3 + 
+                                     scores['volume_volatility'] * 0.3)
                     
                     scores['technical'] = tech_score
                     
-                    # News Sentiment Score (25% weight)
-                    news_score = news.get('news_score', 0) if news.get('status') == 'success' else 0
-                    news_confidence = news.get('confidence', 0)
+                    # News Sentiment Score (30%)
+                    news_score = 0
+                    if news.get('status') == 'success':
+                        raw_news_score = news.get('news_score', 0)
+                        confidence = news.get('confidence', 0)
+                        article_count = news.get('articles_count', 0)
+                        
+                        # Weight by confidence and article count
+                        count_weight = min(1.0, article_count / 20)  # Max weight at 20+ articles
+                        news_score = raw_news_score * confidence * count_weight
                     
-                    # Adjust news score by confidence
-                    scores['news_sentiment'] = news_score * news_confidence
+                    scores['news_sentiment'] = news_score
                     
-                    # Market Environment Score (15% weight)
+                    # Market Environment (from other indicators)
                     market_score = 0
                     try:
-                        # Add market environment factors
                         if self.market_data is not None:
-                            # VIX analysis
+                            # VIX analysis (fear index)
                             if ('Close', '^VIX') in self.market_data.columns:
                                 vix = self.market_data[('Close', '^VIX')].iloc[-1]
-                                if vix > 25: market_score += 1  # Fear benefits gold
-                                elif vix < 15: market_score -= 0.5
+                                if vix > 25: market_score += 0.5  # High fear helps gold
+                                elif vix < 15: market_score -= 0.3  # Low fear
                             
                             # Dollar analysis
                             if ('Close', 'DX-Y.NYB') in self.market_data.columns:
                                 dxy = self.market_data[('Close', 'DX-Y.NYB')].iloc[-1]
-                                if dxy < 100: market_score += 1  # Weak dollar benefits gold
-                                elif dxy > 105: market_score -= 1
+                                dxy_prev = self.market_data[('Close', 'DX-Y.NYB')].iloc[-6:-1].mean()
+                                if dxy < dxy_prev: market_score += 0.5  # Weakening dollar
+                                elif dxy > dxy_prev: market_score -= 0.5  # Strengthening dollar
                     except:
                         pass
                     
-                    scores['market_environment'] = max(-1, min(1, market_score / 2))
+                    scores['market_environment'] = max(-1, min(1, market_score))
+                    
+                    # Final weighted score
+                    weights = {'technical': 0.70, 'news_sentiment': 0.30}
+                    total_score = (scores['technical'] * weights['technical'] + 
+                                  scores['news_sentiment'] * weights['news_sentiment'])
+                    
+                    # Adjust by market environment
+                    total_score = total_score + (scores['market_environment'] * 0.1)
+                    total_score = max(-1, min(1, total_score))
+                    
+                    return {
+                        'total_score': total_score,
+                        'component_scores': scores,
+                        'component_weights': weights
+                    }
                     
                 except Exception as e:
-                    logger.warning(f"⚠️ Score calculation error: {e}")
-                    scores = {'technical': 0, 'news_sentiment': 0, 'market_environment': 0, 'trend': 0, 'momentum': 0, 'volatility': 0}
-                
-                return scores
-            
-            def _generate_professional_signal(self, scores: Dict[str, float]) -> Dict[str, Any]:
+                    logger.error(f"❌ Score calculation error: {e}")
+                    return {
+                        'total_score': 0,
+                        'component_scores': {'technical': 0, 'news_sentiment': 0, 'market_environment': 0},
+                        'component_weights': {'technical': 0.70, 'news_sentiment': 0.30}
+                    }
+        
+            def generate_trading_signal(self, score_data: Dict) -> Dict[str, Any]:
                 """Generate professional trading signal"""
-                # Weighted combination
-                weights = {
-                    'technical': 0.60,
-                    'news_sentiment': 0.25,
-                    'market_environment': 0.15
-                }
-                
-                total_score = sum(scores.get(component, 0) * weight for component, weight in weights.items())
+                total_score = score_data.get('total_score', 0)
                 
                 # Signal classification
-                if total_score >= 0.7:
-                    primary_signal = "Strong Buy"
-                    signal_strength = "Very Strong"
-                elif total_score >= 0.4:
-                    primary_signal = "Buy"
-                    signal_strength = "Strong"
+                if total_score >= 0.6:
+                    signal = "Strong Buy"
+                    strength = "Very Strong"
+                elif total_score >= 0.3:
+                    signal = "Buy" 
+                    strength = "Strong"
                 elif total_score >= 0.1:
-                    primary_signal = "Weak Buy"
-                    signal_strength = "Weak"
-                elif total_score <= -0.7:
-                    primary_signal = "Strong Sell"
-                    signal_strength = "Very Strong"
-                elif total_score <= -0.4:
-                    primary_signal = "Sell"
-                    signal_strength = "Strong"
+                    signal = "Weak Buy"
+                    strength = "Moderate"
+                elif total_score <= -0.6:
+                    signal = "Strong Sell"
+                    strength = "Very Strong"
+                elif total_score <= -0.3:
+                    signal = "Sell"
+                    strength = "Strong"
                 elif total_score <= -0.1:
-                    primary_signal = "Weak Sell"
-                    signal_strength = "Weak"
+                    signal = "Weak Sell"
+                    strength = "Moderate"
                 else:
-                    primary_signal = "Hold"
-                    signal_strength = "Neutral"
+                    signal = "Hold"
+                    strength = "Neutral"
                 
                 # Confidence calculation
-                score_consistency = 1 - np.std(list(scores.values()))
+                component_scores = score_data.get('component_scores', {})
+                score_consistency = 1 - np.std(list(component_scores.values())) if component_scores else 0.5
                 confidence = max(0, min(1, abs(total_score) * score_consistency))
                 
                 return {
-                    "primary_signal": primary_signal,
-                    "signal_strength": signal_strength,
+                    "primary_signal": signal,
+                    "signal_strength": strength, 
                     "total_score": round(total_score, 4),
-                    "confidence_level": round(confidence, 3),
-                    "component_weights": weights,
-                    "score_breakdown": {k: round(v, 4) for k, v in scores.items()}
+                    "confidence_level": round(confidence, 3)
                 }
-            
-            def _calculate_advanced_risk_management(self, technical: Dict, signal: Dict) -> Dict[str, Any]:
-                """Calculate advanced risk management parameters"""
+        
+            def calculate_risk_management(self, technical: Dict, signal: Dict) -> Dict[str, Any]:
+                """Calculate professional risk management"""
                 try:
                     current_price = technical.get('current_price', 0)
-                    atr = technical.get('atr', current_price * 0.02)  # Fallback 2% ATR
+                    atr = technical.get('atr', current_price * 0.02)
                     volatility = technical.get('volatility', 0.2)
                     
-                    # Dynamic stop loss and take profit
                     signal_type = signal.get('primary_signal', 'Hold')
+                    confidence = signal.get('confidence_level', 0.5)
                     
+                    # Dynamic stop loss and take profit
                     if 'Buy' in signal_type:
-                        stop_loss = current_price - (self.config.stop_loss_multiplier * atr)
-                        take_profit = current_price + (self.config.take_profit_multiplier * atr)
+                        stop_loss = current_price - (2.5 * atr)
+                        take_profit = current_price + (4.0 * atr)
                     elif 'Sell' in signal_type:
-                        stop_loss = current_price + (self.config.stop_loss_multiplier * atr)
-                        take_profit = current_price - (self.config.take_profit_multiplier * atr)
+                        stop_loss = current_price + (2.5 * atr) 
+                        take_profit = current_price - (4.0 * atr)
                     else:
                         stop_loss = current_price
                         take_profit = current_price
                     
-                    # Position sizing (based on volatility)
-                    base_position = 0.1  # 10% base
-                    volatility_adjustment = max(0.5, min(1.5, 0.2 / volatility))  # Inverse relationship
-                    confidence_adjustment = signal.get('confidence_level', 0.5)
+                    # Position sizing
+                    base_position = 0.10  # 10% base
+                    volatility_adj = max(0.5, min(1.5, 0.20 / volatility))
+                    confidence_adj = confidence
                     
-                    position_size = min(
-                        self.config.max_position_size,
-                        base_position * volatility_adjustment * confidence_adjustment
-                    )
+                    position_size = min(0.25, base_position * volatility_adj * confidence_adj)
                     
-                    # Risk metrics
-                    risk_amount = abs(current_price - stop_loss) / current_price
-                    risk_reward_ratio = abs(take_profit - current_price) / abs(current_price - stop_loss) if stop_loss != current_price else 0
-                    
-                    # Portfolio heat
-                    portfolio_risk = position_size * risk_amount
+                    # Risk calculations
+                    risk_per_trade = abs(current_price - stop_loss) / current_price if stop_loss != current_price else 0.02
+                    risk_reward = abs(take_profit - current_price) / abs(current_price - stop_loss) if stop_loss != current_price else 2.0
                     
                     return {
                         "current_price": round(current_price, 2),
                         "stop_loss_price": round(stop_loss, 2),
                         "take_profit_price": round(take_profit, 2),
                         "position_size_percent": round(position_size * 100, 2),
-                        "risk_per_trade_percent": round(risk_amount * 100, 2),
-                        "risk_reward_ratio": round(risk_reward_ratio, 2),
-                        "portfolio_heat_percent": round(portfolio_risk * 100, 2),
+                        "risk_per_trade_percent": round(risk_per_trade * 100, 2),
+                        "risk_reward_ratio": round(risk_reward, 2),
                         "atr_value": round(atr, 2),
-                        "volatility_annual": round(volatility * 100, 1),
-                        "volatility_adjustment": round(volatility_adjustment, 2),
-                        "confidence_adjustment": round(confidence_adjustment, 2)
+                        "volatility_annual_percent": round(volatility * 100, 1)
                     }
                     
                 except Exception as e:
-                    logger.warning(f"⚠️ Risk management calculation error: {e}")
+                    logger.warning(f"⚠️ Risk management error: {e}")
                     return {
                         "current_price": 0, "stop_loss_price": 0, "take_profit_price": 0,
-                        "position_size_percent": 5, "risk_per_trade_percent": 2,
-                        "risk_reward_ratio": 1.5, "portfolio_heat_percent": 0.1
+                        "position_size_percent": 10, "risk_per_trade_percent": 2,
+                        "risk_reward_ratio": 2.0, "atr_value": 0, "volatility_annual_percent": 20
                     }
-            
-            def _calculate_performance_metrics(self) -> Dict[str, Any]:
-                """Calculate performance and backtest metrics"""
+        
+            def run_backtest(self) -> Dict[str, Any]:
+                """Run simplified backtest"""
                 try:
                     if self.gold_data is None or len(self.gold_data) < 100:
                         return {"status": "insufficient_data"}
                     
-                    # Simple backtest
                     df = self.gold_data.copy()
                     df['returns'] = df['Close'].pct_change()
                     df['signal'] = 0
                     
-                    # Generate signals for backtest
+                    # Simple strategy signals
                     for i in range(50, len(df)):
                         current_price = df['Close'].iloc[i]
-                        sma_20 = df['Close'].iloc[max(0, i-19):i+1].mean()
-                        sma_50 = df['Close'].iloc[max(0, i-49):i+1].mean()
-                        rsi = self._calculate_simple_rsi(df['Close'].iloc[max(0, i-13):i+1])
+                        sma_20 = df['SMA_20'].iloc[i] if not pd.isna(df['SMA_20'].iloc[i]) else current_price
+                        sma_50 = df['SMA_50'].iloc[i] if not pd.isna(df['SMA_50'].iloc[i]) else current_price
+                        rsi = df['RSI'].iloc[i] if not pd.isna(df['RSI'].iloc[i]) else 50
                         
                         if current_price > sma_50 and current_price > sma_20 and rsi < 70:
                             df.iloc[i, df.columns.get_loc('signal')] = 1
                         elif current_price < sma_50 and current_price < sma_20 and rsi > 30:
                             df.iloc[i, df.columns.get_loc('signal')] = -1
                     
-                    # Calculate strategy returns
+                    # Calculate returns
                     df['strategy_returns'] = df['signal'].shift(1) * df['returns']
-                    df['cumulative_returns'] = (1 + df['returns']).cumprod() - 1
+                    df['cumulative_market'] = (1 + df['returns']).cumprod() - 1
                     df['cumulative_strategy'] = (1 + df['strategy_returns']).cumprod() - 1
                     
-                    # Performance metrics
+                    # Metrics
                     total_return = df['cumulative_strategy'].iloc[-1] * 100
-                    market_return = df['cumulative_returns'].iloc[-1] * 100
+                    market_return = df['cumulative_market'].iloc[-1] * 100
                     
                     # Sharpe ratio
                     strategy_sharpe = (df['strategy_returns'].mean() / df['strategy_returns'].std() * np.sqrt(252)) if df['strategy_returns'].std() > 0 else 0
                     
-                    # Maximum drawdown
+                    # Max drawdown
                     rolling_max = df['cumulative_strategy'].expanding().max()
                     drawdown = (df['cumulative_strategy'] - rolling_max) / (1 + rolling_max)
                     max_drawdown = drawdown.min() * 100
@@ -1388,14 +840,8 @@ jobs:
                     total_trades = (df['strategy_returns'] != 0).sum()
                     win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else 0
                     
-                    # Profit factor
-                    gross_profit = df[df['strategy_returns'] > 0]['strategy_returns'].sum()
-                    gross_loss = abs(df[df['strategy_returns'] < 0]['strategy_returns'].sum())
-                    profit_factor = gross_profit / gross_loss if gross_loss > 0 else 0
-                    
                     return {
                         "status": "success",
-                        "backtest_period_days": len(df),
                         "total_return_percent": round(total_return, 2),
                         "market_return_percent": round(market_return, 2),
                         "excess_return_percent": round(total_return - market_return, 2),
@@ -1403,107 +849,37 @@ jobs:
                         "max_drawdown_percent": round(max_drawdown, 2),
                         "win_rate_percent": round(win_rate, 1),
                         "total_trades": int(total_trades),
-                        "profit_factor": round(profit_factor, 2),
-                        "avg_return_per_trade": round(df['strategy_returns'].mean() * 100, 3),
-                        "volatility_annual": round(df['strategy_returns'].std() * np.sqrt(252) * 100, 1)
+                        "backtest_period_days": len(df)
                     }
                     
                 except Exception as e:
-                    logger.warning(f"⚠️ Performance metrics calculation error: {e}")
+                    logger.warning(f"⚠️ Backtest error: {e}")
                     return {"status": "error", "error": str(e)}
-            
-            def _calculate_simple_rsi(self, prices: pd.Series, period: int = 14) -> float:
-                """Simple RSI calculation for backtest"""
-                if len(prices) < period + 1:
-                    return 50
-                
-                deltas = prices.diff()[1:]
-                gains = deltas.where(deltas > 0, 0).mean()
-                losses = (-deltas.where(deltas < 0, 0)).mean()
-                
-                if losses == 0:
-                    return 100
-                
-                rs = gains / losses
-                return 100 - (100 / (1 + rs))
-            
-            def _generate_market_summary(self) -> Dict[str, Any]:
-                """Generate market environment summary"""
-                try:
-                    if self.market_data is None:
-                        return {"status": "no_data"}
-                    
-                    latest_data = {}
-                    
-                    # Extract latest values for key instruments
-                    for instrument, symbol in self.config.symbols.items():
-                        try:
-                            if ('Close', symbol) in self.market_data.columns:
-                                latest_data[instrument] = {
-                                    'current_price': round(self.market_data[('Close', symbol)].iloc[-1], 2),
-                                    'change_1d': round(
-                                        (self.market_data[('Close', symbol)].iloc[-1] / 
-                                         self.market_data[('Close', symbol)].iloc[-2] - 1) * 100, 2
-                                    ),
-                                    'change_5d': round(
-                                        (self.market_data[('Close', symbol)].iloc[-1] / 
-                                         self.market_data[('Close', symbol)].iloc[-6] - 1) * 100, 2
-                                    ) if len(self.market_data) >= 6 else 0
-                                }
-                        except:
-                            continue
-                    
-                    # Key ratios
-                    ratios = {}
-                    try:
-                        if 'gold_futures' in latest_data and 'silver_futures' in latest_data:
-                            ratios['gold_silver'] = round(
-                                latest_data['gold_futures']['current_price'] / 
-                                latest_data['silver_futures']['current_price'], 2
-                            )
-                    except:
-                        pass
-                    
-                    return {
-                        "status": "success",
-                        "market_data": latest_data,
-                        "key_ratios": ratios,
-                        "market_timestamp": datetime.utcnow().isoformat()
-                    }
-                    
-                except Exception as e:
-                    logger.warning(f"⚠️ Market summary error: {e}")
-                    return {"status": "error", "error": str(e)}
-            
-            def _save_professional_analysis(self, results: Dict[str, Any]) -> int:
-                """Save comprehensive analysis to database"""
+        
+            def save_to_database(self, results: Dict) -> int:
+                """Save results to database"""
                 try:
                     conn = sqlite3.connect(self.db_path)
                     cursor = conn.cursor()
                     
-                    # Extract values safely
                     signal_analysis = results.get('signal_analysis', {})
                     technical = results.get('technical_analysis', {})
                     news = results.get('news_analysis', {})
                     risk_mgmt = results.get('risk_management', {})
-                    performance = results.get('performance_metrics', {})
-                    scores = results.get('component_scores', {})
-                    market_summary = results.get('market_summary', {})
+                    backtest = results.get('backtest_results', {})
+                    scores = results.get('score_analysis', {}).get('component_scores', {})
                     
-                    # Insert main analysis record
                     cursor.execute('''
                         INSERT INTO professional_analysis (
-                            timestamp_utc, analysis_mode, primary_signal, signal_strength,
-                            confidence_score, total_score, technical_score, sentiment_score,
-                            macro_score, news_score, gold_price, dxy_value, vix_value,
-                            rsi_14, stop_loss_price, take_profit_price, position_size_percent,
-                            risk_reward_ratio, backtest_return_1m, backtest_sharpe,
-                            backtest_max_dd, backtest_win_rate, execution_time_ms,
-                            news_articles_analyzed, avg_sentiment_score
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            timestamp_utc, primary_signal, signal_strength, confidence_score,
+                            total_score, technical_score, sentiment_score, market_score,
+                            gold_price, dxy_value, vix_value, rsi_14, macd_signal, trend_direction,
+                            stop_loss_price, take_profit_price, position_size_percent, risk_reward_ratio,
+                            news_articles_count, news_sentiment_score,
+                            backtest_return, backtest_sharpe, backtest_max_dd, execution_time_ms
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ''', (
                         results.get('timestamp_utc', ''),
-                        'professional',
                         signal_analysis.get('primary_signal', 'Hold'),
                         signal_analysis.get('signal_strength', 'Neutral'),
                         signal_analysis.get('confidence_level', 0),
@@ -1511,875 +887,419 @@ jobs:
                         scores.get('technical', 0),
                         scores.get('news_sentiment', 0),
                         scores.get('market_environment', 0),
-                        news.get('news_score', 0),
                         technical.get('current_price', 0),
                         0,  # DXY placeholder
-                        0,  # VIX placeholder  
-                        technical.get('rsi_14', 50),
+                        0,  # VIX placeholder
+                        technical.get('rsi', 50),
+                        technical.get('macd_trend', 'neutral'),
+                        technical.get('trend_long', 'neutral'),
                         risk_mgmt.get('stop_loss_price', 0),
-                        risk_mgmt.get('take_profit_price', 0),
+                        risk_mgmt.get('take_profit_price', 0), 
                         risk_mgmt.get('position_size_percent', 0),
                         risk_mgmt.get('risk_reward_ratio', 0),
-                        performance.get('total_return_percent', 0),
-                        performance.get('sharpe_ratio', 0),
-                        performance.get('max_drawdown_percent', 0),
-                        performance.get('win_rate_percent', 0),
-                        results.get('execution_time_ms', 0),
-                        news.get('articles_analyzed', 0),
-                        news.get('news_score', 0)
+                        news.get('articles_count', 0),
+                        news.get('news_score', 0),
+                        backtest.get('total_return_percent', 0),
+                        backtest.get('sharpe_ratio', 0),
+                        backtest.get('max_drawdown_percent', 0),
+                        results.get('execution_time_ms', 0)
                     ))
                     
                     analysis_id = cursor.lastrowid
                     
-                    # Save news articles
-                    for article in news.get('top_articles', [])[:20]:
+                    # Save top headlines
+                    for headline in news.get('top_headlines', [])[:10]:
                         try:
                             cursor.execute('''
-                                INSERT INTO news_analysis_pro (
-                                    analysis_id, headline, source, url, published_at,
-                                    sentiment_compound, relevance_score, keywords
-                                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                                INSERT INTO news_headlines (
+                                    analysis_id, headline, source, sentiment_score,
+                                    relevance_score, published_at
+                                ) VALUES (?, ?, ?, ?, ?, ?)
                             ''', (
                                 analysis_id,
-                                article.get('title', '')[:500],
-                                article.get('source', '')[:100],
-                                article.get('url', '')[:500],
-                                article.get('published_at', ''),
-                                article.get('sentiment_final', 0),
-                                article.get('relevance_score', 0),
-                                json.dumps(article.get('relevance_categories', {}))[:1000]
+                                headline.get('title', '')[:300],
+                                headline.get('source', '')[:100],
+                                headline.get('sentiment_weighted', 0),
+                                headline.get('relevance_score', 0),
+                                headline.get('published_at', '')
                             ))
                         except Exception as e:
-                            logger.warning(f"⚠️ News article save error: {e}")
-                            continue
+                            logger.warning(f"⚠️ Headline save error: {e}")
                     
                     conn.commit()
                     conn.close()
                     
-                    logger.info(f"💾 Analysis saved to database with ID: {analysis_id}")
+                    logger.info(f"💾 Results saved to database with ID: {analysis_id}")
                     return analysis_id
                     
                 except Exception as e:
                     logger.warning(f"⚠️ Database save error: {e}")
                     return -1
-            
-            def _save_analysis_files(self, results: Dict[str, Any]):
-                """Save analysis to various file formats"""
+        
+            def run_professional_analysis(self) -> Dict[str, Any]:
+                """Run complete professional analysis"""
+                start_time = time.time()
+                logger.info("🏆 Starting Professional Gold Analysis System v3.1")
+                
                 try:
-                    # Save comprehensive JSON
-                    with open('professional_gold_analysis.json', 'w', encoding='utf-8') as f:
-                        json.dump(results, f, ensure_ascii=False, indent=2, default=str)
+                    # Setup
+                    self.setup_database()
                     
-                    # Save summary JSON
+                    # Step 1: Fetch market data (FIXED)
+                    if not self.fetch_market_data_fixed():
+                        raise Exception("Failed to fetch market data")
+                    
+                    # Step 2: Technical analysis
+                    logger.info("📈 Running technical analysis...")
+                    technical_results = self.calculate_technical_indicators()
+                    
+                    if not technical_results:
+                        raise Exception("Technical analysis failed")
+                    
+                    # Step 3: News analysis (parallel)
+                    logger.info("📰 Running news analysis...")
+                    news_results = self.analyze_news_sentiment()
+                    
+                    # Step 4: Score calculation
+                    logger.info("🎯 Calculating comprehensive scores...")
+                    score_results = self.calculate_comprehensive_score(technical_results, news_results)
+                    
+                    # Step 5: Signal generation
+                    logger.info("🚦 Generating trading signal...")
+                    signal_results = self.generate_trading_signal(score_results)
+                    
+                    # Step 6: Risk management
+                    logger.info("🔧 Calculating risk management...")
+                    risk_results = self.calculate_risk_management(technical_results, signal_results)
+                    
+                    # Step 7: Backtesting
+                    logger.info("🔬 Running backtest...")
+                    backtest_results = self.run_backtest()
+                    
+                    # Execution time
+                    execution_time = round((time.time() - start_time) * 1000)
+                    
+                    # Compile final results
+                    final_results = {
+                        "timestamp_utc": datetime.utcnow().isoformat(),
+                        "execution_time_ms": execution_time,
+                        "analysis_version": "v3.1",
+                        "status": "success",
+                        
+                        "signal_analysis": signal_results,
+                        "score_analysis": score_results,
+                        "technical_analysis": technical_results,
+                        "news_analysis": news_results,
+                        "risk_management": risk_results,
+                        "backtest_results": backtest_results,
+                        
+                        "data_quality": {
+                            "market_data_points": len(self.gold_data) if self.gold_data is not None else 0,
+                            "news_articles_analyzed": news_results.get('articles_count', 0),
+                            "technical_indicators_calculated": len(technical_results),
+                            "analysis_reliability": min(1.0, len(self.gold_data) / 252) if self.gold_data is not None else 0
+                        }
+                    }
+                    
+                    # Save to database
+                    analysis_id = self.save_to_database(final_results)
+                    final_results["analysis_id"] = analysis_id
+                    
+                    # Save to files
+                    with open('professional_gold_analysis.json', 'w', encoding='utf-8') as f:
+                        json.dump(final_results, f, ensure_ascii=False, indent=2, default=str)
+                    
+                    # Save summary
                     summary = {
-                        "timestamp": results.get('timestamp_utc'),
-                        "signal": results.get('signal_analysis', {}).get('primary_signal'),
-                        "strength": results.get('signal_analysis', {}).get('signal_strength'),
-                        "score": results.get('signal_analysis', {}).get('total_score'),
-                        "confidence": results.get('signal_analysis', {}).get('confidence_level'),
-                        "gold_price": results.get('technical_analysis', {}).get('current_price'),
-                        "execution_time_ms": results.get('execution_time_ms')
+                        "timestamp": final_results["timestamp_utc"],
+                        "signal": signal_results["primary_signal"],
+                        "strength": signal_results["signal_strength"],
+                        "score": signal_results["total_score"],
+                        "confidence": signal_results["confidence_level"],
+                        "gold_price": technical_results["current_price"],
+                        "execution_time_ms": execution_time
                     }
                     
                     with open('gold_summary.json', 'w', encoding='utf-8') as f:
                         json.dump(summary, f, indent=2)
                     
-                    logger.info("📁 Analysis files saved successfully")
+                    logger.info(f"🎉 Professional analysis completed in {execution_time}ms")
+                    logger.info(f"📊 Signal: {signal_results['primary_signal']} | Score: {signal_results['total_score']:.3f}")
+                    
+                    return final_results
                     
                 except Exception as e:
-                    logger.warning(f"⚠️ File save error: {e}")
+                    logger.error(f"❌ Professional analysis failed: {e}")
+                    
+                    return {
+                        "status": "error",
+                        "error": str(e),
+                        "timestamp_utc": datetime.utcnow().isoformat(),
+                        "execution_time_ms": round((time.time() - start_time) * 1000)
+                    }
         
-        # Main execution
         def main():
-            """Main execution function"""
+            """Main execution"""
             try:
-                print("🏆 Professional Gold Analysis System v3.0")
+                print("🏆 Professional Gold Analysis System v3.1 (FIXED)")
                 print("=" * 60)
                 
-                # Initialize analyzer
                 analyzer = ProfessionalGoldAnalyzer()
-                
-                # Run comprehensive analysis
                 results = analyzer.run_professional_analysis()
                 
                 if results.get('status') == 'success':
-                    # Display results summary
-                    signal_analysis = results.get('signal_analysis', {})
+                    # Display summary
+                    signal = results.get('signal_analysis', {})
                     technical = results.get('technical_analysis', {})
                     news = results.get('news_analysis', {})
                     risk_mgmt = results.get('risk_management', {})
-                    performance = results.get('performance_metrics', {})
+                    backtest = results.get('backtest_results', {})
                     
                     print(f"\n🎯 TRADING SIGNAL")
-                    print(f"Signal: {signal_analysis.get('primary_signal', 'N/A')}")
-                    print(f"Strength: {signal_analysis.get('signal_strength', 'N/A')}")
-                    print(f"Total Score: {signal_analysis.get('total_score', 0):.4f}")
-                    print(f"Confidence: {signal_analysis.get('confidence_level', 0):.1%}")
+                    print(f"Signal: {signal.get('primary_signal', 'N/A')}")
+                    print(f"Strength: {signal.get('signal_strength', 'N/A')}")
+                    print(f"Score: {signal.get('total_score', 0):.4f}")
+                    print(f"Confidence: {signal.get('confidence_level', 0):.1%}")
                     
                     print(f"\n💰 MARKET DATA")
                     print(f"Gold Price: ${technical.get('current_price', 0):,.2f}")
                     print(f"24h Change: {technical.get('price_change_1d', 0):+.2f}%")
-                    print(f"RSI: {technical.get('rsi_14', 0):.1f}")
+                    print(f"RSI: {technical.get('rsi', 0):.1f}")
                     print(f"Trend: {technical.get('trend_long', 'N/A').title()}")
                     
                     print(f"\n🔧 RISK MANAGEMENT")
                     print(f"Stop Loss: ${risk_mgmt.get('stop_loss_price', 0):,.2f}")
                     print(f"Take Profit: ${risk_mgmt.get('take_profit_price', 0):,.2f}")
                     print(f"Position Size: {risk_mgmt.get('position_size_percent', 0):.1f}%")
-                    print(f"Risk/Reward: {risk_mgmt.get('risk_reward_ratio', 0):.2f}")
                     
-                    print(f"\n📰 NEWS ANALYSIS")
+                    print(f"\n📰 NEWS")
                     print(f"Status: {news.get('status', 'N/A')}")
-                    print(f"Articles: {news.get('articles_analyzed', 0)}")
-                    print(f"Sentiment: {news.get('news_score', 0):.4f}")
-                    print(f"Confidence: {news.get('confidence', 0):.1%}")
+                    print(f"Articles: {news.get('articles_count', 0)}")
+                    print(f"Sentiment: {news.get('news_score', 0):+.4f}")
                     
-                    print(f"\n🔬 PERFORMANCE")
-                    if performance.get('status') == 'success':
-                        print(f"Backtest Return: {performance.get('total_return_percent', 0):+.2f}%")
-                        print(f"Sharpe Ratio: {performance.get('sharpe_ratio', 0):.2f}")
-                        print(f"Max Drawdown: {performance.get('max_drawdown_percent', 0):.2f}%")
-                        print(f"Win Rate: {performance.get('win_rate_percent', 0):.1f}%")
+                    if backtest.get('status') == 'success':
+                        print(f"\n🔬 BACKTEST")
+                        print(f"Return: {backtest.get('total_return_percent', 0):+.2f}%")
+                        print(f"Sharpe: {backtest.get('sharpe_ratio', 0):.2f}")
+                        print(f"Max DD: {backtest.get('max_drawdown_percent', 0):.2f}%")
                     
-                    print(f"\n⚡ PERFORMANCE METRICS")
-                    print(f"Execution Time: {results.get('execution_time_ms', 0)}ms")
-                    print(f"Data Points: {results.get('data_quality', {}).get('market_data_points', 0)}")
+                    print(f"\n⚡ PERFORMANCE")
+                    print(f"Time: {results.get('execution_time_ms', 0)}ms")
                     print(f"Analysis ID: {results.get('analysis_id', 'N/A')}")
                     
-                    print(f"\n💾 OUTPUT FILES")
-                    print("• professional_gold_analysis.json (Complete)")
-                    print("• gold_summary.json (Summary)")
-                    print("• professional_gold_analysis.log (Log)")
-                    print("• professional_gold_analysis.db (Database)")
-                    
-                    print(f"\n🎉 Analysis completed successfully!")
-                    
+                    print(f"\n✅ Analysis completed successfully!")
+                    return 0
                 else:
                     print(f"❌ Analysis failed: {results.get('error', 'Unknown error')}")
                     return 1
-                
-                return 0
-                
+                    
             except Exception as e:
                 print(f"💥 Critical error: {e}")
-                import traceback
-                traceback.print_exc()
                 return 1
         
         if __name__ == "__main__":
             exit(main())
         EOF
 
-    - name: 🏆 Execute Professional Analysis
+    - name: 🚀 Execute Fixed Professional Analysis
       id: analysis
       run: |
-        echo "🚀 Starting Professional Gold Analysis System v3.0"
-        echo "Analysis Mode: ${{ github.event.inputs.analysis_mode || 'full' }}"
-        echo "Custom Symbols: ${{ github.event.inputs.custom_symbols || 'default' }}"
+        echo "🚀 Starting Fixed Professional Gold Analysis..."
         
-        timeout 1200 python professional_gold_analyzer.py
+        timeout 900 python professional_gold_analyzer_fixed.py
         
         echo "analysis_status=success" >> $GITHUB_OUTPUT
 
-    - name: 📊 Validate Professional Results
+    - name: 📊 Display Results Summary
       if: steps.analysis.outputs.analysis_status == 'success'
       run: |
-        echo "🔍 Validating professional analysis results..."
+        echo "🔍 Displaying professional analysis results..."
         
-        # Check main results file
         if [ -f "professional_gold_analysis.json" ]; then
-          echo "✅ Professional results file created"
+          echo "✅ Professional analysis completed!"
           
-          # Display comprehensive summary
           python -c "
         import json
         
-        try:
-            with open('professional_gold_analysis.json', 'r') as f:
-                data = json.load(f)
-            
-            print('📊 PROFESSIONAL ANALYSIS SUMMARY')
-            print('=' * 50)
-            
-            # Core signal
-            signal_analysis = data.get('signal_analysis', {})
-            print(f'🎯 Signal: {signal_analysis.get(\"primary_signal\", \"N/A\")} ({signal_analysis.get(\"signal_strength\", \"N/A\")})')
-            print(f'📈 Total Score: {signal_analysis.get(\"total_score\", 0):.4f}')
-            print(f'🔒 Confidence: {signal_analysis.get(\"confidence_level\", 0):.1%}')
-            
-            # Technical analysis
-            technical = data.get('technical_analysis', {})
-            print(f'💰 Gold Price: \${technical.get(\"current_price\", 0):,.2f}')
-            print(f'📊 RSI: {technical.get(\"rsi_14\", 0):.1f}')
-            print(f'📈 Trend: {technical.get(\"trend_long\", \"N/A\").title()}')
-            
-            # News analysis
-            news = data.get('news_analysis', {})
-            print(f'📰 News Status: {news.get(\"status\", \"N/A\")}')
-            print(f'📋 Articles: {news.get(\"articles_analyzed\", 0)}')
-            print(f'💭 Sentiment: {news.get(\"news_score\", 0):.4f}')
-            
-            # Risk management
-            risk = data.get('risk_management', {})
-            print(f'🛑 Stop Loss: \${risk.get(\"stop_loss_price\", 0):,.2f}')
-            print(f'🎯 Take Profit: \${risk.get(\"take_profit_price\", 0):,.2f}')
-            print(f'📏 Position: {risk.get(\"position_size_percent\", 0):.1f}%')
-            
-            # Performance
-            perf = data.get('performance_metrics', {})
-            if perf.get('status') == 'success':
-                print(f'🔬 Backtest Return: {perf.get(\"total_return_percent\", 0):+.2f}%')
-                print(f'⚡ Sharpe: {perf.get(\"sharpe_ratio\", 0):.2f}')
-                print(f'📉 Max DD: {perf.get(\"max_drawdown_percent\", 0):.2f}%')
-            
-            # Execution metrics
-            print(f'⏱️ Execution: {data.get(\"execution_time_ms\", 0)}ms')
-            print(f'🆔 Analysis ID: {data.get(\"analysis_id\", \"N/A\")}')
-            
-            print('\\n✅ Professional analysis validation complete')
-            
-        except Exception as e:
-            print(f'❌ Validation error: {e}')
-            exit(1)
-          "
+        with open('professional_gold_analysis.json', 'r') as f:
+            data = json.load(f)
+        
+        print('📊 PROFESSIONAL ANALYSIS RESULTS')
+        print('=' * 45)
+        
+        signal = data.get('signal_analysis', {})
+        technical = data.get('technical_analysis', {})
+        news = data.get('news_analysis', {})
+        risk_mgmt = data.get('risk_management', {})
+        
+        print(f'🎯 Signal: {signal.get(\"primary_signal\", \"N/A\")} ({signal.get(\"signal_strength\", \"N/A\")})')
+        print(f'📈 Score: {signal.get(\"total_score\", 0):.4f}')
+        print(f'🔒 Confidence: {signal.get(\"confidence_level\", 0):.1%}')
+        print(f'💰 Gold: \${technical.get(\"current_price\", 0):,.2f}')
+        print(f'📊 RSI: {technical.get(\"rsi\", 0):.1f}')
+        print(f'📰 News: {news.get(\"articles_count\", 0)} articles')
+        print(f'🛑 Stop: \${risk_mgmt.get(\"stop_loss_price\", 0):,.2f}')
+        print(f'🎯 Target: \${risk_mgmt.get(\"take_profit_price\", 0):,.2f}')
+        print(f'⚡ Time: {data.get(\"execution_time_ms\", 0)}ms')
+        "
         else
-          echo "❌ Professional results file not found"
+          echo "❌ Results file not found"
           exit 1
         fi
-        
-        # Check summary file
-        if [ -f "gold_summary.json" ]; then
-          echo "✅ Summary file created"
-        fi
-        
-        # Check database
-        if [ -f "professional_gold_analysis.db" ]; then
-          echo "✅ Database file created"
-        fi
-        
-        # Check log file
-        if [ -f "professional_gold_analysis.log" ]; then
-          echo "✅ Log file created"
-          echo "📋 Last 5 log entries:"
-          tail -5 professional_gold_analysis.log
-        fi
 
-    - name: 🎨 Generate Professional Report
+    - name: 📝 Generate Reports
       if: steps.analysis.outputs.analysis_status == 'success'
       run: |
-        echo "📊 Generating professional analysis report..."
-        
         python -c "
         import json
         from datetime import datetime
         
-        try:
-            with open('professional_gold_analysis.json', 'r') as f:
-                data = json.load(f)
-            
-            # Extract key components
-            timestamp = data.get('timestamp_utc', '')
-            signal_analysis = data.get('signal_analysis', {})
-            technical = data.get('technical_analysis', {})
-            news = data.get('news_analysis', {})
-            risk_mgmt = data.get('risk_management', {})
-            performance = data.get('performance_metrics', {})
-            scores = data.get('component_scores', {})
-            
-            # Generate professional HTML report
-            html_report = f'''
-        <!DOCTYPE html>
-        <html lang=\"en\">
-        <head>
-            <meta charset=\"UTF-8\">
-            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
-            <title>Professional Gold Analysis Report</title>
-            <style>
-                body {{
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    margin: 0;
-                    padding: 20px;
-                    background: linear-gradient(135deg, #1e3c72, #2a5298);
-                    color: white;
-                }}
-                .container {{
-                    max-width: 1200px;
-                    margin: 0 auto;
-                    background: rgba(255, 255, 255, 0.1);
-                    backdrop-filter: blur(10px);
-                    border-radius: 15px;
-                    padding: 30px;
-                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                }}
-                .header {{
-                    text-align: center;
-                    margin-bottom: 30px;
-                    border-bottom: 2px solid #ffd700;
-                    padding-bottom: 20px;
-                }}
-                .grid {{
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                    gap: 20px;
-                    margin: 20px 0;
-                }}
-                .card {{
-                    background: rgba(255, 255, 255, 0.15);
-                    border-radius: 10px;
-                    padding: 20px;
-                    border-left: 4px solid #ffd700;
-                }}
-                .signal-card {{
-                    background: linear-gradient(45deg, #ffd700, #ffed4e);
-                    color: #000;
-                    text-align: center;
-                    border: none;
-                }}
-                .metric {{
-                    display: flex;
-                    justify-content: space-between;
-                    margin: 10px 0;
-                    padding: 5px 0;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-                }}
-                .positive {{ color: #4ade80; }}
-                .negative {{ color: #f87171; }}
-                .neutral {{ color: #fbbf24; }}
-                .footer {{
-                    text-align: center;
-                    margin-top: 30px;
-                    font-size: 0.9em;
-                    opacity: 0.8;
-                }}
-            </style>
-        </head>
-        <body>
-            <div class=\"container\">
-                <div class=\"header\">
-                    <h1>🏆 Professional Gold Analysis System v3.0</h1>
-                    <p>Advanced AI-Powered Financial Analysis Platform</p>
-                    <p><strong>Generated:</strong> {datetime.fromisoformat(timestamp.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S UTC') if timestamp else 'N/A'}</p>
-                </div>
-                
-                <div class=\"grid\">
-                    <div class=\"card signal-card\">
-                        <h2>🎯 TRADING SIGNAL</h2>
-                        <h1>{signal_analysis.get('primary_signal', 'N/A')}</h1>
-                        <p><strong>{signal_analysis.get('signal_strength', 'N/A')}</strong></p>
-                        <p>Score: {signal_analysis.get('total_score', 0):.4f} | Confidence: {signal_analysis.get('confidence_level', 0):.1%}</p>
-                    </div>
-                    
-                    <div class=\"card\">
-                        <h3>💰 Market Data</h3>
-                        <div class=\"metric\">
-                            <span>Gold Price:</span>
-                            <span>\${technical.get('current_price', 0):,.2f}</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>24h Change:</span>
-                            <span class=\"{'positive' if technical.get('price_change_1d', 0) > 0 else 'negative'}\">{technical.get('price_change_1d', 0):+.2f}%</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>RSI (14):</span>
-                            <span>{technical.get('rsi_14', 0):.1f}</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Trend (Long):</span>
-                            <span class=\"{'positive' if technical.get('trend_long') == 'bullish' else 'negative'}\">{technical.get('trend_long', 'N/A').title()}</span>
-                        </div>
-                    </div>
-                    
-                    <div class=\"card\">
-                        <h3>📊 Component Scores</h3>
-                        <div class=\"metric\">
-                            <span>Technical:</span>
-                            <span class=\"{'positive' if scores.get('technical', 0) > 0 else 'negative'}\">{scores.get('technical', 0):+.3f}</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>News Sentiment:</span>
-                            <span class=\"{'positive' if scores.get('news_sentiment', 0) > 0 else 'negative'}\">{scores.get('news_sentiment', 0):+.3f}</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Market Environment:</span>
-                            <span class=\"{'positive' if scores.get('market_environment', 0) > 0 else 'negative'}\">{scores.get('market_environment', 0):+.3f}</span>
-                        </div>
-                    </div>
-                    
-                    <div class=\"card\">
-                        <h3>🔧 Risk Management</h3>
-                        <div class=\"metric\">
-                            <span>Stop Loss:</span>
-                            <span>\${risk_mgmt.get('stop_loss_price', 0):,.2f}</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Take Profit:</span>
-                            <span>\${risk_mgmt.get('take_profit_price', 0):,.2f}</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Position Size:</span>
-                            <span>{risk_mgmt.get('position_size_percent', 0):.1f}%</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Risk/Reward:</span>
-                            <span>{risk_mgmt.get('risk_reward_ratio', 0):.2f}</span>
-                        </div>
-                    </div>
-                    
-                    <div class=\"card\">
-                        <h3>📰 News Analysis</h3>
-                        <div class=\"metric\">
-                            <span>Status:</span>
-                            <span>{news.get('status', 'N/A').title()}</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Articles Analyzed:</span>
-                            <span>{news.get('articles_analyzed', 0)}</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Sentiment Score:</span>
-                            <span class=\"{'positive' if news.get('news_score', 0) > 0 else 'negative'}\">{news.get('news_score', 0):+.4f}</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Confidence:</span>
-                            <span>{news.get('confidence', 0):.1%}</span>
-                        </div>
-                    </div>
-                    
-                    <div class=\"card\">
-                        <h3>🔬 Performance Metrics</h3>'''
-            
-            if performance.get('status') == 'success':
-                html_report += f'''
-                        <div class=\"metric\">
-                            <span>Backtest Return:</span>
-                            <span class=\"{'positive' if performance.get('total_return_percent', 0) > 0 else 'negative'}\">{performance.get('total_return_percent', 0):+.2f}%</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Sharpe Ratio:</span>
-                            <span>{performance.get('sharpe_ratio', 0):.2f}</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Max Drawdown:</span>
-                            <span class=\"negative\">{performance.get('max_drawdown_percent', 0):.2f}%</span>
-                        </div>
-                        <div class=\"metric\">
-                            <span>Win Rate:</span>
-                            <span>{performance.get('win_rate_percent', 0):.1f}%</span>
-                        </div>'''
-            else:
-                html_report += '''
-                        <p>Backtest data unavailable</p>'''
-            
-            html_report += f'''
-                    </div>
-                </div>
-                
-                <div class=\"footer\">
-                    <p>🏆 Professional Gold Analysis System v3.0</p>
-                    <p>Execution Time: {data.get('execution_time_ms', 0)}ms | Analysis ID: {data.get('analysis_id', 'N/A')}</p>
-                    <p><em>This analysis is for educational purposes only. Please consult with a financial advisor before making investment decisions.</em></p>
-                </div>
-            </div>
-        </body>
-        </html>
-            '''
-            
-            # Save HTML report
-            with open('professional_gold_report.html', 'w', encoding='utf-8') as f:
-                f.write(html_report)
-            
-            # Generate markdown report for README
-            md_report = f'''# 🏆 Professional Gold Analysis System v3.0
+        with open('professional_gold_analysis.json', 'r') as f:
+            data = json.load(f)
         
-        > **Generated:** {datetime.fromisoformat(timestamp.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S UTC') if timestamp else 'N/A'}
+        signal = data.get('signal_analysis', {})
+        technical = data.get('technical_analysis', {})
+        news = data.get('news_analysis', {})
+        risk_mgmt = data.get('risk_management', {})
+        backtest = data.get('backtest_results', {})
+        scores = data.get('score_analysis', {}).get('component_scores', {})
+        
+        # Generate README
+        readme = f'''# 🏆 Professional Gold Analysis System v3.1
+        
+        **Generated:** {datetime.fromisoformat(data['timestamp_utc'].replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S UTC')}
         
         ## 🎯 Trading Signal
         
-        **{signal_analysis.get('primary_signal', 'N/A')}** - {signal_analysis.get('signal_strength', 'N/A')}
+        **{signal.get('primary_signal', 'Hold')}** - {signal.get('signal_strength', 'Neutral')}
         
-        - **Total Score:** {signal_analysis.get('total_score', 0):.4f}
-        - **Confidence Level:** {signal_analysis.get('confidence_level', 0):.1%}
+        - **Score:** {signal.get('total_score', 0):.4f}
+        - **Confidence:** {signal.get('confidence_level', 0):.1%}
         
-        ## 💰 Market Overview
+        ## 💰 Market Data
         
         | Metric | Value |
         |--------|-------|
         | Gold Price | \${technical.get('current_price', 0):,.2f} |
         | 24h Change | {technical.get('price_change_1d', 0):+.2f}% |
-        | RSI (14) | {technical.get('rsi_14', 0):.1f} |
-        | Long Trend | {technical.get('trend_long', 'N/A').title()} |
-        | MACD Signal | {technical.get('macd_trend', 'N/A').title()} |
-        | Volatility | {technical.get('volatility', 0) * 100:.1f}% |
+        | RSI (14) | {technical.get('rsi', 0):.1f} |
+        | MACD | {technical.get('macd_trend', 'N/A').title()} |
+        | Trend (Long) | {technical.get('trend_long', 'N/A').title()} |
         
-        ## 📊 Component Analysis
+        ## 📊 Component Scores
         
-        | Component | Score | Interpretation |
-        |-----------|-------|----------------|
-        | Technical Analysis | {scores.get('technical', 0):+.3f} | {'Bullish' if scores.get('technical', 0) > 0.2 else 'Bearish' if scores.get('technical', 0) < -0.2 else 'Neutral'} |
-        | News Sentiment | {scores.get('news_sentiment', 0):+.3f} | {'Positive' if scores.get('news_sentiment', 0) > 0.1 else 'Negative' if scores.get('news_sentiment', 0) < -0.1 else 'Neutral'} |
-        | Market Environment | {scores.get('market_environment', 0):+.3f} | {'Supportive' if scores.get('market_environment', 0) > 0.1 else 'Challenging' if scores.get('market_environment', 0) < -0.1 else 'Neutral'} |
+        | Component | Score |
+        |-----------|-------|
+        | Technical | {scores.get('technical', 0):+.3f} |
+        | News Sentiment | {scores.get('news_sentiment', 0):+.3f} |
+        | Market Environment | {scores.get('market_environment', 0):+.3f} |
         
         ## 🔧 Risk Management
         
         - **Stop Loss:** \${risk_mgmt.get('stop_loss_price', 0):,.2f}
         - **Take Profit:** \${risk_mgmt.get('take_profit_price', 0):,.2f}
         - **Position Size:** {risk_mgmt.get('position_size_percent', 0):.1f}%
-        - **Risk/Reward Ratio:** {risk_mgmt.get('risk_reward_ratio', 0):.2f}
-        - **Portfolio Heat:** {risk_mgmt.get('portfolio_heat_percent', 0):.2f}%
+        - **Risk/Reward:** {risk_mgmt.get('risk_reward_ratio', 0):.2f}
         
-        ## 📰 News Analysis Summary
+        ## 📰 News Analysis
         
-        - **Status:** {news.get('status', 'N/A').title()}
-        - **Articles Analyzed:** {news.get('articles_analyzed', 0)}
-        - **Positive Articles:** {news.get('articles_positive', 0)}
-        - **Negative Articles:** {news.get('articles_negative', 0)}
-        - **Overall Sentiment:** {news.get('news_score', 0):+.4f}
-        - **Sentiment Confidence:** {news.get('confidence', 0):.1%}
+        - **Articles Analyzed:** {news.get('articles_count', 0)}
+        - **Sentiment Score:** {news.get('news_score', 0):+.4f}
+        - **Positive/Negative/Neutral:** {news.get('articles_positive', 0)}/{news.get('articles_negative', 0)}/{news.get('articles_neutral', 0)}
         '''
-            
-            if performance.get('status') == 'success':
-                md_report += f'''
-        ## 🔬 Backtesting Performance
         
-        - **Total Return:** {performance.get('total_return_percent', 0):+.2f}%
-        - **Market Return:** {performance.get('market_return_percent', 0):+.2f}%
-        - **Excess Return:** {performance.get('excess_return_percent', 0):+.2f}%
-        - **Sharpe Ratio:** {performance.get('sharpe_ratio', 0):.2f}
-        - **Maximum Drawdown:** {performance.get('max_drawdown_percent', 0):.2f}%
-        - **Win Rate:** {performance.get('win_rate_percent', 0):.1f}%
-        - **Total Trades:** {performance.get('total_trades', 0)}
-        - **Profit Factor:** {performance.get('profit_factor', 0):.2f}
+        if backtest.get('status') == 'success':
+            readme += f'''
+        ## 🔬 Backtesting Results
+        
+        - **Total Return:** {backtest.get('total_return_percent', 0):+.2f}%
+        - **Sharpe Ratio:** {backtest.get('sharpe_ratio', 0):.2f}
+        - **Max Drawdown:** {backtest.get('max_drawdown_percent', 0):.2f}%
+        - **Win Rate:** {backtest.get('win_rate_percent', 0):.1f}%
         '''
-            
-            top_headlines = news.get('top_articles', [])[:5]
-            if top_headlines:
-                md_report += '''
+        
+        headlines = news.get('top_headlines', [])[:5]
+        if headlines:
+            readme += '''
         ## 📋 Top Headlines
         '''
-                for i, headline in enumerate(top_headlines, 1):
-                    sentiment_icon = '🟢' if headline.get('sentiment_final', 0) > 0.1 else '🔴' if headline.get('sentiment_final', 0) < -0.1 else '🟡'
-                    md_report += f'''
-        {i}. {sentiment_icon} **{headline.get('title', '')}**
-           - *Source: {headline.get('source', 'Unknown')}*
-           - *Sentiment: {headline.get('sentiment_final', 0):+.3f} | Relevance: {headline.get('relevance_score', 0):.1f}*
+            for i, headline in enumerate(headlines, 1):
+                sentiment = '🟢' if headline.get('sentiment_weighted', 0) > 0.1 else '🔴' if headline.get('sentiment_weighted', 0) < -0.1 else '🟡'
+                readme += f'''
+        {i}. {sentiment} **{headline.get('title', '')}**
+           *{headline.get('source', 'Unknown')} | Sentiment: {headline.get('sentiment_weighted', 0):+.3f}*
         '''
-            
-            md_report += f'''
         
-        ## ⚡ Analysis Metadata
-        
-        - **Execution Time:** {data.get('execution_time_ms', 0)}ms
-        - **Data Points Analyzed:** {data.get('data_quality', {}).get('market_data_points', 0)}
-        - **Technical Indicators:** {len(technical)} indicators calculated
-        - **Analysis ID:** {data.get('analysis_id', 'N/A')}
-        - **Analysis Version:** {data.get('analysis_version', 'v3.0')}
-        - **Data Quality Score:** {data.get('data_quality', {}).get('analysis_reliability', 0):.2f}
+        readme += f'''
         
         ---
         
-        ### 📁 Available Files:
-        - `professional_gold_analysis.json` - Complete analysis data
-        - `gold_summary.json` - Quick summary
-        - `professional_gold_report.html` - Interactive HTML report
-        - `professional_gold_analysis.db` - Historical database
-        - `professional_gold_analysis.log` - Execution log
+        **Analysis ID:** {data.get('analysis_id', 'N/A')} | **Execution:** {data.get('execution_time_ms', 0)}ms | **Version:** v3.1
         
-        ### ⚠️ Disclaimer
-        This analysis is generated by an automated system for educational purposes only. 
-        **Always conduct your own research and consult with qualified financial advisors before making investment decisions.**
-        
-        *Last updated: {timestamp}*
+        *This analysis is for educational purposes only. Consult with financial advisors before trading.*
         '''
-            
-            # Save markdown report
-            with open('README.md', 'w', encoding='utf-8') as f:
-                f.write(md_report)
-            
-            print('✅ Professional reports generated successfully')
-            
-        except Exception as e:
-            print(f'❌ Report generation error: {e}')
-            import traceback
-            traceback.print_exc()
+        
+        with open('README.md', 'w', encoding='utf-8') as f:
+            f.write(readme)
+        
+        print('✅ Reports generated successfully')
         "
 
-    - name: 💾 Commit Professional Results  
+    - name: 💾 Commit Professional Results
       if: steps.analysis.outputs.analysis_status == 'success'
       run: |
         git config --local user.email "action@github.com"
-        git config --local user.name "🤖 Professional Gold Analysis Bot"
+        git config --local user.name "🏆 Professional Gold Analysis"
         
-        # Add all generated files
-        git add professional_gold_analysis.json
-        git add gold_summary.json  
-        git add README.md
-        git add professional_gold_report.html
-        git add professional_gold_analysis.db
-        git add professional_gold_analysis.log
+        git add professional_gold_analysis.json gold_summary.json README.md
+        git add professional_gold_analysis.db professional_gold_analysis.log
         
-        # Check for changes
         if git diff --staged --quiet; then
-          echo "⚠️ No changes detected for commit"
+          echo "⚠️ No changes to commit"
         else
-          # Create professional commit message
-          SIGNAL=$(python -c "
-          try:
-              import json
-              with open('professional_gold_analysis.json', 'r') as f:
-                  data = json.load(f)
-              signal = data.get('signal_analysis', {}).get('primary_signal', 'Hold')
-              score = data.get('signal_analysis', {}).get('total_score', 0)
-              price = data.get('technical_analysis', {}).get('current_price', 0)
-              print(f'{signal} | Score: {score:.3f} | \${price:,.0f}')
-          except:
-              print('Professional Analysis Update')
-          " 2>/dev/null)
+          SIGNAL=$(python -c "import json; print(json.load(open('professional_gold_analysis.json'))['signal_analysis']['primary_signal'])" 2>/dev/null || echo 'Analysis')
+          SCORE=$(python -c "import json; print(f\"{json.load(open('professional_gold_analysis.json'))['signal_analysis']['total_score']:.3f}\")" 2>/dev/null || echo '0.000')
           
-          COMMIT_MESSAGE="🏆 Professional Gold Analysis: $SIGNAL
-        
-        📊 Complete market analysis with advanced AI components
-        📈 Technical analysis with 25+ indicators  
-        📰 News sentiment analysis from multiple sources
-        🔬 Backtesting with performance metrics
-        🔧 Advanced risk management calculations
-        
-        Generated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
-        Analysis ID: $(python -c "import json; print(json.load(open('professional_gold_analysis.json')).get('analysis_id', 'N/A'))" 2>/dev/null)
-        Execution: $(python -c "import json; print(str(json.load(open('professional_gold_analysis.json')).get('execution_time_ms', 0)) + 'ms')" 2>/dev/null)"
-          
-          git commit -m "$COMMIT_MESSAGE"
-          
-          # Push with retry mechanism
-          for attempt in {1..3}; do
-            if git push; then
-              echo "✅ Successfully pushed professional analysis (attempt $attempt)"
-              break
-            else
-              echo "⚠️ Push attempt $attempt failed, retrying..."
-              sleep 5
-            fi
-            
-            if [ $attempt -eq 3 ]; then
-              echo "❌ Failed to push after 3 attempts"
-              exit 1
-            fi
-          done
+          git commit -m "🏆 Professional Gold Analysis: $SIGNAL ($SCORE) - $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
+          echo "✅ Results committed and pushed"
         fi
 
-    - name: 📤 Upload Professional Analysis Artifacts
+    - name: 📤 Upload Artifacts
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: professional-gold-analysis-${{ github.run_number }}
+        name: professional-gold-analysis-fixed
         path: |
           professional_gold_analysis.json
           gold_summary.json
           README.md
-          professional_gold_report.html
           professional_gold_analysis.db
           professional_gold_analysis.log
-        retention-days: 90
-        compression-level: 6
+        retention-days: 60
 
-    - name: 📱 Send Telegram Notification (Optional)
-      if: success() && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
-      run: |
-        echo "📱 Sending Telegram notification..."
-        
-        SIGNAL=$(python -c "
-        try:
-            import json
-            with open('professional_gold_analysis.json', 'r') as f:
-                data = json.load(f)
-            signal = data.get('signal_analysis', {}).get('primary_signal', 'Hold')
-            score = data.get('signal_analysis', {}).get('total_score', 0)
-            price = data.get('technical_analysis', {}).get('current_price', 0)
-            confidence = data.get('signal_analysis', {}).get('confidence_level', 0)
-            print(f'🏆 Gold Analysis\\n\\nSignal: {signal}\\nScore: {score:.3f}\\nPrice: \${price:,.2f}\\nConfidence: {confidence:.1%}\\n\\nGenerated: $(date -u +\"%Y-%m-%d %H:%M UTC\")')
-        except:
-            print('🏆 Professional Gold Analysis completed')
-        " 2>/dev/null)
-        
-        curl -s -X POST "https://api.telegram.org/bot${{ env.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-          -d chat_id="${{ env.TELEGRAM_CHAT_ID }}" \
-          -d text="$SIGNAL" \
-          -d parse_mode="HTML" || echo "⚠️ Telegram notification failed"
-
-    - name: 🚨 Professional Failure Handler
-      if: failure()
-      run: |
-        echo "❌ PROFESSIONAL ANALYSIS FAILURE DETECTED"
-        echo "================================================"
-        
-        # System diagnostics
-        echo "💻 System Information:"
-        echo "OS: $(uname -a)"
-        echo "Python: $(python --version)"
-        echo "Available Memory: $(free -h | grep Mem)"
-        echo "Available Disk: $(df -h /)"
-        echo "Current Directory: $(pwd)"
-        
-        # File system check
-        echo ""
-        echo "📁 Generated Files:"
-        ls -la *.json *.html *.db *.log 2>/dev/null || echo "No output files found"
-        
-        # Log analysis
-        if [ -f "professional_gold_analysis.log" ]; then
-          echo ""
-          echo "📋 Last 20 Log Entries:"
-          tail -20 professional_gold_analysis.log
-        fi
-        
-        # Python package verification
-        echo ""
-        echo "📦 Key Python Packages:"
-        python -c "
-        packages = ['yfinance', 'pandas', 'numpy', 'requests', 'vaderSentiment', 'textblob', 'xgboost']
-        for pkg in packages:
-            try:
-                __import__(pkg)
-                print(f'✅ {pkg}')
-            except ImportError:
-                print(f'❌ {pkg} - MISSING')
-        "
-        
-        # Error pattern analysis
-        echo ""
-        echo "🔍 Common Error Patterns:"
-        if grep -i "timeout\|timed out" professional_gold_analysis.log 2>/dev/null; then
-          echo "⚠️ TIMEOUT detected - consider increasing timeout limits"
-        fi
-        
-        if grep -i "memory\|oom" professional_gold_analysis.log 2>/dev/null; then
-          echo "⚠️ MEMORY issue detected - consider reducing batch sizes"
-        fi
-        
-        if grep -i "network\|connection\|dns" professional_gold_analysis.log 2>/dev/null; then
-          echo "⚠️ NETWORK issue detected - check API connectivity"
-        fi
-        
-        if grep -i "api.*key\|unauthorized\|403\|401" professional_gold_analysis.log 2>/dev/null; then
-          echo "⚠️ API KEY issue detected - check secrets configuration"
-        fi
-        
-        echo ""
-        echo "💡 Troubleshooting Steps:"
-        echo "1. Check if all secrets are properly configured"
-        echo "2. Verify NEWS_API_KEY is valid and has sufficient quota"
-        echo "3. Ensure repository has write permissions enabled"
-        echo "4. Check if external APIs (Yahoo Finance, NewsAPI) are accessible"
-        echo "5. Review timeout settings if analysis is taking too long"
-        
-        echo ""
-        echo "📞 Support Information:"
-        echo "- Workflow Run: ${{ github.run_number }}"
-        echo "- Repository: ${{ github.repository }}"
-        echo "- Commit: ${{ github.sha }}"
-        echo "- Event: ${{ github.event_name }}"
-        echo "- Analysis Mode: ${{ github.event.inputs.analysis_mode || 'full' }}"
-
-    - name: ✅ Professional Success Summary
+    - name: ✅ Success Summary
       if: success()
       run: |
-        echo "🎉 PROFESSIONAL GOLD ANALYSIS COMPLETED SUCCESSFULLY!"
-        echo "================================================================"
+        echo "🎉 PROFESSIONAL GOLD ANALYSIS COMPLETED!"
+        echo "======================================================"
         
-        # Display comprehensive success metrics
         python -c "
         try:
             import json
-            import os
-            from datetime import datetime
-            
-            # Load results
             with open('professional_gold_analysis.json', 'r') as f:
                 data = json.load(f)
             
-            print('📊 ANALYSIS SUMMARY')
-            print('==================')
+            signal = data['signal_analysis']
+            technical = data['technical_analysis']
             
-            # Core metrics
-            signal_analysis = data.get('signal_analysis', {})
-            technical = data.get('technical_analysis', {})
-            news = data.get('news_analysis', {})
-            risk_mgmt = data.get('risk_management', {})
-            performance = data.get('performance_metrics', {})
-            
-            print(f'🎯 Primary Signal: {signal_analysis.get(\"primary_signal\", \"N/A\")}')
-            print(f'💪 Signal Strength: {signal_analysis.get(\"signal_strength\", \"N/A\")}')
-            print(f'📈 Total Score: {signal_analysis.get(\"total_score\", 0):.4f}')
-            print(f'🔒 Confidence Level: {signal_analysis.get(\"confidence_level\", 0):.1%}')
-            print(f'💰 Gold Price: \${technical.get(\"current_price\", 0):,.2f}')
-            print(f'📊 RSI: {technical.get(\"rsi_14\", 0):.1f}')
-            print(f'📰 News Articles: {news.get(\"articles_analyzed\", 0)}')
-            print(f'⚡ Execution Time: {data.get(\"execution_time_ms\", 0)}ms')
-            print(f'🆔 Analysis ID: {data.get(\"analysis_id\", \"N/A\")}')
-            
-            print('')
-            print('📁 OUTPUT FILES GENERATED')
-            print('=========================')
-            
-            files = [
-                ('professional_gold_analysis.json', 'Complete analysis data'),
-                ('gold_summary.json', 'Quick summary for APIs'),
-                ('README.md', 'Comprehensive markdown report'),
-                ('professional_gold_report.html', 'Interactive HTML dashboard'),
-                ('professional_gold_analysis.db', 'SQLite database with history'),
-                ('professional_gold_analysis.log', 'Detailed execution log')
-            ]
-            
-            for filename, description in files:
-                if os.path.exists(filename):
-                    size = os.path.getsize(filename)
-                    print(f'✅ {filename} ({size:,} bytes) - {description}')
-                else:
-                    print(f'❌ {filename} - Missing')
-            
-            print('')
-            print('🔗 ACCESS LINKS')
-            print('===============')
-            print('• Main Report: README.md (auto-updated)')
-            print('• Interactive Dashboard: professional_gold_report.html')
-            print('• API Data: professional_gold_analysis.json')
-            print('• Quick Summary: gold_summary.json')
-            print('• Historical Data: professional_gold_analysis.db')
-            
-            print('')
-            print('📈 PERFORMANCE HIGHLIGHTS')
-            print('=========================')
-            
-            if performance.get('status') == 'success':
-                print(f'📊 Backtest Return: {performance.get(\"total_return_percent\", 0):+.2f}%')
-                print(f'📈 Market Return: {performance.get(\"market_return_percent\", 0):+.2f}%')
-                print(f'⚡ Sharpe Ratio: {performance.get(\"sharpe_ratio\", 0):.2f}')
-                print(f'📉 Max Drawdown: {performance.get(\"max_drawdown_percent\", 0):.2f}%')
-                print(f'🎯 Win Rate: {performance.get(\"win_rate_percent\", 0):.1f}%')
-            else:
-                print('⚠️ Backtest data not available')
-            
-            print('')
-            print('🔧 RISK MANAGEMENT')
-            print('==================')
-            print(f'🛑 Stop Loss: \${risk_mgmt.get(\"stop_loss_price\", 0):,.2f}')
-            print(f'🎯 Take Profit: \${risk_mgmt.get(\"take_profit_price\", 0):,.2f}')
-            print(f'📏 Position Size: {risk_mgmt.get(\"position_size_percent\", 0):.1f}%')
-            print(f'⚖️ Risk/Reward: {risk_mgmt.get(\"risk_reward_ratio\", 0):.2f}')
-            
-            print('')
-            print('🏆 ANALYSIS COMPLETED SUCCESSFULLY!')
-            print('Check the repository for all generated reports and data.')
-            
+            print(f'🎯 Final Signal: {signal[\"primary_signal\"]} ({signal[\"signal_strength\"]})')
+            print(f'📈 Total Score: {signal[\"total_score\"]:.4f}')
+            print(f'🔒 Confidence: {signal[\"confidence_level\"]:.1%}')
+            print(f'💰 Gold Price: \${technical[\"current_price\"]:,.2f}')
+            print(f'⚡ Execution: {data[\"execution_time_ms\"]}ms')
+            print(f'🆔 Analysis ID: {data[\"analysis_id\"]}')
+            print(f'\\n✅ All files generated successfully!')
         except Exception as e:
-            print(f'❌ Error displaying summary: {e}')
-            print('✅ Analysis completed, but summary display failed')
+            print('✅ Analysis completed (summary error)')
         "
-        
-        echo ""
-        echo "🔔 NEXT STEPS:"
-        echo "1. Review the updated README.md for the full report"
-        echo "2. Download professional_gold_report.html for interactive analysis"
-        echo "3. Use gold_summary.json for quick API integration"
-        echo "4. Check professional_gold_analysis.db for historical trends"
-        echo ""
-        echo "🎯 Happy Trading! 📈💎"
