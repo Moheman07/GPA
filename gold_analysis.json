@@ -1,61 +1,36 @@
 {
-  "timestamp": "2025-08-08T21:07:44.180331",
-  "last_update": "2025-08-08 21:07 UTC",
-  "market_status": {
-    "current_time_utc": "2025-08-08 21:07:44 UTC",
-    "ny_time": "2025-08-08 17:07:44 EST",
-    "london_time": "2025-08-08 22:07:44 GMT",
-    "ny_market_status": "Closed",
-    "london_market_status": "Closed",
-    "is_major_trading_session": false,
-    "market_overlap": false
-  },
+  "timestamp": "2025-08-08T21:16:34.463207",
   "gold_analysis": {
-    "price_usd": 3458.5,
-    "signal": "Weak Buy",
-    "confidence": "Medium",
-    "action_recommendation": "شراء حذر بحجم صغير",
-    "technical_score": 1.35,
-    "component_analysis": {
-      "trend": 0,
+    "signal": "Buy",
+    "confidence": "High",
+    "action_recommendation": "شراء بحجم متوسط",
+    "total_score": 2.1,
+    "component_scores": {
+      "trend": 3,
       "momentum": 3,
       "volume": 1,
       "fibonacci": 1,
-      "correlation": 2
+      "correlation": 1
     },
-    "technical_details": {
-      "macd": "إيجابي متزايد",
-      "rsi_status": "منطقة متوازنة",
-      "roc": "زخم معتدل",
-      "volume_confirmation": "حجم مؤكد للاتجاه",
-      "fibonacci_position": "فوق 61.8% - قوة",
-      "dollar_relationship": "ارتباط سلبي قوي جداً - مفيد للذهب"
+    "current_price": 3458.2,
+    "risk_management": {
+      "stop_loss_levels": {
+        "conservative": 3386.66,
+        "moderate": 3362.81,
+        "aggressive": 3338.97
+      },
+      "profit_targets": {
+        "target_1": 3553.59,
+        "target_2": 3625.12,
+        "target_3": 3696.66
+      },
+      "position_size_recommendation": "متوسط"
     },
     "advanced_indicators": {
       "rsi": 57.4,
-      "williams_r": -28.0,
-      "roc": 1.66,
-      "bb_width": 5.22,
-      "atr_percent": 1.38,
-      "strength_index": 3.86
-    },
-    "risk_management": {
-      "stop_loss_levels": {
-        "conservative": 3386.96,
-        "moderate": 3363.11,
-        "aggressive": 3339.27
-      },
-      "profit_targets": {
-        "target_1": 3553.89,
-        "target_2": 3625.42,
-        "target_3": 3696.96
-      },
-      "position_size_recommendation": "صغير جداً (ثقة منخفضة)",
-      "risk_reward_ratios": {
-        "conservative": 1.33,
-        "moderate": 1.75,
-        "aggressive": 2.0
-      }
+      "williams_r": -28.1,
+      "roc": 1.65,
+      "bb_width": 5.21
     }
   },
   "fibonacci_levels": {
@@ -64,31 +39,30 @@
     "fib_23_6": 3467.95,
     "fib_38_2": 3427.03,
     "fib_50_0": 3393.95,
-    "fib_61_8": 3360.87,
-    "fib_78_6": 3313.78
+    "fib_61_8": 3360.87
   },
   "volume_analysis": {
-    "current_volume": 312375,
-    "avg_volume_20": 23007,
+    "current_volume": 312499,
+    "avg_volume_20": 23013,
     "volume_ratio": 13.58,
     "volume_strength": "قوي"
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.941,
-      "vix": -0.194,
-      "treasury": 0.133,
-      "oil": -0.338,
-      "spy": 0.334,
-      "usdeur": 0.919
+      "dxy": -0.644,
+      "vix": 0.241,
+      "treasury": 0.409,
+      "oil": -0.653,
+      "spy": 0.335,
+      "usdeur": 0.678
     },
     "strength_analysis": {
-      "dxy": "قوي جداً",
+      "dxy": "قوي",
       "vix": "ضعيف",
-      "treasury": "ضعيف",
-      "oil": "متوسط",
+      "treasury": "متوسط",
+      "oil": "قوي",
       "spy": "متوسط",
-      "usdeur": "قوي جداً"
+      "usdeur": "قوي"
     }
   },
   "news_analysis": {
@@ -96,51 +70,22 @@
     "high_impact_news": [
       {
         "title": "Trump to nominate top economic aide Stephen Miran to Federal Reserve board",
-        "source": "ABC News",
-        "publishedAt": "2025-08-07T21:02:25Z",
-        "impact": "عالي"
-      },
-      {
-        "title": "Donald Trump nominates Stephen Miran to Federal Reserve board",
-        "source": "Biztoc.com",
-        "publishedAt": "2025-08-07T20:56:02Z",
-        "impact": "عالي"
-      },
-      {
-        "title": "Who is Stephen Miran? Donald Trump's Pick for Key Federal Reserve Role",
-        "source": "Biztoc.com",
-        "publishedAt": "2025-08-07T20:56:01Z",
-        "impact": "عالي"
+        "source": "ABC News"
       }
     ],
     "medium_impact_news": [
       {
-        "title": "Wheaton Precious Metals still sees 2025 production 600K-670K gold eq. oz.",
-        "source": "Thefly.com",
-        "publishedAt": "2025-08-07T21:06:23Z",
-        "impact": "متوسط"
+        "title": "Investors near 'euphoria' as share market rollercoaster roars on",
+        "source": "ABC News (AU)"
       },
       {
-        "title": "Wheaton Precious Metals reports Q2 adjusted EPS 63c, consensus 59c",
-        "source": "Thefly.com",
-        "publishedAt": "2025-08-07T21:05:04Z",
-        "impact": "متوسط"
+        "title": "‘Paying Tribute to the Tsar’: Apple CEO’s 24-Karat Gold Gift to Trump Sparks Mockery",
+        "source": "Mediaite"
       },
       {
-        "title": "Sandstorm Gold reports Q2 revenue $51.4M vs. $41.4M last year",
-        "source": "Thefly.com",
-        "publishedAt": "2025-08-07T20:56:26Z",
-        "impact": "متوسط"
+        "title": "SmartCentres Real Estate Investment Trust Releases Second Quarter Results for 2025",
+        "source": "Financial Post"
       }
-    ],
-    "total_analyzed": 17
-  },
-  "summary": {
-    "signal": "Weak Buy",
-    "price": 3458.5,
-    "confidence": "Medium",
-    "action": "شراء حذر بحجم صغير",
-    "rsi": 57.4,
-    "trend": "N/A"
+    ]
   }
 }
