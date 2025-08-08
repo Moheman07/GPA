@@ -1,9 +1,5 @@
-numpy<2.0
+numpy
 pandas
 yfinance
 requests
-transformers
-torch
-sentencepiece
-pytz
-pandas-ta
+warnings
