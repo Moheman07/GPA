@@ -1,533 +1,471 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-ProfessionalGoldAnalyzer - نسخة محسنة
-ميزات مضافة:
-- مصدر سعر الأونصة: XAUUSD=X
-- تصفية مقالات بالأسماء (zero-shot) قبل تحليل المشاعر
-- تحليل مشاعر دفعي (batch) عبر FinBERT إن أمكن
-- تطبيع مكونات الدرجات قبل الدمج
-- حفظ إشارات يومية و backtest بسيط
-- مخرجات: gold_analysis.json, historical_signals.csv, backtest_report.json
+Professional Gold Trading Pipeline (Enhanced)
+Features:
+- Uses XAUUSD=X (spot ounce price) from yfinance
+- Filters news with zero-shot (facebook/bart-large-mnli) if available,
+  otherwise uses strict keyword filtering
+- Batch sentiment via ProsusAI/finbert if available, else fallback
+- Normalizes component scores to [-1,1] before weighting
+- Saves daily output gold_analysis.json, appends to historical_signals.csv
+- Runs a simple backtest from historical_signals.csv and saves backtest_report.json
+- Robust error handling for running in CI (GitHub Actions) or local
 """
 import os
 import json
+import time
 from datetime import datetime, timedelta
-import requests
-import warnings
+from typing import List, Dict, Any, Optional
 
 import numpy as np
 import pandas as pd
 import yfinance as yf
 import pandas_ta as ta
+import requests
 
-# transformers يستخدم للنماذج (zero-shot + finbert)
-from transformers import pipeline, Pipeline, AutoTokenizer, AutoModelForSequenceClassification
+# transformers imports with safe handling
+try:
+    from transformers import pipeline
+except Exception:
+    pipeline = None
 
-warnings.filterwarnings("ignore")
+# ---------- Configuration ----------
+SYMBOLS = {
+    "gold": "XAUUSD=X",
+    "dxy": "DX-Y.NYB",
+    "vix": "^VIX",
+    "treasury": "^TNX",
+    "oil": "CL=F",
+    "spy": "SPY"
+}
 
+LOOKBACK_DAYS = int(os.getenv("LOOKBACK_DAYS", "365"))
+NEWS_DAYS = int(os.getenv("NEWS_DAYS", "2"))
+SAVE_PATH = os.getenv("SAVE_PATH", ".")
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")  # optional but recommended
+BATCH_SIZE = int(os.getenv("BATCH_SIZE", "16"))
 
-class ProfessionalGoldAnalyzerV2:
-    def __init__(self,
-                 lookback_days=365,
-                 news_days=2,
-                 news_api_key=None,
-                 save_path=".",
-                 batch_size=16):
-        self.symbols = {
-            'gold': 'XAUUSD=X',   # سعر الأونصة بالدولار
-            'dxy': 'DX-Y.NYB',
-            'vix': '^VIX',
-            'treasury': '^TNX',
-            'oil': 'CL=F',
-            'spy': 'SPY'
-        }
-        self.lookback_days = lookback_days
-        self.news_days = news_days
-        self.news_api_key = news_api_key or os.getenv("NEWS_API_KEY")
-        self.save_path = save_path
-        self.batch_size = batch_size
+# Weights for final signal (adjustable)
+WEIGHTS = {
+    "trend": float(os.getenv("W_TREND", "0.4")),
+    "momentum": float(os.getenv("W_MOMENTUM", "0.3")),
+    "correlation": float(os.getenv("W_CORR", "0.2")),
+    "news": float(os.getenv("W_NEWS", "0.1")),
+}
 
-        # النماذج: zero-shot لتحديد الصلة، و finbert لتحليل المشاعر
-        self.zero_shot = None
-        self.sentiment = None
-        self._load_models()
+# Thresholds for signal decision
+THRESHOLDS = {
+    "buy": float(os.getenv("THRESHOLD_BUY", "0.4")),
+    "sell": float(os.getenv("THRESHOLD_SELL", "-0.4"))
+}
 
-    def _load_models(self):
+HISTORICAL_SIGNALS_CSV = os.path.join(SAVE_PATH, "historical_signals.csv")
+GOLD_ANALYSIS_JSON = os.path.join(SAVE_PATH, "gold_analysis.json")
+BACKTEST_REPORT_JSON = os.path.join(SAVE_PATH, "backtest_report.json")
+
+# Keyword fallback if zero-shot not available
+KEYWORDS = ["gold", "xau", "bullion", "precious metal", "spot gold", "troy ounce", "inflation", "interest rate", "fed", "dollar"]
+
+# ---------- Helper: Model loaders ----------
+def load_zero_shot_model():
+    if pipeline is None:
+        print("⚠️ transformers.pipeline غير متوفر — وسيتم الاعتماد على فلترة الكلمات المفتاحية.")
+        return None
+    try:
+        print("🧠 تحميل zero-shot model (bart-large-mnli)...")
+        zs = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+        print("✅ zero-shot جاهز.")
+        return zs
+    except Exception as e:
+        print(f"⚠️ فشل تحميل zero-shot: {e}")
+        return None
+
+def load_sentiment_model():
+    if pipeline is None:
+        print("⚠️ transformers.pipeline غير متوفر — لن يتوفر تحليل مشاعر محترف.")
+        return None
+    # Try FinBERT first, else fallback
+    candidates = ["ProsusAI/finbert", "yiyanghkust/finbert-tone", "distilbert-base-uncased-finetuned-sst-2-english"]
+    for cand in candidates:
         try:
-            print("🧠 تحميل نموذج zero-shot (NLI) لتصفية الأخبار...")
-            # يستخدم MNLI-based model عبر pipeline zero-shot-classification
-            self.zero_shot = pipeline("zero-shot-classification",
-                                      model="facebook/bart-large-mnli")
-            print("✅ zero-shot جاهز.")
+            print(f"🧠 محاولة تحميل نموذج مشاعر: {cand} ...")
+            sent = pipeline("sentiment-analysis", model=cand)
+            print(f"✅ نموذج المشاعر {cand} جاهز.")
+            return sent
         except Exception as e:
-            print(f"⚠️ فشل تحميل zero-shot: {e}. سيتم استخدام فلترة كلمات مفتاحية بديلة.")
-            self.zero_shot = None
+            print(f"   ⚠️ لا يمكن تحميل {cand}: {e}")
+            continue
+    print("❌ لم يتم تحميل أي نموذج للمشاعر — سيتم تجاوز تحليل المشاعر.")
+    return None
 
-        try:
-            print("🧠 تحميل FinBERT لتحليل المشاعر المالية (batch)...")
-            # ProsusAI/finbert قد يكون متاحًا؛ كبديل نستخدم model عام إن فشل
-            self.sentiment = pipeline("sentiment-analysis",
-                                      model="ProsusAI/finbert")
-            print("✅ FinBERT جاهز.")
-        except Exception as e:
-            print(f"⚠️ فشل تحميل FinBERT: {e}. محاولة تحميل نموذج عام للتحليل.")
-            try:
-                self.sentiment = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
-                print("✅ نموذج بديل جاهز.")
-            except Exception as e2:
-                print(f"❌ فشل تحميل أي نموذج للمشاعر: {e2}")
-                self.sentiment = None
-
-    def fetch_market_data(self):
-        print("\n📊 جلب بيانات السوق من Yahoo Finance...")
-        try:
-            symbols = list(self.symbols.values())
-            data = yf.download(symbols, period=f"{self.lookback_days}d", interval="1d", progress=False)
-            if data.empty:
-                raise ValueError("البيانات الفارغة من Yahoo Finance.")
-            print(f"... نجح جلب {len(data)} صفوف من البيانات.")
-            return data
-        except Exception as e:
-            print(f"❌ خطأ في جلب بيانات السوق: {e}")
+# ---------- Fetch market data ----------
+def fetch_market_data(symbols: Dict[str,str], lookback_days: int = 365) -> Optional[pd.DataFrame]:
+    try:
+        ticker_list = list(symbols.values())
+        period = f"{lookback_days}d"
+        print(f"📊 جلب بيانات Yahoo Finance للفترة: {period} ...")
+        df = yf.download(ticker_list, period=period, interval="1d", progress=False)
+        if df.empty:
+            print("❌ لم يتم جلب بيانات من Yahoo Finance.")
             return None
+        print(f"... تم جلب بيانات بعدد صفوف: {len(df)}")
+        return df
+    except Exception as e:
+        print(f"❌ خطأ أثناء جلب السوق: {e}")
+        return None
 
-    def fetch_news(self):
-        """
-        جلب الأخبار من NewsAPI (إن كان متاحًا).
-        ترجع قائمة مقالات (title, description, source, publishedAt).
-        """
-        print("\n📰 جلب الأخبار من NewsAPI...")
-        if not self.news_api_key:
-            print("⚠️ مفتاح NewsAPI غير موجود، سيتم تخطي جلب الأخبار.")
-            return []
-
-        query = ('gold OR XAU OR bullion OR "precious metal" OR "gold price" '
-                 'OR "interest rate" OR fed OR inflation OR CPI OR NFP OR geopolitical')
-        from_date = (datetime.utcnow() - timedelta(days=self.news_days)).date()
-        url = ("https://newsapi.org/v2/everything"
-               f"?q={requests.utils.quote(query)}&language=en&sortBy=publishedAt&pageSize=100"
-               f"&from={from_date}&apiKey={self.news_api_key}")
-
-        try:
-            res = requests.get(url, timeout=20)
-            res.raise_for_status()
-            articles = res.json().get("articles", [])
-            simple = []
-            for a in articles:
-                simple.append({
-                    "title": a.get("title"),
-                    "description": a.get("description"),
-                    "content": a.get("content"),
-                    "source": a.get("source", {}).get("name"),
-                    "publishedAt": a.get("publishedAt")
-                })
-            print(f"... تم جلب {len(simple)} مقالة من NewsAPI.")
-            return simple
-        except Exception as e:
-            print(f"❌ خطأ في جلب الأخبار: {e}")
-            return []
-
-    def filter_relevant_articles(self, articles):
-        """
-        فلترة المقالات باستخدام zero-shot classification عندما يكون متاحًا،
-        وإلا استخدام كلمات مفتاحية بسيطة.
-        """
-        print("\n🔎 فلترة المقالات ذات الصلة بالذهب...")
-        if not articles:
-            return []
-
-        candidates = []
-        labels = ["gold", "economy", "geopolitics", "other"]
-        for art in articles:
-            text = ((art.get("title") or "") + " " + (art.get("description") or "")).strip()
-            if not text:
-                continue
-            is_relevant = False
-            score = 0
-            if self.zero_shot:
-                try:
-                    out = self.zero_shot(text, candidate_labels=labels, multi_label=False)
-                    # نعتبرها مرتبطة إذا كانت الفئة "gold" أعلى من عتبة
-                    if out and out.get("labels"):
-                        if out["labels"][0] == "gold" and out["scores"][0] >= 0.45:
-                            is_relevant = True
-                            score = float(out["scores"][0])
-                except Exception:
-                    # في حال فشل نموذج NLI نتخطى للاحتياط
-                    is_relevant = False
-
-            if not self.zero_shot:
-                # فلترة كلمات مفتاحية ثانوية
-                kw = ["gold", "xau", "bullion", "precious metal", "troy ounce", "spot gold"]
-                lower = text.lower()
-                if any(k in lower for k in kw):
-                    is_relevant = True
-                    score = 0.5
-
-            if is_relevant:
-                art["_relevance_score"] = score
-                candidates.append(art)
-
-        print(f"... {len(candidates)} مقالات بعد الفلترة.")
-        return sorted(candidates, key=lambda x: x.get("_relevance_score", 0), reverse=True)
-
-    def analyze_sentiment_batch(self, articles):
-        """
-        تحليل المشاعر دفعيًا: استلام قائمة مقالات مرشحة وإرجاع متوسط النتيجة.
-        نحول نتائج النماذج إلى مقياس موحد: pos -> +score, neg -> -score, neutral -> 0
-        """
-        print("\n🧾 تحليل المشاعر (دفعي)...")
-        if not articles or not self.sentiment:
-            print("⚠️ لا توجد مقالات/أو نموذج مشاعر غير متاح — سيتم إرجاع 0.")
-            return {"status": "skipped", "news_score": 0, "headlines": []}
-
-        texts = []
-        for a in articles:
-            txt = (a.get("description") or a.get("title") or "")
-            texts.append(txt)
-
-        results = []
-        try:
-            # batch call support
-            for i in range(0, len(texts), self.batch_size):
-                batch = texts[i:i + self.batch_size]
-                res = self.sentiment(batch)
-                results.extend(res)
-        except Exception as e:
-            print(f"⚠️ خطأ أثناء تحليل المشاعر دفعيًا: {e}")
-            # محاولة تحليل عنصر واحد واحد
-            results = []
-            for t in texts:
-                try:
-                    out = self.sentiment(t)[0]
-                    results.append(out)
-                except Exception:
-                    results.append({"label": "NEUTRAL", "score": 0.0})
-
-        # تحويل الملصقات إلى مقياس موحد
-        numeric = []
-        headlines = []
-        for art, r in zip(articles, results):
-            lbl = r.get("label", "").lower()
-            sc = float(r.get("score", 0.0))
-            val = 0.0
-            # ملاحظة: مسميات النماذج قد تكون "POSITIVE"/"NEGATIVE"/"NEUTRAL" أو "LABEL_0"...
-            if "pos" in lbl or lbl == "positive":
-                val = sc
-            elif "neg" in lbl or lbl == "negative":
-                val = -sc
-            else:
-                val = 0.0
-            numeric.append(val)
-            headlines.append({
-                "title": art.get("title"),
-                "source": art.get("source"),
-                "relevance": art.get("_relevance_score", 0),
-                "sentiment": round(val, 4)
+# ---------- Fetch news ----------
+def fetch_news(news_api_key: Optional[str], days: int = 2, page_size: int = 100) -> List[Dict[str,Any]]:
+    print("📰 جلب أخبار من NewsAPI..." if news_api_key else "📰 NewsAPI مفتاح غير موجود، سيتم تخطي جلب الأخبار.")
+    if not news_api_key:
+        return []
+    query = ('gold OR XAU OR bullion OR "precious metal" OR "gold price" '
+             'OR "interest rate" OR fed OR inflation OR CPI OR NFP OR geopolitical OR dollar')
+    from_date = (datetime.utcnow() - timedelta(days=days)).date()
+    url = ("https://newsapi.org/v2/everything"
+           f"?q={requests.utils.quote(query)}&language=en&sortBy=publishedAt&pageSize={page_size}"
+           f"&from={from_date}&apiKey={news_api_key}")
+    try:
+        res = requests.get(url, timeout=20)
+        res.raise_for_status()
+        items = res.json().get("articles", [])
+        simplified = []
+        for a in items:
+            simplified.append({
+                "title": a.get("title"),
+                "description": a.get("description"),
+                "content": a.get("content"),
+                "source": a.get("source", {}).get("name"),
+                "publishedAt": a.get("publishedAt")
             })
+        print(f"... تم جلب {len(simplified)} مقال من NewsAPI.")
+        return simplified
+    except Exception as e:
+        print(f"⚠️ خطأ أثناء جلب الأخبار: {e}")
+        return []
 
-        # نحسب المتوسط المرجّح حسب relevance
-        relevances = np.array([a.get("_relevance_score", 0.5) for a in articles], dtype=float)
-        vals = np.array(numeric, dtype=float)
-        if relevances.sum() == 0:
-            news_score = float(vals.mean()) if len(vals) else 0.0
+# ---------- Filter relevance ----------
+def is_relevant_by_keywords(text: str) -> bool:
+    if not text:
+        return False
+    t = text.lower()
+    return any(k in t for k in KEYWORDS)
+
+def filter_relevant_articles(articles: List[Dict[str,Any]], zero_shot_pipeline, threshold: float = 0.45) -> List[Dict[str,Any]]:
+    print("🔎 فلترة المقالات لتحديد الصلة بالذهب...")
+    if not articles:
+        return []
+    candidates = []
+    labels = ["gold", "economy", "geopolitics", "other"]
+    for art in articles:
+        title = (art.get("title") or "") or ""
+        desc = (art.get("description") or "") or ""
+        text = (title + " " + desc).strip()
+        if not text:
+            continue
+        relevant = False
+        rel_score = 0.0
+        if zero_shot_pipeline:
+            try:
+                out = zero_shot_pipeline(text, candidate_labels=labels, multi_label=False)
+                if out and out.get("labels"):
+                    if out["labels"][0] == "gold" and out["scores"][0] >= threshold:
+                        relevant = True
+                        rel_score = float(out["scores"][0])
+            except Exception:
+                relevant = False
+        # fallback to strict keyword check
+        if not zero_shot_pipeline and is_relevant_by_keywords(text):
+            relevant = True
+            rel_score = 0.5
+        # even if zero-shot exists, still accept high-keyword matches (guard against model miss)
+        if not relevant and is_relevant_by_keywords(text):
+            relevant = True
+            rel_score = max(rel_score, 0.35)
+        if relevant:
+            art["_relevance_score"] = rel_score
+            candidates.append(art)
+    print(f"... بعد الفلترة بقي {len(candidates)} مقالة ذات صلة.")
+    # sort by relevance score desc
+    return sorted(candidates, key=lambda x: x.get("_relevance_score", 0), reverse=True)
+
+# ---------- Batch sentiment ----------
+def analyze_sentiment_batch(articles: List[Dict[str,Any]], sentiment_pipeline, batch_size: int = 16) -> Dict[str,Any]:
+    print("🧾 تحليل المشاعر (دفعي)...")
+    if not articles or sentiment_pipeline is None:
+        print("⚠️ لا توجد مقالات أو نموذج مشاعر؛ سيتم إرجاع news_score = 0.")
+        return {"status":"skipped", "news_score":0.0, "headlines":[]}
+    texts = []
+    for a in articles:
+        # combine title + description; truncate to reasonable length for transformers (e.g., 512)
+        txt = ((a.get("title") or "") + ". " + (a.get("description") or "")).strip()
+        texts.append(txt[:512])
+    results = []
+    try:
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i+batch_size]
+            out = sentiment_pipeline(batch)
+            # transformer pipeline returns list of dicts for batch
+            results.extend(out)
+            # tiny pause to be kind to remote model hosting (if any)
+            time.sleep(0.1)
+    except Exception as e:
+        print(f"⚠️ خطأ أثناء التحليل الدفعي: {e} — سنحاول تحليل كل عنصر منفردًا.")
+        results = []
+        for t in texts:
+            try:
+                results.append(sentiment_pipeline(t)[0])
+            except Exception:
+                results.append({"label":"NEUTRAL", "score":0.0})
+    # convert to numeric values
+    numeric = []
+    headlines = []
+    for a, r in zip(articles, results):
+        lbl = str(r.get("label","")).lower()
+        sc = float(r.get("score",0.0))
+        val = 0.0
+        if "pos" in lbl or lbl == "positive":
+            val = sc
+        elif "neg" in lbl or lbl == "negative":
+            val = -sc
         else:
-            news_score = float(np.sum(vals * relevances) / (relevances.sum()))
+            val = 0.0
+        numeric.append(val)
+        headlines.append({
+            "title": a.get("title"),
+            "source": a.get("source"),
+            "relevance": round(a.get("_relevance_score", 0), 4),
+            "sentiment": round(val, 4)
+        })
+    relevances = np.array([a.get("_relevance_score", 0.5) for a in articles], dtype=float)
+    vals = np.array(numeric, dtype=float)
+    if relevances.sum() == 0:
+        news_score = float(vals.mean()) if len(vals) else 0.0
+    else:
+        news_score = float(np.sum(vals * relevances) / (relevances.sum()))
+    news_score = max(min(news_score, 1.0), -1.0)
+    news_score = round(news_score, 4)
+    print(f"... news_score (weighted) = {news_score}")
+    return {"status":"success", "news_score":news_score, "headlines":headlines[:20]}
 
-        news_score = round(news_score, 4)
-        print(f"... news_score = {news_score} (مرجّح حسب الصلة)")
-        return {"status": "success", "news_score": news_score, "headlines": headlines[:10]}
+# ---------- Indicators & scoring ----------
+def compute_indicators_for_gold(gold_df: pd.DataFrame) -> pd.DataFrame:
+    ta_strategy = ta.Strategy(name="full", ta=[
+        {"kind":"sma", "length":50}, {"kind":"sma", "length":200},
+        {"kind":"rsi", "length":14}, {"kind":"macd"},
+        {"kind":"bbands"}, {"kind":"atr"}, {"kind":"obv"}
+    ])
+    gold_df.ta.strategy(ta_strategy)
+    return gold_df
 
-    def compute_indicators(self, gold_df):
-        """
-        حساب مؤشرات فنية أساسية باستخدام pandas_ta
-        """
-        ta_strategy = ta.Strategy(name="FullAnalysis", ta=[
-            {"kind": "sma", "length": 50}, {"kind": "sma", "length": 200},
-            {"kind": "rsi"}, {"kind": "macd"}, {"kind": "bbands"},
-            {"kind": "atr"}, {"kind": "obv"}
-        ])
-        gold_df.ta.strategy(ta_strategy)
-        return gold_df
+def normalize_component(val: float, min_val: float, max_val: float) -> float:
+    # clip then scale to [-1,1]
+    v = float(max(min(val, max_val), min_val))
+    return 2 * (v - min_val) / (max_val - min_val) - 1
 
-    @staticmethod
-    def normalize_component(val, min_val=-2, max_val=2):
-        """
-        تطبيع قيمة إلى نطاق [-1, 1]
-        نفترض أن val يقع ضمن [min_val, max_val]
-        """
-        # clip to avoid extreme
-        v = max(min(val, max_val), min_val)
-        # scale to [-1,1]
-        return 2 * (v - min_val) / (max_val - min_val) - 1
+def score_components(latest_row: pd.Series, market_data_df: pd.DataFrame, news_score: float, symbols: Dict[str,str]):
+    # Trend: distance from SMA200 (relative)
+    trend_raw = 0.0
+    try:
+        close = float(latest_row["Close"])
+        sma200 = float(latest_row.get("SMA_200", np.nan))
+        if not np.isnan(sma200) and sma200 != 0:
+            diff = (close - sma200) / sma200  # e.g., 0.02 => 2% above sma200
+            trend_raw = diff * 10  # scale so that ~0.2 -> 2.0
+    except Exception:
+        trend_raw = 0.0
+    # Momentum: MACD histogram normalized by recent avg magnitude
+    momentum_raw = 0.0
+    try:
+        macd_hist = float(latest_row.get("MACDh_12_26_9", np.nan))
+        # scale by a reasonable factor, avoid division by zero
+        momentum_raw = macd_hist
+    except Exception:
+        momentum_raw = 0.0
+    # Correlation with DXY (negative correlation supports gold)
+    corr_raw = 0.0
+    try:
+        gold_close = market_data_df[('Close', symbols['gold'])]
+        dxy_close = market_data_df[('Close', symbols['dxy'])]
+        corr = gold_close.corr(dxy_close)
+        corr_raw = -corr if not np.isnan(corr) else 0.0
+    except Exception:
+        corr_raw = 0.0
+    # Normalize
+    trend_norm = normalize_component(trend_raw, min_val=-2.0, max_val=2.0)
+    momentum_norm = normalize_component(momentum_raw, min_val=-2.0, max_val=2.0)
+    corr_norm = normalize_component(corr_raw, min_val=-1.0, max_val=1.0)
+    news_norm = max(min(news_score, 1.0), -1.0)
+    comps = {
+        "trend_score_raw": round(trend_raw, 6),
+        "momentum_score_raw": round(momentum_raw, 6),
+        "correlation_score_raw": round(corr_raw, 6),
+        "trend_score": round(trend_norm, 6),
+        "momentum_score": round(momentum_norm, 6),
+        "correlation_score": round(corr_norm, 6),
+        "news_score": round(news_norm, 6)
+    }
+    return comps
 
-    def score_components(self, latest_row, market_data, news_score):
-        """
-        توليد قيم مبدئية ثم تطبيعها:
-        - trend_score: -1 (strong down) .. +1 (strong up)
-        - momentum_score: -1 .. +1
-        - correlation_score: -1 .. +1
-        - news_score: مفترض في [-1,1] بالفعل من تحليل المشاعر
-        """
-        # Trend: مقارنة السعر بالنسبة لـ SMA200 و SMA50
-        trend_val = 0.0
-        try:
-            close = latest_row["Close"]
-            sma200 = latest_row.get("SMA_200", np.nan)
-            sma50 = latest_row.get("SMA_50", np.nan)
-            if not np.isnan(sma200) and not np.isnan(sma50):
-                # نسبة المسافة إلى SMA200 (مقسومة على SMA200) مضروبة بمقياس 2
-                diff = (close - sma200) / sma200
-                trend_val = diff * 10  # مقياس مبدئي، سيتم تطبيعه لاحقًا
-        except Exception:
-            trend_val = 0.0
+def decide_signal(comps: Dict[str,float], weights: Dict[str,float] = WEIGHTS, thresholds: Dict[str,float] = THRESHOLDS):
+    total = (comps["trend_score"] * weights["trend"] +
+             comps["momentum_score"] * weights["momentum"] +
+             comps["correlation_score"] * weights["correlation"] +
+             comps["news_score"] * weights["news"])
+    total = round(float(total), 6)
+    if total >= thresholds["buy"]:
+        sig = "Buy"
+    elif total <= thresholds["sell"]:
+        sig = "Sell"
+    else:
+        sig = "Hold"
+    return total, sig
 
-        # Momentum: استخدام MACD histogram إن وجد
-        momentum_val = 0.0
-        try:
-            macd_hist = latest_row.get("MACDh_12_26_9", np.nan)
-            if not np.isnan(macd_hist):
-                momentum_val = macd_hist / max(abs(macd_hist) + 1e-9, 1) * 2
-        except Exception:
-            momentum_val = 0.0
+# ---------- Persistence ----------
+def append_signal_csv(path: str, row: Dict[str,Any]):
+    df_row = pd.DataFrame([row])
+    if not os.path.exists(path):
+        df_row.to_csv(path, index=False, encoding="utf-8")
+    else:
+        df_row.to_csv(path, mode="a", index=False, header=False, encoding="utf-8")
+    print(f"💾 appended signal to {path}")
 
-        # Correlation: ارتباط سعر الذهب مع DXY (عادة سالب)
-        correlation_val = 0.0
-        try:
-            gold_close = market_data[('Close', self.symbols['gold'])]
-            dxy_close = market_data[('Close', self.symbols['dxy'])]
-            corr = gold_close.corr(dxy_close)
-            # نحوّل الارتباط لمقياس حيث -1 => +1 (لأن الارتباط السلبي للذهب مع الدولار يعزز الذهب)
-            correlation_val = -corr if not np.isnan(corr) else 0.0
-        except Exception:
-            correlation_val = 0.0
+def save_json(path: str, data: Any):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    print(f"💾 saved: {path}")
 
-        # تطبيع كل قيمة إلى [-1,1]
-        trend_norm = self.normalize_component(trend_val, min_val=-2, max_val=2)
-        momentum_norm = self.normalize_component(momentum_val, min_val=-2, max_val=2)
-        correlation_norm = self.normalize_component(correlation_val, min_val=-1, max_val=1)
-        news_norm = max(min(news_score, 1.0), -1.0)
-
-        components = {
-            "trend_score_raw": round(trend_val, 4),
-            "momentum_score_raw": round(momentum_val, 4),
-            "correlation_score_raw": round(correlation_val, 4),
-            "trend_score": round(trend_norm, 4),
-            "momentum_score": round(momentum_norm, 4),
-            "correlation_score": round(correlation_norm, 4),
-            "news_score": round(news_norm, 4)
+# ---------- Backtest ----------
+def backtest_from_signals(signals_csv: str, symbol: str):
+    print("📈 بدء backtest من سجل الإشارات...")
+    if not os.path.exists(signals_csv):
+        print("⚠️ لا يوجد ملف إشارات للتشغيل backtest.")
+        return {"status":"error", "error":"no signals file"}
+    try:
+        sigs = pd.read_csv(signals_csv, parse_dates=["timestamp_utc"])
+        sigs.sort_values("timestamp_utc", inplace=True)
+        sigs.reset_index(drop=True, inplace=True)
+        # define date range for price fetch
+        start = sigs["timestamp_utc"].dt.date.min()
+        end = sigs["timestamp_utc"].dt.date.max() + pd.Timedelta(days=1)
+        prices = yf.download(symbol, start=start.isoformat(), end=end.isoformat(), interval="1d", progress=False)
+        if prices.empty:
+            return {"status":"error", "error":"no price series fetched"}
+        close = prices["Close"].ffill().dropna()
+        close.index = pd.to_datetime(close.index)
+        sigs["date"] = pd.to_datetime(sigs["timestamp_utc"]).dt.normalize()
+        # create daily signals aligned with price dates (ffill last signal)
+        daily_sig = sigs.groupby("date").last().reindex(close.index, method="ffill").fillna(method="ffill")
+        # position logic: Buy -> 1, Sell -> 0, Hold -> previous
+        position = []
+        pos = 0
+        for idx, row in daily_sig.iterrows():
+            s = row["signal"]
+            if s == "Buy":
+                pos = 1
+            elif s == "Sell":
+                pos = 0
+            position.append(pos)
+        pf = pd.DataFrame({"close": close, "position": position}, index=close.index)
+        pf["pct_change"] = pf["close"].pct_change().fillna(0)
+        pf["strategy_return"] = pf["position"].shift(1).fillna(0) * pf["pct_change"]
+        pf["cum_return"] = (1 + pf["strategy_return"]).cumprod()
+        pf["buyhold_cum"] = (1 + pf["pct_change"]).cumprod()
+        total_return = float(pf["cum_return"].iloc[-1] - 1)
+        bh_return = float(pf["buyhold_cum"].iloc[-1] - 1)
+        days = (pf.index[-1] - pf.index[0]).days or 1
+        years = days / 365.25
+        cagr = (pf["cum_return"].iloc[-1]) ** (1 / years) - 1 if years > 0 else 0
+        bh_cagr = (pf["buyhold_cum"].iloc[-1]) ** (1 / years) - 1 if years > 0 else 0
+        roll_max = pf["cum_return"].cummax()
+        drawdown = pf["cum_return"] / roll_max - 1
+        max_dd = float(drawdown.min())
+        trades = int(((daily_sig["signal"] == "Buy") | (daily_sig["signal"] == "Sell")).sum())
+        report = {
+            "period_start": str(pf.index[0].date()),
+            "period_end": str(pf.index[-1].date()),
+            "days": int(days),
+            "total_return": round(total_return, 6),
+            "cagr": round(cagr, 6),
+            "buyhold_return": round(bh_return, 6),
+            "buyhold_cagr": round(bh_cagr, 6),
+            "max_drawdown": round(max_dd, 6),
+            "trades": trades
         }
+        save_json(BACKTEST_REPORT_JSON, report)
+        return {"status":"success", "report":report}
+    except Exception as e:
+        return {"status":"error", "error": str(e)}
 
-        return components
-
-    def decide_signal(self, comps, thresholds=None):
-        """
-        قرار نهائي: نجمع المكونات مع أوزان قصيرة قابلة للتعديل.
-        الأوزان:
-         - trend 40%
-         - momentum 30%
-         - correlation 20%
-         - news 10%
-        نحسب total ∈ [-1,1]. نحدد إشارة:
-         - Buy إذا >= 0.4
-         - Sell إذا <= -0.4
-         - Else Hold
-        """
-        if thresholds is None:
-            thresholds = {"buy": 0.4, "sell": -0.4}
-        w = {"trend": 0.4, "momentum": 0.3, "correlation": 0.2, "news": 0.1}
-        total = (comps["trend_score"] * w["trend"] +
-                 comps["momentum_score"] * w["momentum"] +
-                 comps["correlation_score"] * w["correlation"] +
-                 comps["news_score"] * w["news"])
-        if total >= thresholds["buy"]:
-            sig = "Buy"
-        elif total <= thresholds["sell"]:
-            sig = "Sell"
-        else:
-            sig = "Hold"
-        return round(total, 4), sig
-
-    def save_json(self, filename, data):
-        path = os.path.join(self.save_path, filename)
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-        print(f"💾 حفظ: {path}")
-
-    def run_full_analysis(self):
-        market_data = self.fetch_market_data()
-        if market_data is None:
-            return {"status": "error", "error": "market fetch failed"}
-
-        # جهز DataFrame للذهب
-        gold_ticker = self.symbols["gold"]
+# ---------- Main pipeline ----------
+def run_pipeline():
+    # load models
+    zs = load_zero_shot_model()
+    sent = load_sentiment_model()
+    # fetch market data
+    market_df = fetch_market_data(SYMBOLS, LOOKBACK_DAYS)
+    if market_df is None:
+        return {"status":"error", "error":"market fetch failed"}
+    # prepare gold dataframe
+    gold_ticker = SYMBOLS["gold"]
+    try:
         gold_df = pd.DataFrame({
-            "Open": market_data[("Open", gold_ticker)],
-            "High": market_data[("High", gold_ticker)],
-            "Low": market_data[("Low", gold_ticker)],
-            "Close": market_data[("Close", gold_ticker)],
-            "Volume": market_data[("Volume", gold_ticker)]
+            "Open": market_df[("Open", gold_ticker)],
+            "High": market_df[("High", gold_ticker)],
+            "Low": market_df[("Low", gold_ticker)],
+            "Close": market_df[("Close", gold_ticker)],
+            "Volume": market_df[("Volume", gold_ticker)]
         }).dropna()
-
-        if gold_df.empty:
-            return {"status": "error", "error": "no gold data"}
-
-        # مؤشرات فنية
-        gold_df = self.compute_indicators(gold_df)
-        gold_df.dropna(inplace=True)
-
-        # جلب الأخبار وفلترتها
-        articles = self.fetch_news()
-        relevant = self.filter_relevant_articles(articles)
-        news_result = self.analyze_sentiment_batch(relevant)
-
-        # تحضير السجل النهائي لليوم الأخير
-        latest = gold_df.iloc[-1]
-        comps = self.score_components(latest, market_data, news_result.get("news_score", 0))
-        total_score, signal = self.decide_signal(comps)
-
-        result = {
-            "timestamp_utc": datetime.utcnow().isoformat(),
-            "signal": signal,
-            "total_score": total_score,
-            "components": comps,
-            "market_data": {
-                "gold_price": float(round(latest["Close"], 4)),
-                "dxy": float(round(market_data[('Close', self.symbols['dxy'])].iloc[-1], 4)),
-                "vix": float(round(market_data[('Close', self.symbols['vix'])].iloc[-1], 4)) if ('Close', self.symbols['vix']) in market_data else None
-            },
-            "news_analysis": news_result
-        }
-
-        # حفظ النتائج اليومية والملفات اللازمة للـ backtest
-        self.save_json("gold_analysis.json", result)
-
-        # حفظ historical signals (append)
-        signals_path = os.path.join(self.save_path, "historical_signals.csv")
-        row = {
-            "timestamp_utc": result["timestamp_utc"],
-            "signal": signal,
-            "total_score": total_score,
-            "gold_price": result["market_data"]["gold_price"],
-            "news_score": comps["news_score"],
-            "trend_score": comps["trend_score"],
-            "momentum_score": comps["momentum_score"],
-            "correlation_score": comps["correlation_score"]
-        }
-        df_row = pd.DataFrame([row])
-        if not os.path.exists(signals_path):
-            df_row.to_csv(signals_path, index=False, encoding="utf-8")
-        else:
-            df_row.to_csv(signals_path, mode="a", index=False, header=False, encoding="utf-8")
-        print(f"💾 تم تحديث سجل الإشارات: {signals_path}")
-
-        return result
-
-    def backtest_signals(self, signals_csv=None, price_series=None):
-        """
-        backtest بسيط:
-        - إدخال: ملف historical_signals.csv أو سلسلة سعرية (pandas.Series indexed by date)
-        - استراتجية: عند 'Buy' ندخل مركز طويل بكامل الرصيد (position=1)، عند 'Sell' نخرج (position=0).
-          'Hold' يحتفظ بالمركز السابق.
-        - حساب العوائد المئوية وتجميعها.
-        مخرجات: تقرير بسيط (total_return, CAGR, max_drawdown, trades)
-        """
-        print("\n📈 بدء backtest بسيط...")
-        try:
-            if signals_csv is None:
-                signals_csv = os.path.join(self.save_path, "historical_signals.csv")
-            if not os.path.exists(signals_csv):
-                print("⚠️ ملف historical_signals.csv غير موجود، لا يمكن تشغيل backtest.")
-                return {"status": "error", "error": "no signals file"}
-
-            sigs = pd.read_csv(signals_csv, parse_dates=["timestamp_utc"])
-            sigs.sort_values("timestamp_utc", inplace=True)
-            sigs.reset_index(drop=True, inplace=True)
-
-            # للحصول على تسلسل أسعار تاريخي متوافق، نستخرج من Yahoo تاريخ يتراوح بين أول وآخر إشارة
-            start = sigs["timestamp_utc"].dt.date.min()
-            end = sigs["timestamp_utc"].dt.date.max() + pd.Timedelta(days=1)
-            prices = yf.download(self.symbols["gold"], start=start.isoformat(), end=end.isoformat(), interval="1d", progress=False)
-            if prices.empty:
-                return {"status": "error", "error": "no price series fetched for backtest"}
-
-            close = prices["Close"].ffill().dropna()
-            close.index = pd.to_datetime(close.index)
-
-            # ندمج الإشارات مع الأسعار: لكل يوم إشارة نعتبرها تُطبَّق في إغلاق اليوم نفسه (could be improved)
-            sigs["date"] = pd.to_datetime(sigs["timestamp_utc"]).dt.normalize()
-            # تبسيط: نأخذ آخر إشارة لكل تاريخ
-            daily_sig = sigs.groupby("date").last().reindex(close.index, method="ffill").fillna(method="ffill")
-            # تحويل للإشارة الموقفية: Buy -> 1, Sell -> 0, Hold -> previous
-            position = []
-            pos = 0
-            for idx, row in daily_sig.iterrows():
-                s = row["signal"]
-                if s == "Buy":
-                    pos = 1
-                elif s == "Sell":
-                    pos = 0
-                # Hold leaves pos as is
-                position.append(pos)
-            pf = pd.DataFrame({"close": close, "position": position}, index=close.index)
-
-            # حساب عوائد يومية
-            pf["pct_change"] = pf["close"].pct_change().fillna(0)
-            pf["strategy_return"] = pf["position"].shift(1).fillna(0) * pf["pct_change"]  # position 적용 على عائد اليوم التالي
-            pf["cum_return"] = (1 + pf["strategy_return"]).cumprod()
-            pf["buyhold_cum"] = (1 + pf["pct_change"]).cumprod()
-
-            total_return = float(pf["cum_return"].iloc[-1] - 1)
-            bh_return = float(pf["buyhold_cum"].iloc[-1] - 1)
-
-            # CAGR تقريبي
-            days = (pf.index[-1] - pf.index[0]).days or 1
-            years = days / 365.25
-            cagr = (pf["cum_return"].iloc[-1]) ** (1 / years) - 1 if years > 0 else 0
-            bh_cagr = (pf["buyhold_cum"].iloc[-1]) ** (1 / years) - 1 if years > 0 else 0
-
-            # max drawdown
-            roll_max = pf["cum_return"].cummax()
-            drawdown = pf["cum_return"] / roll_max - 1
-            max_dd = float(drawdown.min())
-
-            trades = int(((daily_sig["signal"] == "Buy") | (daily_sig["signal"] == "Sell")).sum())
-
-            report = {
-                "period_start": str(pf.index[0].date()),
-                "period_end": str(pf.index[-1].date()),
-                "days": int(days),
-                "total_return": round(total_return, 4),
-                "cagr": round(cagr, 4),
-                "buyhold_return": round(bh_return, 4),
-                "buyhold_cagr": round(bh_cagr, 4),
-                "max_drawdown": round(max_dd, 4),
-                "trades": trades
-            }
-
-            # حفظ التقرير
-            self.save_json("backtest_report.json", report)
-            print("✅ backtest مكتمل.")
-            return {"status": "success", "report": report, "pf_head": pf.head(3).to_dict()}
-        except Exception as e:
-            print(f"❌ خطأ أثناء backtest: {e}")
-            return {"status": "error", "error": str(e)}
-
+    except Exception as e:
+        return {"status":"error", "error": f"error preparing gold df: {e}"}
+    if gold_df.empty:
+        return {"status":"error", "error":"no gold data"}
+    # compute indicators
+    gold_df = compute_indicators_for_gold(gold_df)
+    gold_df.dropna(inplace=True)
+    if gold_df.empty:
+        return {"status":"error", "error":"not enough data for indicators"}
+    # fetch & filter news
+    raw_news = fetch_news(NEWS_API_KEY, NEWS_DAYS, page_size=100)
+    relevant = filter_relevant_articles(raw_news, zs)
+    news_result = analyze_sentiment_batch(relevant, sent, BATCH_SIZE)
+    # latest row
+    latest = gold_df.iloc[-1]
+    comps = score_components(latest, market_df, news_result.get("news_score", 0.0), SYMBOLS)
+    total_score, signal = decide_signal(comps)
+    # prepare final result
+    result = {
+        "timestamp_utc": datetime.utcnow().isoformat(),
+        "signal": signal,
+        "total_score": total_score,
+        "components": comps,
+        "market_data": {
+            "gold_price": float(round(latest["Close"], 6)),
+            "dxy": float(round(market_df[('Close', SYMBOLS['dxy'])].iloc[-1], 6)) if ('Close', SYMBOLS['dxy']) in market_df else None,
+            "vix": float(round(market_df[('Close', SYMBOLS['vix'])].iloc[-1], 6)) if ('Close', SYMBOLS['vix']) in market_df else None
+        },
+        "news_analysis": news_result
+    }
+    # save json
+    save_json(GOLD_ANALYSIS_JSON, result)
+    # append signal to historical CSV
+    row = {
+        "timestamp_utc": result["timestamp_utc"],
+        "signal": signal,
+        "total_score": total_score,
+        "gold_price": result["market_data"]["gold_price"],
+        "news_score": comps["news_score"],
+        "trend_score": comps["trend_score"],
+        "momentum_score": comps["momentum_score"],
+        "correlation_score": comps["correlation_score"]
+    }
+    append_signal_csv(HISTORICAL_SIGNALS_CSV, row)
+    # run backtest if enough data
+    bt = backtest_from_signals(HISTORICAL_SIGNALS_CSV, SYMBOLS["gold"])
+    return {"status":"success", "result": result, "backtest": bt}
 
 if __name__ == "__main__":
-    analyzer = ProfessionalGoldAnalyzerV2(
-        lookback_days=365,
-        news_days=2,
-        news_api_key=os.getenv("NEWS_API_KEY"),
-        save_path=".",
-        batch_size=16
-    )
-    res = analyzer.run_full_analysis()
-    print("\n--- النتيجة النهائية ---")
-    print(json.dumps(res, indent=2, ensure_ascii=False))
-
-    # نفذ backtest تلقائياً إن كان هناك سجل إشارات
-    bt = analyzer.backtest_signals()
-    print("\n--- ملخص backtest ---")
-    print(json.dumps(bt, indent=2, ensure_ascii=False))
+    out = run_pipeline()
+    print("\n--- Pipeline output ---")
+    print(json.dumps(out, indent=2, ensure_ascii=False))
