@@ -1,42 +1,149 @@
-name: Gold Analysis Bot
+name: Gold Analysis Automation
 
 on:
   schedule:
-    - cron: '35 13 * * 1-5'
-    - cron: '00 17 * * 1-5'
-    - cron: '55 19 * * 1-5'
+    # تشغيل يومي في أفضل الأوقات لتحليل الذهب
+    - cron: '30 13 * * 1-5'  # 1:30 PM UTC (قبل فتح السوق الأمريكي)
+    - cron: '0 21 * * 1-5'   # 9:00 PM UTC (بعد إغلاق السوق الأمريكي)
+    - cron: '0 7 * * 1-5'    # 7:00 AM UTC (قبل فتح السوق الأوروبي)
+  
+  # تشغيل يدوي
   workflow_dispatch:
+  
+  # تشغيل عند push (للاختبار)
+  push:
+    branches: [ main ]
+    paths: 
+      - 'main_analyzer.py'
+
+env:
+  NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
 
 jobs:
-  analyze-gold:
+  gold-analysis:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
+    timeout-minutes: 10
+    
     steps:
-    - name: Checkout repository
+    - name: 🔍 Checkout Repository
       uses: actions/checkout@v4
-      
-    - name: Set up Python with dependency caching
-      uses: actions/setup-python@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 1
+
+    - name: 🐍 Setup Python 3.11
+      uses: actions/setup-python@v4
       with:
         python-version: '3.11'
-        # --- ✅ هذا السطر يحل مشكلة وقت التثبيت الطويل ---
         cache: 'pip'
-        
-    - name: Install dependencies
+
+    - name: ⚡ Install Dependencies (Optimized)
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install --no-cache-dir yfinance pandas numpy requests transformers torch pandas-ta pytz
+        python -c "from transformers import pipeline; pipeline('sentiment-analysis', model='ProsusAI/finbert')" # تحميل مسبق
+
+    - name: 🏃‍♂️ Run Gold Analysis
+      run: |
+        echo "🚀 بدء تحليل الذهب..."
+        python main_analyzer.py
+        echo "✅ انتهى التحليل"
+
+    - name: 📊 Verify Output Files
+      run: |
+        echo "📁 فحص الملفات المُنشأة:"
+        ls -la *.json *.db *.log 2>/dev/null || echo "⚠️ لا توجد ملفات"
         
-    - name: Run Gold Analysis
-      run: python main_analyzer.py
-      env:
-        NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+        if [ -f "gold_analysis_enhanced.json" ]; then
+          echo "✅ تم إنشاء ملف JSON بحجم: $(stat -c%s gold_analysis_enhanced.json) bytes"
+          echo "📋 عرض أول 500 حرف من النتائج:"
+          head -c 500 gold_analysis_enhanced.json
+        else
+          echo "❌ لم يتم إنشاء ملف JSON"
+          exit 1
+        fi
+
+    - name: 📈 Create Analysis Summary
+      run: |
+        python -c "
+        import json
+        from datetime import datetime
         
-    - name: Commit and Push Results
-      if: success()
-      uses: stefanzweifel/git-auto-commit-action@v5
+        # قراءة النتائج
+        with open('gold_analysis_enhanced.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        
+        # إنشاء ملخص markdown
+        summary = f'''# 📊 تحليل الذهب - {datetime.now().strftime('%Y-%m-%d %H:%M')} UTC
+        
+## النتيجة النهائية
+- **الإشارة**: {data['signal']} ({data['signal_strength']})
+- **النتيجة الإجمالية**: {data['total_score']}
+- **سعر الذهب**: ${data['market_data']['gold_price']}
+- **وقف الخسارة**: ${data['stop_loss_price']}
+- **حالة السوق**: {data['market_volatility']}
+
+## مكونات التحليل
+- **الاتجاه**: {data['components']['trend_score']}
+- **الزخم**: {data['components']['momentum_score']}
+- **الارتباط**: {data['components']['correlation_score']}
+- **الأخبار**: {data['components']['news_score']}
+- **التقلبات**: {data['components']['volatility_score']}
+
+## بيانات السوق
+- **مؤشر الدولار (DXY)**: {data['market_data']['dxy']}
+- **مؤشر الخوف (VIX)**: {data['market_data']['vix']}
+- **ATR**: {data['market_data']['atr']}
+
+## تحليل الأخبار
+- **حالة التحليل**: {data['news_analysis']['status']}
+- **نتيجة المشاعر**: {data['news_analysis']['news_sentiment_score']}
+- **عدد المقالات**: {data['news_analysis'].get('analysis_details', {}).get('total_articles_analyzed', 0)}
+
+---
+*آخر تحديث: {data['timestamp_utc']}*
+        '''
+        
+        with open('README.md', 'w', encoding='utf-8') as f:
+            f.write(summary)
+        
+        print('✅ تم إنشاء ملف README.md')
+        "
+
+    - name: 💾 Commit and Push Results
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "Gold Analysis Bot"
+        
+        # إضافة الملفات الجديدة
+        git add -A
+        
+        # فحص التغييرات
+        if git diff --staged --quiet; then
+          echo "⚠️ لا توجد تغييرات للحفظ"
+        else
+          echo "💾 حفظ النتائج الجديدة..."
+          git commit -m "🤖 تحديث تحليل الذهب - $(date '+%Y-%m-%d %H:%M UTC')"
+          git push
+          echo "✅ تم رفع النتائج إلى GitHub"
+        fi
+
+    - name: 🚨 Notification on Failure
+      if: failure()
+      run: |
+        echo "❌ فشل في تحليل الذهب"
+        echo "سبب الفشل قد يكون:"
+        echo "- مشكلة في جلب البيانات"
+        echo "- خطأ في الاتصال بـ NewsAPI" 
+        echo "- مشكلة في نموذج تحليل المشاعر"
+
+    - name: 📤 Upload Artifacts
+      if: always()
+      uses: actions/upload-artifact@v3
       with:
-        commit_message: 'Update daily analysis file'
-        file_pattern: 'gold_analysis.json' # تأكد من أن هذا يطابق اسم ملف المخرجات
+        name: gold-analysis-files
+        path: |
+          *.json
+          *.db
+          *.log
+        retention-days: 30
