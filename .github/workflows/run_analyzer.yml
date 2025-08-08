@@ -37,4 +37,4 @@ jobs:
         with:
           commit_message: '🏆 Update Professional Gold Analysis Report'
           # تأكد من أن أسماء الملفات تطابق ما ينتجه السكربت
-          file_pattern: 'professional_gold_analysis.json gold_analysis_history.db gold_analysis_pro.log'
+          file_pattern: 'gold_analysis_pro.json gold_analysis_history.db gold_analysis_pro.log'
