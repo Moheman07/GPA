@@ -1,0 +1,10 @@
+{
+  "timestamp_utc": "2025-08-08T19:10:45.618012",
+  "execution_time_ms": 5149,
+  "status": "success",
+  "signal": "Buy",
+  "signal_strength": "Strong Buy",
+  "total_score": 0.8,
+  "gold_price": 3453.9,
+  "backtest_win_rate": 0
+}
