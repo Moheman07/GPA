@@ -1,10 +1,10 @@
-name: Gold Analysis - No AI
+name: Gold Analysis - Fixed
 on:
   workflow_dispatch:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     permissions:
       contents: write
     steps:
@@ -13,98 +13,383 @@ jobs:
       with:
         python-version: '3.11'
         cache: 'pip'
-    - run: |
-        pip install yfinance pandas numpy pandas-ta requests pytz
-    - name: Create Simplified Script
+        
+    - name: Install Dependencies (Fixed)
       run: |
-        cat > simple_analyzer.py << 'EOF'
+        pip install yfinance pandas numpy requests pytz
+        # لا نستخدم pandas-ta لأنه يسبب مشاكل
+        
+    - name: Create Working Analyzer
+      run: |
+        cat > gold_analyzer_fixed.py << 'EOF'
         import yfinance as yf
         import pandas as pd
         import numpy as np
         import json
-        from datetime import datetime
-        import pandas_ta as ta
+        import os
+        from datetime import datetime, timedelta
         
-        print("🚀 Starting simplified gold analysis...")
+        print("🚀 Starting Gold Analysis...")
         
         try:
-            # جلب بيانات الذهب
-            symbols = ['GLD', 'DX-Y.NYB', '^VIX']
-            data = yf.download(symbols, period='6mo', progress=False)
-            
-            if data.empty:
-                raise Exception("No data received")
-            
-            # حساب مؤشرات بسيطة
-            gold_data = data[('Close', 'GLD')].dropna()
-            gold_data = pd.DataFrame({'Close': gold_data})
-            
-            gold_data['SMA_20'] = ta.sma(gold_data['Close'], length=20)
-            gold_data['SMA_50'] = ta.sma(gold_data['Close'], length=50)
-            gold_data['RSI'] = ta.rsi(gold_data['Close'], length=14)
-            
-            gold_data = gold_data.dropna()
-            latest = gold_data.iloc[-1]
-            
-            # حساب إشارة بسيطة
-            current_price = latest['Close']
-            score = 0
-            
-            if current_price > latest['SMA_50']: score += 1
-            if current_price > latest['SMA_20']: score += 1  
-            if 30 < latest['RSI'] < 70: score += 1
-            
-            if score >= 2:
-                signal = "Buy"
-            elif score <= 0:
-                signal = "Sell"
-            else:
-                signal = "Hold"
-            
-            # إنشاء النتيجة
-            result = {
-                "timestamp": datetime.utcnow().isoformat(),
-                "signal": signal,
-                "score": score,
-                "gold_price": round(current_price, 2),
-                "rsi": round(latest['RSI'], 2),
-                "sma_20": round(latest['SMA_20'], 2),
-                "sma_50": round(latest['SMA_50'], 2),
-                "data_points": len(gold_data),
-                "status": "success"
+            # رموز الأسهم
+            symbols = {
+                'gold': 'GLD',  # Gold ETF (أكثر استقراراً من GC=F)
+                'dxy': 'DX-Y.NYB',  # Dollar Index  
+                'vix': '^VIX',      # Fear Index
+                'spy': 'SPY'        # S&P 500
             }
             
-            # حفظ النتيجة
-            with open('gold_simple_result.json', 'w') as f:
-                json.dump(result, f, indent=2)
+            # جلب البيانات
+            print("📊 Fetching market data...")
+            tickers = list(symbols.values())
+            data = yf.download(tickers, period='6mo', interval='1d', progress=False)
+            
+            if data.empty:
+                raise Exception("Failed to fetch data")
+            
+            print(f"✅ Got {len(data)} days of data")
+            
+            # معالجة بيانات الذهب
+            gold_data = pd.DataFrame({
+                'Close': data[('Close', symbols['gold'])]
+            }).dropna()
+            
+            if len(gold_data) < 50:
+                raise Exception("Insufficient data")
+            
+            # حساب المؤشرات الفنية (بدون pandas-ta)
+            print("📈 Calculating technical indicators...")
+            
+            # المتوسطات المتحركة
+            gold_data['SMA_20'] = gold_data['Close'].rolling(window=20).mean()
+            gold_data['SMA_50'] = gold_data['Close'].rolling(window=50).mean()
+            gold_data['EMA_12'] = gold_data['Close'].ewm(span=12).mean()
+            gold_data['EMA_26'] = gold_data['Close'].ewm(span=26).mean()
+            
+            # RSI 
+            delta = gold_data['Close'].diff()
+            gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
+            loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+            rs = gain / loss
+            gold_data['RSI'] = 100 - (100 / (1 + rs))
+            
+            # MACD
+            gold_data['MACD'] = gold_data['EMA_12'] - gold_data['EMA_26']
+            gold_data['MACD_Signal'] = gold_data['MACD'].ewm(span=9).mean()
+            
+            # Bollinger Bands
+            gold_data['BB_Middle'] = gold_data['Close'].rolling(window=20).mean()
+            gold_data['BB_Std'] = gold_data['Close'].rolling(window=20).std()
+            gold_data['BB_Upper'] = gold_data['BB_Middle'] + (gold_data['BB_Std'] * 2)
+            gold_data['BB_Lower'] = gold_data['BB_Middle'] - (gold_data['BB_Std'] * 2)
+            
+            # تنظيف البيانات
+            gold_data = gold_data.dropna()
+            
+            if gold_data.empty:
+                raise Exception("No data after calculations")
                 
-            print(f"✅ Analysis completed!")
-            print(f"Signal: {signal}")
-            print(f"Price: ${current_price:.2f}")
-            print(f"Score: {score}/3")
+            latest = gold_data.iloc[-1]
+            current_price = latest['Close']
+            
+            print(f"💰 Current Gold Price: ${current_price:.2f}")
+            
+            # حساب النقاط
+            print("🎯 Calculating signal...")
+            scores = {}
+            
+            # 1. نقاط الاتجاه (40%)
+            trend_score = 0
+            if current_price > latest['SMA_50']: trend_score += 2
+            if current_price > latest['SMA_20']: trend_score += 1.5
+            if latest['SMA_20'] > latest['SMA_50']: trend_score += 1
+            scores['trend'] = min(trend_score / 4.5, 1) * 2 - 1  # تطبيع بين -1 و +1
+            
+            # 2. نقاط الزخم (30%)
+            momentum_score = 0
+            rsi = latest['RSI']
+            if latest['MACD'] > latest['MACD_Signal']: momentum_score += 1
+            if 30 < rsi < 70: momentum_score += 1
+            elif rsi < 30: momentum_score += 1.5  # تشبع بيع
+            elif rsi > 70: momentum_score -= 0.5  # تشبع شراء
+            scores['momentum'] = min(momentum_score / 2.5, 1) * 2 - 1
+            
+            # 3. نقاط السوق العام (20%)
+            market_score = 0
+            try:
+                vix_current = data[('Close', symbols['vix'])].iloc[-1]
+                dxy_current = data[('Close', symbols['dxy'])].iloc[-1]
+                
+                if vix_current > 20: market_score += 1  # خوف يفيد الذهب
+                if dxy_current < 105: market_score += 1  # دولار ضعيف يفيد الذهب
+            except:
+                pass
+            scores['market'] = min(market_score / 2, 1) * 2 - 1
+            
+            # 4. نقاط Bollinger Bands (10%)
+            bb_position = (current_price - latest['BB_Lower']) / (latest['BB_Upper'] - latest['BB_Lower'])
+            if bb_position < 0.2:
+                bb_score = 1  # قرب الحد السفلي
+            elif bb_position > 0.8:
+                bb_score = -1  # قرب الحد العلوي
+            else:
+                bb_score = 0
+            scores['bollinger'] = bb_score
+            
+            # حساب النتيجة الإجمالية
+            weights = {'trend': 0.4, 'momentum': 0.3, 'market': 0.2, 'bollinger': 0.1}
+            total_score = sum(scores[key] * weights[key] for key in weights)
+            
+            # تحديد الإشارة
+            if total_score >= 0.6:
+                signal = "Strong Buy"
+                signal_simple = "Buy"
+            elif total_score >= 0.3:
+                signal = "Buy"
+                signal_simple = "Buy"
+            elif total_score >= -0.3:
+                signal = "Hold"
+                signal_simple = "Hold"
+            elif total_score >= -0.6:
+                signal = "Sell"
+                signal_simple = "Sell"
+            else:
+                signal = "Strong Sell"
+                signal_simple = "Sell"
+            
+            # حساب إدارة المخاطر
+            volatility = gold_data['Close'].pct_change().std() * np.sqrt(252)
+            atr_proxy = gold_data['Close'].rolling(14).apply(lambda x: x.max() - x.min()).iloc[-1]
+            
+            if signal_simple == "Buy":
+                stop_loss = current_price - (2 * atr_proxy / len(gold_data))
+                take_profit = current_price + (3 * atr_proxy / len(gold_data))
+            elif signal_simple == "Sell":
+                stop_loss = current_price + (2 * atr_proxy / len(gold_data))
+                take_profit = current_price - (3 * atr_proxy / len(gold_data))
+            else:
+                stop_loss = current_price
+                take_profit = current_price
+            
+            # باك تيست مبسط
+            print("🔬 Running simple backtest...")
+            gold_data['signal'] = 0
+            gold_data['returns'] = gold_data['Close'].pct_change()
+            
+            # منطق الإشارات للباك تيست
+            for i in range(50, len(gold_data)):
+                if (gold_data['Close'].iloc[i] > gold_data['SMA_20'].iloc[i] and 
+                    gold_data['RSI'].iloc[i] < 70):
+                    gold_data.iloc[i, gold_data.columns.get_loc('signal')] = 1
+                elif (gold_data['Close'].iloc[i] < gold_data['SMA_20'].iloc[i] and 
+                      gold_data['RSI'].iloc[i] > 30):
+                    gold_data.iloc[i, gold_data.columns.get_loc('signal')] = -1
+            
+            # حساب عوائد الاستراتيجية
+            gold_data['strategy_returns'] = gold_data['signal'].shift(1) * gold_data['returns']
+            strategy_return = gold_data['strategy_returns'].sum() * 100
+            market_return = gold_data['returns'].sum() * 100
+            
+            # إعداد النتائج النهائية
+            result = {
+                "timestamp_utc": datetime.utcnow().isoformat(),
+                "status": "success",
+                
+                # الإشارة الرئيسية
+                "signal": signal_simple,
+                "signal_strength": signal,
+                "total_score": round(total_score, 3),
+                "confidence": round(abs(total_score), 3),
+                
+                # بيانات السوق
+                "market_data": {
+                    "gold_price": round(current_price, 2),
+                    "dxy": round(data[('Close', symbols['dxy'])].iloc[-1], 2) if ('Close', symbols['dxy']) in data.columns else 0,
+                    "vix": round(data[('Close', symbols['vix'])].iloc[-1], 2) if ('Close', symbols['vix']) in data.columns else 0,
+                },
+                
+                # المؤشرات الفنية
+                "technical_indicators": {
+                    "rsi": round(latest['RSI'], 2),
+                    "macd_signal": "bullish" if latest['MACD'] > latest['MACD_Signal'] else "bearish",
+                    "sma_20": round(latest['SMA_20'], 2),
+                    "sma_50": round(latest['SMA_50'], 2),
+                    "bb_position": round(bb_position * 100, 1)
+                },
+                
+                # مكونات النقاط
+                "score_components": {k: round(v, 3) for k, v in scores.items()},
+                "component_weights": weights,
+                
+                # إدارة المخاطر
+                "risk_management": {
+                    "stop_loss_price": round(stop_loss, 2),
+                    "take_profit_price": round(take_profit, 2),
+                    "volatility": round(volatility, 3)
+                },
+                
+                # باك تيست
+                "backtest": {
+                    "strategy_return_percent": round(strategy_return, 2),
+                    "market_return_percent": round(market_return, 2),
+                    "excess_return": round(strategy_return - market_return, 2),
+                    "data_points": len(gold_data)
+                },
+                
+                # معلومات الأداء
+                "performance": {
+                    "data_points_analyzed": len(gold_data),
+                    "calculation_success": True
+                }
+            }
+            
+            # حفظ النتائج
+            with open('gold_analysis_result.json', 'w', encoding='utf-8') as f:
+                json.dump(result, f, ensure_ascii=False, indent=2)
+            
+            print(f"✅ Analysis Complete!")
+            print(f"🎯 Signal: {signal} (Score: {total_score:.3f})")
+            print(f"💰 Gold Price: ${current_price:.2f}")
+            print(f"📊 RSI: {latest['RSI']:.1f}")
+            print(f"🔬 Backtest Return: {strategy_return:.2f}%")
             
         except Exception as e:
             print(f"❌ Error: {e}")
-            result = {"status": "error", "error": str(e)}
-            with open('gold_simple_result.json', 'w') as f:
-                json.dump(result, f, indent=2)
+            import traceback
+            traceback.print_exc()
+            
+            # حفظ نتيجة الخطأ
+            error_result = {
+                "timestamp_utc": datetime.utcnow().isoformat(),
+                "status": "error",
+                "error": str(e),
+                "signal": "Hold",
+                "total_score": 0
+            }
+            
+            with open('gold_analysis_result.json', 'w') as f:
+                json.dump(error_result, f, indent=2)
         EOF
-        
-    - run: python simple_analyzer.py
-    
-    - name: Check Results
+
+    - name: Run Fixed Analysis
+      run: python gold_analyzer_fixed.py
+
+    - name: Check and Display Results
       run: |
-        if [ -f "gold_simple_result.json" ]; then
-          echo "✅ Results created"
-          cat gold_simple_result.json
+        if [ -f "gold_analysis_result.json" ]; then
+          echo "✅ Analysis completed successfully!"
+          echo ""
+          echo "📊 Results Summary:"
+          python -c "
+          import json
+          with open('gold_analysis_result.json', 'r') as f:
+              data = json.load(f)
+          
+          print(f'🎯 Signal: {data.get(\"signal\", \"N/A\")} ({data.get(\"signal_strength\", \"N/A\")})')
+          print(f'📈 Score: {data.get(\"total_score\", 0):.3f}')
+          print(f'💰 Gold Price: \${data.get(\"market_data\", {}).get(\"gold_price\", 0):,.2f}')
+          print(f'📊 RSI: {data.get(\"technical_indicators\", {}).get(\"rsi\", 0):.1f}')
+          print(f'🔬 Backtest: {data.get(\"backtest\", {}).get(\"strategy_return_percent\", 0):.2f}%')
+          print(f'✅ Status: {data.get(\"status\", \"unknown\")}')
+          "
+          echo ""
+          echo "📁 Full result saved in: gold_analysis_result.json"
         else
-          echo "❌ No results file"
+          echo "❌ No results file found"
+          ls -la
         fi
+
+    - name: Create Analysis Report
+      if: success()
+      run: |
+        python -c "
+        import json
+        from datetime import datetime
         
+        with open('gold_analysis_result.json', 'r') as f:
+            data = json.load(f)
+        
+        report = f'''# 📊 Gold Analysis Report - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}
+        
+        ## 🎯 Trading Signal
+        **{data.get('signal', 'N/A')}** - {data.get('signal_strength', 'N/A')}
+        - **Total Score**: {data.get('total_score', 0):.3f}
+        - **Confidence**: {data.get('confidence', 0):.3f}
+        
+        ## 💰 Market Data
+        - **Gold Price**: \${data.get('market_data', {}).get('gold_price', 0):,.2f}
+        - **DXY (Dollar)**: {data.get('market_data', {}).get('dxy', 0):.2f}  
+        - **VIX (Fear)**: {data.get('market_data', {}).get('vix', 0):.2f}
+        
+        ## 📈 Technical Indicators
+        - **RSI**: {data.get('technical_indicators', {}).get('rsi', 0):.1f}
+        - **MACD**: {data.get('technical_indicators', {}).get('macd_signal', 'N/A').title()}
+        - **SMA 20**: \${data.get('technical_indicators', {}).get('sma_20', 0):,.2f}
+        - **SMA 50**: \${data.get('technical_indicators', {}).get('sma_50', 0):,.2f}
+        - **BB Position**: {data.get('technical_indicators', {}).get('bb_position', 0):.1f}%
+        
+        ## 🔧 Risk Management  
+        - **Stop Loss**: \${data.get('risk_management', {}).get('stop_loss_price', 0):,.2f}
+        - **Take Profit**: \${data.get('risk_management', {}).get('take_profit_price', 0):,.2f}
+        - **Volatility**: {data.get('risk_management', {}).get('volatility', 0):.3f}
+        
+        ## 🔬 Backtest Performance
+        - **Strategy Return**: {data.get('backtest', {}).get('strategy_return_percent', 0):.2f}%
+        - **Market Return**: {data.get('backtest', {}).get('market_return_percent', 0):.2f}%
+        - **Excess Return**: {data.get('backtest', {}).get('excess_return', 0):.2f}%
+        - **Data Points**: {data.get('backtest', {}).get('data_points', 0)}
+        
+        ## 📊 Score Components
+        '''
+        
+        for component, score in data.get('score_components', {}).items():
+            weight = data.get('component_weights', {}).get(component, 0)
+            report += f'- **{component.title()}**: {score:.3f} (weight: {weight:.1%})\\n'
+        
+        report += f'''
+        ---
+        *Generated: {data.get('timestamp_utc', 'N/A')}*  
+        *Status: {data.get('status', 'unknown').upper()}*
+        '''
+        
+        with open('README.md', 'w', encoding='utf-8') as f:
+            f.write(report)
+        
+        print('✅ Report generated and saved to README.md')
+        "
+
     - name: Commit Results
       run: |
         git config --local user.email "action@github.com"
-        git config --local user.name "Gold Bot"
-        git add gold_simple_result.json
-        git commit -m "🤖 Simple Gold Analysis - $(date)" || echo "No changes"
-        git push || echo "Push failed"
+        git config --local user.name "Gold Analysis Bot 🤖"
+        
+        git add gold_analysis_result.json README.md
+        
+        if git diff --staged --quiet; then
+          echo "⚠️ No changes to commit"
+        else
+          SIGNAL=$(python -c "
+          import json
+          try:
+              with open('gold_analysis_result.json', 'r') as f:
+                  data = json.load(f)
+              print(f'{data[\"signal\"]} (Score: {data[\"total_score\"]:.2f})')
+          except:
+              print('Analysis Update')
+          " 2>/dev/null)
+          
+          git commit -m "🤖 Gold Analysis: $SIGNAL - $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
+          echo "✅ Results committed and pushed!"
+        fi
+
+    - name: Upload Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: gold-analysis-results
+        path: |
+          gold_analysis_result.json
+          README.md
+        retention-days: 30
