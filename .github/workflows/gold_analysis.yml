@@ -1,569 +1,345 @@
-name: ✅ Simple Gold Analysis (Guaranteed Working)
+
+name: Gold Analysis + News
 on:
-  schedule:
-    - cron: '30 13 * * 1-5'
   workflow_dispatch:
-
-env:
-  NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-
+  schedule:
+    - cron: '30 13 * * 1-5'  # يومي
 jobs:
-  simple-analysis:
-    name: ✅ Simple Gold Analysis
+  analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
     permissions:
       contents: write
-    
+    env:
+      NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-        
-    - name: 📦 Install Minimal Packages
-      run: |
-        pip install --quiet yfinance pandas numpy requests vaderSentiment
 
-    - name: 🏗️ Create Simple Working Analyzer
+    - run: pip install yfinance pandas numpy requests
+
+    - name: Create Full Analyzer with News
       run: |
-        cat > simple_analyzer.py << 'EOF'
-        #!/usr/bin/env python3
-        """
-        ✅ Simple Gold Analyzer - GUARANTEED TO WORK
-        """
-        
+        cat > full_analyzer.py << 'EOF'
         import yfinance as yf
         import pandas as pd
         import numpy as np
         import requests
         import json
-        import sqlite3
         import os
         from datetime import datetime, timedelta
-        import warnings
         
-        try:
-            from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-            sentiment_analyzer = SentimentIntensityAnalyzer()
-            SENTIMENT_OK = True
-        except:
-            SENTIMENT_OK = False
-        
-        warnings.filterwarnings('ignore')
-        
-        def fetch_gold_data():
-            """جلب بيانات الذهب - مضمون"""
-            print("📊 Fetching gold data...")
-            
-            try:
-                # جرب GLD أولاً (الأكثر استقراراً)
-                data = yf.download('GLD', period='6mo', progress=False)
-                if not data.empty and len(data) > 50:
-                    print(f"✅ GLD data: {len(data)} days")
-                    return data
-            except:
-                pass
-            
-            try:
-                # جرب الذهب المستقبلي
-                data = yf.download('GC=F', period='6mo', progress=False)
-                if not data.empty and len(data) > 50:
-                    print(f"✅ GC=F data: {len(data)} days")
-                    return data
-            except:
-                pass
-            
-            print("❌ Failed to fetch gold data")
-            return None
-        
-        def calculate_simple_indicators(df):
-            """حساب مؤشرات بسيطة - بدون أخطاء"""
-            print("📈 Calculating indicators...")
-            
-            try:
-                # التأكد من وجود العمود المطلوب
-                if 'Close' not in df.columns:
-                    print("❌ No Close column")
-                    return None
-                
-                # نسخ البيانات
-                data = df.copy()
-                
-                # متوسطات متحركة بسيطة
-                data['SMA_20'] = data['Close'].rolling(20).mean()
-                data['SMA_50'] = data['Close'].rolling(50).mean()
-                
-                # RSI بسيط
-                delta = data['Close'].diff()
-                gain = delta.where(delta > 0, 0).rolling(14).mean()
-                loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
-                
-                # تجنب القسمة على صفر
-                rs = gain / (loss + 0.000001)  # إضافة قيمة صغيرة
-                data['RSI'] = 100 - (100 / (1 + rs))
-                
-                # تنظيف البيانات
-                data = data.dropna()
-                
-                if data.empty:
-                    print("❌ Data empty after calculations")
-                    return None
-                
-                print(f"✅ Indicators calculated: {len(data)} rows")
-                return data
-                
-            except Exception as e:
-                print(f"❌ Indicator calculation error: {e}")
-                return None
-        
-        def analyze_news_simple():
-            """تحليل أخبار بسيط"""
-            print("📰 Analyzing news...")
-            
+        def analyze_news():
+            """تحليل الأخبار المبسط"""
             api_key = os.getenv('NEWS_API_KEY')
             
-            if not api_key or not SENTIMENT_OK:
+            if not api_key:
                 return {
-                    'status': 'disabled',
-                    'sentiment': 0,
-                    'articles': 0,
-                    'headlines': []
+                    "status": "no_api_key",
+                    "news_score": 0,
+                    "articles_count": 0,
+                    "headlines": []
                 }
             
             try:
-                # استعلام بسيط
-                url = f"https://newsapi.org/v2/everything?q=gold+price&language=en&pageSize=20&from={(datetime.now() - timedelta(days=2)).date()}&apiKey={api_key}"
+                # كلمات إيجابية وسلبية للذهب
+                positive_words = [
+                    'surge', 'rise', 'gain', 'bull', 'up', 'higher', 'rally', 'climb',
+                    'inflation', 'safe haven', 'uncertainty', 'crisis', 'fear', 
+                    'dovish', 'stimulus', 'weak dollar', 'rate cut'
+                ]
                 
-                response = requests.get(url, timeout=10)
-                if response.status_code != 200:
-                    return {'status': 'api_error', 'sentiment': 0, 'articles': 0, 'headlines': []}
+                negative_words = [
+                    'fall', 'drop', 'decline', 'bear', 'down', 'lower', 'crash', 'plunge',
+                    'strong dollar', 'rate hike', 'hawkish', 'sell-off', 'profit taking'
+                ]
                 
-                articles = response.json().get('articles', [])
-                if not articles:
-                    return {'status': 'no_articles', 'sentiment': 0, 'articles': 0, 'headlines': []}
+                # جلب أخبار الذهب
+                queries = [
+                    'gold price',
+                    'gold market',
+                    'federal reserve gold',
+                    'inflation gold'
+                ]
                 
-                # تحليل مشاعر بسيط
-                sentiments = []
-                headlines = []
+                all_articles = []
                 
-                for article in articles[:15]:  # أفضل 15 مقال
-                    title = article.get('title', '')
-                    if len(title) < 10:
-                        continue
+                for query in queries:
+                    url = f"https://newsapi.org/v2/everything?q={query}&language=en&sortBy=publishedAt&pageSize=15&from={(datetime.now() - timedelta(days=2)).date()}&apiKey={api_key}"
                     
-                    # فلترة المقالات المتعلقة بالذهب
-                    if any(word in title.lower() for word in ['gold', 'precious', 'bullion']):
-                        try:
-                            scores = sentiment_analyzer.polarity_scores(title)
-                            sentiment = scores['compound']
-                            sentiments.append(sentiment)
-                            headlines.append({
-                                'title': title[:80],
-                                'source': article.get('source', {}).get('name', 'Unknown'),
-                                'sentiment': round(sentiment, 3)
-                            })
-                        except:
-                            continue
+                    try:
+                        response = requests.get(url, timeout=10)
+                        if response.status_code == 200:
+                            data = response.json()
+                            all_articles.extend(data.get('articles', []))
+                    except:
+                        continue
                 
-                if not sentiments:
-                    return {'status': 'no_relevant', 'sentiment': 0, 'articles': 0, 'headlines': []}
-                
-                avg_sentiment = sum(sentiments) / len(sentiments)
-                
-                print(f"✅ News analyzed: {len(headlines)} articles, sentiment: {avg_sentiment:.3f}")
-                
-                return {
-                    'status': 'success',
-                    'sentiment': round(avg_sentiment, 4),
-                    'articles': len(headlines),
-                    'headlines': headlines[:5]
-                }
-                
-            except Exception as e:
-                print(f"❌ News analysis error: {e}")
-                return {'status': 'error', 'sentiment': 0, 'articles': 0, 'headlines': []}
-        
-        def generate_simple_signal(data, news):
-            """توليد إشارة بسيطة"""
-            print("🎯 Generating signal...")
-            
-            try:
-                if data is None or data.empty:
+                if not all_articles:
                     return {
-                        'signal': 'HOLD',
-                        'strength': 'No Data',
-                        'score': 0,
-                        'price': 0
+                        "status": "no_articles",
+                        "news_score": 0,
+                        "articles_count": 0,
+                        "headlines": []
                     }
                 
-                latest = data.iloc[-1]
-                current_price = latest['Close']
+                # تحليل المشاعر البسيط
+                news_score = 0
+                processed_articles = []
+                seen_titles = set()
                 
-                # نقاط التحليل الفني
-                technical_points = 0
+                for article in all_articles[:30]:  # أفضل 30 مقال
+                    title = article.get('title', '').lower()
+                    description = article.get('description', '') or ''
+                    content = f"{title} {description.lower()}"
+                    
+                    # تجنب المكرر
+                    if title in seen_titles or len(title) < 10:
+                        continue
+                    seen_titles.add(title)
+                    
+                    # فحص الكلمات الإيجابية والسلبية
+                    positive_count = sum(1 for word in positive_words if word in content)
+                    negative_count = sum(1 for word in negative_words if word in content)
+                    
+                    # حساب نقاط المقال
+                    article_score = positive_count - negative_count
+                    
+                    # إذا يتحدث عن الذهب مباشرة
+                    if any(word in content for word in ['gold', 'xau', 'precious metal']):
+                        article_score *= 1.5  # زيادة الوزن
+                        
+                        news_score += article_score
+                        
+                        processed_articles.append({
+                            'title': article.get('title', '')[:100],
+                            'source': article.get('source', {}).get('name', 'Unknown'),
+                            'score': round(article_score, 1),
+                            'sentiment': 'positive' if article_score > 0 else 'negative' if article_score < 0 else 'neutral'
+                        })
                 
-                # اتجاه قصير الأمد
-                if current_price > latest['SMA_20']:
-                    technical_points += 2
+                # تطبيع النقاط
+                if len(processed_articles) > 0:
+                    avg_news_score = news_score / len(processed_articles)
+                    news_score = max(-2, min(2, avg_news_score))  # بين -2 و +2
+                else:
+                    news_score = 0
                 
-                # اتجاه متوسط الأمد
-                if current_price > latest['SMA_50']:
-                    technical_points += 2
+                return {
+                    "status": "success",
+                    "news_score": round(news_score, 2),
+                    "articles_count": len(processed_articles),
+                    "headlines": processed_articles[:8],  # أفضل 8 مقالات
+                    "positive_articles": len([a for a in processed_articles if a['score'] > 0]),
+                    "negative_articles": len([a for a in processed_articles if a['score'] < 0])
+                }
+                
+            except Exception as e:
+                return {
+                    "status": "error",
+                    "error": str(e),
+                    "news_score": 0,
+                    "articles_count": 0,
+                    "headlines": []
+                }
+        
+        def analyze_technical():
+            """التحليل الفني"""
+            try:
+                # جلب البيانات
+                symbols = ['GLD', 'DX-Y.NYB', '^VIX', 'SPY']
+                data = yf.download(symbols, period='6mo', progress=False)
+                
+                # معالجة بيانات الذهب
+                gold = data[('Close', 'GLD')].dropna()
+                
+                # المؤشرات
+                sma20 = gold.rolling(20).mean()
+                sma50 = gold.rolling(50).mean()
                 
                 # RSI
-                rsi = latest['RSI']
-                if 30 <= rsi <= 70:
-                    technical_points += 1
-                elif rsi < 30:  # oversold
-                    technical_points += 2
+                delta = gold.diff()
+                gain = delta.where(delta > 0, 0).rolling(14).mean()
+                loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
+                rsi = 100 - (100 / (1 + gain / loss))
                 
-                # تحرك الأسعار
-                if len(data) >= 5:
-                    price_change = (current_price / data['Close'].iloc[-5] - 1) * 100
-                    if price_change > 2:
-                        technical_points += 1
-                    elif price_change < -2:
-                        technical_points -= 1
+                # بيانات حالية
+                current_price = gold.iloc[-1]
+                current_rsi = rsi.iloc[-1]
+                current_sma20 = sma20.iloc[-1]
+                current_sma50 = sma50.iloc[-1]
                 
-                # نقاط الأخبار
-                news_points = 0
-                if news['status'] == 'success':
-                    sentiment = news['sentiment']
-                    if sentiment > 0.2:
-                        news_points += 2
-                    elif sentiment > 0.05:
-                        news_points += 1
-                    elif sentiment < -0.2:
-                        news_points -= 2
-                    elif sentiment < -0.05:
-                        news_points -= 1
+                # نقاط فنية
+                tech_score = 0
+                if current_price > current_sma50: tech_score += 2
+                if current_price > current_sma20: tech_score += 1.5
+                if 30 < current_rsi < 70: tech_score += 1
+                if current_sma20 > current_sma50: tech_score += 0.5
                 
-                # النقاط الإجمالية
-                total_points = technical_points + news_points
+                tech_score = (tech_score / 5) * 2 - 1  # تطبيع بين -1 و +1
                 
-                # تحديد الإشارة
-                if total_points >= 6:
-                    signal = 'STRONG BUY'
-                    strength = 'Very Strong'
-                elif total_points >= 4:
-                    signal = 'BUY'
-                    strength = 'Strong'
-                elif total_points >= 2:
-                    signal = 'BUY'
-                    strength = 'Moderate'
-                elif total_points <= -4:
-                    signal = 'SELL'
-                    strength = 'Strong'
-                elif total_points <= -2:
-                    signal = 'SELL'
-                    strength = 'Moderate'
-                else:
-                    signal = 'HOLD'
-                    strength = 'Neutral'
+                # السوق العام
+                try:
+                    vix = data[('Close', '^VIX')].iloc[-1]
+                    dxy = data[('Close', 'DX-Y.NYB')].iloc[-1]
+                except:
+                    vix = dxy = 0
                 
-                # حساب Stop Loss و Take Profit بسيط
-                price_range = data['Close'].rolling(20).std().iloc[-1]
-                stop_loss = current_price - (2 * price_range)
-                take_profit = current_price + (3 * price_range)
-                
-                result = {
-                    'signal': signal,
-                    'strength': strength,
-                    'score': total_points,
-                    'price': round(current_price, 2),
-                    'rsi': round(rsi, 1),
-                    'sma_20': round(latest['SMA_20'], 2),
-                    'sma_50': round(latest['SMA_50'], 2),
-                    'stop_loss': round(stop_loss, 2),
-                    'take_profit': round(take_profit, 2),
-                    'technical_points': technical_points,
-                    'news_points': news_points
-                }
-                
-                print(f"✅ Signal: {signal} ({strength}) - Score: {total_points}")
-                return result
-                
-            except Exception as e:
-                print(f"❌ Signal generation error: {e}")
                 return {
-                    'signal': 'HOLD',
-                    'strength': 'Error',
-                    'score': 0,
-                    'price': 0
+                    "status": "success",
+                    "tech_score": round(tech_score, 3),
+                    "gold_price": round(current_price, 2),
+                    "rsi": round(current_rsi, 1),
+                    "sma_20": round(current_sma20, 2),
+                    "sma_50": round(current_sma50, 2),
+                    "vix": round(vix, 1),
+                    "dxy": round(dxy, 2),
+                    "trend": "Bullish" if current_price > current_sma50 else "Bearish",
+                    "data_points": len(gold)
                 }
-        
-        def save_to_database(signal, news, timestamp):
-            """حفظ في قاعدة البيانات"""
-            try:
-                conn = sqlite3.connect('simple_gold_analysis.db')
-                cursor = conn.cursor()
                 
-                # إنشاء الجدول إذا لم يكن موجود
-                cursor.execute('''
-                    CREATE TABLE IF NOT EXISTS gold_analysis (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        timestamp TEXT,
-                        signal TEXT,
-                        strength TEXT,
-                        score INTEGER,
-                        price REAL,
-                        rsi REAL,
-                        news_sentiment REAL,
-                        news_articles INTEGER,
-                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                    )
-                ''')
-                
-                # إدراج البيانات
-                cursor.execute('''
-                    INSERT INTO gold_analysis 
-                    (timestamp, signal, strength, score, price, rsi, news_sentiment, news_articles)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                ''', (
-                    timestamp,
-                    signal.get('signal', 'HOLD'),
-                    signal.get('strength', 'Unknown'),
-                    signal.get('score', 0),
-                    signal.get('price', 0),
-                    signal.get('rsi', 50),
-                    news.get('sentiment', 0),
-                    news.get('articles', 0)
-                ))
-                
-                conn.commit()
-                conn.close()
-                print("✅ Data saved to database")
-                return True
             except Exception as e:
-                print(f"❌ Database error: {e}")
-                return False
+                return {
+                    "status": "error",
+                    "error": str(e),
+                    "tech_score": 0
+                }
         
         def main():
-            """الدالة الرئيسية"""
-            print("✅ Simple Gold Analyzer Starting...")
-            print("=" * 50)
+            print("🚀 Starting Gold Analysis with News...")
             
-            start_time = datetime.now()
+            # التحليل الفني
+            print("📈 Technical analysis...")
+            tech_result = analyze_technical()
             
-            # 1. جلب البيانات
-            gold_data = fetch_gold_data()
-            if gold_data is None:
-                print("💥 Cannot fetch gold data - ABORTING")
-                return 1
+            # تحليل الأخبار
+            print("📰 News analysis...")
+            news_result = analyze_news()
             
-            # 2. حساب المؤشرات
-            indicators = calculate_simple_indicators(gold_data)
-            if indicators is None:
-                print("💥 Cannot calculate indicators - ABORTING")
-                return 1
+            if tech_result['status'] == 'success':
+                # حساب النتيجة الإجمالية
+                tech_score = tech_result['tech_score']
+                news_score = news_result.get('news_score', 0)
+                
+                # الأوزان: 70% فني، 30% أخبار
+                total_score = (tech_score * 0.7) + (news_score * 0.3)
+                
+                # تحديد الإشارة
+                if total_score >= 0.6:
+                    signal = "Strong Buy"
+                elif total_score >= 0.3:
+                    signal = "Buy"  
+                elif total_score >= -0.3:
+                    signal = "Hold"
+                elif total_score >= -0.6:
+                    signal = "Sell"
+                else:
+                    signal = "Strong Sell"
+                
+                # النتيجة النهائية
+                result = {
+                    "timestamp": datetime.utcnow().isoformat(),
+                    "status": "success",
+                    
+                    # الإشارة
+                    "signal": signal,
+                    "total_score": round(total_score, 3),
+                    "technical_score": tech_score,
+                    "news_score": news_score,
+                    
+                    # بيانات السوق
+                    "gold_price": tech_result['gold_price'],
+                    "rsi": tech_result['rsi'], 
+                    "sma_20": tech_result['sma_20'],
+                    "sma_50": tech_result['sma_50'],
+                    "vix": tech_result['vix'],
+                    "dxy": tech_result['dxy'],
+                    "trend": tech_result['trend'],
+                    
+                    # تحليل الأخبار
+                    "news_analysis": {
+                        "status": news_result['status'],
+                        "articles_count": news_result.get('articles_count', 0),
+                        "positive_articles": news_result.get('positive_articles', 0),
+                        "negative_articles": news_result.get('negative_articles', 0),
+                        "top_headlines": news_result.get('headlines', [])[:5]
+                    },
+                    
+                    "data_points": tech_result['data_points']
+                }
+            else:
+                result = {
+                    "timestamp": datetime.utcnow().isoformat(),
+                    "status": "error",
+                    "error": tech_result.get('error', 'Technical analysis failed'),
+                    "signal": "Hold",
+                    "total_score": 0
+                }
             
-            # 3. تحليل الأخبار
-            news_result = analyze_news_simple()
+            # حفظ النتيجة
+            with open('gold_analysis_complete.json', 'w', encoding='utf-8') as f:
+                json.dump(result, f, ensure_ascii=False, indent=2)
             
-            # 4. توليد الإشارة
-            signal_result = generate_simple_signal(indicators, news_result)
+            # طباعة الملخص
+            print(f"✅ Analysis Complete!")
+            print(f"Signal: {result['signal']}")
+            print(f"Total Score: {result.get('total_score', 0)}")
             
-            # 5. حساب وقت التنفيذ
-            execution_time = int((datetime.now() - start_time).total_seconds() * 1000)
-            
-            # 6. حفظ في قاعدة البيانات
-            save_to_database(signal_result, news_result, start_time.isoformat())
-            
-            # 7. إنشاء التقرير النهائي
-            final_report = {
-                'timestamp': start_time.isoformat(),
-                'execution_time_ms': execution_time,
-                'status': 'success',
-                'signal': signal_result,
-                'news': news_result,
-                'data_points': len(indicators),
-                'version': 'simple_v1.0'
-            }
-            
-            # 8. حفظ التقرير
-            with open('simple_gold_analysis.json', 'w') as f:
-                json.dump(final_report, f, indent=2)
-            
-            # 9. طباعة الملخص
-            print("")
-            print("🎯 FINAL RESULTS")
-            print("=" * 30)
-            print(f"Signal: {signal_result['signal']}")
-            print(f"Strength: {signal_result['strength']}")
-            print(f"Score: {signal_result['score']}")
-            print(f"Gold Price: ${signal_result['price']:,.2f}")
-            print(f"RSI: {signal_result['rsi']}")
-            print(f"Stop Loss: ${signal_result['stop_loss']:,.2f}")
-            print(f"Take Profit: ${signal_result['take_profit']:,.2f}")
-            print(f"News Articles: {news_result['articles']}")
-            print(f"News Sentiment: {news_result['sentiment']:+.4f}")
-            print(f"Execution Time: {execution_time}ms")
-            print(f"")
-            print("✅ SIMPLE ANALYSIS COMPLETED SUCCESSFULLY!")
-            
-            return 0
+            if result['status'] == 'success':
+                print(f"Gold Price: ${result['gold_price']}")
+                print(f"Technical: {result['technical_score']:.3f}")
+                print(f"News: {result['news_score']:.3f}")
+                print(f"Articles: {result['news_analysis']['articles_count']}")
         
         if __name__ == "__main__":
-            exit(main())
+            main()
         EOF
 
-    - name: ✅ Run Simple Analysis
-      id: analysis
-      run: |
-        echo "✅ Running Simple Gold Analysis..."
-        python simple_analyzer.py
-        echo "analysis_status=success" >> $GITHUB_OUTPUT
+    - run: python full_analyzer.py
 
-    - name: 📊 Show Simple Results
-      if: steps.analysis.outputs.analysis_status == 'success'
+    - name: Display Complete Results
       run: |
-        if [ -f "simple_gold_analysis.json" ]; then
-          echo "✅ SIMPLE ANALYSIS RESULTS:"
-          echo "=========================="
-          
+        if [ -f "gold_analysis_complete.json" ]; then
+          echo "✅ Complete Analysis Done!"
+          echo ""
           python -c "
         import json
-        
-        with open('simple_gold_analysis.json', 'r') as f:
+        with open('gold_analysis_complete.json', 'r') as f:
             data = json.load(f)
         
-        signal = data['signal']
-        news = data['news']
+        print(f'🎯 Signal: {data[\"signal\"]}')
+        print(f'📊 Total Score: {data.get(\"total_score\", 0):.3f}')
+        print(f'💰 Gold Price: \${data.get(\"gold_price\", 0):,.2f}')
+        print(f'📈 Technical: {data.get(\"technical_score\", 0):.3f}')  
+        print(f'📰 News: {data.get(\"news_score\", 0):.3f}')
+        print(f'📋 Articles: {data.get(\"news_analysis\", {}).get(\"articles_count\", 0)}')
+        print(f'✅ Status: {data[\"status\"]}')
         
-        print(f'🎯 Signal: {signal[\"signal\"]} ({signal[\"strength\"]})')
-        print(f'📊 Score: {signal[\"score\"]} points')
-        print(f'💰 Gold Price: \${signal[\"price\"]:,.2f}')
-        print(f'📈 RSI: {signal[\"rsi\"]}')
-        print(f'🛑 Stop Loss: \${signal[\"stop_loss\"]:,.2f}')
-        print(f'🎯 Take Profit: \${signal[\"take_profit\"]:,.2f}')
-        print(f'📰 News: {news[\"articles\"]} articles')
-        print(f'💭 Sentiment: {news[\"sentiment\"]:+.4f}')
-        print(f'⚡ Time: {data[\"execution_time_ms\"]}ms')
-        print(f'📊 Data Points: {data[\"data_points\"]}')
-        "
+        headlines = data.get('news_analysis', {}).get('top_headlines', [])
+        if headlines:
+            print(f'\\n📰 Top Headlines:')
+            for i, h in enumerate(headlines[:3], 1):
+                print(f'  {i}. {h[\"title\"]} [{h[\"source\"]}]')
+          "
         else
           echo "❌ No results file"
-          exit 1
         fi
 
-    - name: 📝 Create Simple README
-      if: steps.analysis.outputs.analysis_status == 'success'
-      run: |
-        python -c "
-        import json
-        from datetime import datetime
-        
-        with open('simple_gold_analysis.json', 'r') as f:
-            data = json.load(f)
-        
-        signal = data['signal']
-        news = data['news']
-        
-        readme = f'''# ✅ Simple Gold Analysis (Guaranteed Working)
-        
-        **Generated:** {datetime.fromisoformat(data['timestamp']).strftime('%Y-%m-%d %H:%M:%S UTC')}
-        
-        ## 🎯 Trading Signal
-        
-        **{signal['signal']}** - {signal['strength']}
-        
-        - **Score:** {signal['score']} points
-        - **Technical Points:** {signal['technical_points']}
-        - **News Points:** {signal['news_points']}
-        
-        ## 💰 Market Data
-        
-        | Metric | Value |
-        |--------|-------|
-        | Gold Price | \${signal['price']:,.2f} |
-        | RSI (14) | {signal['rsi']:.1f} |
-        | SMA 20 | \${signal['sma_20']:,.2f} |
-        | SMA 50 | \${signal['sma_50']:,.2f} |
-        
-        ## 🔧 Risk Management
-        
-        - **Stop Loss:** \${signal['stop_loss']:,.2f}
-        - **Take Profit:** \${signal['take_profit']:,.2f}
-        
-        ## 📰 News Analysis
-        
-        - **Status:** {news['status'].title()}
-        - **Articles:** {news['articles']}
-        - **Sentiment:** {news['sentiment']:+.4f}
-        '''
-        
-        if news.get('headlines'):
-            readme += '''
-        ## 📋 Headlines
-        '''
-            for i, headline in enumerate(news['headlines'], 1):
-                readme += f'''
-        {i}. {headline['title']} [{headline['source']}]
-        '''
-        
-        readme += f'''
-        
-        ---
-        
-        **Execution:** {data['execution_time_ms']}ms | **Data Points:** {data['data_points']} | **Version:** {data['version']}
-        
-        *Simple, reliable analysis that actually works!*
-        '''
-        
-        with open('README.md', 'w') as f:
-            f.write(readme)
-        
-        print('✅ README created')
-        "
-
-    - name: 💾 Commit Simple Results
-      if: steps.analysis.outputs.analysis_status == 'success'
+    - name: Commit Complete Results
       run: |
         git config --local user.email "action@github.com"
-        git config --local user.name "✅ Simple Gold Analysis"
+        git config --local user.name "Gold Analysis Bot 🤖"
+        git add gold_analysis_complete.json
         
-        git add simple_gold_analysis.json README.md simple_gold_analysis.db
+        SIGNAL=$(python -c "import json; print(json.load(open('gold_analysis_complete.json'))['signal'])" 2>/dev/null || echo 'Update')
         
-        if git diff --staged --quiet; then
-          echo "⚠️ No changes"
-        else
-          SIGNAL=$(python -c "import json; print(json.load(open('simple_gold_analysis.json'))['signal']['signal'])" 2>/dev/null || echo 'SIMPLE')
-          PRICE=$(python -c "import json; print(f\"\${json.load(open('simple_gold_analysis.json'))['signal']['price']:,.0f}\")" 2>/dev/null || echo '\$0')
-          
-          git commit -m "✅ Simple Gold: $SIGNAL @ $PRICE - $(date -u '+%m/%d %H:%M')"
-          git push
-          echo "✅ Results committed"
-        fi
+        git commit -m "🤖 Gold Analysis: $SIGNAL - $(date -u '+%m/%d %H:%M UTC')" || echo "No changes"
+        git push || echo "Push completed"
 
-    - name: 📤 Upload Simple Results
+    - uses: actions/upload-artifact@v4
       if: always()
-      uses: actions/upload-artifact@v4
       with:
-        name: simple-gold-analysis
-        path: |
-          simple_gold_analysis.json
-          simple_gold_analysis.db
-          README.md
-
-    - name: 🎉 Simple Success
-      if: success()
-      run: |
-        echo "✅ SIMPLE GOLD ANALYSIS SUCCESS!"
-        echo "================================"
-        
-        python -c "
-        try:
-            import json
-            with open('simple_gold_analysis.json', 'r') as f:
-                data = json.load(f)
-            
-            signal = data['signal']
-            print(f'🎯 {signal[\"signal\"]} ({signal[\"strength\"]})')
-            print(f'📊 Score: {signal[\"score\"]} points')
-            print(f'💰 \${signal[\"price\"]:,.2f}')
-            print(f'⚡ {data[\"execution_time_ms\"]}ms')
-            print('\\n🎉 SIMPLE VERSION WORKING PERFECTLY!')
-        except:
-            print('✅ Analysis completed successfully')
-        "
+        name: complete-gold-analysis
+        path: gold_analysis_complete.json
