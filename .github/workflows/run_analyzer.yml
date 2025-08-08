@@ -1,10 +1,8 @@
 name: Professional Gold Analysis
 
 on:
-  workflow_dispatch: # للتشغيل اليدوي
+  workflow_dispatch:
   schedule:
-    # يعمل من الإثنين إلى الجمعة الساعة 21:00 بتوقيت UTC
-    # (أي بعد إغلاق سوق نيويورك بساعة)
     - cron: '0 21 * * 1-5'
 
 jobs:
@@ -36,5 +34,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: '🏆 Update Professional Gold Analysis Report'
-          # تأكد من أن أسماء الملفات تطابق ما ينتجه السكربت
+          # يقوم بحفظ كل الملفات الناتجة
           file_pattern: 'gold_analysis_pro.json gold_analysis_history.db gold_analysis_pro.log'
