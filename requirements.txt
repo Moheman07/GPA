@@ -1,9 +1,9 @@
 numpy<2.0
-requests
 pandas
 yfinance
-pandas-ta
+requests
 transformers
 torch
 sentencepiece
 pytz
+pandas-ta
