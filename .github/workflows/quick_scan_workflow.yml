@@ -14,15 +14,29 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      
+      - name: Set up Python with dependency caching
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          # ✅ السطر الذي يحل مشكلة بطء التثبيت
           cache: 'pip'
-      - run: pip install -r requirements.txt
+          # ✅ تحديد مكان ملف المكتبات داخل المجلد الفرعي
+          cache-dependency-path: GPA/requirements.txt
+
+      - name: Install dependencies
+        # ✅ الدخول إلى المجلد الصحيح قبل التثبيت
+        working-directory: ./GPA
+        run: pip install -r requirements.txt
+        
       - name: Run Quick Scan
-        run: python hybrid_analyzer.py quick # <-- لاحظ كيف نمرر الوضع هنا
+        # ✅ الدخول إلى المجلد الصحيح قبل تشغيل السكربت
+        working-directory: ./GPA
+        run: python hybrid_analyzer.py quick
+        
       - name: Commit Quick Scan Results
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'Update quick scan analysis'
-          file_pattern: 'quick_analysis.json'
+          # ✅ تحديد المسار الصحيح للملف الذي سيتم حفظه
+          file_pattern: 'GPA/quick_analysis.json'
