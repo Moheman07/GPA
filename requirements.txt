@@ -1,6 +1,5 @@
 numpy<2.0
 requests
-python-dotenv
 pandas
 yfinance
 pandas-ta
