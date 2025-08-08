@@ -1,53 +1,36 @@
-name: Professional Gold Analysis Runner
+name: Professional Gold Analysis
 
 on:
-  # يسمح بالتشغيل اليدوي من تبويب Actions
   workflow_dispatch:
-  
   schedule:
-    # يعمل مرة واحدة يوميًا (من الإثنين للجمعة) الساعة 21:00 بتوقيت UTC
-    # (أي بعد ساعة من إغلاق سوق نيويورك)
     - cron: '0 21 * * 1-5'
 
 jobs:
-  run-and-commit-analysis:
+  run-analysis:
     runs-on: ubuntu-latest
-    
-    # إعطاء صلاحية للكتابة في المستودع لحفظ النتائج
     permissions:
       contents: write
-      
-    # تمرير مفتاح الأخبار السري إلى السكربت
     env:
       NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
 
     steps:
-      # الخطوة 1: سحب الكود من المستودع
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # الخطوة 2: إعداد بيئة بايثون مع التخزين المؤقت للسرعة
-      - name: Set up Python with dependency caching
+      - name: Set up Python with Caching
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip' # تفعيل التخزين المؤقت
+          cache: 'pip'
 
-      # الخطوة 3: تثبيت كل المكتبات المطلوبة
-      - name: Install dependencies
+      - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      # الخطوة 4: تشغيل سكربت التحليل الرئيسي
-      - name: Run Professional Gold Analyzer
-        # تأكد من أن اسم هذا الملف يطابق اسم السكربت في مستودعك
-        run: python main_analyzer.py
+      - name: Run Professional Analyzer
+        run: python analyzer.py
 
-      # الخطوة 5: حفظ كل الملفات الناتجة في المستودع
       - name: Commit and Push Results
-        # هذه الخطوة تعمل فقط إذا نجحت الخطوة السابقة
-        if: success()
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: '🏆 Update Professional Gold Analysis Report'
-          # ✅ يقوم بحفظ كل الملفات التي ينتجها السكربت بالأسماء الصحيحة
-          file_pattern: 'gold_analysis_enhanced.json gold_analysis_history.db gold_analysis.log'
+          commit_message: '🏆 Update Professional Gold Analysis'
+          file_pattern: 'gold_analysis.json'
