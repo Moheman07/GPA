@@ -1,4 +1,0 @@
-{
-  "status": "error",
-  "error_message": "'ProfessionalGoldAnalyzerFinal' object has no attribute 'fetch_market_data'"
-}
