@@ -1,386 +1,202 @@
-name: 🏆 Gold Analysis Professional
+name: 🏆 Gold Analysis Pro
 
 on:
   schedule:
-    # تشغيل يومي في أوقات مختلفة (UTC)
-    - cron: '30 13 * * 1-5'    # 1:30 PM UTC - قبل السوق الأمريكي
-    - cron: '0 21 * * 1-5'     # 9:00 PM UTC - بعد إغلاق السوق  
-    - cron: '0 7 * * 1-5'      # 7:00 AM UTC - قبل السوق الأوروبي
+    # تشغيل يومي
+    - cron: '30 13 * * 1-5'  # 1:30 PM UTC
+    - cron: '0 21 * * 1-5'   # 9:00 PM UTC
     
   # تشغيل يدوي
   workflow_dispatch:
-    inputs:
-      force_run:
-        description: 'Force run analysis'
-        required: false
-        default: 'true'
-        
+  
   # تشغيل عند push للاختبار
   push:
-    branches: [ main, master ]
-    paths: 
-      - '**.py'
+    branches: [ main ]
+    paths: ['**.py']
 
 env:
-  # متغيرات البيئة
   NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
   PYTHONUNBUFFERED: 1
-  PYTHONIOENCODING: utf-8
 
 jobs:
   gold-analysis:
-    name: 📊 Gold Market Analysis
+    name: 📊 Gold Analysis
     runs-on: ubuntu-latest
-    timeout-minutes: 15  # زيادة الوقت المسموح
+    timeout-minutes: 20
     
-    # إعطاء صلاحيات للكتابة
     permissions:
       contents: write
-      actions: write
+      actions: read
     
     steps:
-    - name: 🔍 Checkout Repository  
+    - name: 🔍 Checkout Code
       uses: actions/checkout@v4
       with:
-        # استخدام GITHUB_TOKEN مع صلاحيات كاملة
         token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
 
-    - name: 🐍 Setup Python Environment
-      uses: actions/setup-python@v4
+    - name: 🐍 Setup Python
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'
         cache: 'pip'
 
-    - name: 🚀 Install Dependencies (Optimized)
+    - name: 📦 Install Dependencies  
       run: |
-        echo "📦 Installing Python packages..."
-        python -m pip install --upgrade pip --quiet
-        
-        # تحميل المكتبات الأساسية أولاً
-        pip install --no-cache-dir --quiet numpy pandas requests
-        
-        # تحميل yfinance وpandas-ta
-        pip install --no-cache-dir --quiet yfinance pandas-ta pytz
-        
-        # تحميل transformers مع إعدادات محسنة  
-        pip install --no-cache-dir --quiet torch --index-url https://download.pytorch.org/whl/cpu
-        pip install --no-cache-dir --quiet transformers
-        
-        echo "✅ Dependencies installed successfully"
-        
-        # تحقق من الإصدارات
-        python -c "import yfinance, pandas, numpy, requests, transformers; print('✅ All imports successful')"
+        echo "Installing dependencies..."
+        pip install --upgrade pip
+        pip install yfinance pandas numpy requests transformers torch pandas-ta pytz --index-url https://download.pytorch.org/whl/cpu
+        echo "✅ Dependencies installed"
 
-    - name: 🧠 Pre-download AI Model
+    - name: 🤖 Pre-load Model
       run: |
-        echo "🤖 Pre-downloading FinBERT model..."
         python -c "
         try:
             from transformers import pipeline
-            print('Loading FinBERT model...')
             pipeline('sentiment-analysis', model='ProsusAI/finbert')
-            print('✅ Model loaded successfully')
+            print('✅ Model loaded')
         except Exception as e:
-            print(f'⚠️ Model loading warning: {e}')
-            print('Will continue without sentiment analysis')
-        " || echo "⚠️ Model pre-loading failed, continuing..."
+            print(f'⚠️ Model warning: {e}')
+        " || echo "Continuing without model..."
 
-    - name: 🔧 Setup Analysis Environment
+    - name: 🚀 Run Analysis
       run: |
-        echo "⚙️ Setting up analysis environment..."
-        
-        # إنشاء مجلدات الـ cache والسجلات
-        mkdir -p cache logs
-        
-        # فحص متغيرات البيئة
-        if [ -z "$NEWS_API_KEY" ]; then
-          echo "⚠️ NEWS_API_KEY not found - news analysis will be skipped"
-        else
-          echo "✅ NEWS_API_KEY is configured"
-        fi
-        
-        # فحص المساحة المتاحة
-        df -h
-        
-        echo "🎯 Environment ready"
+        echo "🚀 Starting analysis..."
+        python main_analyzer.py
+        echo "✅ Analysis completed"
 
-    - name: 🏆 Run Gold Analysis
-      id: analysis
+    - name: 📊 Check Results
       run: |
-        echo "🚀 Starting Gold Analysis..."
-        echo "⏰ Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-        
-        # تشغيل التحليل مع معالجة الأخطاء
-        if timeout 600 python main_analyzer.py; then
-          echo "✅ Analysis completed successfully"
-          echo "analysis_status=success" >> $GITHUB_OUTPUT
-        else
-          echo "❌ Analysis failed or timed out"
-          echo "analysis_status=failed" >> $GITHUB_OUTPUT
-          exit 1
-        fi
-        
-        echo "⏰ End time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-
-    - name: 📊 Verify Analysis Output
-      if: steps.analysis.outputs.analysis_status == 'success'
-      run: |
-        echo "🔍 Checking analysis outputs..."
-        
-        # فحص الملفات المُنشأة
         if [ -f "gold_analysis_pro.json" ]; then
-          echo "✅ JSON file created: $(stat -c%s gold_analysis_pro.json) bytes"
-          
-          # عرض ملخص النتائج
-          echo "📋 Analysis Summary:"
+          echo "✅ Results file created"
           python -c "
           import json
-          try:
-              with open('gold_analysis_pro.json', 'r', encoding='utf-8') as f:
-                  data = json.load(f)
-              print(f\"Signal: {data.get('signal', 'N/A')} ({data.get('signal_strength', 'N/A')})\")
-              print(f\"Score: {data.get('total_score', 'N/A')}\")
-              print(f\"Gold Price: ${data.get('market_data', {}).get('gold_price', 'N/A')}\")
-              print(f\"Confidence: {data.get('confidence_level', 'N/A'):.1%}\")
-              print(f\"Execution Time: {data.get('execution_time_ms', 'N/A')}ms\")
-          except Exception as e:
-              print(f'Error reading results: {e}')
+          with open('gold_analysis_pro.json', 'r') as f:
+              data = json.load(f)
+          print(f'Signal: {data[\"signal\"]} ({data[\"signal_strength\"]})')
+          print(f'Score: {data[\"total_score\"]}')
+          print(f'Price: \${data[\"market_data\"][\"gold_price\"]}')
           "
         else
-          echo "❌ JSON file not found"
-          ls -la *.json *.db *.log 2>/dev/null || echo "No output files found"
+          echo "❌ Results file not found"
           exit 1
         fi
-        
-        # فحص قاعدة البيانات
-        if [ -f "gold_analysis_history.db" ]; then
-          echo "✅ Database file created: $(stat -c%s gold_analysis_history.db) bytes"
-        fi
-        
-        # فحص ملف السجل
-        if [ -f "gold_analysis_pro.log" ]; then
-          echo "✅ Log file created: $(stat -c%s gold_analysis_pro.log) bytes"
-          echo "📋 Last 5 log entries:"
-          tail -n 5 gold_analysis_pro.log
-        fi
 
-    - name: 📈 Generate Analysis Report
-      if: steps.analysis.outputs.analysis_status == 'success'
+    - name: 📝 Create Report
       run: |
-        echo "📊 Generating comprehensive report..."
-        
         python -c "
         import json
         from datetime import datetime
-        import os
         
-        try:
-            # قراءة نتائج التحليل
-            with open('gold_analysis_pro.json', 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            
-            # إنشاء تقرير markdown مفصل
-            report = f'''# 📊 Gold Analysis Report - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}
+        with open('gold_analysis_pro.json', 'r') as f:
+            data = json.load(f)
         
-        ## 🎯 Trading Signal
-        - **Signal**: {data['signal']} 
-        - **Strength**: {data['signal_strength']}
-        - **Total Score**: {data['total_score']:.3f}
-        - **Confidence**: {data['confidence_level']:.1%}
+        report = f'''# 📊 Gold Analysis - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}
+
+## 🎯 Trading Signal
+**{data['signal']}** - {data['signal_strength']}
+- **Score**: {data['total_score']:.3f}
+- **Confidence**: {data['confidence_level']:.1%}
+
+## 💰 Market Data  
+- **Gold Price**: \${data['market_data']['gold_price']:,.2f}
+- **DXY**: {data['market_data']['dxy']:.2f}
+- **VIX**: {data['market_data']['vix']:.2f}
+
+## 🔧 Risk Management
+- **Stop Loss**: \${data['risk_management']['stop_loss_price']:.2f}
+- **Take Profit**: \${data['risk_management']['take_profit_price']:.2f}
+- **Position Size**: {data['risk_management']['position_size_percent']:.1f}%
+
+## 📈 Components
+| Component | Score |
+|-----------|-------|'''
         
-        ## 💰 Market Data
-        - **Gold Price**: \${data['market_data']['gold_price']:,.2f}
-        - **DXY (Dollar Index)**: {data['market_data']['dxy']:.2f}
-        - **VIX (Fear Index)**: {data['market_data']['vix']:.2f}
-        - **Gold/Silver Ratio**: {data['market_data']['gold_silver_ratio']:.1f}
+        for comp, score in data['score_components'].items():
+            report += f'\\n| {comp.replace(\"_\", \" \").title()} | {score:.3f} |'
         
-        ## 📈 Technical Analysis
-        | Component | Score | Weight |
-        |-----------|-------|---------|'''
-            
-            for component, score in data['score_components'].items():
-                weight = data['component_weights'].get(component, 0)
-                report += f\"\\n| {component.replace('_', ' ').title()} | {score:.3f} | {weight:.1%} |\"
-            
-            report += f'''
+        report += f'''
+
+## 🔬 Backtest
+- **Return**: {data['backtest_results']['total_return_percent']:.2f}%
+- **Sharpe**: {data['backtest_results']['sharpe_ratio']:.2f}
+- **Max DD**: {data['backtest_results']['max_drawdown_percent']:.2f}%
+- **Win Rate**: {data['backtest_results']['win_rate_percent']:.1f}%
+
+## 📰 News
+- **Status**: {data['news_analysis']['status']}
+- **Articles**: {len(data['news_analysis'].get('headlines', []))}
+- **Sentiment**: {data['news_analysis'].get('news_score', 0):.3f}
+
+---
+*Updated: {data['timestamp_utc']}*
+'''
         
-        ## 🔧 Risk Management
-        - **Stop Loss**: \${data['risk_management']['stop_loss_price']:.2f}
-        - **Take Profit**: \${data['risk_management']['take_profit_price']:.2f}
-        - **Position Size**: {data['risk_management']['position_size_percent']:.1f}%
-        - **Risk/Reward**: {data['risk_management']['risk_reward_ratio']:.2f}
-        
-        ## 📰 News Analysis
-        - **Status**: {data['news_analysis']['status']}
-        - **Sentiment Score**: {data['news_analysis'].get('news_score', 0):.3f}
-        - **Articles Analyzed**: {len(data['news_analysis'].get('headlines', []))}
-        - **News Confidence**: {data['news_analysis'].get('confidence', 0):.1%}
-        
-        ## 🔬 Backtest Results
-        - **Total Return**: {data['backtest_results']['total_return_percent']:.2f}%
-        - **Sharpe Ratio**: {data['backtest_results']['sharpe_ratio']:.2f}
-        - **Max Drawdown**: {data['backtest_results']['max_drawdown_percent']:.2f}%
-        - **Win Rate**: {data['backtest_results']['win_rate_percent']:.1f}%
-        - **Total Trades**: {data['backtest_results']['total_trades']}
-        
-        ## 📋 Key Headlines
-        '''
-            
-            for i, headline in enumerate(data['news_analysis'].get('headlines', [])[:5], 1):
-                report += f\"\\n{i}. **{headline['title']}** - *{headline['source']}*\"
-            
-            report += f'''
-        
-        ## ⚡ Performance Metrics
-        - **Execution Time**: {data['execution_time_ms']}ms
-        - **Data Points**: {data['performance_info']['data_points_analyzed']}
-        - **Indicators**: {data['performance_info']['indicators_calculated']}
-        - **Analysis ID**: {data.get('analysis_id', 'N/A')}
-        
-        ---
-        *Report generated automatically by Gold Analysis Pro*  
-        *Last updated: {data['timestamp_utc']}*
-        '''
-            
-            # حفظ التقرير
-            with open('ANALYSIS_REPORT.md', 'w', encoding='utf-8') as f:
-                f.write(report)
-            
-            print('✅ Analysis report generated successfully')
-            
-        except Exception as e:
-            print(f'❌ Error generating report: {e}')
-            
-            # إنشاء تقرير بسيط في حالة الخطأ
-            with open('ANALYSIS_REPORT.md', 'w', encoding='utf-8') as f:
-                f.write(f'''# Gold Analysis Report - {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}
-        
-        ⚠️ Error generating detailed report: {e}
-        
-        Basic analysis completed. Check gold_analysis_pro.json for details.
-        ''')
-            
-            print('⚠️ Created basic report due to error')
+        with open('README.md', 'w') as f:
+            f.write(report)
+        print('✅ Report created')
         "
 
-    - name: 💾 Commit and Push Results  
-      if: steps.analysis.outputs.analysis_status == 'success'
+    - name: 💾 Commit Results
       run: |
-        echo "💾 Committing analysis results..."
-        
-        # إعداد Git
         git config --local user.email "action@github.com"
-        git config --local user.name "Gold Analysis Bot 🤖"
+        git config --local user.name "Gold Analysis Bot"
         
-        # إضافة الملفات
-        git add -A
+        git add .
         
-        # فحص التغييرات
         if git diff --staged --quiet; then
-          echo "⚠️ No changes to commit"
+          echo "No changes to commit"
         else
-          # إنشاء رسالة commit مفصلة
-          COMMIT_MSG="🤖 Gold Analysis Update - $(date -u '+%Y-%m-%d %H:%M UTC')
-          
-          $(python -c \"
+          SIGNAL=$(python -c "
+          import json
           try:
-              import json
               with open('gold_analysis_pro.json', 'r') as f:
                   data = json.load(f)
-              print(f'📊 Signal: {data[\"signal\"]} ({data[\"signal_strength\"]})')
-              print(f'📈 Score: {data[\"total_score\"]}')  
-              print(f'💰 Gold: \${data[\"market_data\"][\"gold_price\"]}')
-              print(f'⏱️ Time: {data[\"execution_time_ms\"]}ms')
+              print(f'{data[\"signal\"]} ({data[\"total_score\"]:.2f})')
           except:
-              print('📊 Analysis completed successfully')
-          \")"
+              print('Analysis Update')
+          ")
           
-          echo "Committing with message:"
-          echo "$COMMIT_MSG"
-          
-          git commit -m "$COMMIT_MSG"
-          
-          # Push مع retry
-          for i in {1..3}; do
-            if git push; then
-              echo "✅ Successfully pushed to repository"
-              break
-            else
-              echo "⚠️ Push attempt $i failed, retrying..."
-              sleep 5
-            fi
-          done
+          git commit -m "🤖 Gold Analysis: $SIGNAL - $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
+          echo "✅ Results committed and pushed"
         fi
 
-    - name: 📤 Upload Artifacts (Backup)
+    - name: 📤 Upload Files (Fixed)
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4  # ← هنا الإصلاح الرئيسي
       with:
         name: gold-analysis-${{ github.run_number }}
         path: |
           *.json
-          *.db  
+          *.db
           *.log
-          *.md
+          README.md
         retention-days: 30
 
-    - name: 🚨 Failure Notification
+    - name: 🚨 On Failure
       if: failure()
       run: |
-        echo "❌ Gold Analysis Failed!"
-        echo "🔍 Troubleshooting information:"
-        echo "- Workflow run: ${{ github.run_number }}"
-        echo "- Repository: ${{ github.repository }}"
-        echo "- Commit: ${{ github.sha }}"
-        echo "- Event: ${{ github.event_name }}"
-        
-        # عرض معلومات النظام
-        echo "💻 System info:"
-        uname -a
+        echo "❌ Analysis failed!"
+        echo "System info:"
         df -h
         free -h
         
-        # عرض آخر السجلات إذا موجودة
-        if [ -f "gold_analysis_pro.log" ]; then
-          echo "📋 Last log entries:"
-          tail -n 20 gold_analysis_pro.log
-        fi
-        
-        # فحص الملفات المؤقتة
-        echo "📁 Files in directory:"
+        echo "Files created:"
         ls -la
         
-        echo "💡 Common solutions:"
-        echo "1. Check if NEWS_API_KEY secret is set"
-        echo "2. Verify repository permissions"  
-        echo "3. Check network connectivity"
-        echo "4. Review dependency compatibility"
+        if [ -f "gold_analysis_pro.log" ]; then
+          echo "Last 10 log lines:"
+          tail -10 gold_analysis_pro.log
+        fi
+        
+        echo "Python packages:"
+        pip list | grep -E "(yfinance|pandas|transformers)"
 
-    - name: ✅ Success Summary
+    - name: ✅ Success
       if: success()
       run: |
         echo "🎉 Gold Analysis completed successfully!"
-        echo "📊 Analysis summary:"
+        echo "📁 Files created:"
+        ls -la *.json *.db *.md 2>/dev/null | head -10
         
-        if [ -f "gold_analysis_pro.json" ]; then
-          python -c "
-          import json
-          with open('gold_analysis_pro.json', 'r', encoding='utf-8') as f:
-              data = json.load(f)
-          print(f'🎯 Signal: {data[\"signal\"]} ({data[\"signal_strength\"]})')
-          print(f'📈 Total Score: {data[\"total_score\"]}')
-          print(f'💰 Gold Price: \${data[\"market_data\"][\"gold_price\"]}')
-          print(f'🔒 Confidence: {data[\"confidence_level\"]:.1%}')
-          print(f'⚡ Execution: {data[\"execution_time_ms\"]}ms')
-          print(f'📰 News Articles: {len(data[\"news_analysis\"].get(\"headlines\", []))}')
-          print(f'🔬 Backtest Return: {data[\"backtest_results\"][\"total_return_percent\"]}%')
-          "
-        fi
-        
-        echo ""
-        echo "📁 Generated files:"
-        ls -la *.json *.db *.md 2>/dev/null || echo "No output files"
-        
-        echo ""
-        echo "🔗 Check the repository for updated analysis files!"
+        echo "🔗 Check the repository for updated files!"
