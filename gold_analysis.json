@@ -1,36 +1,62 @@
 {
-  "timestamp": "2025-08-11T15:16:12.100523",
+  "timestamp": "2025-08-11T15:43:26.668004",
+  "status": "success",
   "gold_analysis": {
-    "signal": "Buy",
-    "confidence": "High",
-    "action_recommendation": "شراء بحجم متوسط",
-    "total_score": 1.85,
+    "signal": "Strong Buy",
+    "confidence": "Very High",
+    "action_recommendation": "شراء قوي - حجم كبير",
+    "total_score": 2.5,
     "component_scores": {
-      "trend": 3,
-      "momentum": 2,
-      "volume": 1,
-      "fibonacci": 1,
-      "correlation": 1
+      "trend": 4,
+      "momentum": 1.5,
+      "volume": 3,
+      "fibonacci": 2,
+      "correlation": 1,
+      "support_resistance": -2,
+      "economic": 3,
+      "news": 2,
+      "ma_cross": 3
     },
-    "current_price": 3403.4,
+    "current_price": 3408.2,
     "risk_management": {
       "stop_loss_levels": {
-        "conservative": 3335.45,
-        "moderate": 3312.8,
-        "aggressive": 3290.15
+        "tight": 3357.24,
+        "conservative": 3340.25,
+        "moderate": 3306.27,
+        "wide": 3272.3
       },
       "profit_targets": {
-        "target_1": 3494.0,
-        "target_2": 3561.95,
-        "target_3": 3629.9
+        "target_1": 3476.15,
+        "target_2": 3544.1,
+        "target_3": 3634.7,
+        "target_4": 3770.6
       },
-      "position_size_recommendation": "متوسط"
+      "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
+      "risk_reward_ratio": 2.0,
+      "max_risk_per_trade": "2%"
     },
-    "advanced_indicators": {
-      "rsi": 45.0,
-      "williams_r": -34.5,
-      "roc": -1.04,
-      "bb_width": 5.08
+    "entry_strategy": {
+      "entry_type": "دخول قوي - السوق في اتجاه واضح",
+      "entry_zones": [
+        "دخول فوري عند 3408.2"
+      ],
+      "conditions": [],
+      "warnings": []
+    },
+    "technical_summary": {
+      "rsi": 45.6,
+      "macd": 16.56,
+      "williams_r": -32.3,
+      "stoch_k": 67.7,
+      "bb_position": 0.76,
+      "volume_ratio": 10.2
+    },
+    "key_levels": {
+      "sma_20": 3363.43,
+      "sma_50": 3352.24,
+      "sma_200": 3019.54,
+      "bb_upper": 3449.42,
+      "bb_lower": 3277.45
     }
   },
   "fibonacci_levels": {
@@ -39,13 +65,36 @@
     "fib_23_6": 3424.32,
     "fib_38_2": 3391.74,
     "fib_50_0": 3365.4,
-    "fib_61_8": 3339.06
+    "fib_61_8": 3339.06,
+    "fib_78_6": 3301.56,
+    "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
+    "current_position": 69.18
+  },
+  "support_resistance": {
+    "resistance_levels": [
+      3444.0,
+      3441.0,
+      3400.0
+    ],
+    "support_levels": [
+      3253.8,
+      3263.9,
+      3282.0
+    ],
+    "nearest_resistance": 3441.0,
+    "nearest_support": 3282.0,
+    "price_to_resistance": 0.96,
+    "price_to_support": 3.7
   },
   "volume_analysis": {
-    "current_volume": 158194,
-    "avg_volume_20": 15740,
-    "volume_ratio": 10.05,
-    "volume_strength": "قوي"
+    "current_volume": 162961,
+    "avg_volume_5": 35259,
+    "avg_volume_20": 15979,
+    "volume_ratio": 10.2,
+    "volume_strength": "قوي جداً",
+    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "obv_trend": "هابط",
+    "volume_price_correlation": "سلبي"
   },
   "market_correlations": {
     "correlations": {
@@ -54,7 +103,8 @@
       "treasury": 0.399,
       "oil": -0.647,
       "spy": 0.335,
-      "usdeur": 0.686
+      "usdeur": 0.686,
+      "silver": 0.821
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -62,38 +112,121 @@
       "treasury": "متوسط",
       "oil": "قوي",
       "spy": "متوسط",
-      "usdeur": "قوي"
+      "usdeur": "قوي",
+      "silver": "قوي جداً"
+    },
+    "interpretation": {
+      "dxy": "ارتباط عكسي قوي - إيجابي للذهب عند ضعف الدولار",
+      "vix": "تأثير محدود من التقلبات",
+      "oil": "ارتباط قوي - مؤشر على التضخم"
     }
+  },
+  "economic_data": {
+    "status": "simulated",
+    "last_update": "2025-08-11T15:43:26.247454",
+    "indicators": {
+      "US_CPI": {
+        "value": 3.2,
+        "previous": 3.4,
+        "impact": "إيجابي للذهب - تضخم منخفض",
+        "next_release": "2025-02-12"
+      },
+      "US_Interest_Rate": {
+        "value": 4.5,
+        "previous": 4.75,
+        "impact": "إيجابي للذهب - خفض الفائدة",
+        "next_release": "2025-01-29 FOMC"
+      },
+      "US_NFP": {
+        "value": 256000,
+        "previous": 227000,
+        "impact": "سلبي للذهب - سوق عمل قوي",
+        "next_release": "2025-02-07"
+      },
+      "DXY_Index": {
+        "value": 108.5,
+        "trend": "هابط",
+        "impact": "إيجابي للذهب - ضعف الدولار"
+      },
+      "Geopolitical_Risk": {
+        "level": "متوسط",
+        "events": [
+          "توترات تجارية",
+          "قلق من التضخم"
+        ],
+        "impact": "محايد إلى إيجابي للذهب"
+      }
+    },
+    "overall_impact": "إيجابي للذهب",
+    "score": 3
   },
   "news_analysis": {
     "status": "success",
-    "high_impact_news": [
-      {
-        "title": "JPMorgan revamps strong forecast on Federal Reserve rate cuts",
-        "source": "Biztoc.com"
-      },
-      {
-        "title": "Fed Official Says Latest Jobs Data Supports 3 Rate Cuts in 2025",
-        "source": "Theepochtimes.com"
-      },
-      {
-        "title": "US inflation to rise as higher tariffs feed through",
-        "source": "Biztoc.com"
-      }
-    ],
-    "medium_impact_news": [
-      {
-        "title": "How Kentucky bourbon went from boom to bust",
-        "source": "BBC News"
-      },
-      {
-        "title": "10 Iconic '90s TV Shows That Still Hold Up Today",
-        "source": "Screen Rant"
-      },
-      {
-        "title": "Top economist says it’s ‘panic season’ in markets and it’s your fault for taking summer vacation. Blame the ‘harvest time’ mentality",
-        "source": "Fortune"
-      }
-    ]
+    "summary": {
+      "total_relevant_news": 20,
+      "critical_count": 0,
+      "high_impact_count": 10,
+      "overall_sentiment": "إيجابي للذهب"
+    },
+    "categorized_news": {
+      "high_impact": [
+        {
+          "title": "US inflation to rise as higher tariffs feed through",
+          "source": "Biztoc.com",
+          "published": "2025-08-10T14:47:04Z",
+          "url": "https://biztoc.com/x/ab83439467049ed1",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
+          "title": "US inflation to rise as higher tariffs feed through",
+          "source": "Fortune",
+          "published": "2025-08-10T14:43:48Z",
+          "url": "https://fortune.com/2025/08/10/inflation-preview-july-cpi-estimate-trump-tariffs-economic-indicators/",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
+          "title": "US Inflation to Rise as Higher Tariffs Feed Through - Bloomberg.com",
+          "source": "Slashdot.org",
+          "published": "2025-08-10T11:55:04Z",
+          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178632608",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        }
+      ],
+      "gold_specific": [
+        {
+          "title": "Gold may rally further amid macro uncertainty, global tariff tensions: Analysts",
+          "source": "BusinessLine",
+          "published": "2025-08-10T13:47:31Z",
+          "url": "https://www.thehindubusinessline.com/markets/gold/gold-may-rally-further-amid-macro-uncertainty-global-tariff-tensions-analysts/article69916932.ece",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "White Lighthouse Investment Management Inc. Decreases Stock Holdings in abrdn Physical Gold Shares ETF (NYSEARCA:SGOL)",
+          "source": "ETF Daily News",
+          "published": "2025-08-10T08:52:47Z",
+          "url": "https://www.etfdailynews.com/2025/08/10/white-lighthouse-investment-management-inc-decreases-stock-holdings-in-abrdn-physical-gold-shares-etf-nysearcasgol/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Spanish Mountain Gold (CVE:SPA) Trading Down 16.9% – Time to Sell?",
+          "source": "ETF Daily News",
+          "published": "2025-08-10T08:12:59Z",
+          "url": "https://www.etfdailynews.com/2025/08/10/spanish-mountain-gold-cvespa-trading-down-16-9-time-to-sell/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        }
+      ]
+    }
+  },
+  "market_summary": {
+    "last_update": "2025-08-11 15:43:26",
+    "data_points": 53,
+    "timeframe": "Daily",
+    "market_condition": "صاعد قوي"
   }
 }
