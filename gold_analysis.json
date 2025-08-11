@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-11T04:02:03.578368",
+  "timestamp": "2025-08-11T06:24:10.366446",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
@@ -12,25 +12,25 @@
       "fibonacci": 1,
       "correlation": 1
     },
-    "current_price": 3438.3,
+    "current_price": 3433.6,
     "risk_management": {
       "stop_loss_levels": {
-        "conservative": 3373.96,
-        "moderate": 3352.51,
-        "aggressive": 3331.07
+        "conservative": 3369.26,
+        "moderate": 3347.81,
+        "aggressive": 3326.37
       },
       "profit_targets": {
-        "target_1": 3524.09,
-        "target_2": 3588.43,
-        "target_3": 3652.76
+        "target_1": 3519.39,
+        "target_2": 3583.73,
+        "target_3": 3648.06
       },
       "position_size_recommendation": "متوسط"
     },
     "advanced_indicators": {
-      "rsi": 49.9,
-      "williams_r": -18.2,
-      "roc": -0.03,
-      "bb_width": 5.36
+      "rsi": 49.2,
+      "williams_r": -20.4,
+      "roc": -0.16,
+      "bb_width": 5.32
     }
   },
   "fibonacci_levels": {
@@ -42,9 +42,9 @@
     "fib_61_8": 3339.06
   },
   "volume_analysis": {
-    "current_volume": 32947,
-    "avg_volume_20": 9478,
-    "volume_ratio": 3.48,
+    "current_volume": 41495,
+    "avg_volume_20": 9906,
+    "volume_ratio": 4.19,
     "volume_strength": "قوي"
   },
   "market_correlations": {
@@ -54,7 +54,7 @@
       "treasury": 0.401,
       "oil": -0.648,
       "spy": 0.327,
-      "usdeur": 0.684
+      "usdeur": 0.687
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -69,22 +69,26 @@
     "status": "success",
     "high_impact_news": [
       {
-        "title": "US Inflation To Rise As Higher Tariffs Feed Through",
+        "title": "Fed's Bowman Favors Three Interest-Rate Cuts This Year",
         "source": "Ndtvprofit.com"
+      },
+      {
+        "title": "RBA interest rate decision: Rate cut ‘almost inevitable’ after last month’s surprise hold",
+        "source": "Thenightly.com.au"
       }
     ],
     "medium_impact_news": [
       {
-        "title": "When is Son Heung-Min's first MLS game for LAFC?",
-        "source": "FourFourTwo"
+        "title": "RSPCA 'overwhelmed with joy and hope' at end of Tasmanian greyhound racing",
+        "source": "ABC News (AU)"
       },
       {
-        "title": "Understanding the sheer scale of the Democrat effort to destroy Trump via debanking",
-        "source": "Americanthinker.com"
+        "title": "FY2025 EPS Forecast for Endeavour Silver Reduced by Analyst",
+        "source": "ETF Daily News"
       },
       {
-        "title": "Jimmy Kimmel Lives in Bizarro World",
-        "source": "Americanthinker.com"
+        "title": "Analysts Offer Predictions for TSE:OR FY2025 Earnings",
+        "source": "ETF Daily News"
       }
     ]
   }
