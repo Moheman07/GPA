@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-08T21:16:34.463207",
+  "timestamp": "2025-08-11T01:14:24.524874",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
@@ -12,49 +12,49 @@
       "fibonacci": 1,
       "correlation": 1
     },
-    "current_price": 3458.2,
+    "current_price": 3446.1,
     "risk_management": {
       "stop_loss_levels": {
-        "conservative": 3386.66,
-        "moderate": 3362.81,
-        "aggressive": 3338.97
+        "conservative": 3382.63,
+        "moderate": 3361.47,
+        "aggressive": 3340.31
       },
       "profit_targets": {
-        "target_1": 3553.59,
-        "target_2": 3625.12,
-        "target_3": 3696.66
+        "target_1": 3530.73,
+        "target_2": 3594.2,
+        "target_3": 3657.67
       },
       "position_size_recommendation": "متوسط"
     },
     "advanced_indicators": {
-      "rsi": 57.4,
-      "williams_r": -28.1,
-      "roc": 1.65,
-      "bb_width": 5.21
+      "rsi": 51.0,
+      "williams_r": -14.5,
+      "roc": 0.2,
+      "bb_width": 5.45
     }
   },
   "fibonacci_levels": {
-    "high": 3534.1,
+    "high": 3477.0,
     "low": 3253.8,
-    "fib_23_6": 3467.95,
-    "fib_38_2": 3427.03,
-    "fib_50_0": 3393.95,
-    "fib_61_8": 3360.87
+    "fib_23_6": 3424.32,
+    "fib_38_2": 3391.74,
+    "fib_50_0": 3365.4,
+    "fib_61_8": 3339.06
   },
   "volume_analysis": {
-    "current_volume": 312499,
-    "avg_volume_20": 23013,
-    "volume_ratio": 13.58,
+    "current_volume": 14938,
+    "avg_volume_20": 8578,
+    "volume_ratio": 1.74,
     "volume_strength": "قوي"
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.644,
-      "vix": 0.241,
-      "treasury": 0.409,
-      "oil": -0.653,
-      "spy": 0.335,
-      "usdeur": 0.678
+      "dxy": -0.652,
+      "vix": 0.251,
+      "treasury": 0.401,
+      "oil": -0.648,
+      "spy": 0.327,
+      "usdeur": 0.684
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -69,22 +69,26 @@
     "status": "success",
     "high_impact_news": [
       {
-        "title": "Trump to nominate top economic aide Stephen Miran to Federal Reserve board",
-        "source": "ABC News"
+        "title": "A top Federal Reserve official says dour jobs data backs the case for 3 rate cuts",
+        "source": "WISHTV.com"
+      },
+      {
+        "title": "Is Struggling Due To Inflation, Says Jim Cramer",
+        "source": "Biztoc.com"
       }
     ],
     "medium_impact_news": [
       {
-        "title": "Investors near 'euphoria' as share market rollercoaster roars on",
-        "source": "ABC News (AU)"
+        "title": "Flag football in New Zealand: The growing sport pushing for LA Olympics 2028",
+        "source": "New Zealand Herald"
       },
       {
-        "title": "‘Paying Tribute to the Tsar’: Apple CEO’s 24-Karat Gold Gift to Trump Sparks Mockery",
-        "source": "Mediaite"
+        "title": "Trump’s top crypto advisor Bo Hines departs amid ongoing efforts to build America’s Bitcoin reserve",
+        "source": "Crypto Briefing"
       },
       {
-        "title": "SmartCentres Real Estate Investment Trust Releases Second Quarter Results for 2025",
-        "source": "Financial Post"
+        "title": "Whitmer Told Trump In Private That Michigan Auto Jobs Depend On A Tariff Change Of Course",
+        "source": "HuffPost"
       }
     ]
   }
