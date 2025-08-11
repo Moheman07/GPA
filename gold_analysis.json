@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-08-11T18:21:25.162689",
+  "timestamp": "2025-08-11T21:14:01.982739",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.5,
+    "total_score": 2.3,
     "component_scores": {
       "trend": 4,
-      "momentum": 1.5,
+      "momentum": 0.5,
       "volume": 3,
       "fibonacci": 2,
       "correlation": 1,
@@ -17,46 +17,46 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3407.2,
+    "current_price": 3393.7,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3356.24,
-        "conservative": 3339.25,
-        "moderate": 3305.27,
-        "wide": 3271.3
+        "tight": 3342.39,
+        "conservative": 3325.29,
+        "moderate": 3291.08,
+        "wide": 3256.88
       },
       "profit_targets": {
-        "target_1": 3475.15,
-        "target_2": 3543.1,
-        "target_3": 3633.7,
-        "target_4": 3769.6
+        "target_1": 3462.11,
+        "target_2": 3530.52,
+        "target_3": 3621.74,
+        "target_4": 3758.56
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
       "max_risk_per_trade": "2%"
     },
     "entry_strategy": {
-      "entry_type": "دخول قوي - السوق في اتجاه واضح",
+      "entry_type": "دخول تدريجي",
       "entry_zones": [
-        "دخول فوري عند 3407.2"
+        "قسّم الدخول على 2-3 مراحل"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 45.5,
-      "macd": 16.48,
-      "williams_r": -32.8,
-      "stoch_k": 67.2,
-      "bb_position": 0.76,
-      "volume_ratio": 11.32
+      "rsi": 43.8,
+      "macd": 15.4,
+      "williams_r": -39.1,
+      "stoch_k": 60.9,
+      "bb_position": 0.68,
+      "volume_ratio": 11.61
     },
     "key_levels": {
-      "sma_20": 3363.38,
-      "sma_50": 3352.22,
-      "sma_200": 3019.54,
-      "bb_upper": 3449.27,
-      "bb_lower": 3277.5
+      "sma_20": 3362.71,
+      "sma_50": 3351.95,
+      "sma_200": 3019.47,
+      "bb_upper": 3447.34,
+      "bb_lower": 3278.08
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 68.73
+    "current_position": 62.68
   },
   "support_resistance": {
     "resistance_levels": [
@@ -81,16 +81,16 @@
       3263.9,
       3282.0
     ],
-    "nearest_resistance": 3441.0,
+    "nearest_resistance": 3400.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 0.99,
-    "price_to_support": 3.67
+    "price_to_resistance": 0.19,
+    "price_to_support": 3.29
   },
   "volume_analysis": {
-    "current_volume": 204184,
-    "avg_volume_5": 43503,
-    "avg_volume_20": 18040,
-    "volume_ratio": 11.32,
+    "current_volume": 216925,
+    "avg_volume_5": 46052,
+    "avg_volume_20": 18677,
+    "volume_ratio": 11.61,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "هابط",
@@ -99,12 +99,12 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.652,
-      "vix": 0.246,
+      "vix": 0.247,
       "treasury": 0.399,
       "oil": -0.647,
-      "spy": 0.335,
+      "spy": 0.334,
       "usdeur": 0.686,
-      "silver": 0.821
+      "silver": 0.82
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-11T18:21:24.639681",
+    "last_update": "2025-08-11T21:14:01.567619",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -165,7 +165,7 @@
     "summary": {
       "total_relevant_news": 19,
       "critical_count": 0,
-      "high_impact_count": 10,
+      "high_impact_count": 9,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
@@ -197,6 +197,14 @@
       ],
       "gold_specific": [
         {
+          "title": "Analyst expects gold to fall off the 'Wall of Worry'",
+          "source": "TheStreet",
+          "published": "2025-08-10T18:47:00Z",
+          "url": "https://www.thestreet.com/investing/analyst-expects-gold-to-fall-off-the-wall-of-worry",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
           "title": "Gold may rally further amid macro uncertainty, global tariff tensions: Analysts",
           "source": "BusinessLine",
           "published": "2025-08-10T13:47:31Z",
@@ -211,20 +219,12 @@
           "url": "https://www.etfdailynews.com/2025/08/10/white-lighthouse-investment-management-inc-decreases-stock-holdings-in-abrdn-physical-gold-shares-etf-nysearcasgol/",
           "impact": "مباشر للذهب",
           "sentiment": null
-        },
-        {
-          "title": "Spanish Mountain Gold (CVE:SPA) Trading Down 16.9% – Time to Sell?",
-          "source": "ETF Daily News",
-          "published": "2025-08-10T08:12:59Z",
-          "url": "https://www.etfdailynews.com/2025/08/10/spanish-mountain-gold-cvespa-trading-down-16-9-time-to-sell/",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-11 18:21:25",
+    "last_update": "2025-08-11 21:14:01",
     "data_points": 53,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
