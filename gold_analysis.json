@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-11T01:14:24.524874",
+  "timestamp": "2025-08-11T04:02:03.578368",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
@@ -12,25 +12,25 @@
       "fibonacci": 1,
       "correlation": 1
     },
-    "current_price": 3446.1,
+    "current_price": 3438.3,
     "risk_management": {
       "stop_loss_levels": {
-        "conservative": 3382.63,
-        "moderate": 3361.47,
-        "aggressive": 3340.31
+        "conservative": 3373.96,
+        "moderate": 3352.51,
+        "aggressive": 3331.07
       },
       "profit_targets": {
-        "target_1": 3530.73,
-        "target_2": 3594.2,
-        "target_3": 3657.67
+        "target_1": 3524.09,
+        "target_2": 3588.43,
+        "target_3": 3652.76
       },
       "position_size_recommendation": "متوسط"
     },
     "advanced_indicators": {
-      "rsi": 51.0,
-      "williams_r": -14.5,
-      "roc": 0.2,
-      "bb_width": 5.45
+      "rsi": 49.9,
+      "williams_r": -18.2,
+      "roc": -0.03,
+      "bb_width": 5.36
     }
   },
   "fibonacci_levels": {
@@ -42,9 +42,9 @@
     "fib_61_8": 3339.06
   },
   "volume_analysis": {
-    "current_volume": 14938,
-    "avg_volume_20": 8578,
-    "volume_ratio": 1.74,
+    "current_volume": 32947,
+    "avg_volume_20": 9478,
+    "volume_ratio": 3.48,
     "volume_strength": "قوي"
   },
   "market_correlations": {
@@ -69,26 +69,22 @@
     "status": "success",
     "high_impact_news": [
       {
-        "title": "A top Federal Reserve official says dour jobs data backs the case for 3 rate cuts",
-        "source": "WISHTV.com"
-      },
-      {
-        "title": "Is Struggling Due To Inflation, Says Jim Cramer",
-        "source": "Biztoc.com"
+        "title": "US Inflation To Rise As Higher Tariffs Feed Through",
+        "source": "Ndtvprofit.com"
       }
     ],
     "medium_impact_news": [
       {
-        "title": "Flag football in New Zealand: The growing sport pushing for LA Olympics 2028",
-        "source": "New Zealand Herald"
+        "title": "When is Son Heung-Min's first MLS game for LAFC?",
+        "source": "FourFourTwo"
       },
       {
-        "title": "Trump’s top crypto advisor Bo Hines departs amid ongoing efforts to build America’s Bitcoin reserve",
-        "source": "Crypto Briefing"
+        "title": "Understanding the sheer scale of the Democrat effort to destroy Trump via debanking",
+        "source": "Americanthinker.com"
       },
       {
-        "title": "Whitmer Told Trump In Private That Michigan Auto Jobs Depend On A Tariff Change Of Course",
-        "source": "HuffPost"
+        "title": "Jimmy Kimmel Lives in Bizarro World",
+        "source": "Americanthinker.com"
       }
     ]
   }
