@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-11T12:30:29.930333",
+  "timestamp": "2025-08-11T15:16:12.100523",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
@@ -12,25 +12,25 @@
       "fibonacci": 1,
       "correlation": 1
     },
-    "current_price": 3407.5,
+    "current_price": 3403.4,
     "risk_management": {
       "stop_loss_levels": {
-        "conservative": 3340.3,
-        "moderate": 3317.9,
-        "aggressive": 3295.5
+        "conservative": 3335.45,
+        "moderate": 3312.8,
+        "aggressive": 3290.15
       },
       "profit_targets": {
-        "target_1": 3497.1,
-        "target_2": 3564.3,
-        "target_3": 3631.5
+        "target_1": 3494.0,
+        "target_2": 3561.95,
+        "target_3": 3629.9
       },
       "position_size_recommendation": "متوسط"
     },
     "advanced_indicators": {
-      "rsi": 45.5,
-      "williams_r": -32.6,
-      "roc": -0.92,
-      "bb_width": 5.11
+      "rsi": 45.0,
+      "williams_r": -34.5,
+      "roc": -1.04,
+      "bb_width": 5.08
     }
   },
   "fibonacci_levels": {
@@ -42,18 +42,18 @@
     "fib_61_8": 3339.06
   },
   "volume_analysis": {
-    "current_volume": 106801,
-    "avg_volume_20": 13171,
-    "volume_ratio": 8.11,
+    "current_volume": 158194,
+    "avg_volume_20": 15740,
+    "volume_ratio": 10.05,
     "volume_strength": "قوي"
   },
   "market_correlations": {
     "correlations": {
       "dxy": -0.652,
       "vix": 0.246,
-      "treasury": 0.401,
+      "treasury": 0.399,
       "oil": -0.647,
-      "spy": 0.327,
+      "spy": 0.335,
       "usdeur": 0.686
     },
     "strength_analysis": {
@@ -69,26 +69,30 @@
     "status": "success",
     "high_impact_news": [
       {
-        "title": "Trump Targets Banks For Crypto Bias, Scaramucci Flags 'Ethereum Killer,' Kiyosaki Slams 'Marxist Fed' As BTC Booms — This Week In Crypto",
+        "title": "JPMorgan revamps strong forecast on Federal Reserve rate cuts",
         "source": "Biztoc.com"
       },
       {
-        "title": "US Inflation to Rise as Higher Tariffs Feed Through - Bloomberg.com",
-        "source": "Slashdot.org"
+        "title": "Fed Official Says Latest Jobs Data Supports 3 Rate Cuts in 2025",
+        "source": "Theepochtimes.com"
+      },
+      {
+        "title": "US inflation to rise as higher tariffs feed through",
+        "source": "Biztoc.com"
       }
     ],
     "medium_impact_news": [
       {
-        "title": "Vocal Gold Promoter Says He’d Choose Bitcoin When Threatened With A Gun To The Head",
-        "source": "newsBTC"
+        "title": "How Kentucky bourbon went from boom to bust",
+        "source": "BBC News"
       },
       {
-        "title": "See New Orleans mayoral hopefuls' economic development plans",
-        "source": "NOLA.com"
+        "title": "10 Iconic '90s TV Shows That Still Hold Up Today",
+        "source": "Screen Rant"
       },
       {
-        "title": "Pope Leo XIV urges mercy and vigilance in Angelus at St. Peter’s",
-        "source": "Catholicnewsagency.com"
+        "title": "Top economist says it’s ‘panic season’ in markets and it’s your fault for taking summer vacation. Blame the ‘harvest time’ mentality",
+        "source": "Fortune"
       }
     ]
   }
