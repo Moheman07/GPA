@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-11T06:24:10.366446",
+  "timestamp": "2025-08-11T09:20:29.224882",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
@@ -12,25 +12,25 @@
       "fibonacci": 1,
       "correlation": 1
     },
-    "current_price": 3433.6,
+    "current_price": 3416.7,
     "risk_management": {
       "stop_loss_levels": {
-        "conservative": 3369.26,
-        "moderate": 3347.81,
-        "aggressive": 3326.37
+        "conservative": 3350.3,
+        "moderate": 3328.17,
+        "aggressive": 3306.04
       },
       "profit_targets": {
-        "target_1": 3519.39,
-        "target_2": 3583.73,
-        "target_3": 3648.06
+        "target_1": 3505.23,
+        "target_2": 3571.62,
+        "target_3": 3638.02
       },
       "position_size_recommendation": "متوسط"
     },
     "advanced_indicators": {
-      "rsi": 49.2,
-      "williams_r": -20.4,
-      "roc": -0.16,
-      "bb_width": 5.32
+      "rsi": 46.8,
+      "williams_r": -28.3,
+      "roc": -0.65,
+      "bb_width": 5.17
     }
   },
   "fibonacci_levels": {
@@ -42,15 +42,15 @@
     "fib_61_8": 3339.06
   },
   "volume_analysis": {
-    "current_volume": 41495,
-    "avg_volume_20": 9906,
-    "volume_ratio": 4.19,
+    "current_volume": 76163,
+    "avg_volume_20": 11639,
+    "volume_ratio": 6.54,
     "volume_strength": "قوي"
   },
   "market_correlations": {
     "correlations": {
       "dxy": -0.652,
-      "vix": 0.251,
+      "vix": 0.246,
       "treasury": 0.401,
       "oil": -0.648,
       "spy": 0.327,
@@ -69,26 +69,22 @@
     "status": "success",
     "high_impact_news": [
       {
-        "title": "Fed's Bowman Favors Three Interest-Rate Cuts This Year",
-        "source": "Ndtvprofit.com"
-      },
-      {
-        "title": "RBA interest rate decision: Rate cut ‘almost inevitable’ after last month’s surprise hold",
-        "source": "Thenightly.com.au"
+        "title": "Inflation? Not in the cannabis market. Here's why weed is so cheap.",
+        "source": "USA Today"
       }
     ],
     "medium_impact_news": [
       {
-        "title": "RSPCA 'overwhelmed with joy and hope' at end of Tasmanian greyhound racing",
-        "source": "ABC News (AU)"
+        "title": "Cotton producers grapple with global headwinds, climate change",
+        "source": "Hurriyet Daily News"
       },
       {
-        "title": "FY2025 EPS Forecast for Endeavour Silver Reduced by Analyst",
-        "source": "ETF Daily News"
+        "title": "Antidepressants Just Don't Work For Some People—Research Explores Why",
+        "source": "mindbodygreen.com"
       },
       {
-        "title": "Analysts Offer Predictions for TSE:OR FY2025 Earnings",
-        "source": "ETF Daily News"
+        "title": "Leprechaun The Beginning 2025 1080p AMZN WEB-DL H264-playWEB",
+        "source": "Rlsbb.ru"
       }
     ]
   }
