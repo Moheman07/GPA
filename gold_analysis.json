@@ -1,36 +1,36 @@
 {
-  "timestamp": "2025-08-11T09:20:29.224882",
+  "timestamp": "2025-08-11T12:30:29.930333",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
     "action_recommendation": "شراء بحجم متوسط",
-    "total_score": 2.1,
+    "total_score": 1.85,
     "component_scores": {
       "trend": 3,
-      "momentum": 3,
+      "momentum": 2,
       "volume": 1,
       "fibonacci": 1,
       "correlation": 1
     },
-    "current_price": 3416.7,
+    "current_price": 3407.5,
     "risk_management": {
       "stop_loss_levels": {
-        "conservative": 3350.3,
-        "moderate": 3328.17,
-        "aggressive": 3306.04
+        "conservative": 3340.3,
+        "moderate": 3317.9,
+        "aggressive": 3295.5
       },
       "profit_targets": {
-        "target_1": 3505.23,
-        "target_2": 3571.62,
-        "target_3": 3638.02
+        "target_1": 3497.1,
+        "target_2": 3564.3,
+        "target_3": 3631.5
       },
       "position_size_recommendation": "متوسط"
     },
     "advanced_indicators": {
-      "rsi": 46.8,
-      "williams_r": -28.3,
-      "roc": -0.65,
-      "bb_width": 5.17
+      "rsi": 45.5,
+      "williams_r": -32.6,
+      "roc": -0.92,
+      "bb_width": 5.11
     }
   },
   "fibonacci_levels": {
@@ -42,9 +42,9 @@
     "fib_61_8": 3339.06
   },
   "volume_analysis": {
-    "current_volume": 76163,
-    "avg_volume_20": 11639,
-    "volume_ratio": 6.54,
+    "current_volume": 106801,
+    "avg_volume_20": 13171,
+    "volume_ratio": 8.11,
     "volume_strength": "قوي"
   },
   "market_correlations": {
@@ -52,9 +52,9 @@
       "dxy": -0.652,
       "vix": 0.246,
       "treasury": 0.401,
-      "oil": -0.648,
+      "oil": -0.647,
       "spy": 0.327,
-      "usdeur": 0.687
+      "usdeur": 0.686
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -69,22 +69,26 @@
     "status": "success",
     "high_impact_news": [
       {
-        "title": "Inflation? Not in the cannabis market. Here's why weed is so cheap.",
-        "source": "USA Today"
+        "title": "Trump Targets Banks For Crypto Bias, Scaramucci Flags 'Ethereum Killer,' Kiyosaki Slams 'Marxist Fed' As BTC Booms — This Week In Crypto",
+        "source": "Biztoc.com"
+      },
+      {
+        "title": "US Inflation to Rise as Higher Tariffs Feed Through - Bloomberg.com",
+        "source": "Slashdot.org"
       }
     ],
     "medium_impact_news": [
       {
-        "title": "Cotton producers grapple with global headwinds, climate change",
-        "source": "Hurriyet Daily News"
+        "title": "Vocal Gold Promoter Says He’d Choose Bitcoin When Threatened With A Gun To The Head",
+        "source": "newsBTC"
       },
       {
-        "title": "Antidepressants Just Don't Work For Some People—Research Explores Why",
-        "source": "mindbodygreen.com"
+        "title": "See New Orleans mayoral hopefuls' economic development plans",
+        "source": "NOLA.com"
       },
       {
-        "title": "Leprechaun The Beginning 2025 1080p AMZN WEB-DL H264-playWEB",
-        "source": "Rlsbb.ru"
+        "title": "Pope Leo XIV urges mercy and vigilance in Angelus at St. Peter’s",
+        "source": "Catholicnewsagency.com"
       }
     ]
   }
