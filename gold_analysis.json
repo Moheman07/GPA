@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-08-11T21:14:01.982739",
+  "timestamp": "2025-08-12T01:06:46.104021",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.3,
+    "total_score": 2.2,
     "component_scores": {
       "trend": 4,
-      "momentum": 0.5,
-      "volume": 3,
+      "momentum": 1.5,
+      "volume": 1,
       "fibonacci": 2,
       "correlation": 1,
       "support_resistance": -2,
@@ -17,46 +17,46 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3393.7,
+    "current_price": 3405.4,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3342.39,
-        "conservative": 3325.29,
-        "moderate": 3291.08,
-        "wide": 3256.88
+        "tight": 3356.28,
+        "conservative": 3339.9,
+        "moderate": 3307.16,
+        "wide": 3274.41
       },
       "profit_targets": {
-        "target_1": 3462.11,
-        "target_2": 3530.52,
-        "target_3": 3621.74,
-        "target_4": 3758.56
+        "target_1": 3470.9,
+        "target_2": 3536.39,
+        "target_3": 3623.72,
+        "target_4": 3754.71
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
       "max_risk_per_trade": "2%"
     },
     "entry_strategy": {
-      "entry_type": "دخول تدريجي",
+      "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "قسّم الدخول على 2-3 مراحل"
+        "دخول فوري عند 3405.4"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 43.8,
-      "macd": 15.4,
-      "williams_r": -39.1,
-      "stoch_k": 60.9,
-      "bb_position": 0.68,
-      "volume_ratio": 11.61
+      "rsi": 45.3,
+      "macd": 16.33,
+      "williams_r": -33.6,
+      "stoch_k": 66.4,
+      "bb_position": 0.75,
+      "volume_ratio": 1.01
     },
     "key_levels": {
-      "sma_20": 3362.71,
-      "sma_50": 3351.95,
-      "sma_200": 3019.47,
-      "bb_upper": 3447.34,
-      "bb_lower": 3278.08
+      "sma_20": 3363.29,
+      "sma_50": 3352.18,
+      "sma_200": 3019.53,
+      "bb_upper": 3448.99,
+      "bb_lower": 3277.6
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 62.68
+    "current_position": 67.92
   },
   "support_resistance": {
     "resistance_levels": [
@@ -81,19 +81,19 @@
       3263.9,
       3282.0
     ],
-    "nearest_resistance": 3400.0,
+    "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 0.19,
-    "price_to_support": 3.29
+    "price_to_resistance": 1.05,
+    "price_to_support": 3.62
   },
   "volume_analysis": {
-    "current_volume": 216925,
-    "avg_volume_5": 46052,
-    "avg_volume_20": 18677,
-    "volume_ratio": 11.61,
-    "volume_strength": "قوي جداً",
-    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
-    "obv_trend": "هابط",
+    "current_volume": 8371,
+    "avg_volume_5": 4341,
+    "avg_volume_20": 8249,
+    "volume_ratio": 1.01,
+    "volume_strength": "طبيعي",
+    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
+    "obv_trend": "صاعد",
     "volume_price_correlation": "سلبي"
   },
   "market_correlations": {
@@ -103,8 +103,8 @@
       "treasury": 0.399,
       "oil": -0.647,
       "spy": 0.334,
-      "usdeur": 0.686,
-      "silver": 0.82
+      "usdeur": 0.687,
+      "silver": 0.821
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-11T21:14:01.567619",
+    "last_update": "2025-08-12T01:06:45.702298",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,9 +163,9 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 19,
+      "total_relevant_news": 15,
       "critical_count": 0,
-      "high_impact_count": 9,
+      "high_impact_count": 5,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
@@ -197,26 +197,26 @@
       ],
       "gold_specific": [
         {
+          "title": "US Gold Futures Slip as Traders Await Clarification on Tariffs",
+          "source": "Financial Post",
+          "published": "2025-08-11T00:36:46Z",
+          "url": "https://financialpost.com/pmn/business-pmn/us-gold-futures-slip-as-traders-await-clarification-on-tariffs",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "US Gold Futures Steady as Traders Await Clarification on Tariffs",
+          "source": "Biztoc.com",
+          "published": "2025-08-11T00:15:06Z",
+          "url": "https://biztoc.com/x/bc571995ee5871ad",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
           "title": "Analyst expects gold to fall off the 'Wall of Worry'",
           "source": "TheStreet",
           "published": "2025-08-10T18:47:00Z",
           "url": "https://www.thestreet.com/investing/analyst-expects-gold-to-fall-off-the-wall-of-worry",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "Gold may rally further amid macro uncertainty, global tariff tensions: Analysts",
-          "source": "BusinessLine",
-          "published": "2025-08-10T13:47:31Z",
-          "url": "https://www.thehindubusinessline.com/markets/gold/gold-may-rally-further-amid-macro-uncertainty-global-tariff-tensions-analysts/article69916932.ece",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "White Lighthouse Investment Management Inc. Decreases Stock Holdings in abrdn Physical Gold Shares ETF (NYSEARCA:SGOL)",
-          "source": "ETF Daily News",
-          "published": "2025-08-10T08:52:47Z",
-          "url": "https://www.etfdailynews.com/2025/08/10/white-lighthouse-investment-management-inc-decreases-stock-holdings-in-abrdn-physical-gold-shares-etf-nysearcasgol/",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -224,9 +224,9 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-11 21:14:01",
+    "last_update": "2025-08-12 01:06:46",
     "data_points": 53,
     "timeframe": "Daily",
-    "market_condition": "صاعد قوي"
+    "market_condition": "متقلب"
   }
 }
