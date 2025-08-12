@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-12T06:21:46.565677",
+  "timestamp": "2025-08-12T09:17:14.687510",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3398.9,
+    "current_price": 3399.9,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3345.9,
-        "conservative": 3328.23,
-        "moderate": 3292.89,
-        "wide": 3257.56
+        "tight": 3346.9,
+        "conservative": 3329.23,
+        "moderate": 3293.89,
+        "wide": 3258.56
       },
       "profit_targets": {
-        "target_1": 3469.57,
-        "target_2": 3540.24,
-        "target_3": 3634.47,
-        "target_4": 3775.81
+        "target_1": 3470.57,
+        "target_2": 3541.24,
+        "target_3": 3635.47,
+        "target_4": 3776.81
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3398.9"
+        "دخول فوري عند 3399.9"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 50.6,
-      "macd": 13.61,
-      "williams_r": -36.6,
-      "stoch_k": 63.4,
+      "rsi": 50.7,
+      "macd": 13.69,
+      "williams_r": -36.2,
+      "stoch_k": 63.8,
       "bb_position": 0.71,
-      "volume_ratio": 2.87
+      "volume_ratio": 4.48
     },
     "key_levels": {
-      "sma_20": 3364.13,
-      "sma_50": 3351.7,
+      "sma_20": 3364.18,
+      "sma_50": 3351.72,
       "sma_200": 3022.59,
-      "bb_upper": 3447.92,
-      "bb_lower": 3280.35
+      "bb_upper": 3448.05,
+      "bb_lower": 3280.32
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 65.01
+    "current_position": 65.46
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.24,
-    "price_to_support": 3.44
+    "price_to_resistance": 1.21,
+    "price_to_support": 3.47
   },
   "volume_analysis": {
-    "current_volume": 27865,
-    "avg_volume_5": 10027,
-    "avg_volume_20": 9706,
-    "volume_ratio": 2.87,
+    "current_volume": 48056,
+    "avg_volume_5": 14065,
+    "avg_volume_20": 10716,
+    "volume_ratio": 4.48,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,7 +99,7 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.654,
-      "vix": 0.247,
+      "vix": 0.243,
       "treasury": 0.399,
       "oil": -0.649,
       "spy": 0.333,
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-12T06:21:46.358382",
+    "last_update": "2025-08-12T09:17:14.296940",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,9 +163,9 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 14,
+      "total_relevant_news": 16,
       "critical_count": 0,
-      "high_impact_count": 6,
+      "high_impact_count": 5,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
@@ -211,38 +211,30 @@
           "url": "https://biztoc.com/x/8fc5a89367d24789",
           "impact": "متوسط",
           "sentiment": null
-        },
-        {
-          "title": "Currency Traders Focus on Australian Dollar and Euro for Bearish Dollar Bets",
-          "source": "Biztoc.com",
-          "published": "2025-08-11T02:28:33Z",
-          "url": "https://biztoc.com/x/a32a2d2d6c7ea195",
-          "impact": "متوسط",
-          "sentiment": null
         }
       ],
       "gold_specific": [
         {
-          "title": "Caledonia Mining Corporation Plc: Results for the Quarter ended June 30, 2025",
-          "source": "GlobeNewswire",
-          "published": "2025-08-11T06:00:00Z",
-          "url": "https://www.globenewswire.com/news-release/2025/08/11/3130610/0/en/Caledonia-Mining-Corporation-Plc-Results-for-the-Quarter-ended-June-30-2025.html",
+          "title": "10,236 Shares in iShares Gold Trust Micro (NYSEARCA:IAUM) Bought by XTX Topco Ltd",
+          "source": "ETF Daily News",
+          "published": "2025-08-11T08:44:56Z",
+          "url": "https://www.etfdailynews.com/2025/08/11/10236-shares-in-ishares-gold-trust-micro-nysearcaiaum-bought-by-xtx-topco-ltd/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "akshare-mcp-ikouhaha 0.3.0",
-          "source": "Pypi.org",
-          "published": "2025-08-11T05:52:06Z",
-          "url": "https://pypi.org/project/akshare-mcp-ikouhaha/0.3.0/",
+          "title": "US Bancorp DE Has $684,000 Stock Position in Kinross Gold Corporation (NYSE:KGC)",
+          "source": "ETF Daily News",
+          "published": "2025-08-11T08:25:12Z",
+          "url": "https://www.etfdailynews.com/2025/08/11/us-bancorp-de-has-684000-stock-position-in-kinross-gold-corporation-nysekgc/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "GOLD PRICES PLUMMET!  Is Now the Time to Buy?  Kathmandu Sees a Big Drop!",
-          "source": "Nep123.com",
-          "published": "2025-08-11T05:29:52Z",
-          "url": "https://nep123.com/gold-prices-plummet-is-now-the-time-to-buy-kathmandu-sees-a-big-drop/",
+          "title": "Gold price tumbles on reports U.S. to clarify tariff plan on bullion",
+          "source": "Biztoc.com",
+          "published": "2025-08-11T08:23:55Z",
+          "url": "https://biztoc.com/x/e99a7ff33b3891bf",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -250,7 +242,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-12 06:21:46",
+    "last_update": "2025-08-12 09:17:14",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
