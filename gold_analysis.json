@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-12T01:06:46.104021",
+  "timestamp": "2025-08-12T03:45:43.038954",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -8,55 +8,55 @@
     "total_score": 2.2,
     "component_scores": {
       "trend": 4,
-      "momentum": 1.5,
-      "volume": 1,
+      "momentum": 0.5,
+      "volume": 3,
       "fibonacci": 2,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 2,
+      "news": 0,
       "ma_cross": 3
     },
-    "current_price": 3405.4,
+    "current_price": 3401.7,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3356.28,
-        "conservative": 3339.9,
-        "moderate": 3307.16,
-        "wide": 3274.41
+        "tight": 3352.58,
+        "conservative": 3336.2,
+        "moderate": 3303.46,
+        "wide": 3270.71
       },
       "profit_targets": {
-        "target_1": 3470.9,
-        "target_2": 3536.39,
-        "target_3": 3623.72,
-        "target_4": 3754.71
+        "target_1": 3467.2,
+        "target_2": 3532.69,
+        "target_3": 3620.02,
+        "target_4": 3751.01
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
       "max_risk_per_trade": "2%"
     },
     "entry_strategy": {
-      "entry_type": "دخول قوي - السوق في اتجاه واضح",
+      "entry_type": "دخول تدريجي",
       "entry_zones": [
-        "دخول فوري عند 3405.4"
+        "قسّم الدخول على 2-3 مراحل"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 45.3,
-      "macd": 16.33,
-      "williams_r": -33.6,
-      "stoch_k": 66.4,
-      "bb_position": 0.75,
-      "volume_ratio": 1.01
+      "rsi": 44.8,
+      "macd": 16.04,
+      "williams_r": -35.3,
+      "stoch_k": 64.7,
+      "bb_position": 0.73,
+      "volume_ratio": 2.17
     },
     "key_levels": {
-      "sma_20": 3363.29,
-      "sma_50": 3352.18,
-      "sma_200": 3019.53,
-      "bb_upper": 3448.99,
-      "bb_lower": 3277.6
+      "sma_20": 3363.11,
+      "sma_50": 3352.11,
+      "sma_200": 3019.51,
+      "bb_upper": 3448.43,
+      "bb_lower": 3277.79
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 67.92
+    "current_position": 66.26
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,17 +83,17 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.05,
-    "price_to_support": 3.62
+    "price_to_resistance": 1.16,
+    "price_to_support": 3.52
   },
   "volume_analysis": {
-    "current_volume": 8371,
-    "avg_volume_5": 4341,
-    "avg_volume_20": 8249,
-    "volume_ratio": 1.01,
-    "volume_strength": "طبيعي",
-    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
-    "obv_trend": "صاعد",
+    "current_volume": 19361,
+    "avg_volume_5": 6977,
+    "avg_volume_20": 8908,
+    "volume_ratio": 2.17,
+    "volume_strength": "قوي جداً",
+    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "obv_trend": "هابط",
     "volume_price_correlation": "سلبي"
   },
   "market_correlations": {
@@ -103,8 +103,8 @@
       "treasury": 0.399,
       "oil": -0.647,
       "spy": 0.334,
-      "usdeur": 0.687,
-      "silver": 0.821
+      "usdeur": 0.686,
+      "silver": 0.82
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-12T01:06:45.702298",
+    "last_update": "2025-08-12T03:45:42.451056",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,60 +163,62 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 15,
+      "total_relevant_news": 9,
       "critical_count": 0,
-      "high_impact_count": 5,
-      "overall_sentiment": "إيجابي للذهب"
+      "high_impact_count": 6,
+      "overall_sentiment": "محايد"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "US inflation to rise as higher tariffs feed through",
+          "title": "Going To ‘Be A Big Week’—Bitcoin Suddenly Soars As Crypto Braces For Massive Price Shocks",
+          "source": "Forbes",
+          "published": "2025-08-11T03:24:23Z",
+          "url": "https://www.forbes.com/sites/digital-assets/2025/08/10/going-to-be-a-big-week-bitcoin-suddenly-soars-as-crypto-braces-for-massive-price-shocks/",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
+        {
+          "title": "Asian Markets Waver To Start Key Week For Trade, US Data",
+          "source": "International Business Times",
+          "published": "2025-08-11T03:21:21Z",
+          "url": "https://www.ibtimes.com/asian-markets-waver-start-key-week-trade-us-data-3780630",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
+        {
+          "title": "Asian markets waver to start key week for trade, US data",
+          "source": "Digital Journal",
+          "published": "2025-08-11T03:17:32Z",
+          "url": "https://www.digitaljournal.com/world/asian-markets-waver-to-start-key-week-for-trade-us-data/article",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        }
+      ],
+      "medium_impact": [
+        {
+          "title": "Ether Leads Weekend Crypto Rally as Treasury Buyers Boost Token",
           "source": "Biztoc.com",
-          "published": "2025-08-10T14:47:04Z",
-          "url": "https://biztoc.com/x/ab83439467049ed1",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
+          "published": "2025-08-11T03:02:02Z",
+          "url": "https://biztoc.com/x/8fc5a89367d24789",
+          "impact": "متوسط",
+          "sentiment": null
         },
         {
-          "title": "US inflation to rise as higher tariffs feed through",
-          "source": "Fortune",
-          "published": "2025-08-10T14:43:48Z",
-          "url": "https://fortune.com/2025/08/10/inflation-preview-july-cpi-estimate-trump-tariffs-economic-indicators/",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "US Inflation to Rise as Higher Tariffs Feed Through - Bloomberg.com",
-          "source": "Slashdot.org",
-          "published": "2025-08-10T11:55:04Z",
-          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178632608",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
+          "title": "Currency Traders Focus on Australian Dollar and Euro for Bearish Dollar Bets",
+          "source": "Biztoc.com",
+          "published": "2025-08-11T02:28:33Z",
+          "url": "https://biztoc.com/x/a32a2d2d6c7ea195",
+          "impact": "متوسط",
+          "sentiment": null
         }
       ],
       "gold_specific": [
         {
-          "title": "US Gold Futures Slip as Traders Await Clarification on Tariffs",
-          "source": "Financial Post",
-          "published": "2025-08-11T00:36:46Z",
-          "url": "https://financialpost.com/pmn/business-pmn/us-gold-futures-slip-as-traders-await-clarification-on-tariffs",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "US Gold Futures Steady as Traders Await Clarification on Tariffs",
+          "title": "US Consumers Will Bear the Brunt of Tariff Costs, Goldman Says",
           "source": "Biztoc.com",
-          "published": "2025-08-11T00:15:06Z",
-          "url": "https://biztoc.com/x/bc571995ee5871ad",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "Analyst expects gold to fall off the 'Wall of Worry'",
-          "source": "TheStreet",
-          "published": "2025-08-10T18:47:00Z",
-          "url": "https://www.thestreet.com/investing/analyst-expects-gold-to-fall-off-the-wall-of-worry",
+          "published": "2025-08-11T03:01:57Z",
+          "url": "https://biztoc.com/x/b5ab5d9c42a795f7",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -224,9 +226,9 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-12 01:06:46",
+    "last_update": "2025-08-12 03:45:43",
     "data_points": 53,
     "timeframe": "Daily",
-    "market_condition": "متقلب"
+    "market_condition": "صاعد قوي"
   }
 }
