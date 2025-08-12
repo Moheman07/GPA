@@ -1,35 +1,35 @@
 {
-  "timestamp": "2025-08-12T12:28:32.962963",
+  "timestamp": "2025-08-12T15:15:25.687597",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.65,
+    "total_score": 2.55,
     "component_scores": {
       "trend": 4,
       "momentum": 1.5,
       "volume": 4,
-      "fibonacci": 2,
+      "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3392.1,
+    "current_price": 3391.3,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3339.1,
-        "conservative": 3321.43,
-        "moderate": 3286.09,
-        "wide": 3250.76
+        "tight": 3338.3,
+        "conservative": 3320.63,
+        "moderate": 3285.29,
+        "wide": 3249.96
       },
       "profit_targets": {
-        "target_1": 3462.77,
-        "target_2": 3533.44,
-        "target_3": 3627.67,
-        "target_4": 3769.01
+        "target_1": 3461.97,
+        "target_2": 3532.64,
+        "target_3": 3626.87,
+        "target_4": 3768.21
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3392.1"
+        "دخول فوري عند 3391.3"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 49.8,
-      "macd": 13.07,
-      "williams_r": -39.8,
-      "stoch_k": 60.2,
+      "rsi": 49.7,
+      "macd": 13.0,
+      "williams_r": -40.2,
+      "stoch_k": 59.8,
       "bb_position": 0.67,
-      "volume_ratio": 5.94
+      "volume_ratio": 9.21
     },
     "key_levels": {
-      "sma_20": 3363.8,
-      "sma_50": 3351.57,
+      "sma_20": 3363.76,
+      "sma_50": 3351.55,
       "sma_200": 3022.55,
-      "bb_upper": 3447.04,
-      "bb_lower": 3280.55
+      "bb_upper": 3446.94,
+      "bb_lower": 3280.57
     }
   },
   "fibonacci_levels": {
@@ -67,8 +67,8 @@
     "fib_50_0": 3365.4,
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
-    "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 61.96
+    "analysis": "السعر فوق 50% - منطقة محايدة",
+    "current_position": 61.6
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.44,
-    "price_to_support": 3.25
+    "price_to_resistance": 1.47,
+    "price_to_support": 3.22
   },
   "volume_analysis": {
-    "current_volume": 70228,
-    "avg_volume_5": 18499,
-    "avg_volume_20": 11824,
-    "volume_ratio": 5.94,
+    "current_volume": 141785,
+    "avg_volume_5": 32811,
+    "avg_volume_20": 15402,
+    "volume_ratio": 9.21,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,10 +99,10 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.654,
-      "vix": 0.243,
-      "treasury": 0.399,
+      "vix": 0.241,
+      "treasury": 0.398,
       "oil": -0.649,
-      "spy": 0.333,
+      "spy": 0.341,
       "usdeur": 0.689,
       "silver": 0.822
     },
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-12T12:28:32.645522",
+    "last_update": "2025-08-12T15:15:25.336140",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,70 +163,78 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 23,
+      "total_relevant_news": 26,
       "critical_count": 0,
-      "high_impact_count": 8,
+      "high_impact_count": 11,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "US Consumers to Bear Brunt of Tariff Hit, Goldman Economists Say - Bloomberg.com",
-          "source": "Slashdot.org",
-          "published": "2025-08-11T12:15:14Z",
-          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178641804",
+          "title": "Stocks Turn Mixed Ahead of This Week's Key Inflation Reports",
+          "source": "Barchart.com",
+          "published": "2025-08-11T15:12:39Z",
+          "url": "https://www.barchart.com/story/news/34050882/stocks-turn-mixed-ahead-of-this-week-s-key-inflation-reports",
           "impact": "عالي",
-          "sentiment": "محايد"
+          "sentiment": "سلبي"
         },
         {
-          "title": "Gold price today, Monday, August 11: Gold remains above $3,400 ahead of inflation report",
-          "source": "Yahoo Entertainment",
-          "published": "2025-08-11T12:06:34Z",
-          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-monday-august-11-gold-remains-above-3400-ahead-of-inflation-report-120634861.html",
+          "title": "One FOMC dissenter might have just called out the Fed for its shifting base interest rate policy",
+          "source": "Fortune",
+          "published": "2025-08-11T15:10:53Z",
+          "url": "https://fortune.com/2025/08/11/michelle-bowman-fomc-dissent-base-interest-rate/",
           "impact": "عالي",
-          "sentiment": "إيجابي"
+          "sentiment": "سلبي"
         },
         {
-          "title": "Crypto Watchlist: Why This Week Could Be Massive For Bitcoin",
-          "source": "newsBTC",
-          "published": "2025-08-11T11:00:27Z",
-          "url": "http://www.newsbtc.com/news/crypto-watchlist-this-week-massive-bitcoin/",
+          "title": "Stocks Supported by Fed Rate Cut Speculation and Strength in Chip Makers",
+          "source": "Barchart.com",
+          "published": "2025-08-11T14:10:44Z",
+          "url": "https://www.barchart.com/story/news/34049597/stocks-supported-by-fed-rate-cut-speculation-and-strength-in-chip-makers",
           "impact": "عالي",
           "sentiment": "إيجابي"
         }
       ],
       "medium_impact": [
         {
-          "title": "Gold price hits record high: Should you buy now or beware?",
-          "source": "The Times of India",
-          "published": "2025-08-11T05:52:16Z",
-          "url": "https://economictimes.indiatimes.com/mf/analysis/gold-price-hits-record-high-should-you-buy-now-or-beware/articleshow/123230459.cms",
+          "title": "Dollar Gains on Euro Weakness",
+          "source": "Barchart.com",
+          "published": "2025-08-11T14:31:29Z",
+          "url": "https://www.barchart.com/story/news/34050042/dollar-gains-on-euro-weakness",
+          "impact": "متوسط",
+          "sentiment": null
+        },
+        {
+          "title": "Climate Security Is Energy Security",
+          "source": "Project Syndicate",
+          "published": "2025-08-11T13:21:40Z",
+          "url": "https://www.project-syndicate.org/commentary/energy-security-still-requires-clean-energy-technology-by-gernot-wagner-2025-08",
           "impact": "متوسط",
           "sentiment": null
         }
       ],
       "gold_specific": [
         {
-          "title": "US Gold Futures Retreat as Traders Await Clarity on Tariffs",
-          "source": "Yahoo Entertainment",
-          "published": "2025-08-11T12:26:23Z",
-          "url": "https://finance.yahoo.com/news/us-gold-futures-fall-traders-055244176.html",
+          "title": "Gold To Move Higher Into Year End",
+          "source": "Forbes",
+          "published": "2025-08-11T14:48:53Z",
+          "url": "https://www.forbes.com/sites/greatspeculations/2025/08/11/gold-to-move-higher-into-year-end/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Gold price prediction for September: Gold rate falls. What to expect in coming days?",
-          "source": "The Times of India",
-          "published": "2025-08-11T12:22:11Z",
-          "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-prediction-for-september-gold-rate-falls-what-to-expect-in-coming-days/articleshow/123237381.cms",
+          "title": "Has the gold price surge finally stopped? Here's what some experts think.",
+          "source": "CBS News",
+          "published": "2025-08-11T14:11:11Z",
+          "url": "https://www.cbsnews.com/news/has-the-gold-price-surge-finally-stopped-what-experts-think/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Gold price today, Tuesday, August 12, 2025: Gold retreats after tariff clarification",
-          "source": "Yahoo Entertainment",
-          "published": "2025-08-11T12:06:34Z",
-          "url": "https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_997b956f-73ec-4032-a5a1-b865ed86d35a",
+          "title": "Eldorado Gold price target raised by $1.50 at Scotiabank, here's why",
+          "source": "Thefly.com",
+          "published": "2025-08-11T13:46:25Z",
+          "url": "https://thefly.com/permalinks/entry.php/id4180850/EGO-Eldorado-Gold-price-target-raised-by--at-Scotiabank-heres-why",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -234,7 +242,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-12 12:28:32",
+    "last_update": "2025-08-12 15:15:25",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
