@@ -1,62 +1,62 @@
 {
-  "timestamp": "2025-08-12T03:45:43.038954",
+  "timestamp": "2025-08-12T06:21:46.565677",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.2,
+    "total_score": 2.95,
     "component_scores": {
       "trend": 4,
-      "momentum": 0.5,
-      "volume": 3,
+      "momentum": 3.0,
+      "volume": 4,
       "fibonacci": 2,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 0,
+      "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3401.7,
+    "current_price": 3398.9,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3352.58,
-        "conservative": 3336.2,
-        "moderate": 3303.46,
-        "wide": 3270.71
+        "tight": 3345.9,
+        "conservative": 3328.23,
+        "moderate": 3292.89,
+        "wide": 3257.56
       },
       "profit_targets": {
-        "target_1": 3467.2,
-        "target_2": 3532.69,
-        "target_3": 3620.02,
-        "target_4": 3751.01
+        "target_1": 3469.57,
+        "target_2": 3540.24,
+        "target_3": 3634.47,
+        "target_4": 3775.81
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
       "max_risk_per_trade": "2%"
     },
     "entry_strategy": {
-      "entry_type": "دخول تدريجي",
+      "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "قسّم الدخول على 2-3 مراحل"
+        "دخول فوري عند 3398.9"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 44.8,
-      "macd": 16.04,
-      "williams_r": -35.3,
-      "stoch_k": 64.7,
-      "bb_position": 0.73,
-      "volume_ratio": 2.17
+      "rsi": 50.6,
+      "macd": 13.61,
+      "williams_r": -36.6,
+      "stoch_k": 63.4,
+      "bb_position": 0.71,
+      "volume_ratio": 2.87
     },
     "key_levels": {
-      "sma_20": 3363.11,
-      "sma_50": 3352.11,
-      "sma_200": 3019.51,
-      "bb_upper": 3448.43,
-      "bb_lower": 3277.79
+      "sma_20": 3364.13,
+      "sma_50": 3351.7,
+      "sma_200": 3022.59,
+      "bb_upper": 3447.92,
+      "bb_lower": 3280.35
     }
   },
   "fibonacci_levels": {
@@ -68,13 +68,13 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 66.26
+    "current_position": 65.01
   },
   "support_resistance": {
     "resistance_levels": [
+      3477.0,
       3444.0,
-      3441.0,
-      3400.0
+      3441.0
     ],
     "support_levels": [
       3253.8,
@@ -83,28 +83,28 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.16,
-    "price_to_support": 3.52
+    "price_to_resistance": 1.24,
+    "price_to_support": 3.44
   },
   "volume_analysis": {
-    "current_volume": 19361,
-    "avg_volume_5": 6977,
-    "avg_volume_20": 8908,
-    "volume_ratio": 2.17,
+    "current_volume": 27865,
+    "avg_volume_5": 10027,
+    "avg_volume_20": 9706,
+    "volume_ratio": 2.87,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
-    "obv_trend": "هابط",
-    "volume_price_correlation": "سلبي"
+    "obv_trend": "صاعد",
+    "volume_price_correlation": "إيجابي"
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.652,
+      "dxy": -0.654,
       "vix": 0.247,
       "treasury": 0.399,
-      "oil": -0.647,
-      "spy": 0.334,
-      "usdeur": 0.686,
-      "silver": 0.82
+      "oil": -0.649,
+      "spy": 0.333,
+      "usdeur": 0.689,
+      "silver": 0.822
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-12T03:45:42.451056",
+    "last_update": "2025-08-12T06:21:46.358382",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,13 +163,21 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 9,
+      "total_relevant_news": 14,
       "critical_count": 0,
       "high_impact_count": 6,
-      "overall_sentiment": "محايد"
+      "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "India bonds rangebound ahead of state debt supply, CPI data",
+          "source": "BusinessLine",
+          "published": "2025-08-11T06:05:45Z",
+          "url": "https://www.thehindubusinessline.com/markets/india-bonds-rangebound-ahead-of-state-debt-supply-cpi-data/article69918988.ece",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
         {
           "title": "Going To ‘Be A Big Week’—Bitcoin Suddenly Soars As Crypto Braces For Massive Price Shocks",
           "source": "Forbes",
@@ -185,17 +193,17 @@
           "url": "https://www.ibtimes.com/asian-markets-waver-start-key-week-trade-us-data-3780630",
           "impact": "عالي",
           "sentiment": "محايد"
-        },
-        {
-          "title": "Asian markets waver to start key week for trade, US data",
-          "source": "Digital Journal",
-          "published": "2025-08-11T03:17:32Z",
-          "url": "https://www.digitaljournal.com/world/asian-markets-waver-to-start-key-week-for-trade-us-data/article",
-          "impact": "عالي",
-          "sentiment": "محايد"
         }
       ],
       "medium_impact": [
+        {
+          "title": "Gold price hits record high: Should you buy now or beware?",
+          "source": "The Times of India",
+          "published": "2025-08-11T05:52:16Z",
+          "url": "https://economictimes.indiatimes.com/mf/analysis/gold-price-hits-record-high-should-you-buy-now-or-beware/articleshow/123230459.cms",
+          "impact": "متوسط",
+          "sentiment": null
+        },
         {
           "title": "Ether Leads Weekend Crypto Rally as Treasury Buyers Boost Token",
           "source": "Biztoc.com",
@@ -215,10 +223,26 @@
       ],
       "gold_specific": [
         {
-          "title": "US Consumers Will Bear the Brunt of Tariff Costs, Goldman Says",
-          "source": "Biztoc.com",
-          "published": "2025-08-11T03:01:57Z",
-          "url": "https://biztoc.com/x/b5ab5d9c42a795f7",
+          "title": "Caledonia Mining Corporation Plc: Results for the Quarter ended June 30, 2025",
+          "source": "GlobeNewswire",
+          "published": "2025-08-11T06:00:00Z",
+          "url": "https://www.globenewswire.com/news-release/2025/08/11/3130610/0/en/Caledonia-Mining-Corporation-Plc-Results-for-the-Quarter-ended-June-30-2025.html",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "akshare-mcp-ikouhaha 0.3.0",
+          "source": "Pypi.org",
+          "published": "2025-08-11T05:52:06Z",
+          "url": "https://pypi.org/project/akshare-mcp-ikouhaha/0.3.0/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "GOLD PRICES PLUMMET!  Is Now the Time to Buy?  Kathmandu Sees a Big Drop!",
+          "source": "Nep123.com",
+          "published": "2025-08-11T05:29:52Z",
+          "url": "https://nep123.com/gold-prices-plummet-is-now-the-time-to-buy-kathmandu-sees-a-big-drop/",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -226,8 +250,8 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-12 03:45:43",
-    "data_points": 53,
+    "last_update": "2025-08-12 06:21:46",
+    "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
   }
