@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-12T18:21:26.369892",
+  "timestamp": "2025-08-12T21:13:34.891899",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": -2,
       "ma_cross": 3
     },
-    "current_price": 3400.5,
+    "current_price": 3399.6,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3347.33,
-        "conservative": 3329.6,
-        "moderate": 3294.16,
-        "wide": 3258.71
+        "tight": 3346.43,
+        "conservative": 3328.7,
+        "moderate": 3293.26,
+        "wide": 3257.81
       },
       "profit_targets": {
-        "target_1": 3471.4,
-        "target_2": 3542.29,
-        "target_3": 3636.82,
-        "target_4": 3778.61
+        "target_1": 3470.5,
+        "target_2": 3541.39,
+        "target_3": 3635.92,
+        "target_4": 3777.71
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3400.5"
+        "دخول فوري عند 3399.6"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 50.8,
-      "macd": 13.74,
-      "williams_r": -35.9,
-      "stoch_k": 64.1,
-      "bb_position": 0.72,
-      "volume_ratio": 10.43
+      "rsi": 50.7,
+      "macd": 13.66,
+      "williams_r": -36.3,
+      "stoch_k": 63.7,
+      "bb_position": 0.71,
+      "volume_ratio": 10.66
     },
     "key_levels": {
-      "sma_20": 3364.22,
-      "sma_50": 3351.74,
-      "sma_200": 3022.6,
-      "bb_upper": 3448.14,
-      "bb_lower": 3280.29
+      "sma_20": 3364.17,
+      "sma_50": 3351.72,
+      "sma_200": 3022.59,
+      "bb_upper": 3448.01,
+      "bb_lower": 3280.33
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 65.73
+    "current_position": 65.32
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.19,
-    "price_to_support": 3.48
+    "price_to_resistance": 1.22,
+    "price_to_support": 3.46
   },
   "volume_analysis": {
-    "current_volume": 181214,
-    "avg_volume_5": 40696,
-    "avg_volume_20": 17373,
-    "volume_ratio": 10.43,
+    "current_volume": 189872,
+    "avg_volume_5": 42428,
+    "avg_volume_20": 17806,
+    "volume_ratio": 10.66,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -102,7 +102,7 @@
       "vix": 0.241,
       "treasury": 0.398,
       "oil": -0.65,
-      "spy": 0.342,
+      "spy": 0.334,
       "usdeur": 0.689,
       "silver": 0.822
     },
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-12T18:21:26.065877",
+    "last_update": "2025-08-12T21:13:34.611356",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,34 +163,34 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 25,
+      "total_relevant_news": 27,
       "critical_count": 0,
-      "high_impact_count": 10,
+      "high_impact_count": 12,
       "overall_sentiment": "سلبي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
+          "title": "Stocks Decline Ahead of US Inflation News",
+          "source": "Biztoc.com",
+          "published": "2025-08-11T20:48:56Z",
+          "url": "https://biztoc.com/x/5a4663aece7083bb",
+          "impact": "عالي",
+          "sentiment": "سلبي"
+        },
+        {
+          "title": "Gold price will not be tariffed, announces Donald Trump. What will be impact on gold rate?",
+          "source": "The Times of India",
+          "published": "2025-08-11T18:26:57Z",
+          "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-will-not-be-tariffed-announces-donald-trump-what-will-be-impact-on-gold-rate/articleshow/123243533.cms",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
           "title": "US Treasury Yields Edge Lower as Traders Shift Focus to CPI",
           "source": "Biztoc.com",
           "published": "2025-08-11T17:39:51Z",
           "url": "https://biztoc.com/x/a4b15e4ddd12c7bc",
-          "impact": "عالي",
-          "sentiment": "سلبي"
-        },
-        {
-          "title": "Canadian dollar hits a six-day low ahead of pivotal US inflation data",
-          "source": "Biztoc.com",
-          "published": "2025-08-11T17:39:30Z",
-          "url": "https://biztoc.com/x/98fdb1b002200d63",
-          "impact": "عالي",
-          "sentiment": "سلبي"
-        },
-        {
-          "title": "US Treasury Yields Edge Lower as Traders Shift Focus to CPI",
-          "source": "Yahoo Entertainment",
-          "published": "2025-08-11T17:13:10Z",
-          "url": "https://finance.yahoo.com/news/treasury-yields-slide-cpi-fed-091307383.html",
           "impact": "عالي",
           "sentiment": "سلبي"
         }
@@ -215,6 +215,14 @@
       ],
       "gold_specific": [
         {
+          "title": "Gold logs biggest daily price drop in months as Trump says it won’t face tariffs",
+          "source": "Biztoc.com",
+          "published": "2025-08-11T19:09:01Z",
+          "url": "https://biztoc.com/x/433c24dca0a60399",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
           "title": "Lundin Gold price target raised by C$4 at CIBC",
           "source": "Thefly.com",
           "published": "2025-08-11T16:48:05Z",
@@ -229,20 +237,12 @@
           "url": "https://thefly.com/permalinks/entry.php/id4180987/AAUCF-Allied-Gold-price-target-lowered-by-C-at-CIBC",
           "impact": "مباشر للذهب",
           "sentiment": null
-        },
-        {
-          "title": "Trump said foreign countries would 'eat' tariffs—but U.S. consumers and businesses will actually pay 75% at best - Fortune",
-          "source": "Slashdot.org",
-          "published": "2025-08-11T16:35:14Z",
-          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178643826",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-12 18:21:26",
+    "last_update": "2025-08-12 21:13:34",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
