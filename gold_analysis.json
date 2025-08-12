@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-08-12T10:51:01.652914",
+  "timestamp": "2025-08-12T12:28:32.962963",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.85,
+    "total_score": 2.65,
     "component_scores": {
       "trend": 4,
-      "momentum": 2.5,
+      "momentum": 1.5,
       "volume": 4,
       "fibonacci": 2,
       "correlation": 1,
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3395.7,
+    "current_price": 3392.1,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3342.7,
-        "conservative": 3325.03,
-        "moderate": 3289.69,
-        "wide": 3254.36
+        "tight": 3339.1,
+        "conservative": 3321.43,
+        "moderate": 3286.09,
+        "wide": 3250.76
       },
       "profit_targets": {
-        "target_1": 3466.37,
-        "target_2": 3537.04,
-        "target_3": 3631.27,
-        "target_4": 3772.61
+        "target_1": 3462.77,
+        "target_2": 3533.44,
+        "target_3": 3627.67,
+        "target_4": 3769.01
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3395.7"
+        "دخول فوري عند 3392.1"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 50.2,
-      "macd": 13.35,
-      "williams_r": -38.2,
-      "stoch_k": 61.8,
-      "bb_position": 0.69,
-      "volume_ratio": 5.03
+      "rsi": 49.8,
+      "macd": 13.07,
+      "williams_r": -39.8,
+      "stoch_k": 60.2,
+      "bb_position": 0.67,
+      "volume_ratio": 5.94
     },
     "key_levels": {
-      "sma_20": 3363.98,
-      "sma_50": 3351.64,
-      "sma_200": 3022.57,
-      "bb_upper": 3447.49,
-      "bb_lower": 3280.46
+      "sma_20": 3363.8,
+      "sma_50": 3351.57,
+      "sma_200": 3022.55,
+      "bb_upper": 3447.04,
+      "bb_lower": 3280.55
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 63.58
+    "current_position": 61.96
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.33,
-    "price_to_support": 3.35
+    "price_to_resistance": 1.44,
+    "price_to_support": 3.25
   },
   "volume_analysis": {
-    "current_volume": 55861,
-    "avg_volume_5": 15626,
-    "avg_volume_20": 11106,
-    "volume_ratio": 5.03,
+    "current_volume": 70228,
+    "avg_volume_5": 18499,
+    "avg_volume_20": 11824,
+    "volume_ratio": 5.94,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-12T10:51:01.030906",
+    "last_update": "2025-08-12T12:28:32.645522",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,36 +163,36 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 20,
+      "total_relevant_news": 23,
       "critical_count": 0,
-      "high_impact_count": 9,
+      "high_impact_count": 8,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "US inflation to rise as higher tariffs feed through",
-          "source": "Biztoc.com",
-          "published": "2025-08-11T10:03:49Z",
-          "url": "https://biztoc.com/x/5f20df4a8088d81a",
+          "title": "US Consumers to Bear Brunt of Tariff Hit, Goldman Economists Say - Bloomberg.com",
+          "source": "Slashdot.org",
+          "published": "2025-08-11T12:15:14Z",
+          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178641804",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
+        {
+          "title": "Gold price today, Monday, August 11: Gold remains above $3,400 ahead of inflation report",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-11T12:06:34Z",
+          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-monday-august-11-gold-remains-above-3400-ahead-of-inflation-report-120634861.html",
           "impact": "عالي",
           "sentiment": "إيجابي"
         },
         {
-          "title": "Reserve Bank predicted to slash interest rates on Tuesday amid cooling inflation",
-          "source": "7NEWS.com.au",
-          "published": "2025-08-11T09:58:27Z",
-          "url": "https://7news.com.au/news/reserve-bank-predicted-to-slash-interest-rates-on-tuesday-amid-cooling-inflation-c-19650334",
+          "title": "Crypto Watchlist: Why This Week Could Be Massive For Bitcoin",
+          "source": "newsBTC",
+          "published": "2025-08-11T11:00:27Z",
+          "url": "http://www.newsbtc.com/news/crypto-watchlist-this-week-massive-bitcoin/",
           "impact": "عالي",
-          "sentiment": "محايد"
-        },
-        {
-          "title": "Will US inflation numbers withstand pressure from Trump?",
-          "source": "Biztoc.com",
-          "published": "2025-08-11T09:30:51Z",
-          "url": "https://biztoc.com/x/f27ec1b12b9e4619",
-          "impact": "عالي",
-          "sentiment": "محايد"
+          "sentiment": "إيجابي"
         }
       ],
       "medium_impact": [
@@ -207,26 +207,26 @@
       ],
       "gold_specific": [
         {
-          "title": "Barrick Builds Momentum in Q2 With Higher Production, Stronger Cash Flows and Key Growth Projects on Track",
-          "source": "Financial Post",
-          "published": "2025-08-11T10:05:09Z",
-          "url": "https://financialpost.com/globe-newswire/barrick-builds-momentum-in-q2-with-higher-production-stronger-cash-flows-and-key-growth-projects-on-track",
+          "title": "US Gold Futures Retreat as Traders Await Clarity on Tariffs",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-11T12:26:23Z",
+          "url": "https://finance.yahoo.com/news/us-gold-futures-fall-traders-055244176.html",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Barrick Builds Momentum in Q2 With Higher Production, Stronger Cash Flows and Key Growth Projects on Track",
-          "source": "GlobeNewswire",
-          "published": "2025-08-11T10:00:00Z",
-          "url": "https://www.globenewswire.com/news-release/2025/08/11/3130710/0/en/Barrick-Builds-Momentum-in-Q2-With-Higher-Production-Stronger-Cash-Flows-and-Key-Growth-Projects-on-Track.html",
+          "title": "Gold price prediction for September: Gold rate falls. What to expect in coming days?",
+          "source": "The Times of India",
+          "published": "2025-08-11T12:22:11Z",
+          "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-prediction-for-september-gold-rate-falls-what-to-expect-in-coming-days/articleshow/123237381.cms",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "10,236 Shares in iShares Gold Trust Micro (NYSEARCA:IAUM) Bought by XTX Topco Ltd",
-          "source": "ETF Daily News",
-          "published": "2025-08-11T08:44:56Z",
-          "url": "https://www.etfdailynews.com/2025/08/11/10236-shares-in-ishares-gold-trust-micro-nysearcaiaum-bought-by-xtx-topco-ltd/",
+          "title": "Gold price today, Tuesday, August 12, 2025: Gold retreats after tariff clarification",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-11T12:06:34Z",
+          "url": "https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_997b956f-73ec-4032-a5a1-b865ed86d35a",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -234,7 +234,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-12 10:51:01",
+    "last_update": "2025-08-12 12:28:32",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
