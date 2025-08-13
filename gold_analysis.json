@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-13T09:17:09.846884",
+  "timestamp": "2025-08-13T12:29:07.926203",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 4,
       "ma_cross": 3
     },
-    "current_price": 3409.8,
+    "current_price": 3408.4,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3356.17,
-        "conservative": 3338.29,
-        "moderate": 3302.54,
-        "wide": 3266.79
+        "tight": 3354.42,
+        "conservative": 3336.42,
+        "moderate": 3300.43,
+        "wide": 3264.44
       },
       "profit_targets": {
-        "target_1": 3481.31,
-        "target_2": 3552.81,
-        "target_3": 3648.16,
-        "target_4": 3791.17
+        "target_1": 3480.38,
+        "target_2": 3552.36,
+        "target_3": 3648.33,
+        "target_4": 3792.29
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3409.8"
+        "دخول فوري عند 3408.4"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 54.8,
-      "macd": 12.38,
-      "williams_r": -31.5,
-      "stoch_k": 68.5,
-      "bb_position": 0.77,
-      "volume_ratio": 4.28
+      "rsi": 54.6,
+      "macd": 12.27,
+      "williams_r": -32.2,
+      "stoch_k": 67.8,
+      "bb_position": 0.76,
+      "volume_ratio": 5.76
     },
     "key_levels": {
-      "sma_20": 3364.5,
-      "sma_50": 3351.9,
+      "sma_20": 3364.43,
+      "sma_50": 3351.87,
       "sma_200": 3025.68,
-      "bb_upper": 3449.49,
-      "bb_lower": 3279.51
+      "bb_upper": 3449.27,
+      "bb_lower": 3279.59
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 69.89
+    "current_position": 69.27
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 0.92,
-    "price_to_support": 3.75
+    "price_to_resistance": 0.96,
+    "price_to_support": 3.71
   },
   "volume_analysis": {
-    "current_volume": 43984,
-    "avg_volume_5": 12016,
-    "avg_volume_20": 10277,
-    "volume_ratio": 4.28,
+    "current_volume": 65342,
+    "avg_volume_5": 16287,
+    "avg_volume_20": 11345,
+    "volume_ratio": 5.76,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-13T09:17:09.431409",
+    "last_update": "2025-08-13T12:29:07.478076",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,9 +163,9 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 23,
+      "total_relevant_news": 24,
       "critical_count": 1,
-      "high_impact_count": 16,
+      "high_impact_count": 18,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
@@ -181,28 +181,38 @@
       ],
       "high_impact": [
         {
-          "title": "U.S. inflation data ahead; Trump nominates new BLS head - what's moving markets",
+          "title": "Crypto braces for new CPI release that’s seen to ‘trigger Bitcoin’s next all-time high’",
           "source": "Biztoc.com",
-          "published": "2025-08-12T07:55:21Z",
-          "url": "https://biztoc.com/x/7854b81581755887",
-          "impact": "عالي",
-          "sentiment": "محايد"
-        },
-        {
-          "title": "Disinflation is going to be the big theme for India; CPI may fall to 1.3%, below RBI target: Sonal Varma, Nomura",
-          "source": "The Times of India",
-          "published": "2025-08-12T07:36:02Z",
-          "url": "https://economictimes.indiatimes.com/markets/expert-view/disinflation-is-going-to-be-the-big-theme-for-india-cpi-may-fall-to-1-3-below-rbi-target-sonal-varma-nomura/articleshow/123253271.cms",
-          "impact": "عالي",
-          "sentiment": "سلبي"
-        },
-        {
-          "title": "Most Markets Rise As China-US Truce Extended, Inflation In Focus",
-          "source": "International Business Times",
-          "published": "2025-08-12T07:30:21Z",
-          "url": "https://www.ibtimes.com/most-markets-rise-china-us-truce-extended-inflation-focus-3780707",
+          "published": "2025-08-12T11:38:04Z",
+          "url": "https://biztoc.com/x/c12773117a71ccd7",
           "impact": "عالي",
           "sentiment": "إيجابي"
+        },
+        {
+          "title": "German 10-year Bund yields hit 12-day high ahead of U.S. inflation data",
+          "source": "Biztoc.com",
+          "published": "2025-08-12T11:37:38Z",
+          "url": "https://biztoc.com/x/2bba171aacfbe3fd",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
+          "title": "Banking heavyweights pull markets down ahead of inflation data",
+          "source": "BusinessLine",
+          "published": "2025-08-12T10:55:34Z",
+          "url": "https://www.thehindubusinessline.com/markets/stock-markets/banking-heavyweights-pull-markets-down-ahead-of-inflation-data/article69923834.ece",
+          "impact": "عالي",
+          "sentiment": "سلبي"
+        }
+      ],
+      "medium_impact": [
+        {
+          "title": "What Is Happening to the Dollar as a Safe Haven?",
+          "source": "Nakedcapitalism.com",
+          "published": "2025-08-12T09:55:34Z",
+          "url": "https://www.nakedcapitalism.com/2025/08/what-is-happening-to-the-dollar-as-a-safe-haven.html",
+          "impact": "متوسط",
+          "sentiment": null
         }
       ],
       "gold_specific": [
@@ -234,7 +244,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-13 09:17:09",
+    "last_update": "2025-08-13 12:29:07",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
