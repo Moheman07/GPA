@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-13T18:19:43.129171",
+  "timestamp": "2025-08-13T21:13:15.932114",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3404.6,
+    "current_price": 3407.0,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3350.22,
-        "conservative": 3332.1,
-        "moderate": 3295.84,
-        "wide": 3259.59
+        "tight": 3352.62,
+        "conservative": 3334.5,
+        "moderate": 3298.24,
+        "wide": 3261.99
       },
       "profit_targets": {
-        "target_1": 3477.1,
-        "target_2": 3549.61,
-        "target_3": 3646.28,
-        "target_4": 3791.29
+        "target_1": 3479.5,
+        "target_2": 3552.01,
+        "target_3": 3648.68,
+        "target_4": 3793.69
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3404.6"
+        "دخول فوري عند 3407.0"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 54.2,
-      "macd": 11.96,
-      "williams_r": -34.0,
-      "stoch_k": 66.0,
-      "bb_position": 0.74,
-      "volume_ratio": 8.7
+      "rsi": 54.5,
+      "macd": 12.15,
+      "williams_r": -32.8,
+      "stoch_k": 67.2,
+      "bb_position": 0.75,
+      "volume_ratio": 9.01
     },
     "key_levels": {
-      "sma_20": 3364.24,
-      "sma_50": 3351.79,
-      "sma_200": 3025.66,
-      "bb_upper": 3448.68,
-      "bb_lower": 3279.8
+      "sma_20": 3364.36,
+      "sma_50": 3351.84,
+      "sma_200": 3025.67,
+      "bb_upper": 3449.05,
+      "bb_lower": 3279.67
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 67.56
+    "current_position": 68.64
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.07,
-    "price_to_support": 3.6
+    "price_to_resistance": 1.0,
+    "price_to_support": 3.67
   },
   "volume_analysis": {
-    "current_volume": 124469,
-    "avg_volume_5": 28113,
-    "avg_volume_20": 14302,
-    "volume_ratio": 8.7,
+    "current_volume": 132393,
+    "avg_volume_5": 29698,
+    "avg_volume_20": 14698,
+    "volume_ratio": 9.01,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -100,8 +100,9 @@
     "correlations": {
       "dxy": -0.659,
       "vix": 0.238,
-      "treasury": 0.391,
-      "spy": 0.342,
+      "treasury": 0.39,
+      "oil": -0.648,
+      "spy": 0.335,
       "usdeur": 0.694,
       "silver": 0.821
     },
@@ -109,18 +110,20 @@
       "dxy": "قوي",
       "vix": "ضعيف",
       "treasury": "متوسط",
+      "oil": "قوي",
       "spy": "متوسط",
       "usdeur": "قوي",
       "silver": "قوي جداً"
     },
     "interpretation": {
       "dxy": "ارتباط عكسي قوي - إيجابي للذهب عند ضعف الدولار",
-      "vix": "تأثير محدود من التقلبات"
+      "vix": "تأثير محدود من التقلبات",
+      "oil": "ارتباط قوي - مؤشر على التضخم"
     }
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-13T18:19:42.898175",
+    "last_update": "2025-08-13T21:13:15.620124",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -160,13 +163,29 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 28,
+      "total_relevant_news": 25,
       "critical_count": 0,
-      "high_impact_count": 28,
+      "high_impact_count": 25,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "U.S. Dollar rate, Bitcoin price crash: Experts make big prediction for currency markets",
+          "source": "The Times of India",
+          "published": "2025-08-12T20:44:03Z",
+          "url": "https://economictimes.indiatimes.com/news/international/us/u-s-dollar-rate-bitcoin-price-crash-experts-make-big-prediction-for-currency-markets/articleshow/123266607.cms",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
+        {
+          "title": "Why Rocket Companies (RKT) Stock Is Up Today",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-12T20:36:11Z",
+          "url": "https://finance.yahoo.com/news/why-rocket-companies-rkt-stock-203611573.html",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
         {
           "title": "US inflation held steady as mild tariff hit offset by cheaper gas and food",
           "source": "Biztoc.com",
@@ -174,28 +193,12 @@
           "url": "https://biztoc.com/x/885705702f91a987",
           "impact": "عالي",
           "sentiment": "محايد"
-        },
-        {
-          "title": "US inflation held steady last month as tariff hit offset by cheaper gas, food",
-          "source": "WISHTV.com",
-          "published": "2025-08-12T17:35:24Z",
-          "url": "https://www.wishtv.com/news/business/us-inflation-unchanged-july/",
-          "impact": "عالي",
-          "sentiment": "محايد"
-        },
-        {
-          "title": "Stocks rally, oil prices drop after modest US inflation data solidifies Fed rate cut expectations - Reuters",
-          "source": "Slashdot.org",
-          "published": "2025-08-12T17:35:00Z",
-          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178656110",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-13 18:19:43",
+    "last_update": "2025-08-13 21:13:15",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
