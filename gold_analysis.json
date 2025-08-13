@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-08-13T15:12:41.306153",
+  "timestamp": "2025-08-13T18:19:43.129171",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 3.05,
+    "total_score": 2.95,
     "component_scores": {
       "trend": 4,
-      "momentum": 3.5,
+      "momentum": 3.0,
       "volume": 4,
       "fibonacci": 2,
       "correlation": 1,
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3412.3,
+    "current_price": 3404.6,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3357.92,
-        "conservative": 3339.8,
-        "moderate": 3303.54,
-        "wide": 3267.29
+        "tight": 3350.22,
+        "conservative": 3332.1,
+        "moderate": 3295.84,
+        "wide": 3259.59
       },
       "profit_targets": {
-        "target_1": 3484.8,
-        "target_2": 3557.31,
-        "target_3": 3653.98,
-        "target_4": 3798.99
+        "target_1": 3477.1,
+        "target_2": 3549.61,
+        "target_3": 3646.28,
+        "target_4": 3791.29
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3412.3"
+        "دخول فوري عند 3404.6"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 55.0,
-      "macd": 12.58,
-      "williams_r": -30.4,
-      "stoch_k": 69.6,
-      "bb_position": 0.78,
-      "volume_ratio": 7.7
+      "rsi": 54.2,
+      "macd": 11.96,
+      "williams_r": -34.0,
+      "stoch_k": 66.0,
+      "bb_position": 0.74,
+      "volume_ratio": 8.7
     },
     "key_levels": {
-      "sma_20": 3364.62,
-      "sma_50": 3351.95,
-      "sma_200": 3025.7,
-      "bb_upper": 3449.9,
-      "bb_lower": 3279.35
+      "sma_20": 3364.24,
+      "sma_50": 3351.79,
+      "sma_200": 3025.66,
+      "bb_upper": 3448.68,
+      "bb_lower": 3279.8
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 71.01
+    "current_position": 67.56
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 0.84,
-    "price_to_support": 3.82
+    "price_to_resistance": 1.07,
+    "price_to_support": 3.6
   },
   "volume_analysis": {
-    "current_volume": 101078,
-    "avg_volume_5": 23435,
-    "avg_volume_20": 13132,
-    "volume_ratio": 7.7,
+    "current_volume": 124469,
+    "avg_volume_5": 28113,
+    "avg_volume_20": 14302,
+    "volume_ratio": 8.7,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -98,10 +98,9 @@
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.66,
+      "dxy": -0.659,
       "vix": 0.238,
-      "treasury": 0.39,
-      "oil": -0.648,
+      "treasury": 0.391,
       "spy": 0.342,
       "usdeur": 0.694,
       "silver": 0.821
@@ -110,20 +109,18 @@
       "dxy": "قوي",
       "vix": "ضعيف",
       "treasury": "متوسط",
-      "oil": "قوي",
       "spy": "متوسط",
       "usdeur": "قوي",
       "silver": "قوي جداً"
     },
     "interpretation": {
       "dxy": "ارتباط عكسي قوي - إيجابي للذهب عند ضعف الدولار",
-      "vix": "تأثير محدود من التقلبات",
-      "oil": "ارتباط قوي - مؤشر على التضخم"
+      "vix": "تأثير محدود من التقلبات"
     }
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-13T15:12:40.972515",
+    "last_update": "2025-08-13T18:19:42.898175",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,60 +160,42 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 29,
+      "total_relevant_news": 28,
       "critical_count": 0,
-      "high_impact_count": 27,
+      "high_impact_count": 28,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "US stock market greenlights rally: Dow, S&P, Nasdaq soar to record highs on strong Fed rate cut hopes after CPI inflation slowdown — Tech giants drive",
-          "source": "The Times of India",
-          "published": "2025-08-12T15:08:06Z",
-          "url": "https://economictimes.indiatimes.com/news/international/us/us-stock-market-greenlights-rally-dow-sp-nasdaq-soar-to-record-highs-on-strong-fed-rate-cut-hopes-after-cpi-inflation-slowdown-tech-giants-drive-investor-optimism/articleshow/123261042.cms",
+          "title": "US inflation held steady as mild tariff hit offset by cheaper gas and food",
+          "source": "Biztoc.com",
+          "published": "2025-08-12T17:46:07Z",
+          "url": "https://biztoc.com/x/885705702f91a987",
           "impact": "عالي",
-          "sentiment": "إيجابي"
+          "sentiment": "محايد"
         },
         {
-          "title": "Dollar Trades Lower as CPI Report Boosts Chances of a Fed Rate Cut",
-          "source": "Barchart.com",
-          "published": "2025-08-12T14:56:16Z",
-          "url": "https://www.barchart.com/story/news/34080690/dollar-trades-lower-as-cpi-report-boosts-chances-of-a-fed-rate-cut",
+          "title": "US inflation held steady last month as tariff hit offset by cheaper gas, food",
+          "source": "WISHTV.com",
+          "published": "2025-08-12T17:35:24Z",
+          "url": "https://www.wishtv.com/news/business/us-inflation-unchanged-july/",
           "impact": "عالي",
-          "sentiment": "سلبي"
+          "sentiment": "محايد"
         },
         {
-          "title": "Stocks rise, bonds firm on reassuring US inflation data - Reuters",
+          "title": "Stocks rally, oil prices drop after modest US inflation data solidifies Fed rate cut expectations - Reuters",
           "source": "Slashdot.org",
-          "published": "2025-08-12T14:52:35Z",
-          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178654578",
+          "published": "2025-08-12T17:35:00Z",
+          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178656110",
           "impact": "عالي",
           "sentiment": "إيجابي"
-        }
-      ],
-      "gold_specific": [
-        {
-          "title": "West Red Lake Gold Expands High-Grade Zone in South Austin with 36.85 g/t Au over 6.9m, 92.39 g/t Au over 2m and 8.79 g/t Au over 15.5m",
-          "source": "Financial Post",
-          "published": "2025-08-12T13:08:09Z",
-          "url": "https://financialpost.com/globe-newswire/west-red-lake-gold-expands-high-grade-zone-in-south-austin-with-36-85-g-t-au-over-6-9m-92-39-g-t-au-over-2m-and-8-79-g-t-au-over-15-5m",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "West Red Lake Gold Expands High-Grade Zone in South Austin with 36.85 g/t Au over 6.9m, 92.39 g/t Au over 2m and 8.79 g/t Au over 15.5m",
-          "source": "GlobeNewswire",
-          "published": "2025-08-12T13:07:00Z",
-          "url": "https://www.globenewswire.com/news-release/2025/08/12/3131794/0/en/West-Red-Lake-Gold-Expands-High-Grade-Zone-in-South-Austin-with-36-85-g-t-Au-over-6-9m-92-39-g-t-Au-over-2m-and-8-79-g-t-Au-over-15-5m.html",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-13 15:12:41",
+    "last_update": "2025-08-13 18:19:43",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
