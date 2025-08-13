@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-13T06:21:52.537082",
+  "timestamp": "2025-08-13T09:17:09.846884",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 4,
       "ma_cross": 3
     },
-    "current_price": 3402.0,
+    "current_price": 3409.8,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3349.04,
-        "conservative": 3331.38,
-        "moderate": 3296.07,
-        "wide": 3260.76
+        "tight": 3356.17,
+        "conservative": 3338.29,
+        "moderate": 3302.54,
+        "wide": 3266.79
       },
       "profit_targets": {
-        "target_1": 3472.62,
-        "target_2": 3543.24,
-        "target_3": 3637.39,
-        "target_4": 3778.63
+        "target_1": 3481.31,
+        "target_2": 3552.81,
+        "target_3": 3648.16,
+        "target_4": 3791.17
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3402.0"
+        "دخول فوري عند 3409.8"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 53.9,
-      "macd": 11.75,
-      "williams_r": -35.2,
-      "stoch_k": 64.8,
-      "bb_position": 0.73,
-      "volume_ratio": 2.61
+      "rsi": 54.8,
+      "macd": 12.38,
+      "williams_r": -31.5,
+      "stoch_k": 68.5,
+      "bb_position": 0.77,
+      "volume_ratio": 4.28
     },
     "key_levels": {
-      "sma_20": 3364.11,
-      "sma_50": 3351.74,
-      "sma_200": 3025.64,
-      "bb_upper": 3448.29,
-      "bb_lower": 3279.93
+      "sma_20": 3364.5,
+      "sma_50": 3351.9,
+      "sma_200": 3025.68,
+      "bb_upper": 3449.49,
+      "bb_lower": 3279.51
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 66.4
+    "current_position": 69.89
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.15,
-    "price_to_support": 3.53
+    "price_to_resistance": 0.92,
+    "price_to_support": 3.75
   },
   "volume_analysis": {
-    "current_volume": 24243,
-    "avg_volume_5": 8068,
-    "avg_volume_20": 9290,
-    "volume_ratio": 2.61,
+    "current_volume": 43984,
+    "avg_volume_5": 12016,
+    "avg_volume_20": 10277,
+    "volume_ratio": 4.28,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -98,8 +98,8 @@
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.659,
-      "vix": 0.245,
+      "dxy": -0.66,
+      "vix": 0.238,
       "treasury": 0.393,
       "oil": -0.648,
       "spy": 0.333,
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-13T06:21:52.233403",
+    "last_update": "2025-08-13T09:17:09.431409",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,9 +163,9 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 25,
+      "total_relevant_news": 23,
       "critical_count": 1,
-      "high_impact_count": 20,
+      "high_impact_count": 16,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
@@ -181,52 +181,52 @@
       ],
       "high_impact": [
         {
-          "title": "How Traders Are Positioning Bitcoin for This Week’s US Inflation Print",
-          "source": "Decrypt",
-          "published": "2025-08-12T03:51:31Z",
-          "url": "https://decrypt.co/334676/traders-positioning-bitcoin-this-weeks-us-inflation-print",
+          "title": "U.S. inflation data ahead; Trump nominates new BLS head - what's moving markets",
+          "source": "Biztoc.com",
+          "published": "2025-08-12T07:55:21Z",
+          "url": "https://biztoc.com/x/7854b81581755887",
           "impact": "عالي",
-          "sentiment": "إيجابي"
+          "sentiment": "محايد"
         },
         {
-          "title": "India’s CPI Retail Inflation Highlights: Retail inflation falls to 1.55% in July, lowest since June 2017",
-          "source": "BusinessLine",
-          "published": "2025-08-12T03:33:56Z",
-          "url": "https://www.thehindubusinessline.com/economy/india-cpi-retail-inflation-gdp-data-july-2025-highlights/article69920358.ece",
+          "title": "Disinflation is going to be the big theme for India; CPI may fall to 1.3%, below RBI target: Sonal Varma, Nomura",
+          "source": "The Times of India",
+          "published": "2025-08-12T07:36:02Z",
+          "url": "https://economictimes.indiatimes.com/markets/expert-view/disinflation-is-going-to-be-the-big-theme-for-india-cpi-may-fall-to-1-3-below-rbi-target-sonal-varma-nomura/articleshow/123253271.cms",
           "impact": "عالي",
           "sentiment": "سلبي"
         },
         {
-          "title": "Gold edges higher with focus on US inflation data",
-          "source": "BusinessLine",
-          "published": "2025-08-12T03:11:54Z",
-          "url": "https://www.thehindubusinessline.com/markets/gold/gold-edges-higher-with-focus-on-us-inflation-data/article69922713.ece",
+          "title": "Most Markets Rise As China-US Truce Extended, Inflation In Focus",
+          "source": "International Business Times",
+          "published": "2025-08-12T07:30:21Z",
+          "url": "https://www.ibtimes.com/most-markets-rise-china-us-truce-extended-inflation-focus-3780707",
           "impact": "عالي",
-          "sentiment": "محايد"
+          "sentiment": "إيجابي"
         }
       ],
       "gold_specific": [
         {
-          "title": "Gold Prices PLUMMET!  Kathmandu Sees Big Drop – Is Now the Time to Buy? ",
-          "source": "Nep123.com",
-          "published": "2025-08-12T05:32:51Z",
-          "url": "https://nep123.com/gold-prices-plummet-kathmandu-sees-big-drop-is-now-the-time-to-buy-2/",
+          "title": "Galiano Gold (GAU) to Release Earnings on Wednesday",
+          "source": "ETF Daily News",
+          "published": "2025-08-12T07:26:50Z",
+          "url": "https://www.etfdailynews.com/2025/08/12/galiano-gold-gau-to-release-earnings-on-wednesday/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Gold Holds Loss as Traders Seek Clarity on Trump’s No-Tariff Vow",
-          "source": "Biztoc.com",
-          "published": "2025-08-12T00:20:22Z",
-          "url": "https://biztoc.com/x/4c02a6bc726ab6be",
+          "title": "Gold prices trade lower as safe haven buying declines, but trade above Rs 1 lakh. Do analysts see capped upside?",
+          "source": "The Times of India",
+          "published": "2025-08-12T06:53:11Z",
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-prices-trade-lower-as-safe-haven-buying-declines-but-trade-above-rs-1-lakh-do-analysts-see-capped-upside/articleshow/123252442.cms",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Strong drilling targets identified next to high-grade gold-copper mine",
-          "source": "GlobeNewswire",
-          "published": "2025-08-11T22:48:00Z",
-          "url": "https://www.globenewswire.com/news-release/2025/08/11/3131357/0/en/Strong-drilling-targets-identified-next-to-high-grade-gold-copper-mine.html",
+          "title": "Centerra Gold (NYSE:CGAU) Upgraded at Wall Street Zen",
+          "source": "ETF Daily News",
+          "published": "2025-08-12T06:28:43Z",
+          "url": "https://www.etfdailynews.com/2025/08/12/centerra-gold-nysecgau-upgraded-at-wall-street-zen/",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -234,7 +234,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-13 06:21:52",
+    "last_update": "2025-08-13 09:17:09",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
