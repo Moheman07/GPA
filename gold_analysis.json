@@ -1,11 +1,11 @@
 {
-  "timestamp": "2025-08-13T03:48:16.087348",
+  "timestamp": "2025-08-13T06:21:52.537082",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.95,
+    "total_score": 3.05,
     "component_scores": {
       "trend": 4,
       "momentum": 3.0,
@@ -14,22 +14,22 @@
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 2,
+      "news": 4,
       "ma_cross": 3
     },
-    "current_price": 3400.0,
+    "current_price": 3402.0,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3347.29,
-        "conservative": 3329.72,
-        "moderate": 3294.59,
-        "wide": 3259.45
+        "tight": 3349.04,
+        "conservative": 3331.38,
+        "moderate": 3296.07,
+        "wide": 3260.76
       },
       "profit_targets": {
-        "target_1": 3470.28,
-        "target_2": 3540.55,
-        "target_3": 3634.25,
-        "target_4": 3774.8
+        "target_1": 3472.62,
+        "target_2": 3543.24,
+        "target_3": 3637.39,
+        "target_4": 3778.63
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3400.0"
+        "دخول فوري عند 3402.0"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 50.7,
-      "macd": 13.7,
-      "williams_r": -36.1,
-      "stoch_k": 63.9,
-      "bb_position": 0.71,
-      "volume_ratio": 2.06
+      "rsi": 53.9,
+      "macd": 11.75,
+      "williams_r": -35.2,
+      "stoch_k": 64.8,
+      "bb_position": 0.73,
+      "volume_ratio": 2.61
     },
     "key_levels": {
-      "sma_20": 3364.19,
-      "sma_50": 3351.73,
-      "sma_200": 3022.59,
-      "bb_upper": 3448.07,
-      "bb_lower": 3280.31
+      "sma_20": 3364.11,
+      "sma_50": 3351.74,
+      "sma_200": 3025.64,
+      "bb_upper": 3448.29,
+      "bb_lower": 3279.93
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 65.5
+    "current_position": 66.4
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.21,
-    "price_to_support": 3.47
+    "price_to_resistance": 1.15,
+    "price_to_support": 3.53
   },
   "volume_analysis": {
-    "current_volume": 18401,
-    "avg_volume_5": 6900,
-    "avg_volume_20": 8924,
-    "volume_ratio": 2.06,
+    "current_volume": 24243,
+    "avg_volume_5": 8068,
+    "avg_volume_20": 9290,
+    "volume_ratio": 2.61,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -98,13 +98,13 @@
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.654,
-      "vix": 0.241,
-      "treasury": 0.398,
-      "oil": -0.65,
-      "spy": 0.334,
-      "usdeur": 0.691,
-      "silver": 0.822
+      "dxy": -0.659,
+      "vix": 0.245,
+      "treasury": 0.393,
+      "oil": -0.648,
+      "spy": 0.333,
+      "usdeur": 0.694,
+      "silver": 0.821
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-13T03:48:15.738472",
+    "last_update": "2025-08-13T06:21:52.233403",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -164,12 +164,30 @@
     "status": "success",
     "summary": {
       "total_relevant_news": 25,
-      "critical_count": 0,
-      "high_impact_count": 19,
+      "critical_count": 1,
+      "high_impact_count": 20,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
+      "critical": [
+        {
+          "title": "Sensex jumps over 100 pts, Nifty tops 24,600; IT stocks rise",
+          "source": "The Times of India",
+          "published": "2025-08-12T03:59:50Z",
+          "url": "https://economictimes.indiatimes.com/markets/stocks/news/ril-lt-lift-sensex-100-pts-higher-nifty-above-24600/articleshow/123249192.cms",
+          "impact": "حرج - تأثير فوري",
+          "sentiment": "إيجابي"
+        }
+      ],
       "high_impact": [
+        {
+          "title": "How Traders Are Positioning Bitcoin for This Week’s US Inflation Print",
+          "source": "Decrypt",
+          "published": "2025-08-12T03:51:31Z",
+          "url": "https://decrypt.co/334676/traders-positioning-bitcoin-this-weeks-us-inflation-print",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
         {
           "title": "India’s CPI Retail Inflation Highlights: Retail inflation falls to 1.55% in July, lowest since June 2017",
           "source": "BusinessLine",
@@ -185,17 +203,17 @@
           "url": "https://www.thehindubusinessline.com/markets/gold/gold-edges-higher-with-focus-on-us-inflation-data/article69922713.ece",
           "impact": "عالي",
           "sentiment": "محايد"
-        },
-        {
-          "title": "Indian benchmarks likely to open flat ahead of release of domestic inflation data",
-          "source": "BusinessLine",
-          "published": "2025-08-12T02:49:19Z",
-          "url": "https://www.thehindubusinessline.com/markets/indian-benchmarks-likely-to-open-flat-ahead-of-release-of-domestic-inflation-data/article69922689.ece",
-          "impact": "عالي",
-          "sentiment": "محايد"
         }
       ],
       "gold_specific": [
+        {
+          "title": "Gold Prices PLUMMET!  Kathmandu Sees Big Drop – Is Now the Time to Buy? ",
+          "source": "Nep123.com",
+          "published": "2025-08-12T05:32:51Z",
+          "url": "https://nep123.com/gold-prices-plummet-kathmandu-sees-big-drop-is-now-the-time-to-buy-2/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
         {
           "title": "Gold Holds Loss as Traders Seek Clarity on Trump’s No-Tariff Vow",
           "source": "Biztoc.com",
@@ -211,20 +229,12 @@
           "url": "https://www.globenewswire.com/news-release/2025/08/11/3131357/0/en/Strong-drilling-targets-identified-next-to-high-grade-gold-copper-mine.html",
           "impact": "مباشر للذهب",
           "sentiment": null
-        },
-        {
-          "title": "Gold logs biggest daily price drop in months as Trump says it won’t face tariffs",
-          "source": "Biztoc.com",
-          "published": "2025-08-11T19:09:01Z",
-          "url": "https://biztoc.com/x/433c24dca0a60399",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-13 03:48:16",
+    "last_update": "2025-08-13 06:21:52",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
