@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-08-12T21:13:34.891899",
+  "timestamp": "2025-08-13T01:08:14.683979",
   "status": "success",
   "gold_analysis": {
-    "signal": "Strong Buy",
-    "confidence": "Very High",
-    "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.75,
+    "signal": "Buy",
+    "confidence": "High",
+    "action_recommendation": "شراء - حجم متوسط",
+    "total_score": 1.85,
     "component_scores": {
       "trend": 4,
-      "momentum": 3.0,
-      "volume": 4,
+      "momentum": 1.5,
+      "volume": 0,
       "fibonacci": 2,
       "correlation": 1,
       "support_resistance": -2,
@@ -17,46 +17,48 @@
       "news": -2,
       "ma_cross": 3
     },
-    "current_price": 3399.6,
+    "current_price": 3393.4,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3346.43,
-        "conservative": 3328.7,
-        "moderate": 3293.26,
-        "wide": 3257.81
+        "tight": 3340.7,
+        "conservative": 3323.14,
+        "moderate": 3288.0,
+        "wide": 3252.87
       },
       "profit_targets": {
-        "target_1": 3470.5,
-        "target_2": 3541.39,
-        "target_3": 3635.92,
-        "target_4": 3777.71
+        "target_1": 3463.66,
+        "target_2": 3533.93,
+        "target_3": 3627.61,
+        "target_4": 3768.14
       },
-      "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
+      "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
       "max_risk_per_trade": "2%"
     },
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3399.6"
+        "دخول فوري عند 3393.4"
       ],
       "conditions": [],
-      "warnings": []
+      "warnings": [
+        "⚠️ حجم ضعيف - تأكيد مطلوب"
+      ]
     },
     "technical_summary": {
-      "rsi": 50.7,
-      "macd": 13.66,
-      "williams_r": -36.3,
-      "stoch_k": 63.7,
-      "bb_position": 0.71,
-      "volume_ratio": 10.66
+      "rsi": 49.9,
+      "macd": 13.17,
+      "williams_r": -39.2,
+      "stoch_k": 60.8,
+      "bb_position": 0.68,
+      "volume_ratio": 0.76
     },
     "key_levels": {
-      "sma_20": 3364.17,
-      "sma_50": 3351.72,
-      "sma_200": 3022.59,
-      "bb_upper": 3448.01,
-      "bb_lower": 3280.33
+      "sma_20": 3363.86,
+      "sma_50": 3351.59,
+      "sma_200": 3022.56,
+      "bb_upper": 3447.2,
+      "bb_lower": 3280.52
     }
   },
   "fibonacci_levels": {
@@ -68,7 +70,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 65.32
+    "current_position": 62.54
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,18 +85,18 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.22,
-    "price_to_support": 3.46
+    "price_to_resistance": 1.4,
+    "price_to_support": 3.28
   },
   "volume_analysis": {
-    "current_volume": 189872,
-    "avg_volume_5": 42428,
-    "avg_volume_20": 17806,
-    "volume_ratio": 10.66,
-    "volume_strength": "قوي جداً",
-    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "current_volume": 6587,
+    "avg_volume_5": 5771,
+    "avg_volume_20": 8642,
+    "volume_ratio": 0.76,
+    "volume_strength": "ضعيف",
+    "volume_signal": "حجم ضعيف - حذر من الحركة الوهمية",
     "obv_trend": "صاعد",
-    "volume_price_correlation": "إيجابي"
+    "volume_price_correlation": "سلبي"
   },
   "market_correlations": {
     "correlations": {
@@ -103,7 +105,7 @@
       "treasury": 0.398,
       "oil": -0.65,
       "spy": 0.334,
-      "usdeur": 0.689,
+      "usdeur": 0.691,
       "silver": 0.822
     },
     "strength_analysis": {
@@ -123,7 +125,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-12T21:13:34.611356",
+    "last_update": "2025-08-13T01:08:14.369139",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,36 +165,36 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 27,
+      "total_relevant_news": 26,
       "critical_count": 0,
-      "high_impact_count": 12,
+      "high_impact_count": 13,
       "overall_sentiment": "سلبي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "Stocks Decline Ahead of US Inflation News",
-          "source": "Biztoc.com",
-          "published": "2025-08-11T20:48:56Z",
-          "url": "https://biztoc.com/x/5a4663aece7083bb",
-          "impact": "عالي",
-          "sentiment": "سلبي"
-        },
-        {
-          "title": "Gold price will not be tariffed, announces Donald Trump. What will be impact on gold rate?",
-          "source": "The Times of India",
-          "published": "2025-08-11T18:26:57Z",
-          "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-will-not-be-tariffed-announces-donald-trump-what-will-be-impact-on-gold-rate/articleshow/123243533.cms",
+          "title": "Dissenting Fed Vice Chair Urges Rate Cuts As Jobs Data Weakens, Inflation Nears Target — Still Sees 'Three Cuts' In 2025",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-11T23:31:02Z",
+          "url": "https://finance.yahoo.com/news/dissenting-fed-vice-chair-urges-233102598.html",
           "impact": "عالي",
           "sentiment": "إيجابي"
         },
         {
-          "title": "US Treasury Yields Edge Lower as Traders Shift Focus to CPI",
-          "source": "Biztoc.com",
-          "published": "2025-08-11T17:39:51Z",
-          "url": "https://biztoc.com/x/a4b15e4ddd12c7bc",
+          "title": "US inflation rises to 2.8% in July 2025 as Trump tariffs push prices higher, core CPI hits six-month high",
+          "source": "The Times of India",
+          "published": "2025-08-11T22:56:33Z",
+          "url": "https://economictimes.indiatimes.com/news/international/us/us-inflation-rises-to-2-8-in-july-2025-as-trump-tariffs-push-prices-higher-core-cpi-hits-six-month-high/articleshow/123245641.cms",
           "impact": "عالي",
-          "sentiment": "سلبي"
+          "sentiment": "إيجابي"
+        },
+        {
+          "title": "Asian Stocks Look Subdued Ahead of US Inflation: Markets Wrap",
+          "source": "Biztoc.com",
+          "published": "2025-08-11T22:40:07Z",
+          "url": "https://biztoc.com/x/83380e2a93179312",
+          "impact": "عالي",
+          "sentiment": "محايد"
         }
       ],
       "medium_impact": [
@@ -215,26 +217,26 @@
       ],
       "gold_specific": [
         {
+          "title": "Gold Holds Loss as Traders Seek Clarity on Trump’s No-Tariff Vow",
+          "source": "Biztoc.com",
+          "published": "2025-08-12T00:20:22Z",
+          "url": "https://biztoc.com/x/4c02a6bc726ab6be",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Strong drilling targets identified next to high-grade gold-copper mine",
+          "source": "GlobeNewswire",
+          "published": "2025-08-11T22:48:00Z",
+          "url": "https://www.globenewswire.com/news-release/2025/08/11/3131357/0/en/Strong-drilling-targets-identified-next-to-high-grade-gold-copper-mine.html",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
           "title": "Gold logs biggest daily price drop in months as Trump says it won’t face tariffs",
           "source": "Biztoc.com",
           "published": "2025-08-11T19:09:01Z",
           "url": "https://biztoc.com/x/433c24dca0a60399",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "Lundin Gold price target raised by C$4 at CIBC",
-          "source": "Thefly.com",
-          "published": "2025-08-11T16:48:05Z",
-          "url": "https://thefly.com/permalinks/entry.php/id4180991/LUGDF-Lundin-Gold-price-target-raised-by-C-at-CIBC",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "Allied Gold price target lowered by C$3 at CIBC",
-          "source": "Thefly.com",
-          "published": "2025-08-11T16:46:00Z",
-          "url": "https://thefly.com/permalinks/entry.php/id4180987/AAUCF-Allied-Gold-price-target-lowered-by-C-at-CIBC",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -242,9 +244,9 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-12 21:13:34",
+    "last_update": "2025-08-13 01:08:14",
     "data_points": 54,
     "timeframe": "Daily",
-    "market_condition": "صاعد قوي"
+    "market_condition": "متقلب"
   }
 }
