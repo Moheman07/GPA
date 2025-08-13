@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-13T12:29:07.926203",
+  "timestamp": "2025-08-13T15:12:41.306153",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -8,28 +8,28 @@
     "total_score": 3.05,
     "component_scores": {
       "trend": 4,
-      "momentum": 3.0,
+      "momentum": 3.5,
       "volume": 4,
       "fibonacci": 2,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 4,
+      "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3408.4,
+    "current_price": 3412.3,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3354.42,
-        "conservative": 3336.42,
-        "moderate": 3300.43,
-        "wide": 3264.44
+        "tight": 3357.92,
+        "conservative": 3339.8,
+        "moderate": 3303.54,
+        "wide": 3267.29
       },
       "profit_targets": {
-        "target_1": 3480.38,
-        "target_2": 3552.36,
-        "target_3": 3648.33,
-        "target_4": 3792.29
+        "target_1": 3484.8,
+        "target_2": 3557.31,
+        "target_3": 3653.98,
+        "target_4": 3798.99
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3408.4"
+        "دخول فوري عند 3412.3"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 54.6,
-      "macd": 12.27,
-      "williams_r": -32.2,
-      "stoch_k": 67.8,
-      "bb_position": 0.76,
-      "volume_ratio": 5.76
+      "rsi": 55.0,
+      "macd": 12.58,
+      "williams_r": -30.4,
+      "stoch_k": 69.6,
+      "bb_position": 0.78,
+      "volume_ratio": 7.7
     },
     "key_levels": {
-      "sma_20": 3364.43,
-      "sma_50": 3351.87,
-      "sma_200": 3025.68,
-      "bb_upper": 3449.27,
-      "bb_lower": 3279.59
+      "sma_20": 3364.62,
+      "sma_50": 3351.95,
+      "sma_200": 3025.7,
+      "bb_upper": 3449.9,
+      "bb_lower": 3279.35
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 69.27
+    "current_position": 71.01
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 0.96,
-    "price_to_support": 3.71
+    "price_to_resistance": 0.84,
+    "price_to_support": 3.82
   },
   "volume_analysis": {
-    "current_volume": 65342,
-    "avg_volume_5": 16287,
-    "avg_volume_20": 11345,
-    "volume_ratio": 5.76,
+    "current_volume": 101078,
+    "avg_volume_5": 23435,
+    "avg_volume_20": 13132,
+    "volume_ratio": 7.7,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -100,9 +100,9 @@
     "correlations": {
       "dxy": -0.66,
       "vix": 0.238,
-      "treasury": 0.393,
+      "treasury": 0.39,
       "oil": -0.648,
-      "spy": 0.333,
+      "spy": 0.342,
       "usdeur": 0.694,
       "silver": 0.821
     },
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-13T12:29:07.478076",
+    "last_update": "2025-08-13T15:12:40.972515",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,80 +163,52 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 24,
-      "critical_count": 1,
-      "high_impact_count": 18,
+      "total_relevant_news": 29,
+      "critical_count": 0,
+      "high_impact_count": 27,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
-      "critical": [
-        {
-          "title": "Sensex jumps over 100 pts, Nifty tops 24,600; IT stocks rise",
-          "source": "The Times of India",
-          "published": "2025-08-12T03:59:50Z",
-          "url": "https://economictimes.indiatimes.com/markets/stocks/news/ril-lt-lift-sensex-100-pts-higher-nifty-above-24600/articleshow/123249192.cms",
-          "impact": "حرج - تأثير فوري",
-          "sentiment": "إيجابي"
-        }
-      ],
       "high_impact": [
         {
-          "title": "Crypto braces for new CPI release that’s seen to ‘trigger Bitcoin’s next all-time high’",
-          "source": "Biztoc.com",
-          "published": "2025-08-12T11:38:04Z",
-          "url": "https://biztoc.com/x/c12773117a71ccd7",
+          "title": "US stock market greenlights rally: Dow, S&P, Nasdaq soar to record highs on strong Fed rate cut hopes after CPI inflation slowdown — Tech giants drive",
+          "source": "The Times of India",
+          "published": "2025-08-12T15:08:06Z",
+          "url": "https://economictimes.indiatimes.com/news/international/us/us-stock-market-greenlights-rally-dow-sp-nasdaq-soar-to-record-highs-on-strong-fed-rate-cut-hopes-after-cpi-inflation-slowdown-tech-giants-drive-investor-optimism/articleshow/123261042.cms",
           "impact": "عالي",
           "sentiment": "إيجابي"
         },
         {
-          "title": "German 10-year Bund yields hit 12-day high ahead of U.S. inflation data",
-          "source": "Biztoc.com",
-          "published": "2025-08-12T11:37:38Z",
-          "url": "https://biztoc.com/x/2bba171aacfbe3fd",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "Banking heavyweights pull markets down ahead of inflation data",
-          "source": "BusinessLine",
-          "published": "2025-08-12T10:55:34Z",
-          "url": "https://www.thehindubusinessline.com/markets/stock-markets/banking-heavyweights-pull-markets-down-ahead-of-inflation-data/article69923834.ece",
+          "title": "Dollar Trades Lower as CPI Report Boosts Chances of a Fed Rate Cut",
+          "source": "Barchart.com",
+          "published": "2025-08-12T14:56:16Z",
+          "url": "https://www.barchart.com/story/news/34080690/dollar-trades-lower-as-cpi-report-boosts-chances-of-a-fed-rate-cut",
           "impact": "عالي",
           "sentiment": "سلبي"
-        }
-      ],
-      "medium_impact": [
+        },
         {
-          "title": "What Is Happening to the Dollar as a Safe Haven?",
-          "source": "Nakedcapitalism.com",
-          "published": "2025-08-12T09:55:34Z",
-          "url": "https://www.nakedcapitalism.com/2025/08/what-is-happening-to-the-dollar-as-a-safe-haven.html",
-          "impact": "متوسط",
-          "sentiment": null
+          "title": "Stocks rise, bonds firm on reassuring US inflation data - Reuters",
+          "source": "Slashdot.org",
+          "published": "2025-08-12T14:52:35Z",
+          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178654578",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
         }
       ],
       "gold_specific": [
         {
-          "title": "Galiano Gold (GAU) to Release Earnings on Wednesday",
-          "source": "ETF Daily News",
-          "published": "2025-08-12T07:26:50Z",
-          "url": "https://www.etfdailynews.com/2025/08/12/galiano-gold-gau-to-release-earnings-on-wednesday/",
+          "title": "West Red Lake Gold Expands High-Grade Zone in South Austin with 36.85 g/t Au over 6.9m, 92.39 g/t Au over 2m and 8.79 g/t Au over 15.5m",
+          "source": "Financial Post",
+          "published": "2025-08-12T13:08:09Z",
+          "url": "https://financialpost.com/globe-newswire/west-red-lake-gold-expands-high-grade-zone-in-south-austin-with-36-85-g-t-au-over-6-9m-92-39-g-t-au-over-2m-and-8-79-g-t-au-over-15-5m",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Gold prices trade lower as safe haven buying declines, but trade above Rs 1 lakh. Do analysts see capped upside?",
-          "source": "The Times of India",
-          "published": "2025-08-12T06:53:11Z",
-          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-prices-trade-lower-as-safe-haven-buying-declines-but-trade-above-rs-1-lakh-do-analysts-see-capped-upside/articleshow/123252442.cms",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "Centerra Gold (NYSE:CGAU) Upgraded at Wall Street Zen",
-          "source": "ETF Daily News",
-          "published": "2025-08-12T06:28:43Z",
-          "url": "https://www.etfdailynews.com/2025/08/12/centerra-gold-nysecgau-upgraded-at-wall-street-zen/",
+          "title": "West Red Lake Gold Expands High-Grade Zone in South Austin with 36.85 g/t Au over 6.9m, 92.39 g/t Au over 2m and 8.79 g/t Au over 15.5m",
+          "source": "GlobeNewswire",
+          "published": "2025-08-12T13:07:00Z",
+          "url": "https://www.globenewswire.com/news-release/2025/08/12/3131794/0/en/West-Red-Lake-Gold-Expands-High-Grade-Zone-in-South-Austin-with-36-85-g-t-Au-over-6-9m-92-39-g-t-Au-over-2m-and-8-79-g-t-Au-over-15-5m.html",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -244,7 +216,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-13 12:29:07",
+    "last_update": "2025-08-13 15:12:41",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
