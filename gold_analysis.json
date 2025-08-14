@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-14T09:17:35.838173",
+  "timestamp": "2025-08-14T12:29:50.475164",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3397.9,
+    "current_price": 3402.5,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3346.62,
-        "conservative": 3329.53,
-        "moderate": 3295.35,
-        "wide": 3261.16
+        "tight": 3351.22,
+        "conservative": 3334.13,
+        "moderate": 3299.95,
+        "wide": 3265.76
       },
       "profit_targets": {
-        "target_1": 3466.27,
-        "target_2": 3534.64,
-        "target_3": 3625.79,
-        "target_4": 3762.53
+        "target_1": 3470.87,
+        "target_2": 3539.24,
+        "target_3": 3630.39,
+        "target_4": 3767.13
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3397.9"
+        "دخول فوري عند 3402.5"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 58.9,
-      "macd": 10.3,
-      "williams_r": -37.1,
-      "stoch_k": 62.9,
-      "bb_position": 0.7,
-      "volume_ratio": 5.05
+      "rsi": 59.4,
+      "macd": 10.67,
+      "williams_r": -35.0,
+      "stoch_k": 65.0,
+      "bb_position": 0.72,
+      "volume_ratio": 6.13
     },
     "key_levels": {
-      "sma_20": 3364.83,
-      "sma_50": 3351.36,
-      "sma_200": 3028.7,
-      "bb_upper": 3447.95,
-      "bb_lower": 3281.72
+      "sma_20": 3365.06,
+      "sma_50": 3351.45,
+      "sma_200": 3028.73,
+      "bb_upper": 3448.59,
+      "bb_lower": 3281.54
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 64.56
+    "current_position": 66.62
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.27,
-    "price_to_support": 3.41
+    "price_to_resistance": 1.13,
+    "price_to_support": 3.54
   },
   "volume_analysis": {
-    "current_volume": 54943,
-    "avg_volume_5": 13462,
-    "avg_volume_20": 10879,
-    "volume_ratio": 5.05,
+    "current_volume": 71960,
+    "avg_volume_5": 16865,
+    "avg_volume_20": 11730,
+    "volume_ratio": 6.13,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,7 +99,7 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.665,
-      "vix": 0.233,
+      "vix": 0.232,
       "treasury": 0.385,
       "oil": -0.647,
       "spy": 0.334,
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-14T09:17:35.564126",
+    "last_update": "2025-08-14T12:29:50.076383",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,62 +163,60 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 5,
+      "total_relevant_news": 10,
       "critical_count": 0,
-      "high_impact_count": 3,
+      "high_impact_count": 8,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "Bets On Fed Cut Rise; Trump-Putin Summit | Horizons Middle East & Africa 8/13/2025",
-          "source": "Biztoc.com",
-          "published": "2025-08-13T09:16:30Z",
-          "url": "https://biztoc.com/x/6050f41f6f752a66",
+          "title": "Investors Jump Into Riskiest Assets After US Inflation Report",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-13T12:28:32Z",
+          "url": "https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_f4b200e0-06df-419d-87ca-a8e590b6c725",
           "impact": "عالي",
-          "sentiment": "إيجابي"
+          "sentiment": "محايد"
         },
         {
-          "title": "Most Gulf shares rise on Fed rate cut hopes; mixed earnings cap gains",
+          "title": "Investors Jump Into Riskiest Assets After US Inflation Report",
           "source": "Biztoc.com",
-          "published": "2025-08-13T08:58:49Z",
-          "url": "https://biztoc.com/x/8b72707a46cc6540",
+          "published": "2025-08-13T11:12:39Z",
+          "url": "https://biztoc.com/x/42941b1de65e5ece",
           "impact": "عالي",
-          "sentiment": "إيجابي"
+          "sentiment": "محايد"
         },
         {
-          "title": "Japan’s Nikkei 225 hits all-time high after US inflation remains steady",
-          "source": "Al Jazeera English",
-          "published": "2025-08-13T08:23:29Z",
-          "url": "https://www.aljazeera.com/economy/2025/8/13/japans-nikkei-225-hits-all-time-high-after-us-inflation-remains-steady",
+          "title": "Rupee rises 20 paise to close at 87.43 against US dollar",
+          "source": "BusinessLine",
+          "published": "2025-08-13T10:40:39Z",
+          "url": "https://www.thehindubusinessline.com/markets/forex/rupee-rises-20-paise-to-close-at-8743-against-us-dollar/article69928214.ece",
           "impact": "عالي",
           "sentiment": "إيجابي"
         }
       ],
       "medium_impact": [
         {
-          "title": "Advent International agrees to acquire and take private Nasdaq-listed Sapiens International, an Israel-based insurance software company, for $2.5B in ",
-          "source": "Biztoc.com",
-          "published": "2025-08-13T08:36:46Z",
-          "url": "https://biztoc.com/x/571dca7ce01a36b6",
+          "title": "Endeavour Silver Announces Q2 2025 Financial Results; Earnings Call at 10AM PDT (1PM EDT) Today",
+          "source": "GlobeNewswire",
+          "published": "2025-08-13T10:50:00Z",
+          "url": "https://www.globenewswire.com/news-release/2025/08/13/3132415/0/en/Endeavour-Silver-Announces-Q2-2025-Financial-Results-Earnings-Call-at-10AM-PDT-1PM-EDT-Today.html",
           "impact": "متوسط",
           "sentiment": null
-        }
-      ],
-      "gold_specific": [
+        },
         {
-          "title": "Headlands Technologies LLC Purchases New Holdings in Kinross Gold Corporation (NYSE:KGC)",
-          "source": "ETF Daily News",
-          "published": "2025-08-13T08:22:50Z",
-          "url": "https://www.etfdailynews.com/2025/08/13/headlands-technologies-llc-purchases-new-holdings-in-kinross-gold-corporation-nysekgc/",
-          "impact": "مباشر للذهب",
+          "title": "Billion-Dollar Pay Packages Are Disasters-In-Waiting",
+          "source": "Biztoc.com",
+          "published": "2025-08-13T09:32:27Z",
+          "url": "https://biztoc.com/x/353f44dc67613cf4",
+          "impact": "متوسط",
           "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-14 09:17:35",
+    "last_update": "2025-08-14 12:29:50",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
