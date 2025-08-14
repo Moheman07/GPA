@@ -1,14 +1,14 @@
 {
-  "timestamp": "2025-08-14T03:48:54.127077",
+  "timestamp": "2025-08-14T06:21:59.260622",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.95,
+    "total_score": 3.05,
     "component_scores": {
       "trend": 4,
-      "momentum": 3.0,
+      "momentum": 3.5,
       "volume": 4,
       "fibonacci": 2,
       "correlation": 1,
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3404.3,
+    "current_price": 3408.5,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3349.83,
-        "conservative": 3331.67,
-        "moderate": 3295.35,
-        "wide": 3259.04
+        "tight": 3357.22,
+        "conservative": 3340.13,
+        "moderate": 3305.95,
+        "wide": 3271.76
       },
       "profit_targets": {
-        "target_1": 3476.93,
-        "target_2": 3549.56,
-        "target_3": 3646.41,
-        "target_4": 3791.67
+        "target_1": 3476.87,
+        "target_2": 3545.24,
+        "target_3": 3636.39,
+        "target_4": 3773.13
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3404.3"
+        "دخول فوري عند 3408.5"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 54.1,
-      "macd": 11.94,
-      "williams_r": -34.1,
-      "stoch_k": 65.9,
-      "bb_position": 0.74,
-      "volume_ratio": 2.23
+      "rsi": 60.1,
+      "macd": 11.14,
+      "williams_r": -32.1,
+      "stoch_k": 67.9,
+      "bb_position": 0.76,
+      "volume_ratio": 2.95
     },
     "key_levels": {
-      "sma_20": 3364.22,
-      "sma_50": 3351.79,
-      "sma_200": 3025.66,
-      "bb_upper": 3448.63,
-      "bb_lower": 3279.82
+      "sma_20": 3365.36,
+      "sma_50": 3351.57,
+      "sma_200": 3028.76,
+      "bb_upper": 3449.49,
+      "bb_lower": 3281.24
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 67.43
+    "current_position": 69.31
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.08,
-    "price_to_support": 3.59
+    "price_to_resistance": 0.95,
+    "price_to_support": 3.71
   },
   "volume_analysis": {
-    "current_volume": 20339,
-    "avg_volume_5": 7311,
-    "avg_volume_20": 9101,
-    "volume_ratio": 2.23,
+    "current_volume": 28141,
+    "avg_volume_5": 8101,
+    "avg_volume_20": 9539,
+    "volume_ratio": 2.95,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -98,13 +98,13 @@
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.659,
-      "vix": 0.238,
-      "treasury": 0.39,
-      "oil": -0.648,
-      "spy": 0.335,
-      "usdeur": 0.696,
-      "silver": 0.821
+      "dxy": -0.665,
+      "vix": 0.239,
+      "treasury": 0.385,
+      "oil": -0.647,
+      "spy": 0.334,
+      "usdeur": 0.699,
+      "silver": 0.82
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-14T03:48:53.740363",
+    "last_update": "2025-08-14T06:21:58.843884",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,65 +163,73 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 13,
+      "total_relevant_news": 18,
       "critical_count": 0,
-      "high_impact_count": 8,
+      "high_impact_count": 12,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "Hong Kong stocks approach 2-week high on prospects of US rate cut",
+          "title": "Stocks Hit Record, Wall Street Fear Gauge Sinks: Markets Wrap",
+          "source": "Financial Post",
+          "published": "2025-08-13T06:18:28Z",
+          "url": "https://financialpost.com/pmn/business-pmn/stocks-hit-record-wall-street-fear-gauge-sinks-markets-wrap",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
+        {
+          "title": "Instant view: India's annual retail inflation slows to 1.55% in July",
           "source": "Biztoc.com",
-          "published": "2025-08-13T02:41:48Z",
-          "url": "https://biztoc.com/x/4c48a3aedd6a85a9",
+          "published": "2025-08-13T06:01:13Z",
+          "url": "https://biztoc.com/x/16bd002dd314756b",
           "impact": "عالي",
-          "sentiment": "إيجابي"
+          "sentiment": "سلبي"
         },
         {
-          "title": "S&P 500, Nasdaq end at record closing highs as moderate inflation lifts rate hopes",
-          "source": "BusinessLine",
-          "published": "2025-08-13T01:52:33Z",
-          "url": "https://www.thehindubusinessline.com/markets/sp-500-nasdaq-end-at-record-closing-highs-as-moderate-inflation-lifts-rate-hopes/article69927031.ece",
+          "title": "Nomura sees Fed rate cut in September as inflation cools",
+          "source": "Biztoc.com",
+          "published": "2025-08-13T05:50:06Z",
+          "url": "https://biztoc.com/x/ce1c17aff00310ea",
           "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "Asian Markets Follow US Stocks Rally, Treasuries Fall",
-          "source": "Ndtvprofit.com",
-          "published": "2025-08-13T01:47:58Z",
-          "url": "https://www.ndtvprofit.com/markets/global-stock-markets-asian-indices-hang-sheng-nikkei-dax-ftse-nasdaq-s-and-p-dow-jones-news-today-13-auguest-2025",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
+          "sentiment": "محايد"
         }
       ],
       "medium_impact": [
         {
-          "title": "Osisko Development Reports Second Quarter 2025 Results",
-          "source": "GlobeNewswire",
-          "published": "2025-08-13T00:30:00Z",
-          "url": "https://www.globenewswire.com/news-release/2025/08/13/3132257/0/en/Osisko-Development-Reports-Second-Quarter-2025-Results.html",
+          "title": "Wall Street Is Warming to These 6 Industrial Stocks. They Don’t Depend on Nvidia or AI",
+          "source": "Biztoc.com",
+          "published": "2025-08-13T06:12:12Z",
+          "url": "https://biztoc.com/x/62b51d8623aa6c15",
           "impact": "متوسط",
           "sentiment": null
         },
         {
-          "title": "Is Ford Stock’s Juicy Dividend Still Safe Amid the Global Tariff War?",
+          "title": "FTSE 100 Live: Stocks Poised to Rally Toward Record Highs",
           "source": "Biztoc.com",
-          "published": "2025-08-12T23:43:43Z",
-          "url": "https://biztoc.com/x/61ce58024ce44ba2",
+          "published": "2025-08-13T06:01:27Z",
+          "url": "https://biztoc.com/x/be7ff470c1905593",
           "impact": "متوسط",
           "sentiment": null
         },
         {
-          "title": "China’s fight against price wars is an uphill battle",
+          "title": "Singapore million-dollar flat sales hit record in Q2, market data shows",
           "source": "Biztoc.com",
-          "published": "2025-08-12T23:10:07Z",
-          "url": "https://biztoc.com/x/b9f27bbe75d3497b",
+          "published": "2025-08-13T05:50:26Z",
+          "url": "https://biztoc.com/x/2bfa90d02a46f859",
           "impact": "متوسط",
           "sentiment": null
         }
       ],
       "gold_specific": [
+        {
+          "title": "Sandstorm Gold Ltd (NYSE:SAND) Receives $10.15 Average Target Price from Analysts",
+          "source": "ETF Daily News",
+          "published": "2025-08-13T05:12:54Z",
+          "url": "https://www.etfdailynews.com/2025/08/13/sandstorm-gold-ltd-nysesand-receives-10-15-average-target-price-from-analysts/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
         {
           "title": "Gold Prices Drop For Second Day - Check Rates In Delhi, Mumbai, Chennai And Other Cities",
           "source": "Ndtvprofit.com",
@@ -229,20 +237,12 @@
           "url": "https://www.ndtvprofit.com/markets/gold-price-drops-for-second-day-check-rates-in-delhi-mumbai-chennai-and-other-cities",
           "impact": "مباشر للذهب",
           "sentiment": null
-        },
-        {
-          "title": "Evolution Mining’s Profit More Than Doubles on Gold’s Surge",
-          "source": "Biztoc.com",
-          "published": "2025-08-12T23:10:24Z",
-          "url": "https://biztoc.com/x/997c6ed02538703f",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-14 03:48:54",
+    "last_update": "2025-08-14 06:21:59",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
