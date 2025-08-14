@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-14T18:20:52.972942",
+  "timestamp": "2025-08-14T21:13:17.993690",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3382.8,
+    "current_price": 3382.3,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3331.52,
-        "conservative": 3314.43,
-        "moderate": 3280.25,
-        "wide": 3246.06
+        "tight": 3331.02,
+        "conservative": 3313.93,
+        "moderate": 3279.75,
+        "wide": 3245.56
       },
       "profit_targets": {
-        "target_1": 3451.17,
-        "target_2": 3519.54,
-        "target_3": 3610.69,
-        "target_4": 3747.43
+        "target_1": 3450.67,
+        "target_2": 3519.04,
+        "target_3": 3610.19,
+        "target_4": 3746.93
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,24 +38,24 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3382.8"
+        "دخول فوري عند 3382.3"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 57.1,
-      "macd": 9.09,
-      "williams_r": -44.2,
-      "stoch_k": 55.8,
+      "rsi": 57.0,
+      "macd": 9.05,
+      "williams_r": -44.4,
+      "stoch_k": 55.6,
       "bb_position": 0.61,
-      "volume_ratio": 9.77
+      "volume_ratio": 10.0
     },
     "key_levels": {
-      "sma_20": 3364.08,
-      "sma_50": 3351.06,
-      "sma_200": 3028.63,
-      "bb_upper": 3446.2,
+      "sma_20": 3364.05,
+      "sma_50": 3351.05,
+      "sma_200": 3028.62,
+      "bb_upper": 3446.15,
       "bb_lower": 3281.96
     }
   },
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 57.8
+    "current_position": 57.57
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.72,
-    "price_to_support": 2.98
+    "price_to_resistance": 1.74,
+    "price_to_support": 2.97
   },
   "volume_analysis": {
-    "current_volume": 155259,
-    "avg_volume_5": 33525,
-    "avg_volume_20": 15895,
-    "volume_ratio": 9.77,
+    "current_volume": 162641,
+    "avg_volume_5": 35001,
+    "avg_volume_20": 16264,
+    "volume_ratio": 10.0,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -102,7 +102,7 @@
       "vix": 0.233,
       "treasury": 0.384,
       "oil": -0.646,
-      "spy": 0.342,
+      "spy": 0.335,
       "usdeur": 0.698,
       "silver": 0.82
     },
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-14T18:20:52.253753",
+    "last_update": "2025-08-14T21:13:17.853040",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,13 +163,21 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 16,
+      "total_relevant_news": 17,
       "critical_count": 0,
-      "high_impact_count": 12,
+      "high_impact_count": 13,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Stocks Inch Up as Hopes for Interest Rates Go Global",
+          "source": "Newser",
+          "published": "2025-08-13T20:46:27Z",
+          "url": "https://www.newser.com/story/373500/stocks-inch-up-as-hopes-for-interest-rates-go-global.html",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
         {
           "title": "CPI Report Boosts Market Bets On Larger September Fed Rate Cut",
           "source": "Ndtvprofit.com",
@@ -185,17 +193,17 @@
           "url": "https://economictimes.indiatimes.com/markets/stocks/news/ahead-of-market-10-things-that-will-decide-stock-market-action-on-thursday/articleshow/123284303.cms",
           "impact": "عالي",
           "sentiment": "إيجابي"
-        },
-        {
-          "title": "Fed cut seen near certain after inflation data - Bessent",
-          "source": "RTE",
-          "published": "2025-08-13T14:23:03Z",
-          "url": "https://www.rte.ie/news/business/2025/0813/1528281-fed-cut-seen-near-certain-after-inflation-data-bessent/",
-          "impact": "عالي",
-          "sentiment": "محايد"
         }
       ],
       "medium_impact": [
+        {
+          "title": "Orezone Gold Reports Second Quarter 2025 Results",
+          "source": "GlobeNewswire",
+          "published": "2025-08-13T20:16:00Z",
+          "url": "https://www.globenewswire.com/news-release/2025/08/13/3133010/0/en/Orezone-Gold-Reports-Second-Quarter-2025-Results.html",
+          "impact": "متوسط",
+          "sentiment": null
+        },
         {
           "title": "Chinese Tech 'Piggybacking' From US, Says Treasury Secretary Bessent",
           "source": "Ndtvprofit.com",
@@ -209,14 +217,6 @@
           "source": "GlobeNewswire",
           "published": "2025-08-13T10:50:00Z",
           "url": "https://www.globenewswire.com/news-release/2025/08/13/3132415/0/en/Endeavour-Silver-Announces-Q2-2025-Financial-Results-Earnings-Call-at-10AM-PDT-1PM-EDT-Today.html",
-          "impact": "متوسط",
-          "sentiment": null
-        },
-        {
-          "title": "Billion-Dollar Pay Packages Are Disasters-In-Waiting",
-          "source": "Biztoc.com",
-          "published": "2025-08-13T09:32:27Z",
-          "url": "https://biztoc.com/x/353f44dc67613cf4",
           "impact": "متوسط",
           "sentiment": null
         }
@@ -234,7 +234,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-14 18:20:52",
+    "last_update": "2025-08-14 21:13:17",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
