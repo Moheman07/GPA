@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-14T06:21:59.260622",
+  "timestamp": "2025-08-14T09:17:35.838173",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3408.5,
+    "current_price": 3397.9,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3357.22,
-        "conservative": 3340.13,
-        "moderate": 3305.95,
-        "wide": 3271.76
+        "tight": 3346.62,
+        "conservative": 3329.53,
+        "moderate": 3295.35,
+        "wide": 3261.16
       },
       "profit_targets": {
-        "target_1": 3476.87,
-        "target_2": 3545.24,
-        "target_3": 3636.39,
-        "target_4": 3773.13
+        "target_1": 3466.27,
+        "target_2": 3534.64,
+        "target_3": 3625.79,
+        "target_4": 3762.53
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3408.5"
+        "دخول فوري عند 3397.9"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 60.1,
-      "macd": 11.14,
-      "williams_r": -32.1,
-      "stoch_k": 67.9,
-      "bb_position": 0.76,
-      "volume_ratio": 2.95
+      "rsi": 58.9,
+      "macd": 10.3,
+      "williams_r": -37.1,
+      "stoch_k": 62.9,
+      "bb_position": 0.7,
+      "volume_ratio": 5.05
     },
     "key_levels": {
-      "sma_20": 3365.36,
-      "sma_50": 3351.57,
-      "sma_200": 3028.76,
-      "bb_upper": 3449.49,
-      "bb_lower": 3281.24
+      "sma_20": 3364.83,
+      "sma_50": 3351.36,
+      "sma_200": 3028.7,
+      "bb_upper": 3447.95,
+      "bb_lower": 3281.72
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 69.31
+    "current_position": 64.56
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 0.95,
-    "price_to_support": 3.71
+    "price_to_resistance": 1.27,
+    "price_to_support": 3.41
   },
   "volume_analysis": {
-    "current_volume": 28141,
-    "avg_volume_5": 8101,
-    "avg_volume_20": 9539,
-    "volume_ratio": 2.95,
+    "current_volume": 54943,
+    "avg_volume_5": 13462,
+    "avg_volume_20": 10879,
+    "volume_ratio": 5.05,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,7 +99,7 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.665,
-      "vix": 0.239,
+      "vix": 0.233,
       "treasury": 0.385,
       "oil": -0.647,
       "spy": 0.334,
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-14T06:21:58.843884",
+    "last_update": "2025-08-14T09:17:35.564126",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,78 +163,54 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 18,
+      "total_relevant_news": 5,
       "critical_count": 0,
-      "high_impact_count": 12,
+      "high_impact_count": 3,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "Stocks Hit Record, Wall Street Fear Gauge Sinks: Markets Wrap",
-          "source": "Financial Post",
-          "published": "2025-08-13T06:18:28Z",
-          "url": "https://financialpost.com/pmn/business-pmn/stocks-hit-record-wall-street-fear-gauge-sinks-markets-wrap",
+          "title": "Bets On Fed Cut Rise; Trump-Putin Summit | Horizons Middle East & Africa 8/13/2025",
+          "source": "Biztoc.com",
+          "published": "2025-08-13T09:16:30Z",
+          "url": "https://biztoc.com/x/6050f41f6f752a66",
           "impact": "عالي",
-          "sentiment": "محايد"
+          "sentiment": "إيجابي"
         },
         {
-          "title": "Instant view: India's annual retail inflation slows to 1.55% in July",
+          "title": "Most Gulf shares rise on Fed rate cut hopes; mixed earnings cap gains",
           "source": "Biztoc.com",
-          "published": "2025-08-13T06:01:13Z",
-          "url": "https://biztoc.com/x/16bd002dd314756b",
+          "published": "2025-08-13T08:58:49Z",
+          "url": "https://biztoc.com/x/8b72707a46cc6540",
           "impact": "عالي",
-          "sentiment": "سلبي"
+          "sentiment": "إيجابي"
         },
         {
-          "title": "Nomura sees Fed rate cut in September as inflation cools",
-          "source": "Biztoc.com",
-          "published": "2025-08-13T05:50:06Z",
-          "url": "https://biztoc.com/x/ce1c17aff00310ea",
+          "title": "Japan’s Nikkei 225 hits all-time high after US inflation remains steady",
+          "source": "Al Jazeera English",
+          "published": "2025-08-13T08:23:29Z",
+          "url": "https://www.aljazeera.com/economy/2025/8/13/japans-nikkei-225-hits-all-time-high-after-us-inflation-remains-steady",
           "impact": "عالي",
-          "sentiment": "محايد"
+          "sentiment": "إيجابي"
         }
       ],
       "medium_impact": [
         {
-          "title": "Wall Street Is Warming to These 6 Industrial Stocks. They Don’t Depend on Nvidia or AI",
+          "title": "Advent International agrees to acquire and take private Nasdaq-listed Sapiens International, an Israel-based insurance software company, for $2.5B in ",
           "source": "Biztoc.com",
-          "published": "2025-08-13T06:12:12Z",
-          "url": "https://biztoc.com/x/62b51d8623aa6c15",
-          "impact": "متوسط",
-          "sentiment": null
-        },
-        {
-          "title": "FTSE 100 Live: Stocks Poised to Rally Toward Record Highs",
-          "source": "Biztoc.com",
-          "published": "2025-08-13T06:01:27Z",
-          "url": "https://biztoc.com/x/be7ff470c1905593",
-          "impact": "متوسط",
-          "sentiment": null
-        },
-        {
-          "title": "Singapore million-dollar flat sales hit record in Q2, market data shows",
-          "source": "Biztoc.com",
-          "published": "2025-08-13T05:50:26Z",
-          "url": "https://biztoc.com/x/2bfa90d02a46f859",
+          "published": "2025-08-13T08:36:46Z",
+          "url": "https://biztoc.com/x/571dca7ce01a36b6",
           "impact": "متوسط",
           "sentiment": null
         }
       ],
       "gold_specific": [
         {
-          "title": "Sandstorm Gold Ltd (NYSE:SAND) Receives $10.15 Average Target Price from Analysts",
+          "title": "Headlands Technologies LLC Purchases New Holdings in Kinross Gold Corporation (NYSE:KGC)",
           "source": "ETF Daily News",
-          "published": "2025-08-13T05:12:54Z",
-          "url": "https://www.etfdailynews.com/2025/08/13/sandstorm-gold-ltd-nysesand-receives-10-15-average-target-price-from-analysts/",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "Gold Prices Drop For Second Day - Check Rates In Delhi, Mumbai, Chennai And Other Cities",
-          "source": "Ndtvprofit.com",
-          "published": "2025-08-13T03:45:59Z",
-          "url": "https://www.ndtvprofit.com/markets/gold-price-drops-for-second-day-check-rates-in-delhi-mumbai-chennai-and-other-cities",
+          "published": "2025-08-13T08:22:50Z",
+          "url": "https://www.etfdailynews.com/2025/08/13/headlands-technologies-llc-purchases-new-holdings-in-kinross-gold-corporation-nysekgc/",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -242,7 +218,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-14 06:21:59",
+    "last_update": "2025-08-14 09:17:35",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
