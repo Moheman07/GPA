@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-08-13T21:13:15.932114",
+  "timestamp": "2025-08-14T01:08:47.167056",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.95,
+    "total_score": 2.6,
     "component_scores": {
       "trend": 4,
-      "momentum": 3.0,
-      "volume": 4,
+      "momentum": 3.5,
+      "volume": 1,
       "fibonacci": 2,
       "correlation": 1,
       "support_resistance": -2,
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3407.0,
+    "current_price": 3420.0,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3352.62,
-        "conservative": 3334.5,
-        "moderate": 3298.24,
-        "wide": 3261.99
+        "tight": 3365.53,
+        "conservative": 3347.37,
+        "moderate": 3311.05,
+        "wide": 3274.74
       },
       "profit_targets": {
-        "target_1": 3479.5,
-        "target_2": 3552.01,
-        "target_3": 3648.68,
-        "target_4": 3793.69
+        "target_1": 3492.63,
+        "target_2": 3565.26,
+        "target_3": 3662.11,
+        "target_4": 3807.37
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,25 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3407.0"
+        "دخول فوري عند 3420.0"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 54.5,
-      "macd": 12.15,
-      "williams_r": -32.8,
-      "stoch_k": 67.2,
-      "bb_position": 0.75,
-      "volume_ratio": 9.01
+      "rsi": 55.9,
+      "macd": 13.19,
+      "williams_r": -26.7,
+      "stoch_k": 73.3,
+      "bb_position": 0.82,
+      "volume_ratio": 0.93
     },
     "key_levels": {
-      "sma_20": 3364.36,
-      "sma_50": 3351.84,
-      "sma_200": 3025.67,
-      "bb_upper": 3449.05,
-      "bb_lower": 3279.67
+      "sma_20": 3365.01,
+      "sma_50": 3352.1,
+      "sma_200": 3025.73,
+      "bb_upper": 3451.26,
+      "bb_lower": 3278.76
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 68.64
+    "current_position": 74.46
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,27 +83,27 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.0,
-    "price_to_support": 3.67
+    "price_to_resistance": 0.61,
+    "price_to_support": 4.04
   },
   "volume_analysis": {
-    "current_volume": 132393,
-    "avg_volume_5": 29698,
-    "avg_volume_20": 14698,
-    "volume_ratio": 9.01,
-    "volume_strength": "قوي جداً",
-    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "current_volume": 7890,
+    "avg_volume_5": 4797,
+    "avg_volume_20": 8473,
+    "volume_ratio": 0.93,
+    "volume_strength": "طبيعي",
+    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
     "obv_trend": "صاعد",
-    "volume_price_correlation": "إيجابي"
+    "volume_price_correlation": "سلبي"
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.659,
+      "dxy": -0.66,
       "vix": 0.238,
       "treasury": 0.39,
       "oil": -0.648,
       "spy": 0.335,
-      "usdeur": 0.694,
+      "usdeur": 0.696,
       "silver": 0.821
     },
     "strength_analysis": {
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-13T21:13:15.620124",
+    "last_update": "2025-08-14T01:08:46.865639",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,44 +163,96 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 25,
+      "total_relevant_news": 10,
       "critical_count": 0,
-      "high_impact_count": 25,
+      "high_impact_count": 4,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "U.S. Dollar rate, Bitcoin price crash: Experts make big prediction for currency markets",
+          "title": "Asian stocks gain after US CPI fuels Fed rate cut bets",
           "source": "The Times of India",
-          "published": "2025-08-12T20:44:03Z",
-          "url": "https://economictimes.indiatimes.com/news/international/us/u-s-dollar-rate-bitcoin-price-crash-experts-make-big-prediction-for-currency-markets/articleshow/123266607.cms",
-          "impact": "عالي",
-          "sentiment": "محايد"
-        },
-        {
-          "title": "Why Rocket Companies (RKT) Stock Is Up Today",
-          "source": "Yahoo Entertainment",
-          "published": "2025-08-12T20:36:11Z",
-          "url": "https://finance.yahoo.com/news/why-rocket-companies-rkt-stock-203611573.html",
+          "published": "2025-08-13T01:07:00Z",
+          "url": "https://economictimes.indiatimes.com/markets/stocks/news/asian-stocks-gain-after-us-cpi-fuels-fed-rate-cut-bets/articleshow/123269119.cms",
           "impact": "عالي",
           "sentiment": "إيجابي"
         },
         {
-          "title": "US inflation held steady as mild tariff hit offset by cheaper gas and food",
+          "title": "Gold Holds Modest Gain as Inflation Data Aids US Rate-Cut Bets",
           "source": "Biztoc.com",
-          "published": "2025-08-12T17:46:07Z",
-          "url": "https://biztoc.com/x/885705702f91a987",
+          "published": "2025-08-13T00:06:14Z",
+          "url": "https://biztoc.com/x/c5375481bee0fb59",
           "impact": "عالي",
-          "sentiment": "محايد"
+          "sentiment": "إيجابي"
+        },
+        {
+          "title": "Man Group’s Japan Fund Buying Bank Stocks in Bet on Inflation",
+          "source": "Biztoc.com",
+          "published": "2025-08-12T23:44:06Z",
+          "url": "https://biztoc.com/x/cca91a139230201e",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        }
+      ],
+      "medium_impact": [
+        {
+          "title": "Osisko Development Reports Second Quarter 2025 Results",
+          "source": "GlobeNewswire",
+          "published": "2025-08-13T00:30:00Z",
+          "url": "https://www.globenewswire.com/news-release/2025/08/13/3132257/0/en/Osisko-Development-Reports-Second-Quarter-2025-Results.html",
+          "impact": "متوسط",
+          "sentiment": null
+        },
+        {
+          "title": "Is Ford Stock’s Juicy Dividend Still Safe Amid the Global Tariff War?",
+          "source": "Biztoc.com",
+          "published": "2025-08-12T23:43:43Z",
+          "url": "https://biztoc.com/x/61ce58024ce44ba2",
+          "impact": "متوسط",
+          "sentiment": null
+        },
+        {
+          "title": "China’s fight against price wars is an uphill battle",
+          "source": "Biztoc.com",
+          "published": "2025-08-12T23:10:07Z",
+          "url": "https://biztoc.com/x/b9f27bbe75d3497b",
+          "impact": "متوسط",
+          "sentiment": null
+        }
+      ],
+      "gold_specific": [
+        {
+          "title": "Evolution Mining’s Profit More Than Doubles on Gold’s Surge",
+          "source": "Biztoc.com",
+          "published": "2025-08-12T23:10:24Z",
+          "url": "https://biztoc.com/x/997c6ed02538703f",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Trump rebukes Goldman's Solomon over bank's tariff research",
+          "source": "Biztoc.com",
+          "published": "2025-08-12T22:47:45Z",
+          "url": "https://biztoc.com/x/2d63d3a89434db90",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Pentagon Golden Dome to have 4-layer defense system, slides show",
+          "source": "Biztoc.com",
+          "published": "2025-08-12T22:36:36Z",
+          "url": "https://biztoc.com/x/cc5124852c2ca97f",
+          "impact": "مباشر للذهب",
+          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-13 21:13:15",
+    "last_update": "2025-08-14 01:08:47",
     "data_points": 54,
     "timeframe": "Daily",
-    "market_condition": "صاعد قوي"
+    "market_condition": "متقلب"
   }
 }
