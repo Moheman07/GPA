@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-14T15:15:15.232142",
+  "timestamp": "2025-08-14T18:20:52.972942",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3384.2,
+    "current_price": 3382.8,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3332.92,
-        "conservative": 3315.83,
-        "moderate": 3281.65,
-        "wide": 3247.46
+        "tight": 3331.52,
+        "conservative": 3314.43,
+        "moderate": 3280.25,
+        "wide": 3246.06
       },
       "profit_targets": {
-        "target_1": 3452.57,
-        "target_2": 3520.94,
-        "target_3": 3612.09,
-        "target_4": 3748.83
+        "target_1": 3451.17,
+        "target_2": 3519.54,
+        "target_3": 3610.69,
+        "target_4": 3747.43
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,24 +38,24 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3384.2"
+        "دخول فوري عند 3382.8"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 57.3,
-      "macd": 9.21,
-      "williams_r": -43.5,
-      "stoch_k": 56.5,
-      "bb_position": 0.62,
-      "volume_ratio": 8.68
+      "rsi": 57.1,
+      "macd": 9.09,
+      "williams_r": -44.2,
+      "stoch_k": 55.8,
+      "bb_position": 0.61,
+      "volume_ratio": 9.77
     },
     "key_levels": {
-      "sma_20": 3364.15,
-      "sma_50": 3351.09,
+      "sma_20": 3364.08,
+      "sma_50": 3351.06,
       "sma_200": 3028.63,
-      "bb_upper": 3446.34,
+      "bb_upper": 3446.2,
       "bb_lower": 3281.96
     }
   },
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 58.42
+    "current_position": 57.8
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.68,
-    "price_to_support": 3.02
+    "price_to_resistance": 1.72,
+    "price_to_support": 2.98
   },
   "volume_analysis": {
-    "current_volume": 124619,
-    "avg_volume_5": 27397,
-    "avg_volume_20": 14363,
-    "volume_ratio": 8.68,
+    "current_volume": 155259,
+    "avg_volume_5": 33525,
+    "avg_volume_20": 15895,
+    "volume_ratio": 9.77,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -100,7 +100,7 @@
     "correlations": {
       "dxy": -0.665,
       "vix": 0.233,
-      "treasury": 0.383,
+      "treasury": 0.384,
       "oil": -0.646,
       "spy": 0.342,
       "usdeur": 0.698,
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-14T15:15:14.873735",
+    "last_update": "2025-08-14T18:20:52.253753",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,34 +163,34 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 14,
+      "total_relevant_news": 16,
       "critical_count": 0,
-      "high_impact_count": 10,
+      "high_impact_count": 12,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
+          "title": "CPI Report Boosts Market Bets On Larger September Fed Rate Cut",
+          "source": "Ndtvprofit.com",
+          "published": "2025-08-13T18:19:18Z",
+          "url": "https://www.ndtvprofit.com/global-economics/cpi-report-boosts-market-bets-on-larger-september-fed-rate-cut",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
+          "title": "Ahead of Market: 10 things that will decide stock market action on Thursday",
+          "source": "The Times of India",
+          "published": "2025-08-13T15:49:35Z",
+          "url": "https://economictimes.indiatimes.com/markets/stocks/news/ahead-of-market-10-things-that-will-decide-stock-market-action-on-thursday/articleshow/123284303.cms",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
           "title": "Fed cut seen near certain after inflation data - Bessent",
           "source": "RTE",
           "published": "2025-08-13T14:23:03Z",
           "url": "https://www.rte.ie/news/business/2025/0813/1528281-fed-cut-seen-near-certain-after-inflation-data-bessent/",
-          "impact": "عالي",
-          "sentiment": "محايد"
-        },
-        {
-          "title": "Investors Jump Into Riskiest Assets After US Inflation Report",
-          "source": "Biztoc.com",
-          "published": "2025-08-13T13:03:54Z",
-          "url": "https://biztoc.com/x/192feca4ba03ea7f",
-          "impact": "عالي",
-          "sentiment": "محايد"
-        },
-        {
-          "title": "Investors Jump Into Riskiest Assets After US Inflation Report",
-          "source": "Yahoo Entertainment",
-          "published": "2025-08-13T12:28:32Z",
-          "url": "https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_f4b200e0-06df-419d-87ca-a8e590b6c725",
           "impact": "عالي",
           "sentiment": "محايد"
         }
@@ -234,7 +234,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-14 15:15:15",
+    "last_update": "2025-08-14 18:20:52",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
