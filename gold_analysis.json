@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-08-15T03:49:47.021120",
+  "timestamp": "2025-08-15T06:21:44.399945",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.5,
+    "total_score": 2.35,
     "component_scores": {
       "trend": 4,
-      "momentum": 3.5,
-      "volume": 1,
+      "momentum": 0.5,
+      "volume": 4,
       "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
@@ -17,46 +17,46 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3389.9,
+    "current_price": 3388.6,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3341.28,
-        "conservative": 3325.07,
-        "moderate": 3292.65,
-        "wide": 3260.24
+        "tight": 3337.37,
+        "conservative": 3320.3,
+        "moderate": 3286.14,
+        "wide": 3251.99
       },
       "profit_targets": {
-        "target_1": 3454.73,
-        "target_2": 3519.56,
-        "target_3": 3606.01,
-        "target_4": 3735.67
+        "target_1": 3456.9,
+        "target_2": 3525.21,
+        "target_3": 3616.28,
+        "target_4": 3752.89
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
       "max_risk_per_trade": "2%"
     },
     "entry_strategy": {
-      "entry_type": "دخول قوي - السوق في اتجاه واضح",
+      "entry_type": "دخول تدريجي",
       "entry_zones": [
-        "دخول فوري عند 3389.9"
+        "قسّم الدخول على 2-3 مراحل"
       ],
       "conditions": [],
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 58.0,
-      "macd": 9.66,
-      "williams_r": -40.9,
-      "stoch_k": 59.1,
+      "rsi": 60.7,
+      "macd": 7.14,
+      "williams_r": -41.5,
+      "stoch_k": 58.5,
       "bb_position": 0.65,
-      "volume_ratio": 1.46
+      "volume_ratio": 2.37
     },
     "key_levels": {
-      "sma_20": 3364.43,
-      "sma_50": 3351.2,
-      "sma_200": 3028.66,
-      "bb_upper": 3446.95,
-      "bb_lower": 3281.92
+      "sma_20": 3363.48,
+      "sma_50": 3350.87,
+      "sma_200": 3031.49,
+      "bb_upper": 3446.81,
+      "bb_lower": 3280.15
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 60.98
+    "current_position": 60.39
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,28 +83,28 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.51,
-    "price_to_support": 3.18
+    "price_to_resistance": 1.55,
+    "price_to_support": 3.15
   },
   "volume_analysis": {
-    "current_volume": 12717,
-    "avg_volume_5": 4896,
-    "avg_volume_20": 8737,
-    "volume_ratio": 1.46,
-    "volume_strength": "طبيعي",
-    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
+    "current_volume": 21862,
+    "avg_volume_5": 5396,
+    "avg_volume_20": 9215,
+    "volume_ratio": 2.37,
+    "volume_strength": "قوي جداً",
+    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
     "volume_price_correlation": "إيجابي"
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.665,
-      "vix": 0.233,
-      "treasury": 0.384,
-      "oil": -0.646,
-      "spy": 0.335,
-      "usdeur": 0.702,
-      "silver": 0.82
+      "dxy": -0.671,
+      "vix": 0.232,
+      "treasury": 0.377,
+      "oil": -0.644,
+      "spy": 0.334,
+      "usdeur": 0.704,
+      "silver": 0.819
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-15T03:49:46.707873",
+    "last_update": "2025-08-15T06:21:44.009872",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -165,7 +165,7 @@
     "summary": {
       "total_relevant_news": 19,
       "critical_count": 0,
-      "high_impact_count": 14,
+      "high_impact_count": 12,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
@@ -223,18 +223,26 @@
       ],
       "gold_specific": [
         {
-          "title": "Gold Rises After Bessent Urges US Central Bank to Slash Rates",
-          "source": "Biztoc.com",
-          "published": "2025-08-14T01:09:06Z",
-          "url": "https://biztoc.com/x/887dcbb479fee63d",
+          "title": "Cormark Forecasts Sandstorm Gold’s FY2025 Earnings (TSE:SSL)",
+          "source": "ETF Daily News",
+          "published": "2025-08-14T06:11:10Z",
+          "url": "https://www.etfdailynews.com/2025/08/14/cormark-forecasts-sandstorm-golds-fy2025-earnings-tsessl/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Senco Gold Q1 profit doubles on festive demand, showroom expansion, margin gains",
-          "source": "The Times of India",
-          "published": "2025-08-13T14:55:12Z",
-          "url": "https://economictimes.indiatimes.com/markets/stocks/earnings/senco-gold-q1-profit-doubles-on-festive-demand-showroom-expansion-margin-gains/articleshow/123283664.cms",
+          "title": "Gold Price Snaps Two-Day Drop - Check Rates In Delhi, Mumbai, Chennai And Other Cities",
+          "source": "Ndtvprofit.com",
+          "published": "2025-08-14T04:10:06Z",
+          "url": "https://www.ndtvprofit.com/markets/gold-price-snaps-two-day-drop-check-rates-in-delhi-mumbai-chennai-and-other-cities",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Gold Rises After Bessent Urges US Central Bank to Slash Rates",
+          "source": "Biztoc.com",
+          "published": "2025-08-14T01:09:06Z",
+          "url": "https://biztoc.com/x/887dcbb479fee63d",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -242,9 +250,9 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-15 03:49:47",
+    "last_update": "2025-08-15 06:21:44",
     "data_points": 54,
     "timeframe": "Daily",
-    "market_condition": "متقلب"
+    "market_condition": "صاعد قوي"
   }
 }
