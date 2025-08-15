@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-15T12:27:29.790420",
+  "timestamp": "2025-08-15T15:14:31.419397",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3384.3,
+    "current_price": 3390.0,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3333.07,
-        "conservative": 3316.0,
-        "moderate": 3281.84,
-        "wide": 3247.69
+        "tight": 3338.77,
+        "conservative": 3321.7,
+        "moderate": 3287.54,
+        "wide": 3253.39
       },
       "profit_targets": {
-        "target_1": 3452.6,
-        "target_2": 3520.91,
-        "target_3": 3611.98,
-        "target_4": 3748.59
+        "target_1": 3458.3,
+        "target_2": 3526.61,
+        "target_3": 3617.68,
+        "target_4": 3754.29
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 60.3,
-      "macd": 6.8,
-      "williams_r": -43.5,
-      "stoch_k": 56.5,
-      "bb_position": 0.63,
-      "volume_ratio": 4.87
+      "rsi": 60.9,
+      "macd": 7.26,
+      "williams_r": -40.8,
+      "stoch_k": 59.2,
+      "bb_position": 0.66,
+      "volume_ratio": 7.04
     },
     "key_levels": {
-      "sma_20": 3363.26,
-      "sma_50": 3350.78,
-      "sma_200": 3031.47,
-      "bb_upper": 3446.35,
-      "bb_lower": 3280.18
+      "sma_20": 3363.55,
+      "sma_50": 3350.89,
+      "sma_200": 3031.5,
+      "bb_upper": 3446.97,
+      "bb_lower": 3280.13
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 58.47
+    "current_position": 61.02
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.68,
-    "price_to_support": 3.02
+    "price_to_resistance": 1.5,
+    "price_to_support": 3.19
   },
   "volume_analysis": {
-    "current_volume": 52349,
-    "avg_volume_5": 11494,
-    "avg_volume_20": 10739,
-    "volume_ratio": 4.87,
+    "current_volume": 88341,
+    "avg_volume_5": 18692,
+    "avg_volume_20": 12539,
+    "volume_ratio": 7.04,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -100,9 +100,9 @@
     "correlations": {
       "dxy": -0.671,
       "vix": 0.226,
-      "treasury": 0.377,
+      "treasury": 0.376,
       "oil": -0.644,
-      "spy": 0.334,
+      "spy": 0.342,
       "usdeur": 0.704,
       "silver": 0.819
     },
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-15T12:27:29.492074",
+    "last_update": "2025-08-15T15:14:31.112431",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,13 +163,29 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 16,
+      "total_relevant_news": 18,
       "critical_count": 0,
-      "high_impact_count": 8,
+      "high_impact_count": 9,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Businesses have been eating Trump's tariffs. That's starting to change (Alicia Wallace/CNN)",
+          "source": "Memeorandum.com",
+          "published": "2025-08-14T13:25:01Z",
+          "url": "https://www.memeorandum.com/250814/p38",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
+          "title": "US wholesale inflation rose last month at the fastest pace in three years | CNN Business",
+          "source": "CNN",
+          "published": "2025-08-14T12:43:55Z",
+          "url": "https://www.cnn.com/2025/08/14/economy/us-ppi-wholesale-inflation-july",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
         {
           "title": "Bitcoin Hits $124K Record as 4 Tailwinds Align: Crypto Daybook Americas",
           "source": "Biztoc.com",
@@ -177,22 +193,6 @@
           "url": "https://biztoc.com/x/8687d306908dd2c2",
           "impact": "عالي",
           "sentiment": "إيجابي"
-        },
-        {
-          "title": "Gold prices trade firm as tariff uncertainty supports safe-haven demand. Check what analysts predict",
-          "source": "The Times of India",
-          "published": "2025-08-14T07:15:42Z",
-          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-prices-trade-firm-as-tariff-uncertainty-supports-safe-haven-demand-check-what-analysts-predict/articleshow/123298345.cms",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "US inflation held steady as mild tariff hit offset by cheaper gas, food",
-          "source": "Biztoc.com",
-          "published": "2025-08-14T02:59:59Z",
-          "url": "https://biztoc.com/x/43b17a7799a0d94e",
-          "impact": "عالي",
-          "sentiment": "محايد"
         }
       ],
       "medium_impact": [
@@ -215,6 +215,14 @@
       ],
       "gold_specific": [
         {
+          "title": "Artemis Gold price target raised by C$1.50 at National Bank",
+          "source": "Thefly.com",
+          "published": "2025-08-14T14:48:51Z",
+          "url": "https://thefly.com/permalinks/entry.php/id4183689/ARGTF-Artemis-Gold-price-target-raised-by-C-at-National-Bank",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
           "title": "Galiano Gold price target raised by 40c at H.C. Wainwright, here's why",
           "source": "Thefly.com",
           "published": "2025-08-14T09:57:43Z",
@@ -229,20 +237,12 @@
           "url": "https://www.globenewswire.com/news-release/2025/08/14/3133182/0/en/Trident-Resources-To-Commence-5-000m-Diamond-Drilling-Program-on-Contact-Lake-High-Grade-Gold-Project-Saskatchewan.html",
           "impact": "مباشر للذهب",
           "sentiment": null
-        },
-        {
-          "title": "Barrick Gold Q4 EPS Estimate Cut by Raymond James Financial",
-          "source": "ETF Daily News",
-          "published": "2025-08-14T06:42:48Z",
-          "url": "https://www.etfdailynews.com/2025/08/14/barrick-gold-q4-eps-estimate-cut-by-raymond-james-financial/",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-15 12:27:29",
+    "last_update": "2025-08-15 15:14:31",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
