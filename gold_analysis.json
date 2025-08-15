@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-08-15T01:08:52.937249",
+  "timestamp": "2025-08-15T03:49:47.021120",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.35,
+    "total_score": 2.5,
     "component_scores": {
       "trend": 4,
       "momentum": 3.5,
-      "volume": 0,
+      "volume": 1,
       "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3383.3,
+    "current_price": 3389.9,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3335.19,
-        "conservative": 3319.15,
-        "moderate": 3287.08,
-        "wide": 3255.01
+        "tight": 3341.28,
+        "conservative": 3325.07,
+        "moderate": 3292.65,
+        "wide": 3260.24
       },
       "profit_targets": {
-        "target_1": 3447.45,
-        "target_2": 3511.59,
-        "target_3": 3597.12,
-        "target_4": 3725.41
+        "target_1": 3454.73,
+        "target_2": 3519.56,
+        "target_3": 3606.01,
+        "target_4": 3735.67
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -38,27 +38,25 @@
     "entry_strategy": {
       "entry_type": "دخول قوي - السوق في اتجاه واضح",
       "entry_zones": [
-        "دخول فوري عند 3383.3"
+        "دخول فوري عند 3389.9"
       ],
       "conditions": [],
-      "warnings": [
-        "⚠️ حجم ضعيف - تأكيد مطلوب"
-      ]
+      "warnings": []
     },
     "technical_summary": {
-      "rsi": 57.2,
-      "macd": 9.13,
-      "williams_r": -44.0,
-      "stoch_k": 56.0,
-      "bb_position": 0.62,
-      "volume_ratio": 0.59
+      "rsi": 58.0,
+      "macd": 9.66,
+      "williams_r": -40.9,
+      "stoch_k": 59.1,
+      "bb_position": 0.65,
+      "volume_ratio": 1.46
     },
     "key_levels": {
-      "sma_20": 3364.1,
-      "sma_50": 3351.07,
-      "sma_200": 3028.63,
-      "bb_upper": 3446.25,
-      "bb_lower": 3281.96
+      "sma_20": 3364.43,
+      "sma_50": 3351.2,
+      "sma_200": 3028.66,
+      "bb_upper": 3446.95,
+      "bb_lower": 3281.92
     }
   },
   "fibonacci_levels": {
@@ -70,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 58.02
+    "current_position": 60.98
   },
   "support_resistance": {
     "resistance_levels": [
@@ -85,18 +83,18 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.71,
-    "price_to_support": 2.99
+    "price_to_resistance": 1.51,
+    "price_to_support": 3.18
   },
   "volume_analysis": {
-    "current_volume": 4983,
-    "avg_volume_5": 3470,
-    "avg_volume_20": 8381,
-    "volume_ratio": 0.59,
-    "volume_strength": "ضعيف",
-    "volume_signal": "حجم ضعيف - حذر من الحركة الوهمية",
+    "current_volume": 12717,
+    "avg_volume_5": 4896,
+    "avg_volume_20": 8737,
+    "volume_ratio": 1.46,
+    "volume_strength": "طبيعي",
+    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
     "obv_trend": "صاعد",
-    "volume_price_correlation": "سلبي"
+    "volume_price_correlation": "إيجابي"
   },
   "market_correlations": {
     "correlations": {
@@ -125,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-15T01:08:52.496160",
+    "last_update": "2025-08-15T03:49:46.707873",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -165,34 +163,34 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 17,
+      "total_relevant_news": 19,
       "critical_count": 0,
-      "high_impact_count": 13,
+      "high_impact_count": 14,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
+          "title": "US inflation held steady as mild tariff hit offset by cheaper gas, food",
+          "source": "Biztoc.com",
+          "published": "2025-08-14T02:59:59Z",
+          "url": "https://biztoc.com/x/43b17a7799a0d94e",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
+        {
+          "title": "Yen Gains, Asian Stocks Tepid After Rate-Cut Bets: Markets Wrap",
+          "source": "Ndtvprofit.com",
+          "published": "2025-08-14T01:34:01Z",
+          "url": "https://www.ndtvprofit.com/markets/global-stock-markets-asian-indices-hang-sheng-nikkei-dax-ftse-nasdaq-s-and-p-dow-jones-news-today-14-august-2025",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
           "title": "World equities hit record highs, US yields fall on optimism for Fed rate cut",
           "source": "The Times of India",
           "published": "2025-08-14T00:55:21Z",
           "url": "https://economictimes.indiatimes.com/markets/stocks/news/world-equities-hit-record-highs-us-yields-fall-on-optimism-for-fed-rate-cut/articleshow/123292063.cms",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "Stocks Inch Up as Hopes for Interest Rates Go Global",
-          "source": "Newser",
-          "published": "2025-08-13T20:46:27Z",
-          "url": "https://www.newser.com/story/373500/stocks-inch-up-as-hopes-for-interest-rates-go-global.html",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "CPI Report Boosts Market Bets On Larger September Fed Rate Cut",
-          "source": "Ndtvprofit.com",
-          "published": "2025-08-13T18:19:18Z",
-          "url": "https://www.ndtvprofit.com/global-economics/cpi-report-boosts-market-bets-on-larger-september-fed-rate-cut",
           "impact": "عالي",
           "sentiment": "إيجابي"
         }
@@ -225,6 +223,14 @@
       ],
       "gold_specific": [
         {
+          "title": "Gold Rises After Bessent Urges US Central Bank to Slash Rates",
+          "source": "Biztoc.com",
+          "published": "2025-08-14T01:09:06Z",
+          "url": "https://biztoc.com/x/887dcbb479fee63d",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
           "title": "Senco Gold Q1 profit doubles on festive demand, showroom expansion, margin gains",
           "source": "The Times of India",
           "published": "2025-08-13T14:55:12Z",
@@ -236,7 +242,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-15 01:08:52",
+    "last_update": "2025-08-15 03:49:47",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "متقلب"
