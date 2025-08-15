@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-15T06:21:44.399945",
+  "timestamp": "2025-08-15T09:15:22.814062",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3388.6,
+    "current_price": 3387.8,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3337.37,
-        "conservative": 3320.3,
-        "moderate": 3286.14,
-        "wide": 3251.99
+        "tight": 3336.57,
+        "conservative": 3319.5,
+        "moderate": 3285.34,
+        "wide": 3251.19
       },
       "profit_targets": {
-        "target_1": 3456.9,
-        "target_2": 3525.21,
-        "target_3": 3616.28,
-        "target_4": 3752.89
+        "target_1": 3456.1,
+        "target_2": 3524.41,
+        "target_3": 3615.48,
+        "target_4": 3752.09
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 60.7,
-      "macd": 7.14,
-      "williams_r": -41.5,
-      "stoch_k": 58.5,
+      "rsi": 60.6,
+      "macd": 7.08,
+      "williams_r": -41.9,
+      "stoch_k": 58.1,
       "bb_position": 0.65,
-      "volume_ratio": 2.37
+      "volume_ratio": 3.68
     },
     "key_levels": {
-      "sma_20": 3363.48,
-      "sma_50": 3350.87,
+      "sma_20": 3363.44,
+      "sma_50": 3350.85,
       "sma_200": 3031.49,
-      "bb_upper": 3446.81,
-      "bb_lower": 3280.15
+      "bb_upper": 3446.72,
+      "bb_lower": 3280.16
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 60.39
+    "current_position": 60.04
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.55,
-    "price_to_support": 3.15
+    "price_to_resistance": 1.57,
+    "price_to_support": 3.12
   },
   "volume_analysis": {
-    "current_volume": 21862,
-    "avg_volume_5": 5396,
-    "avg_volume_20": 9215,
-    "volume_ratio": 2.37,
+    "current_volume": 36612,
+    "avg_volume_5": 8346,
+    "avg_volume_20": 9953,
+    "volume_ratio": 3.68,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,11 +99,10 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.671,
-      "vix": 0.232,
+      "vix": 0.226,
       "treasury": 0.377,
       "oil": -0.644,
       "spy": 0.334,
-      "usdeur": 0.704,
       "silver": 0.819
     },
     "strength_analysis": {
@@ -112,7 +111,6 @@
       "treasury": "متوسط",
       "oil": "قوي",
       "spy": "متوسط",
-      "usdeur": "قوي جداً",
       "silver": "قوي جداً"
     },
     "interpretation": {
@@ -123,7 +121,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-15T06:21:44.009872",
+    "last_update": "2025-08-15T09:15:22.505634",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,13 +161,21 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 19,
+      "total_relevant_news": 17,
       "critical_count": 0,
-      "high_impact_count": 12,
+      "high_impact_count": 9,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Gold prices trade firm as tariff uncertainty supports safe-haven demand. Check what analysts predict",
+          "source": "The Times of India",
+          "published": "2025-08-14T07:15:42Z",
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-prices-trade-firm-as-tariff-uncertainty-supports-safe-haven-demand-check-what-analysts-predict/articleshow/123298345.cms",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
         {
           "title": "US inflation held steady as mild tariff hit offset by cheaper gas, food",
           "source": "Biztoc.com",
@@ -185,17 +191,17 @@
           "url": "https://www.ndtvprofit.com/markets/global-stock-markets-asian-indices-hang-sheng-nikkei-dax-ftse-nasdaq-s-and-p-dow-jones-news-today-14-august-2025",
           "impact": "عالي",
           "sentiment": "إيجابي"
-        },
-        {
-          "title": "World equities hit record highs, US yields fall on optimism for Fed rate cut",
-          "source": "The Times of India",
-          "published": "2025-08-14T00:55:21Z",
-          "url": "https://economictimes.indiatimes.com/markets/stocks/news/world-equities-hit-record-highs-us-yields-fall-on-optimism-for-fed-rate-cut/articleshow/123292063.cms",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
         }
       ],
       "medium_impact": [
+        {
+          "title": "What’s next for Bitcoin after hitting a new ATH at $124k? Check forecast",
+          "source": "Coinjournal.net",
+          "published": "2025-08-14T08:11:25Z",
+          "url": "https://coinjournal.net/news/whats-next-for-bitcoin-after-hitting-a-new-ath-at-124k-check-forecast/",
+          "impact": "متوسط",
+          "sentiment": null
+        },
         {
           "title": "Orezone Gold Reports Second Quarter 2025 Results",
           "source": "GlobeNewswire",
@@ -203,25 +209,25 @@
           "url": "https://www.globenewswire.com/news-release/2025/08/13/3133010/0/en/Orezone-Gold-Reports-Second-Quarter-2025-Results.html",
           "impact": "متوسط",
           "sentiment": null
-        },
-        {
-          "title": "Chinese Tech 'Piggybacking' From US, Says Treasury Secretary Bessent",
-          "source": "Ndtvprofit.com",
-          "published": "2025-08-13T13:33:09Z",
-          "url": "https://www.ndtvprofit.com/world/china-tech-piggybacking-from-us-says-treasury-secretary-bessent",
-          "impact": "متوسط",
-          "sentiment": null
-        },
-        {
-          "title": "Endeavour Silver Announces Q2 2025 Financial Results; Earnings Call at 10AM PDT (1PM EDT) Today",
-          "source": "GlobeNewswire",
-          "published": "2025-08-13T10:50:00Z",
-          "url": "https://www.globenewswire.com/news-release/2025/08/13/3132415/0/en/Endeavour-Silver-Announces-Q2-2025-Financial-Results-Earnings-Call-at-10AM-PDT-1PM-EDT-Today.html",
-          "impact": "متوسط",
-          "sentiment": null
         }
       ],
       "gold_specific": [
+        {
+          "title": "Trident Resources To Commence 5,000m Diamond Drilling Program on Contact Lake High-Grade Gold Project, Saskatchewan",
+          "source": "GlobeNewswire",
+          "published": "2025-08-14T07:05:00Z",
+          "url": "https://www.globenewswire.com/news-release/2025/08/14/3133182/0/en/Trident-Resources-To-Commence-5-000m-Diamond-Drilling-Program-on-Contact-Lake-High-Grade-Gold-Project-Saskatchewan.html",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Barrick Gold Q4 EPS Estimate Cut by Raymond James Financial",
+          "source": "ETF Daily News",
+          "published": "2025-08-14T06:42:48Z",
+          "url": "https://www.etfdailynews.com/2025/08/14/barrick-gold-q4-eps-estimate-cut-by-raymond-james-financial/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
         {
           "title": "Cormark Forecasts Sandstorm Gold’s FY2025 Earnings (TSE:SSL)",
           "source": "ETF Daily News",
@@ -229,28 +235,12 @@
           "url": "https://www.etfdailynews.com/2025/08/14/cormark-forecasts-sandstorm-golds-fy2025-earnings-tsessl/",
           "impact": "مباشر للذهب",
           "sentiment": null
-        },
-        {
-          "title": "Gold Price Snaps Two-Day Drop - Check Rates In Delhi, Mumbai, Chennai And Other Cities",
-          "source": "Ndtvprofit.com",
-          "published": "2025-08-14T04:10:06Z",
-          "url": "https://www.ndtvprofit.com/markets/gold-price-snaps-two-day-drop-check-rates-in-delhi-mumbai-chennai-and-other-cities",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "Gold Rises After Bessent Urges US Central Bank to Slash Rates",
-          "source": "Biztoc.com",
-          "published": "2025-08-14T01:09:06Z",
-          "url": "https://biztoc.com/x/887dcbb479fee63d",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-15 06:21:44",
+    "last_update": "2025-08-15 09:15:22",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
