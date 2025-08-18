@@ -1,35 +1,35 @@
 {
-  "timestamp": "2025-08-18T09:19:23.432984",
+  "timestamp": "2025-08-18T12:29:28.408722",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.45,
+    "total_score": 2.35,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
       "volume": 4,
-      "fibonacci": 2,
+      "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3395.6,
+    "current_price": 3391.6,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3343.95,
-        "conservative": 3326.73,
-        "moderate": 3292.29,
-        "wide": 3257.86
+        "tight": 3339.95,
+        "conservative": 3322.73,
+        "moderate": 3288.29,
+        "wide": 3253.86
       },
       "profit_targets": {
-        "target_1": 3464.47,
-        "target_2": 3533.34,
-        "target_3": 3625.17,
-        "target_4": 3762.91
+        "target_1": 3460.47,
+        "target_2": 3529.34,
+        "target_3": 3621.17,
+        "target_4": 3758.91
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 59.9,
-      "macd": 5.83,
-      "williams_r": -38.2,
-      "stoch_k": 61.8,
-      "bb_position": 0.71,
-      "volume_ratio": 4.59
+      "rsi": 59.5,
+      "macd": 5.51,
+      "williams_r": -40.1,
+      "stoch_k": 59.9,
+      "bb_position": 0.69,
+      "volume_ratio": 5.46
     },
     "key_levels": {
-      "sma_20": 3360.53,
-      "sma_50": 3351.27,
-      "sma_200": 3034.26,
-      "bb_upper": 3443.24,
-      "bb_lower": 3277.83
+      "sma_20": 3360.33,
+      "sma_50": 3351.19,
+      "sma_200": 3034.24,
+      "bb_upper": 3442.7,
+      "bb_lower": 3277.97
     }
   },
   "fibonacci_levels": {
@@ -67,8 +67,8 @@
     "fib_50_0": 3365.4,
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
-    "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 63.53
+    "analysis": "السعر فوق 50% - منطقة محايدة",
+    "current_position": 61.74
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.34,
-    "price_to_support": 3.35
+    "price_to_resistance": 1.46,
+    "price_to_support": 3.23
   },
   "volume_analysis": {
-    "current_volume": 48413,
-    "avg_volume_5": 10443,
-    "avg_volume_20": 10549,
-    "volume_ratio": 4.59,
+    "current_volume": 61100,
+    "avg_volume_5": 12981,
+    "avg_volume_20": 11183,
+    "volume_ratio": 5.46,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-18T09:19:23.046912",
+    "last_update": "2025-08-18T12:29:28.087595",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -250,7 +250,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-18 09:19:23",
+    "last_update": "2025-08-18 12:29:28",
     "data_points": 53,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
