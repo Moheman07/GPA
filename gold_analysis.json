@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-18T18:21:03.664595",
+  "timestamp": "2025-08-18T21:12:12.264796",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3378.8,
+    "current_price": 3378.0,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3327.15,
-        "conservative": 3309.93,
-        "moderate": 3275.49,
-        "wide": 3241.06
+        "tight": 3326.35,
+        "conservative": 3309.13,
+        "moderate": 3274.69,
+        "wide": 3240.26
       },
       "profit_targets": {
-        "target_1": 3447.67,
-        "target_2": 3516.54,
-        "target_3": 3608.37,
-        "target_4": 3746.11
+        "target_1": 3446.87,
+        "target_2": 3515.74,
+        "target_3": 3607.57,
+        "target_4": 3745.31
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 58.0,
-      "macd": 4.49,
-      "williams_r": -46.1,
-      "stoch_k": 53.9,
-      "bb_position": 0.62,
-      "volume_ratio": 8.05
+      "rsi": 57.9,
+      "macd": 4.42,
+      "williams_r": -46.5,
+      "stoch_k": 53.5,
+      "bb_position": 0.61,
+      "volume_ratio": 8.33
     },
     "key_levels": {
-      "sma_20": 3359.69,
-      "sma_50": 3350.94,
-      "sma_200": 3034.18,
-      "bb_upper": 3441.23,
-      "bb_lower": 3278.16
+      "sma_20": 3359.65,
+      "sma_50": 3350.92,
+      "sma_200": 3034.17,
+      "bb_upper": 3441.16,
+      "bb_lower": 3278.15
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 56.0
+    "current_position": 55.65
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.84,
-    "price_to_support": 2.86
+    "price_to_resistance": 1.87,
+    "price_to_support": 2.84
   },
   "volume_analysis": {
-    "current_volume": 109627,
-    "avg_volume_5": 22686,
-    "avg_volume_20": 13609,
-    "volume_ratio": 8.05,
+    "current_volume": 116076,
+    "avg_volume_5": 23976,
+    "avg_volume_20": 13932,
+    "volume_ratio": 8.33,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -101,7 +101,7 @@
       "dxy": -0.679,
       "vix": 0.215,
       "treasury": 0.365,
-      "oil": -0.638,
+      "oil": -0.639,
       "spy": 0.338,
       "usdeur": 0.713,
       "silver": 0.817
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-18T18:21:03.265496",
+    "last_update": "2025-08-18T21:12:11.615964",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,7 +163,7 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 6,
+      "total_relevant_news": 9,
       "critical_count": 0,
       "high_impact_count": 4,
       "overall_sentiment": "إيجابي للذهب"
@@ -197,6 +197,14 @@
       ],
       "medium_impact": [
         {
+          "title": "Israel's growing frustration over the war in Gaza erupts in nationwide protests",
+          "source": "Biztoc.com",
+          "published": "2025-08-17T19:20:42Z",
+          "url": "https://biztoc.com/x/a5fc6c3b77984962",
+          "impact": "متوسط",
+          "sentiment": null
+        },
+        {
           "title": "Powell, Trump Talks and Other Can't Miss Items this Week",
           "source": "Barchart.com",
           "published": "2025-08-17T17:00:02Z",
@@ -212,11 +220,29 @@
           "impact": "متوسط",
           "sentiment": null
         }
+      ],
+      "gold_specific": [
+        {
+          "title": "Gold Market Manipulation: Three Abuses Within the Last 5 Years",
+          "source": "Activistpost.com",
+          "published": "2025-08-17T19:00:00Z",
+          "url": "https://www.activistpost.com/gold-market-manipulation-three-abuses-within-the-last-5-years/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Building Scale in Gold: Equinox and Calibre Combine to Create Canadian Giant",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-17T19:00:00Z",
+          "url": "https://finance.yahoo.com/news/building-scale-gold-equinox-calibre-190000956.html",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-18 18:21:03",
+    "last_update": "2025-08-18 21:12:12",
     "data_points": 53,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
