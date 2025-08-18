@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-18T06:23:46.102855",
+  "timestamp": "2025-08-18T09:19:23.432984",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3394.9,
+    "current_price": 3395.6,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3343.25,
-        "conservative": 3326.03,
-        "moderate": 3291.59,
-        "wide": 3257.16
+        "tight": 3343.95,
+        "conservative": 3326.73,
+        "moderate": 3292.29,
+        "wide": 3257.86
       },
       "profit_targets": {
-        "target_1": 3463.77,
-        "target_2": 3532.64,
-        "target_3": 3624.47,
-        "target_4": 3762.21
+        "target_1": 3464.47,
+        "target_2": 3533.34,
+        "target_3": 3625.17,
+        "target_4": 3762.91
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 59.8,
-      "macd": 5.77,
-      "williams_r": -38.5,
-      "stoch_k": 61.5,
+      "rsi": 59.9,
+      "macd": 5.83,
+      "williams_r": -38.2,
+      "stoch_k": 61.8,
       "bb_position": 0.71,
-      "volume_ratio": 3.47
+      "volume_ratio": 4.59
     },
     "key_levels": {
-      "sma_20": 3360.5,
-      "sma_50": 3351.26,
+      "sma_20": 3360.53,
+      "sma_50": 3351.27,
       "sma_200": 3034.26,
-      "bb_upper": 3443.14,
-      "bb_lower": 3277.86
+      "bb_upper": 3443.24,
+      "bb_lower": 3277.83
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 63.22
+    "current_position": 63.53
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.36,
-    "price_to_support": 3.33
+    "price_to_resistance": 1.34,
+    "price_to_support": 3.35
   },
   "volume_analysis": {
-    "current_volume": 34180,
-    "avg_volume_5": 7597,
-    "avg_volume_20": 9837,
-    "volume_ratio": 3.47,
+    "current_volume": 48413,
+    "avg_volume_5": 10443,
+    "avg_volume_20": 10549,
+    "volume_ratio": 4.59,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,7 +99,7 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.679,
-      "vix": 0.22,
+      "vix": 0.216,
       "treasury": 0.365,
       "oil": -0.639,
       "spy": 0.331,
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-18T06:23:45.597666",
+    "last_update": "2025-08-18T09:19:23.046912",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -223,6 +223,14 @@
       ],
       "gold_specific": [
         {
+          "title": "Top Gold Stocks To Watch Today – August 14th",
+          "source": "ETF Daily News",
+          "published": "2025-08-17T07:37:07Z",
+          "url": "https://www.etfdailynews.com/2025/08/17/top-gold-stocks-to-watch-today-august-14th/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
           "title": "Gold & Silver CRASH!  Are Prices STILL Falling?!  #Gold #Silver #Markets #Finance",
           "source": "Nep123.com",
           "published": "2025-08-17T06:16:50Z",
@@ -237,20 +245,12 @@
           "url": "https://www.etfdailynews.com/2025/08/17/short-interest-in-white-gold-corp-otcmktswhgof-increases-by-198-0/",
           "impact": "مباشر للذهب",
           "sentiment": null
-        },
-        {
-          "title": "Gold Price PLUMMETS!  Get the Latest Updates!  #Nepal #GoldPrice",
-          "source": "Nep123.com",
-          "published": "2025-08-17T05:29:48Z",
-          "url": "https://nep123.com/gold-price-plummets-get-the-latest-updates-nepal-goldprice/",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-18 06:23:46",
+    "last_update": "2025-08-18 09:19:23",
     "data_points": 53,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
