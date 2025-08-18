@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-08-15T21:11:47.293512",
+  "timestamp": "2025-08-18T01:12:54.871766",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.35,
+    "total_score": 2.2,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
-      "volume": 4,
+      "volume": 3,
       "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3381.7,
+    "current_price": 3387.7,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3330.47,
-        "conservative": 3313.4,
-        "moderate": 3279.24,
-        "wide": 3245.09
+        "tight": 3337.29,
+        "conservative": 3320.49,
+        "moderate": 3286.88,
+        "wide": 3253.28
       },
       "profit_targets": {
-        "target_1": 3450.0,
-        "target_2": 3518.31,
-        "target_3": 3609.38,
-        "target_4": 3745.99
+        "target_1": 3454.91,
+        "target_2": 3522.12,
+        "target_3": 3611.74,
+        "target_4": 3746.16
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 60.0,
-      "macd": 6.59,
-      "williams_r": -44.7,
-      "stoch_k": 55.3,
-      "bb_position": 0.61,
-      "volume_ratio": 8.31
+      "rsi": 59.0,
+      "macd": 5.2,
+      "williams_r": -41.9,
+      "stoch_k": 58.1,
+      "bb_position": 0.67,
+      "volume_ratio": 1.51
     },
     "key_levels": {
-      "sma_20": 3363.13,
-      "sma_50": 3350.73,
-      "sma_200": 3031.46,
-      "bb_upper": 3446.09,
-      "bb_lower": 3280.18
+      "sma_20": 3360.14,
+      "sma_50": 3351.11,
+      "sma_200": 3034.22,
+      "bb_upper": 3442.21,
+      "bb_lower": 3278.07
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 57.3
+    "current_position": 59.99
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,28 +83,28 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.75,
-    "price_to_support": 2.95
+    "price_to_resistance": 1.57,
+    "price_to_support": 3.12
   },
   "volume_analysis": {
-    "current_volume": 115486,
-    "avg_volume_5": 24121,
-    "avg_volume_20": 13896,
-    "volume_ratio": 8.31,
-    "volume_strength": "قوي جداً",
-    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "current_volume": 13298,
+    "avg_volume_5": 3420,
+    "avg_volume_20": 8793,
+    "volume_ratio": 1.51,
+    "volume_strength": "قوي",
+    "volume_signal": "حجم فوق المتوسط - اهتمام متزايد",
     "obv_trend": "صاعد",
     "volume_price_correlation": "إيجابي"
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.671,
-      "vix": 0.226,
-      "treasury": 0.376,
-      "oil": -0.644,
-      "spy": 0.337,
-      "usdeur": 0.704,
-      "silver": 0.819
+      "dxy": -0.679,
+      "vix": 0.22,
+      "treasury": 0.365,
+      "oil": -0.639,
+      "spy": 0.331,
+      "usdeur": 0.71,
+      "silver": 0.817
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-15T21:11:46.963712",
+    "last_update": "2025-08-18T01:12:54.197701",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,62 +163,86 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 17,
+      "total_relevant_news": 24,
       "critical_count": 0,
-      "high_impact_count": 14,
+      "high_impact_count": 12,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "Stock Rally Hits a Wall as US Inflation Picks Up: Markets Wrap",
-          "source": "Financial Post",
-          "published": "2025-08-14T20:41:44Z",
-          "url": "https://financialpost.com/pmn/business-pmn/stock-rally-hits-a-wall-as-us-inflation-picks-up-markets-wrap",
+          "title": "Stocks power to record highs again despite warning signs. Can the market's strong run continue?",
+          "source": "Biztoc.com",
+          "published": "2025-08-16T17:19:34Z",
+          "url": "https://biztoc.com/x/4822098de334525c",
           "impact": "عالي",
           "sentiment": "إيجابي"
         },
         {
-          "title": "Investors were blindsided by hot July PPI inflation reading, but stocks mostly shrugged it off — or did they?",
-          "source": "Biztoc.com",
-          "published": "2025-08-14T19:54:25Z",
-          "url": "https://biztoc.com/x/0e967754301c155d",
+          "title": "Fed Expected To Cut Interest Rates, Though Inflation May Be Picking Up",
+          "source": "Forbes",
+          "published": "2025-08-16T16:47:00Z",
+          "url": "https://www.forbes.com/sites/simonmoore/2025/08/16/fed-expected-to-cut-interest-rates-though-inflation-may-be-picking-up/",
           "impact": "عالي",
-          "sentiment": "سلبي"
+          "sentiment": "إيجابي"
         },
         {
-          "title": "Bitcoin sell-off intensifies after hot US inflation report rattles stocks, crypto",
-          "source": "Cointelegraph",
-          "published": "2025-08-14T18:12:27Z",
-          "url": "https://cointelegraph.com/news/bitcoin-sell-off-intensifies-after-hot-us-inflation-report-rattles-stocks-crypto",
+          "title": "Charting the global economy: US retail sales point to resilience",
+          "source": "Bloomberg",
+          "published": "2025-08-16T11:07:26Z",
+          "url": "https://www.bloomberg.com/news/articles/2025-08-16/world-economy-latest-healthy-us-retail-sales-signals-consumer-resilience",
           "impact": "عالي",
           "sentiment": "إيجابي"
         }
       ],
       "medium_impact": [
         {
-          "title": "What’s next for Bitcoin after hitting a new ATH at $124k? Check forecast",
-          "source": "Coinjournal.net",
-          "published": "2025-08-14T08:11:25Z",
-          "url": "https://coinjournal.net/news/whats-next-for-bitcoin-after-hitting-a-new-ath-at-124k-check-forecast/",
+          "title": "PMs — the lull before the storm",
+          "source": "Freerepublic.com",
+          "published": "2025-08-15T22:21:23Z",
+          "url": "https://freerepublic.com/focus/f-news/4334837/posts",
+          "impact": "متوسط",
+          "sentiment": null
+        },
+        {
+          "title": "Dollar Falls on Weaker US Consumer Sentiment",
+          "source": "Barchart.com",
+          "published": "2025-08-15T19:57:31Z",
+          "url": "https://www.barchart.com/story/news/34188831/dollar-falls-on-weaker-us-consumer-sentiment",
+          "impact": "متوسط",
+          "sentiment": null
+        },
+        {
+          "title": "Busy September US corporate bond market expected despite lower rate cut odds",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-15T17:53:41Z",
+          "url": "https://finance.yahoo.com/news/busy-september-us-corporate-bond-175341149.html",
           "impact": "متوسط",
           "sentiment": null
         }
       ],
       "gold_specific": [
         {
-          "title": "Artemis Gold price target raised by C$1.50 at National Bank",
-          "source": "Thefly.com",
-          "published": "2025-08-14T14:48:51Z",
-          "url": "https://thefly.com/permalinks/entry.php/id4183689/ARGTF-Artemis-Gold-price-target-raised-by-C-at-National-Bank",
+          "title": "historical gold price trend in India 1947ರ ಸ್ವಾತಂತ್ರ್ಯ ಸಮಯದಲ್ಲಿ ಚಿನ್ನಕ್ಕೆ ಬೇಡಿಕೆಯೇ ಇರಲಿಲ್ಲ! ಆಗ ಇದ್ದ ರೇಟ್ ಎಷ್ಟು? | Gold Price In India From 1947 To 202",
+          "source": "Asianetnews.com",
+          "published": "2025-08-16T10:55:46Z",
+          "url": "https://kannada.asianetnews.com/business/gold-price-in-india-from-1947-to-2025-complete-historical-trend-and-analysis-gow/articleshow-btwld36",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Galiano Gold price target raised by 40c at H.C. Wainwright, here's why",
-          "source": "Thefly.com",
-          "published": "2025-08-14T09:57:43Z",
-          "url": "https://thefly.com/permalinks/entry.php/id4183152/GAU-Galiano-Gold-price-target-raised-by-c-at-HC-Wainwright-heres-why",
+          "title": "PNC Financial Services Group Inc. Purchases 2,614 Shares of SPDR Gold MiniShares Trust (NYSEARCA:GLDM)",
+          "source": "ETF Daily News",
+          "published": "2025-08-16T07:52:51Z",
+          "url": "https://www.etfdailynews.com/2025/08/16/pnc-financial-services-group-inc-purchases-2614-shares-of-spdr-gold-minishares-trust-nysearcagldm/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Atlantic Gold (OTCMKTS:SPVEF) Stock Price Down 0.9% – Should You Sell?",
+          "source": "ETF Daily News",
+          "published": "2025-08-16T06:42:45Z",
+          "url": "https://www.etfdailynews.com/2025/08/16/atlantic-gold-otcmktsspvef-stock-price-down-0-9-should-you-sell/",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -226,8 +250,8 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-15 21:11:47",
-    "data_points": 54,
+    "last_update": "2025-08-18 01:12:54",
+    "data_points": 53,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
   }
