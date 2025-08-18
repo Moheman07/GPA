@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-18T03:58:28.948701",
+  "timestamp": "2025-08-18T06:23:46.102855",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3394.4,
+    "current_price": 3394.9,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3343.46,
-        "conservative": 3326.48,
-        "moderate": 3292.52,
-        "wide": 3258.56
+        "tight": 3343.25,
+        "conservative": 3326.03,
+        "moderate": 3291.59,
+        "wide": 3257.16
       },
       "profit_targets": {
-        "target_1": 3462.32,
-        "target_2": 3530.24,
-        "target_3": 3620.79,
-        "target_4": 3756.63
+        "target_1": 3463.77,
+        "target_2": 3532.64,
+        "target_3": 3624.47,
+        "target_4": 3762.21
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -45,18 +45,18 @@
     },
     "technical_summary": {
       "rsi": 59.8,
-      "macd": 5.73,
-      "williams_r": -38.8,
-      "stoch_k": 61.2,
+      "macd": 5.77,
+      "williams_r": -38.5,
+      "stoch_k": 61.5,
       "bb_position": 0.71,
-      "volume_ratio": 2.37
+      "volume_ratio": 3.47
     },
     "key_levels": {
-      "sma_20": 3360.47,
-      "sma_50": 3351.25,
+      "sma_20": 3360.5,
+      "sma_50": 3351.26,
       "sma_200": 3034.26,
-      "bb_upper": 3443.08,
-      "bb_lower": 3277.87
+      "bb_upper": 3443.14,
+      "bb_lower": 3277.86
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 62.99
+    "current_position": 63.22
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.37,
-    "price_to_support": 3.31
+    "price_to_resistance": 1.36,
+    "price_to_support": 3.33
   },
   "volume_analysis": {
-    "current_volume": 21875,
-    "avg_volume_5": 5136,
-    "avg_volume_20": 9222,
-    "volume_ratio": 2.37,
+    "current_volume": 34180,
+    "avg_volume_5": 7597,
+    "avg_volume_20": 9837,
+    "volume_ratio": 3.47,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -103,7 +103,7 @@
       "treasury": 0.365,
       "oil": -0.639,
       "spy": 0.331,
-      "usdeur": 0.71,
+      "usdeur": 0.713,
       "silver": 0.817
     },
     "strength_analysis": {
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-18T03:58:28.562895",
+    "last_update": "2025-08-18T06:23:45.597666",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,13 +163,21 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 24,
+      "total_relevant_news": 25,
       "critical_count": 0,
-      "high_impact_count": 12,
+      "high_impact_count": 9,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Gold price drops further, silver also down",
+          "source": "Khabarhub.com",
+          "published": "2025-08-17T06:15:50Z",
+          "url": "https://english.khabarhub.com/2025/17/491355/",
+          "impact": "عالي",
+          "sentiment": "سلبي"
+        },
         {
           "title": "Stocks power to record highs again despite warning signs. Can the market's strong run continue?",
           "source": "Biztoc.com",
@@ -183,14 +191,6 @@
           "source": "Forbes",
           "published": "2025-08-16T16:47:00Z",
           "url": "https://www.forbes.com/sites/simonmoore/2025/08/16/fed-expected-to-cut-interest-rates-though-inflation-may-be-picking-up/",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "Charting the global economy: US retail sales point to resilience",
-          "source": "Bloomberg",
-          "published": "2025-08-16T11:07:26Z",
-          "url": "https://www.bloomberg.com/news/articles/2025-08-16/world-economy-latest-healthy-us-retail-sales-signals-consumer-resilience",
           "impact": "عالي",
           "sentiment": "إيجابي"
         }
@@ -223,26 +223,26 @@
       ],
       "gold_specific": [
         {
-          "title": "historical gold price trend in India 1947ರ ಸ್ವಾತಂತ್ರ್ಯ ಸಮಯದಲ್ಲಿ ಚಿನ್ನಕ್ಕೆ ಬೇಡಿಕೆಯೇ ಇರಲಿಲ್ಲ! ಆಗ ಇದ್ದ ರೇಟ್ ಎಷ್ಟು? | Gold Price In India From 1947 To 202",
-          "source": "Asianetnews.com",
-          "published": "2025-08-16T10:55:46Z",
-          "url": "https://kannada.asianetnews.com/business/gold-price-in-india-from-1947-to-2025-complete-historical-trend-and-analysis-gow/articleshow-btwld36",
+          "title": "Gold & Silver CRASH!  Are Prices STILL Falling?!  #Gold #Silver #Markets #Finance",
+          "source": "Nep123.com",
+          "published": "2025-08-17T06:16:50Z",
+          "url": "https://nep123.com/gold-silver-crash-are-prices-still-falling-gold-silver-markets-finance/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "PNC Financial Services Group Inc. Purchases 2,614 Shares of SPDR Gold MiniShares Trust (NYSEARCA:GLDM)",
+          "title": "Short Interest in White Gold Corp. (OTCMKTS:WHGOF) Increases By 198.0%",
           "source": "ETF Daily News",
-          "published": "2025-08-16T07:52:51Z",
-          "url": "https://www.etfdailynews.com/2025/08/16/pnc-financial-services-group-inc-purchases-2614-shares-of-spdr-gold-minishares-trust-nysearcagldm/",
+          "published": "2025-08-17T05:38:52Z",
+          "url": "https://www.etfdailynews.com/2025/08/17/short-interest-in-white-gold-corp-otcmktswhgof-increases-by-198-0/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Atlantic Gold (OTCMKTS:SPVEF) Stock Price Down 0.9% – Should You Sell?",
-          "source": "ETF Daily News",
-          "published": "2025-08-16T06:42:45Z",
-          "url": "https://www.etfdailynews.com/2025/08/16/atlantic-gold-otcmktsspvef-stock-price-down-0-9-should-you-sell/",
+          "title": "Gold Price PLUMMETS!  Get the Latest Updates!  #Nepal #GoldPrice",
+          "source": "Nep123.com",
+          "published": "2025-08-17T05:29:48Z",
+          "url": "https://nep123.com/gold-price-plummets-get-the-latest-updates-nepal-goldprice/",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -250,7 +250,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-18 03:58:28",
+    "last_update": "2025-08-18 06:23:46",
     "data_points": 53,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
