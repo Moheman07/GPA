@@ -1,35 +1,35 @@
 {
-  "timestamp": "2025-08-19T13:38:05.500873",
+  "timestamp": "2025-08-19T15:21:30.621807",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.35,
+    "total_score": 2.55,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
       "volume": 4,
       "fibonacci": 1,
       "correlation": 1,
-      "support_resistance": -2,
+      "support_resistance": 0,
       "economic": 3,
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3377.5,
+    "current_price": 3365.6,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3330.78,
-        "conservative": 3315.21,
-        "moderate": 3284.06,
-        "wide": 3252.91
+        "tight": 3318.88,
+        "conservative": 3303.31,
+        "moderate": 3272.16,
+        "wide": 3241.01
       },
       "profit_targets": {
-        "target_1": 3439.79,
-        "target_2": 3502.09,
-        "target_3": 3585.14,
-        "target_4": 3709.73
+        "target_1": 3427.89,
+        "target_2": 3490.19,
+        "target_3": 3573.24,
+        "target_4": 3697.83
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 62.5,
-      "macd": 2.64,
-      "williams_r": -48.8,
-      "stoch_k": 51.2,
-      "bb_position": 0.66,
-      "volume_ratio": 5.76
+      "rsi": 61.1,
+      "macd": 1.69,
+      "williams_r": -54.6,
+      "stoch_k": 45.4,
+      "bb_position": 0.58,
+      "volume_ratio": 7.41
     },
     "key_levels": {
-      "sma_20": 3354.25,
-      "sma_50": 3350.9,
-      "sma_200": 3037.14,
-      "bb_upper": 3427.39,
-      "bb_lower": 3281.12
+      "sma_20": 3353.66,
+      "sma_50": 3350.66,
+      "sma_200": 3037.08,
+      "bb_upper": 3426.19,
+      "bb_lower": 3281.13
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 55.42
+    "current_position": 50.09
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.88,
-    "price_to_support": 2.83
+    "price_to_resistance": 2.24,
+    "price_to_support": 2.48
   },
   "volume_analysis": {
-    "current_volume": 66491,
-    "avg_volume_5": 14092,
-    "avg_volume_20": 11540,
-    "volume_ratio": 5.76,
+    "current_volume": 96624,
+    "avg_volume_5": 20119,
+    "avg_volume_20": 13046,
+    "volume_ratio": 7.41,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,7 +99,7 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.681,
-      "vix": 0.21,
+      "vix": 0.211,
       "treasury": 0.365,
       "oil": -0.641,
       "spy": 0.344,
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-19T13:38:05.261819",
+    "last_update": "2025-08-19T15:21:30.260987",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,34 +163,34 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 21,
+      "total_relevant_news": 24,
       "critical_count": 0,
-      "high_impact_count": 6,
+      "high_impact_count": 8,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
         {
+          "title": "Bitcoin’s record-breaking rally is a mirage measured by an ‘unpredictable ruler,’ analysts say",
+          "source": "Dlnews.com",
+          "published": "2025-08-18T14:03:06Z",
+          "url": "https://www.dlnews.com/articles/markets/bitcoin-record-rally-a-mirage-measured-unpredictable-ruler/",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
+          "title": "Jackson Hole, key retail earnings, and fresh economic data: Here's everything the stock market is watching this week",
+          "source": "Business Insider",
+          "published": "2025-08-18T13:47:12Z",
+          "url": "https://www.businessinsider.com/stock-market-this-week-fed-jackson-hole-rate-cut-earnings-2025-8",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
+        {
           "title": "Markets Log Weekly Gains As Import Prices, Retail Earnings, And Fed Policy Take Spotlight",
           "source": "Forbes",
           "published": "2025-08-18T12:29:48Z",
           "url": "https://www.forbes.com/sites/jjkinahan/2025/08/18/markets-log-weekly-gains-as-import-prices-retail-earnings-and-fed-policy-take-spotlight/",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "Gold price today, Monday, August 18: Gold opens above $3,380 as investors wait for interest rate clues",
-          "source": "Biztoc.com",
-          "published": "2025-08-18T12:19:47Z",
-          "url": "https://biztoc.com/x/a70954abbc32ba87",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "Gold price today, Monday, August 18: Gold opens above $3,380 as investors wait for interest rate clues",
-          "source": "Yahoo Entertainment",
-          "published": "2025-08-18T12:02:58Z",
-          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-monday-august-18-gold-opens-above-3380-as-investors-wait-for-interest-rate-clues-120258722.html",
           "impact": "عالي",
           "sentiment": "إيجابي"
         }
@@ -215,6 +215,14 @@
       ],
       "gold_specific": [
         {
+          "title": "Gold price prediction for August-end: Experts forecast gold rate in upcoming days",
+          "source": "The Times of India",
+          "published": "2025-08-18T13:46:24Z",
+          "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-prediction-for-august-end-experts-forecast-gold-rate-in-upcoming-days/articleshow/123366749.cms",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
           "title": "SONORO GOLD PROVIDES SURFACE RIGHTS UPDATE FOR THE CERRO CALICHE GOLD PROJECT",
           "source": "Financial Post",
           "published": "2025-08-18T12:04:39Z",
@@ -229,20 +237,12 @@
           "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-tuesday-august-19-2025-gold-opens-near-3400-ahead-of-big-retail-earnings-week-120258990.html",
           "impact": "مباشر للذهب",
           "sentiment": null
-        },
-        {
-          "title": "Tomingley Exploration Intersects Significant Gold at El Paso",
-          "source": "GlobeNewswire",
-          "published": "2025-08-18T10:21:00Z",
-          "url": "https://www.globenewswire.com/news-release/2025/08/18/3134875/0/en/Tomingley-Exploration-Intersects-Significant-Gold-at-El-Paso.html",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-19 13:38:05",
+    "last_update": "2025-08-19 15:21:30",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
