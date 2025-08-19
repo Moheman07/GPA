@@ -1125,7 +1125,6 @@ class ProfessionalGoldAnalyzerV3:
             # EMA
             df['EMA_9'] = df['Close'].ewm(span=9).mean()
             df['EMA_21'] = df['Close'].ewm(span=21).mean()
-            
             # التقاطعات الذهبية/الموت
             df['Golden_Cross'] = (df['SMA_50'] > df['SMA_200']).astype(int)
             df['Death_Cross'] = (df['SMA_50'] < df['SMA_200']).astype(int)
@@ -1502,7 +1501,6 @@ class ProfessionalGoldAnalyzerV3:
                     scores['trend'] -= 1
                     if latest['Close'] < latest['SMA_20']:
                         scores['trend'] -= 1
-            
             # التقاطعات الذهبية
             if latest.get('Golden_Cross', 0) == 1:
                 scores['ma_cross'] = 3
