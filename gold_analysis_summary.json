@@ -1,9 +1,9 @@
 {
-  "last_update": "2025-08-19T10:16:58.734080",
+  "last_update": "2025-08-19T10:20:52.923484",
   "version": "3.0",
-  "signal": null,
-  "confidence": null,
-  "price": null,
+  "signal": "Sell",
+  "confidence": "Medium",
+  "price": 3386.5,
   "ml_probability": null,
-  "market_condition": "عرضي/محايد - انتظار"
+  "market_condition": "عرضي - RSI: 63.5"
 }
