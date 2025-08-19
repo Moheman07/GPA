@@ -1,212 +1,25 @@
-name: Gold Analysis V3 Auto-Commit
-
-on:
-  schedule:
-    - cron: '0 */3 * * 1-5'
-  workflow_dispatch:
-  push:
-    branches: [ main, master ]
-
-permissions:
-  contents: write
-
-jobs:
-  analyze:
-    runs-on: ubuntu-latest
+- name: Fix and Run Analysis
+  run: |
+    # تطبيق الإصلاحات مباشرة
+    sed -i 's/progress=False)/progress=False, auto_adjust=True)/g' main_analyzer_v3.py
     
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
-      
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install yfinance pandas numpy requests scikit-learn xgboost textblob spacy backtrader aiohttp joblib
-        python -m spacy download en_core_web_sm || true
-        
-    - name: Create Simplified Analyzer
-      run: |
-        cat > fix_analyzer.py << 'EOF'
-        import yfinance as yf
-        import pandas as pd
-        import numpy as np
-        from datetime import datetime
-        import json
-        import warnings
-        warnings.filterwarnings('ignore')
-        
-        print("🚀 تشغيل المحلل المبسط...")
-        
-        try:
-            # جلب بيانات الذهب
-            data = yf.download('GC=F', period='1mo', progress=False, auto_adjust=True)
-            if data.empty:
-                data = yf.download('GLD', period='1mo', progress=False, auto_adjust=True)
-            
-            if not data.empty:
-                latest_price = float(data['Close'].iloc[-1])
-                
-                # حساب RSI بسيط
-                delta = data['Close'].diff()
-                gain = delta.where(delta > 0, 0).rolling(14).mean()
-                loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
-                rs = gain / loss
-                rsi = 100 - (100 / (1 + rs))
-                latest_rsi = float(rsi.iloc[-1])
-                
-                # حساب المتوسطات المتحركة
-                sma_20 = float(data['Close'].rolling(20).mean().iloc[-1])
-                sma_50 = float(data['Close'].rolling(50).mean().iloc[-1]) if len(data) >= 50 else sma_20
-                
-                # إشارة محسنة
-                score = 0
-                
-                # تحليل RSI
-                if latest_rsi < 30:
-                    signal = "Strong Buy"
-                    confidence = "High"
-                    score = 3
-                elif latest_rsi > 70:
-                    signal = "Strong Sell"
-                    confidence = "High"
-                    score = -3
-                elif latest_rsi < 45:
-                    signal = "Buy"
-                    confidence = "Medium"
-                    score = 1
-                elif latest_rsi > 55:
-                    signal = "Sell"
-                    confidence = "Medium"
-                    score = -1
-                else:
-                    signal = "Hold"
-                    confidence = "Low"
-                    score = 0
-                
-                # تحليل المتوسطات
-                if latest_price > sma_20:
-                    score += 0.5
-                if latest_price > sma_50:
-                    score += 0.5
-                
-                # تحديد حالة السوق
-                if score > 2:
-                    market_condition = "صاعد قوي"
-                elif score > 0:
-                    market_condition = "صاعد"
-                elif score < -2:
-                    market_condition = "هابط قوي"
-                elif score < 0:
-                    market_condition = "هابط"
-                else:
-                    market_condition = "عرضي"
-                
-                # حفظ النتائج الصحيحة
-                summary = {
-                    'last_update': datetime.now().isoformat(),
-                    'version': '3.0',
-                    'signal': signal,
-                    'confidence': confidence,
-                    'price': round(latest_price, 2),
-                    'ml_probability': None,
-                    'market_condition': f"{market_condition} - RSI: {latest_rsi:.1f}"
-                }
-                
-                # تحليل كامل
-                full_analysis = {
-                    'timestamp': datetime.now().isoformat(),
-                    'status': 'success',
-                    'version': '3.0',
-                    'gold_analysis': {
-                        'signal': signal,
-                        'confidence': confidence,
-                        'action_recommendation': signal,
-                        'total_score': round(score, 2),
-                        'current_price': round(latest_price, 2),
-                        'technical_summary': {
-                            'rsi': round(latest_rsi, 1),
-                            'sma_20': round(sma_20, 2),
-                            'sma_50': round(sma_50, 2)
-                        }
-                    },
-                    'market_summary': {
-                        'last_update': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                        'data_points': len(data),
-                        'market_condition': market_condition
-                    }
-                }
-                
-                print(f"✅ السعر: ${latest_price:.2f}")
-                print(f"✅ RSI: {latest_rsi:.1f}")
-                print(f"✅ الإشارة: {signal}")
-                print(f"✅ حالة السوق: {market_condition}")
-                
-            else:
-                summary = {
-                    'last_update': datetime.now().isoformat(),
-                    'version': '3.0',
-                    'signal': None,
-                    'confidence': None,
-                    'price': None,
-                    'ml_probability': None,
-                    'market_condition': 'فشل جلب البيانات'
-                }
-                full_analysis = {'status': 'error', 'message': 'فشل جلب البيانات'}
-                print("❌ فشل جلب البيانات")
-            
-            # حفظ الملفات بالبيانات الصحيحة
-            with open('gold_analysis_summary.json', 'w', encoding='utf-8') as f:
-                json.dump(summary, f, ensure_ascii=False, indent=2)
-            
-            with open('gold_analysis_v3.json', 'w', encoding='utf-8') as f:
-                json.dump(full_analysis, f, ensure_ascii=False, indent=2)
-                
-        except Exception as e:
-            print(f"❌ خطأ: {e}")
-            summary = {
-                'last_update': datetime.now().isoformat(),
-                'version': '3.0',
-                'signal': None,
-                'confidence': None,
-                'price': None,
-                'ml_probability': None,
-                'market_condition': f'خطأ: {str(e)}'
-            }
-            with open('gold_analysis_summary.json', 'w', encoding='utf-8') as f:
-                json.dump(summary, f, ensure_ascii=False, indent=2)
-        EOF
-        
-        python fix_analyzer.py
-        
-    - name: Show Results
-      run: |
-        echo "📄 محتوى gold_analysis_summary.json:"
-        cat gold_analysis_summary.json
-        
-    - name: Configure Git
-      run: |
-        git config --global user.email "action@github.com"
-        git config --global user.name "Gold Analysis Bot V3"
-        
-    - name: Commit and Push
-      run: |
-        # إضافة الملفات المحدثة
-        git add gold_analysis_v3.json gold_analysis_summary.json || true
-        
-        # إنشاء commit إذا كانت هناك تغييرات
-        if ! git diff --staged --quiet; then
-          git commit -m "🔄 Update gold analysis V3 - $(date +'%Y-%m-%d %H:%M UTC')"
-          
-          # محاولة الدفع مع استراتيجية merge
-          git pull origin main --no-rebase --strategy=ours || true
-          git push origin main
-        else
-          echo "لا توجد تغييرات للحفظ"
-        fi
+    # إضافة معالجة الأخطاء
+    python -c "
+import re
+with open('main_analyzer_v3.py', 'r') as f:
+    content = f.read()
+    
+# إصلاح analyze_timeframe
+content = re.sub(
+    r'latest```math
+\'RSI\'```',
+    'latest.get(\'RSI\', 50)',
+    content
+)
+
+with open('main_analyzer_v3.py', 'w') as f:
+    f.write(content)
+    "
+    
+    # تشغيل السكربت
+    python main_analyzer_v3.py
