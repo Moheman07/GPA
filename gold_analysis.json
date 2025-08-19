@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-19T03:38:55.266584",
+  "timestamp": "2025-08-19T06:21:04.185920",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": -2,
       "ma_cross": 3
     },
-    "current_price": 3384.2,
+    "current_price": 3381.6,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3334.05,
-        "conservative": 3317.33,
-        "moderate": 3283.9,
-        "wide": 3250.46
+        "tight": 3335.25,
+        "conservative": 3319.8,
+        "moderate": 3288.9,
+        "wide": 3258.0
       },
       "profit_targets": {
-        "target_1": 3451.07,
-        "target_2": 3517.94,
-        "target_3": 3607.09,
-        "target_4": 3740.83
+        "target_1": 3443.4,
+        "target_2": 3505.2,
+        "target_3": 3587.6,
+        "target_4": 3711.2
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 58.6,
-      "macd": 4.92,
-      "williams_r": -43.5,
-      "stoch_k": 56.5,
-      "bb_position": 0.65,
-      "volume_ratio": 2.03
+      "rsi": 63.0,
+      "macd": 2.97,
+      "williams_r": -46.7,
+      "stoch_k": 53.3,
+      "bb_position": 0.68,
+      "volume_ratio": 2.7
     },
     "key_levels": {
-      "sma_20": 3359.96,
-      "sma_50": 3351.04,
-      "sma_200": 3034.21,
-      "bb_upper": 3441.81,
-      "bb_lower": 3278.12
+      "sma_20": 3354.46,
+      "sma_50": 3350.98,
+      "sma_200": 3037.16,
+      "bb_upper": 3427.89,
+      "bb_lower": 3281.03
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 58.42
+    "current_position": 57.26
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.68,
-    "price_to_support": 3.02
+    "price_to_resistance": 1.76,
+    "price_to_support": 2.95
   },
   "volume_analysis": {
-    "current_volume": 18388,
-    "avg_volume_5": 4557,
-    "avg_volume_20": 9077,
-    "volume_ratio": 2.03,
+    "current_volume": 25692,
+    "avg_volume_5": 5933,
+    "avg_volume_20": 9500,
+    "volume_ratio": 2.7,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -98,13 +98,13 @@
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.679,
-      "vix": 0.215,
+      "dxy": -0.681,
+      "vix": 0.216,
       "treasury": 0.365,
-      "oil": -0.639,
-      "spy": 0.338,
-      "usdeur": 0.713,
-      "silver": 0.817
+      "oil": -0.641,
+      "spy": 0.337,
+      "usdeur": 0.715,
+      "silver": 0.818
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-19T03:38:54.949159",
+    "last_update": "2025-08-19T06:21:03.564967",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,9 +163,9 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 4,
+      "total_relevant_news": 6,
       "critical_count": 0,
-      "high_impact_count": 2,
+      "high_impact_count": 1,
       "overall_sentiment": "سلبي للذهب"
     },
     "categorized_news": {
@@ -177,14 +177,6 @@
           "url": "https://biztoc.com/x/987a92c477383784",
           "impact": "عالي",
           "sentiment": "سلبي"
-        },
-        {
-          "title": "Republicans look to make a U-turn on federal commitment to electric vehicles for the Postal Service",
-          "source": "Biztoc.com",
-          "published": "2025-08-17T22:30:36Z",
-          "url": "https://biztoc.com/x/2478be7e596399c6",
-          "impact": "عالي",
-          "sentiment": "محايد"
         }
       ],
       "medium_impact": [
@@ -199,10 +191,26 @@
       ],
       "gold_specific": [
         {
-          "title": "Gold, Silver Prices Hold Steady - Check Rates In Delhi, Mumbai And Other Cities",
-          "source": "Ndtvprofit.com",
-          "published": "2025-08-18T01:39:04Z",
-          "url": "https://www.ndtvprofit.com/markets/gold-silver-prices-hold-steady-check-rates-in-delhi-mumbai-and-other-cities",
+          "title": "Gold Prices Soar!  Big Jump of ₹800! ",
+          "source": "Nep123.com",
+          "published": "2025-08-18T05:59:50Z",
+          "url": "https://nep123.com/gold-prices-soar-big-jump-of-800/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "San Lorenzo Gold (CVE:SLG) Shares Up 37.9% – Time to Buy?",
+          "source": "ETF Daily News",
+          "published": "2025-08-18T05:49:07Z",
+          "url": "https://www.etfdailynews.com/2025/08/18/san-lorenzo-gold-cveslg-shares-up-37-9-time-to-buy/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Gold Price : Up UP!  How Much is it TODAY?! ",
+          "source": "Nep123.com",
+          "published": "2025-08-18T05:46:55Z",
+          "url": "https://nep123.com/gold-price-up-up-how-much-is-it-today/",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -210,8 +218,8 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-19 03:38:55",
-    "data_points": 53,
+    "last_update": "2025-08-19 06:21:04",
+    "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
   }
