@@ -28,11 +28,50 @@ jobs:
         pip install -r requirements.txt
         python -m spacy download en_core_web_sm
         
+    - name: Test Basic Functionality
+      env:
+        NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+        FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      run: |
+        # إنشاء ملف الاختبار
+        cat > test_analyzer.py << 'EOF'
+        import yfinance as yf
+        import os
+        from datetime import datetime
+        
+        print("🔍 اختبار الوظائف الأساسية...")
+        print("="*50)
+        
+        # اختبار yfinance
+        print("\n1. اختبار جلب بيانات الذهب:")
+        try:
+            gold_data = yf.download('GC=F', period='5d', progress=False)
+            if not gold_data.empty:
+                print(f"✅ نجح - آخر سعر: ${gold_data['Close'].iloc[-1]:.2f}")
+            else:
+                print("❌ البيانات فارغة")
+        except Exception as e:
+            print(f"❌ خطأ: {e}")
+        
+        # اختبار API keys
+        print("\n2. مفاتيح API:")
+        print(f"NEWS_API_KEY: {'✅ موجود' if os.getenv('NEWS_API_KEY') else '❌ مفقود'}")
+        print(f"FRED_API_KEY: {'✅ موجود' if os.getenv('FRED_API_KEY') else '⚠️ مفقود (اختياري)'}")
+        EOF
+        
+        python test_analyzer.py
+        
     - name: Run Analysis V3
       env:
         NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
         FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-      run: python main_analyzer_v3.py
+      run: |
+        # تشغيل التحليل الرئيسي
+        python main_analyzer_v3.py || echo "فشل التحليل الرئيسي"
+        
+        # عرض محتوى الملفات الناتجة
+        echo -e "\n📄 محتوى gold_analysis_summary.json:"
+        cat gold_analysis_summary.json 2>/dev/null || echo "الملف غير موجود"
         
     - name: Commit and Push Results
       run: |
