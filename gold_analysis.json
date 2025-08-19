@@ -1,0 +1,250 @@
+{
+  "timestamp": "2025-08-19T13:38:05.500873",
+  "status": "success",
+  "gold_analysis": {
+    "signal": "Strong Buy",
+    "confidence": "Very High",
+    "action_recommendation": "شراء قوي - حجم كبير",
+    "total_score": 2.35,
+    "component_scores": {
+      "trend": 4,
+      "momentum": 0.5,
+      "volume": 4,
+      "fibonacci": 1,
+      "correlation": 1,
+      "support_resistance": -2,
+      "economic": 3,
+      "news": 2,
+      "ma_cross": 3
+    },
+    "current_price": 3377.5,
+    "risk_management": {
+      "stop_loss_levels": {
+        "tight": 3330.78,
+        "conservative": 3315.21,
+        "moderate": 3284.06,
+        "wide": 3252.91
+      },
+      "profit_targets": {
+        "target_1": 3439.79,
+        "target_2": 3502.09,
+        "target_3": 3585.14,
+        "target_4": 3709.73
+      },
+      "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
+      "risk_reward_ratio": 2.0,
+      "max_risk_per_trade": "2%"
+    },
+    "entry_strategy": {
+      "entry_type": "دخول تدريجي",
+      "entry_zones": [
+        "قسّم الدخول على 2-3 مراحل"
+      ],
+      "conditions": [],
+      "warnings": []
+    },
+    "technical_summary": {
+      "rsi": 62.5,
+      "macd": 2.64,
+      "williams_r": -48.8,
+      "stoch_k": 51.2,
+      "bb_position": 0.66,
+      "volume_ratio": 5.76
+    },
+    "key_levels": {
+      "sma_20": 3354.25,
+      "sma_50": 3350.9,
+      "sma_200": 3037.14,
+      "bb_upper": 3427.39,
+      "bb_lower": 3281.12
+    }
+  },
+  "fibonacci_levels": {
+    "high": 3477.0,
+    "low": 3253.8,
+    "fib_23_6": 3424.32,
+    "fib_38_2": 3391.74,
+    "fib_50_0": 3365.4,
+    "fib_61_8": 3339.06,
+    "fib_78_6": 3301.56,
+    "analysis": "السعر فوق 50% - منطقة محايدة",
+    "current_position": 55.42
+  },
+  "support_resistance": {
+    "resistance_levels": [
+      3477.0,
+      3444.0,
+      3441.0
+    ],
+    "support_levels": [
+      3253.8,
+      3263.9,
+      3282.0
+    ],
+    "nearest_resistance": 3441.0,
+    "nearest_support": 3282.0,
+    "price_to_resistance": 1.88,
+    "price_to_support": 2.83
+  },
+  "volume_analysis": {
+    "current_volume": 66491,
+    "avg_volume_5": 14092,
+    "avg_volume_20": 11540,
+    "volume_ratio": 5.76,
+    "volume_strength": "قوي جداً",
+    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "obv_trend": "صاعد",
+    "volume_price_correlation": "إيجابي"
+  },
+  "market_correlations": {
+    "correlations": {
+      "dxy": -0.681,
+      "vix": 0.21,
+      "treasury": 0.365,
+      "oil": -0.641,
+      "spy": 0.344,
+      "usdeur": 0.715,
+      "silver": 0.818
+    },
+    "strength_analysis": {
+      "dxy": "قوي",
+      "vix": "ضعيف",
+      "treasury": "متوسط",
+      "oil": "قوي",
+      "spy": "متوسط",
+      "usdeur": "قوي جداً",
+      "silver": "قوي جداً"
+    },
+    "interpretation": {
+      "dxy": "ارتباط عكسي قوي - إيجابي للذهب عند ضعف الدولار",
+      "vix": "تأثير محدود من التقلبات",
+      "oil": "ارتباط قوي - مؤشر على التضخم"
+    }
+  },
+  "economic_data": {
+    "status": "simulated",
+    "last_update": "2025-08-19T13:38:05.261819",
+    "indicators": {
+      "US_CPI": {
+        "value": 3.2,
+        "previous": 3.4,
+        "impact": "إيجابي للذهب - تضخم منخفض",
+        "next_release": "2025-02-12"
+      },
+      "US_Interest_Rate": {
+        "value": 4.5,
+        "previous": 4.75,
+        "impact": "إيجابي للذهب - خفض الفائدة",
+        "next_release": "2025-01-29 FOMC"
+      },
+      "US_NFP": {
+        "value": 256000,
+        "previous": 227000,
+        "impact": "سلبي للذهب - سوق عمل قوي",
+        "next_release": "2025-02-07"
+      },
+      "DXY_Index": {
+        "value": 108.5,
+        "trend": "هابط",
+        "impact": "إيجابي للذهب - ضعف الدولار"
+      },
+      "Geopolitical_Risk": {
+        "level": "متوسط",
+        "events": [
+          "توترات تجارية",
+          "قلق من التضخم"
+        ],
+        "impact": "محايد إلى إيجابي للذهب"
+      }
+    },
+    "overall_impact": "إيجابي للذهب",
+    "score": 3
+  },
+  "news_analysis": {
+    "status": "success",
+    "summary": {
+      "total_relevant_news": 21,
+      "critical_count": 0,
+      "high_impact_count": 6,
+      "overall_sentiment": "إيجابي للذهب"
+    },
+    "categorized_news": {
+      "high_impact": [
+        {
+          "title": "Markets Log Weekly Gains As Import Prices, Retail Earnings, And Fed Policy Take Spotlight",
+          "source": "Forbes",
+          "published": "2025-08-18T12:29:48Z",
+          "url": "https://www.forbes.com/sites/jjkinahan/2025/08/18/markets-log-weekly-gains-as-import-prices-retail-earnings-and-fed-policy-take-spotlight/",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
+          "title": "Gold price today, Monday, August 18: Gold opens above $3,380 as investors wait for interest rate clues",
+          "source": "Biztoc.com",
+          "published": "2025-08-18T12:19:47Z",
+          "url": "https://biztoc.com/x/a70954abbc32ba87",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
+        {
+          "title": "Gold price today, Monday, August 18: Gold opens above $3,380 as investors wait for interest rate clues",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-18T12:02:58Z",
+          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-monday-august-18-gold-opens-above-3380-as-investors-wait-for-interest-rate-clues-120258722.html",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        }
+      ],
+      "medium_impact": [
+        {
+          "title": "Bitcoin risks further slide toward $112,000 after surprise market correction",
+          "source": "CryptoSlate",
+          "published": "2025-08-18T08:16:02Z",
+          "url": "https://cryptoslate.com/bitcoin-risks-further-slide-toward-112000-after-surprise-market-correction/",
+          "impact": "متوسط",
+          "sentiment": null
+        },
+        {
+          "title": "Oil falls on easing Russia supply concerns after Trump-Putin meet",
+          "source": "The Times of India",
+          "published": "2025-08-18T02:03:16Z",
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/oil-falls-on-easing-russia-supply-concerns-after-trump-putin-meet/articleshow/123353579.cms",
+          "impact": "متوسط",
+          "sentiment": null
+        }
+      ],
+      "gold_specific": [
+        {
+          "title": "SONORO GOLD PROVIDES SURFACE RIGHTS UPDATE FOR THE CERRO CALICHE GOLD PROJECT",
+          "source": "Financial Post",
+          "published": "2025-08-18T12:04:39Z",
+          "url": "https://financialpost.com/globe-newswire/sonoro-gold-provides-surface-rights-update-for-the-cerro-caliche-gold-project",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Gold price today, Tuesday, August 19, 2025: Gold opens near $3,400 ahead of big retail earnings week",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-18T12:02:58Z",
+          "url": "https://finance.yahoo.com/personal-finance/investing/article/gold-price-today-tuesday-august-19-2025-gold-opens-near-3400-ahead-of-big-retail-earnings-week-120258990.html",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Tomingley Exploration Intersects Significant Gold at El Paso",
+          "source": "GlobeNewswire",
+          "published": "2025-08-18T10:21:00Z",
+          "url": "https://www.globenewswire.com/news-release/2025/08/18/3134875/0/en/Tomingley-Exploration-Intersects-Significant-Gold-at-El-Paso.html",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        }
+      ]
+    }
+  },
+  "market_summary": {
+    "last_update": "2025-08-19 13:38:05",
+    "data_points": 54,
+    "timeframe": "Daily",
+    "market_condition": "صاعد قوي"
+  }
+}
