@@ -1,37 +1,37 @@
 {
-  "timestamp": "2025-08-19T01:05:44.993784",
+  "timestamp": "2025-08-19T03:38:55.266584",
   "status": "success",
   "gold_analysis": {
-    "signal": "Buy",
-    "confidence": "High",
-    "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.8,
+    "signal": "Strong Buy",
+    "confidence": "Very High",
+    "action_recommendation": "شراء قوي - حجم كبير",
+    "total_score": 2.15,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
-      "volume": 1,
+      "volume": 4,
       "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 0,
+      "news": -2,
       "ma_cross": 3
     },
-    "current_price": 3378.4,
+    "current_price": 3384.2,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3328.33,
-        "conservative": 3311.64,
-        "moderate": 3278.26,
-        "wide": 3244.88
+        "tight": 3334.05,
+        "conservative": 3317.33,
+        "moderate": 3283.9,
+        "wide": 3250.46
       },
       "profit_targets": {
-        "target_1": 3445.16,
-        "target_2": 3511.92,
-        "target_3": 3600.94,
-        "target_4": 3734.46
+        "target_1": 3451.07,
+        "target_2": 3517.94,
+        "target_3": 3607.09,
+        "target_4": 3740.83
       },
-      "position_size_recommendation": "متوسط-كبير (50-75%)",
+      "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
       "max_risk_per_trade": "2%"
     },
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 57.9,
-      "macd": 4.46,
-      "williams_r": -46.3,
-      "stoch_k": 53.7,
-      "bb_position": 0.61,
-      "volume_ratio": 1.05
+      "rsi": 58.6,
+      "macd": 4.92,
+      "williams_r": -43.5,
+      "stoch_k": 56.5,
+      "bb_position": 0.65,
+      "volume_ratio": 2.03
     },
     "key_levels": {
-      "sma_20": 3359.67,
-      "sma_50": 3350.93,
-      "sma_200": 3034.18,
-      "bb_upper": 3441.19,
-      "bb_lower": 3278.16
+      "sma_20": 3359.96,
+      "sma_50": 3351.04,
+      "sma_200": 3034.21,
+      "bb_upper": 3441.81,
+      "bb_lower": 3278.12
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 55.82
+    "current_position": 58.42
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,16 +83,16 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.85,
-    "price_to_support": 2.85
+    "price_to_resistance": 1.68,
+    "price_to_support": 3.02
   },
   "volume_analysis": {
-    "current_volume": 9052,
-    "avg_volume_5": 2571,
-    "avg_volume_20": 8581,
-    "volume_ratio": 1.05,
-    "volume_strength": "طبيعي",
-    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
+    "current_volume": 18388,
+    "avg_volume_5": 4557,
+    "avg_volume_20": 9077,
+    "volume_ratio": 2.03,
+    "volume_strength": "قوي جداً",
+    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
     "volume_price_correlation": "إيجابي"
   },
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-19T01:05:44.631201",
+    "last_update": "2025-08-19T03:38:54.949159",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,13 +163,21 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 2,
+      "total_relevant_news": 4,
       "critical_count": 0,
-      "high_impact_count": 1,
-      "overall_sentiment": "محايد"
+      "high_impact_count": 2,
+      "overall_sentiment": "سلبي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Gold Holds Weekly Drop on Growing Concern Over US Inflation",
+          "source": "Biztoc.com",
+          "published": "2025-08-18T01:07:13Z",
+          "url": "https://biztoc.com/x/987a92c477383784",
+          "impact": "عالي",
+          "sentiment": "سلبي"
+        },
         {
           "title": "Republicans look to make a U-turn on federal commitment to electric vehicles for the Postal Service",
           "source": "Biztoc.com",
@@ -181,20 +189,30 @@
       ],
       "medium_impact": [
         {
-          "title": "Israel's growing frustration over the war in Gaza erupts in nationwide protests",
-          "source": "Biztoc.com",
-          "published": "2025-08-17T19:20:42Z",
-          "url": "https://biztoc.com/x/a5fc6c3b77984962",
+          "title": "Oil falls on easing Russia supply concerns after Trump-Putin meet",
+          "source": "The Times of India",
+          "published": "2025-08-18T02:03:16Z",
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/oil-falls-on-easing-russia-supply-concerns-after-trump-putin-meet/articleshow/123353579.cms",
           "impact": "متوسط",
+          "sentiment": null
+        }
+      ],
+      "gold_specific": [
+        {
+          "title": "Gold, Silver Prices Hold Steady - Check Rates In Delhi, Mumbai And Other Cities",
+          "source": "Ndtvprofit.com",
+          "published": "2025-08-18T01:39:04Z",
+          "url": "https://www.ndtvprofit.com/markets/gold-silver-prices-hold-steady-check-rates-in-delhi-mumbai-and-other-cities",
+          "impact": "مباشر للذهب",
           "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-19 01:05:44",
+    "last_update": "2025-08-19 03:38:55",
     "data_points": 53,
     "timeframe": "Daily",
-    "market_condition": "متقلب"
+    "market_condition": "صاعد قوي"
   }
 }
