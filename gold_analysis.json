@@ -1,37 +1,37 @@
 {
-  "timestamp": "2025-08-18T21:12:12.264796",
+  "timestamp": "2025-08-19T01:05:44.993784",
   "status": "success",
   "gold_analysis": {
-    "signal": "Strong Buy",
-    "confidence": "Very High",
-    "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.35,
+    "signal": "Buy",
+    "confidence": "High",
+    "action_recommendation": "شراء - حجم متوسط",
+    "total_score": 1.8,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
-      "volume": 4,
+      "volume": 1,
       "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 2,
+      "news": 0,
       "ma_cross": 3
     },
-    "current_price": 3378.0,
+    "current_price": 3378.4,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3326.35,
-        "conservative": 3309.13,
-        "moderate": 3274.69,
-        "wide": 3240.26
+        "tight": 3328.33,
+        "conservative": 3311.64,
+        "moderate": 3278.26,
+        "wide": 3244.88
       },
       "profit_targets": {
-        "target_1": 3446.87,
-        "target_2": 3515.74,
-        "target_3": 3607.57,
-        "target_4": 3745.31
+        "target_1": 3445.16,
+        "target_2": 3511.92,
+        "target_3": 3600.94,
+        "target_4": 3734.46
       },
-      "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
+      "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
       "max_risk_per_trade": "2%"
     },
@@ -45,18 +45,18 @@
     },
     "technical_summary": {
       "rsi": 57.9,
-      "macd": 4.42,
-      "williams_r": -46.5,
-      "stoch_k": 53.5,
+      "macd": 4.46,
+      "williams_r": -46.3,
+      "stoch_k": 53.7,
       "bb_position": 0.61,
-      "volume_ratio": 8.33
+      "volume_ratio": 1.05
     },
     "key_levels": {
-      "sma_20": 3359.65,
-      "sma_50": 3350.92,
-      "sma_200": 3034.17,
-      "bb_upper": 3441.16,
-      "bb_lower": 3278.15
+      "sma_20": 3359.67,
+      "sma_50": 3350.93,
+      "sma_200": 3034.18,
+      "bb_upper": 3441.19,
+      "bb_lower": 3278.16
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 55.65
+    "current_position": 55.82
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,16 +83,16 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.87,
-    "price_to_support": 2.84
+    "price_to_resistance": 1.85,
+    "price_to_support": 2.85
   },
   "volume_analysis": {
-    "current_volume": 116076,
-    "avg_volume_5": 23976,
-    "avg_volume_20": 13932,
-    "volume_ratio": 8.33,
-    "volume_strength": "قوي جداً",
-    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "current_volume": 9052,
+    "avg_volume_5": 2571,
+    "avg_volume_20": 8581,
+    "volume_ratio": 1.05,
+    "volume_strength": "طبيعي",
+    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
     "obv_trend": "صاعد",
     "volume_price_correlation": "إيجابي"
   },
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-18T21:12:11.615964",
+    "last_update": "2025-08-19T01:05:44.631201",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,36 +163,20 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 9,
+      "total_relevant_news": 2,
       "critical_count": 0,
-      "high_impact_count": 4,
-      "overall_sentiment": "إيجابي للذهب"
+      "high_impact_count": 1,
+      "overall_sentiment": "محايد"
     },
     "categorized_news": {
       "high_impact": [
         {
-          "title": "The Fed, Home Depot, Target, Walmart, and More to Watch This Week",
+          "title": "Republicans look to make a U-turn on federal commitment to electric vehicles for the Postal Service",
           "source": "Biztoc.com",
-          "published": "2025-08-17T18:02:33Z",
-          "url": "https://biztoc.com/x/41bd71b3301fb5cf",
+          "published": "2025-08-17T22:30:36Z",
+          "url": "https://biztoc.com/x/2478be7e596399c6",
           "impact": "عالي",
           "sentiment": "محايد"
-        },
-        {
-          "title": "California unemployment rises to 5.5%, worst in the U.S. as tech falters",
-          "source": "Biztoc.com",
-          "published": "2025-08-17T16:10:32Z",
-          "url": "https://biztoc.com/x/465ffacea43e4a7e",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "California unemployment rises to 5.5%, worst in the U.S., as tech falters: ‘It’s brutal out there’",
-          "source": "Biztoc.com",
-          "published": "2025-08-17T15:59:15Z",
-          "url": "https://biztoc.com/x/580306157786497c",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
         }
       ],
       "medium_impact": [
@@ -203,48 +187,14 @@
           "url": "https://biztoc.com/x/a5fc6c3b77984962",
           "impact": "متوسط",
           "sentiment": null
-        },
-        {
-          "title": "Powell, Trump Talks and Other Can't Miss Items this Week",
-          "source": "Barchart.com",
-          "published": "2025-08-17T17:00:02Z",
-          "url": "https://www.barchart.com/story/news/34212044/powell-trump-talks-and-other-can-t-miss-items-this-week",
-          "impact": "متوسط",
-          "sentiment": null
-        },
-        {
-          "title": "Trump-Putin Meeting - what we learned #war #ukraine",
-          "source": "Biztoc.com",
-          "published": "2025-08-17T16:38:29Z",
-          "url": "https://biztoc.com/x/e895495a85c5f883",
-          "impact": "متوسط",
-          "sentiment": null
-        }
-      ],
-      "gold_specific": [
-        {
-          "title": "Gold Market Manipulation: Three Abuses Within the Last 5 Years",
-          "source": "Activistpost.com",
-          "published": "2025-08-17T19:00:00Z",
-          "url": "https://www.activistpost.com/gold-market-manipulation-three-abuses-within-the-last-5-years/",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "Building Scale in Gold: Equinox and Calibre Combine to Create Canadian Giant",
-          "source": "Yahoo Entertainment",
-          "published": "2025-08-17T19:00:00Z",
-          "url": "https://finance.yahoo.com/news/building-scale-gold-equinox-calibre-190000956.html",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-18 21:12:12",
+    "last_update": "2025-08-19 01:05:44",
     "data_points": 53,
     "timeframe": "Daily",
-    "market_condition": "صاعد قوي"
+    "market_condition": "متقلب"
   }
 }
