@@ -1,25 +1,15 @@
-- name: Fix and Run Analysis
+- name: Auto Fix Script
   run: |
-    # تطبيق الإصلاحات مباشرة
-    sed -i 's/progress=False)/progress=False, auto_adjust=True)/g' main_analyzer_v3.py
+    cat > auto_fix.py << 'EOF'
+    import re
+    with open('main_analyzer_v3.py', 'r') as f:
+        content = f.read()
+    content = re.sub(r'\ndef _get_future_prices', r'    def _get_future_prices', content)
+    content = re.sub(r'\ndef fetch_multi_timeframe_data', r'    def fetch_multi_timeframe_data', content)
+    content = re.sub(r'\ndef generate_professional_signals_v3', r'    def generate_professional_signals_v3', content)
+    with open('main_analyzer_v3.py', 'w') as f:
+        f.write(content)
+    EOF
     
-    # إضافة معالجة الأخطاء
-    python -c "
-import re
-with open('main_analyzer_v3.py', 'r') as f:
-    content = f.read()
-    
-# إصلاح analyze_timeframe
-content = re.sub(
-    r'latest```math
-\'RSI\'```',
-    'latest.get(\'RSI\', 50)',
-    content
-)
-
-with open('main_analyzer_v3.py', 'w') as f:
-    f.write(content)
-    "
-    
-    # تشغيل السكربت
+    python auto_fix.py
     python main_analyzer_v3.py
