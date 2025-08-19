@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-19T10:15:27.961425",
+  "timestamp": "2025-08-19T10:16:58.734080",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
@@ -15,7 +15,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 59.01
+    "current_position": 59.45
   },
   "support_resistance": {
     "resistance_levels": [
@@ -30,14 +30,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.64,
-    "price_to_support": 3.06
+    "price_to_resistance": 1.61,
+    "price_to_support": 3.09
   },
   "volume_analysis": {
-    "current_volume": 39488,
-    "avg_volume_5": 8692,
-    "avg_volume_20": 10189,
-    "volume_ratio": 3.88,
+    "current_volume": 39653,
+    "avg_volume_5": 8725,
+    "avg_volume_20": 10198,
+    "volume_ratio": 3.89,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -70,7 +70,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-19T10:15:26.409397",
+    "last_update": "2025-08-19T10:16:57.182872",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -693,7 +693,7 @@
   },
   "backtest_results": null,
   "market_summary": {
-    "last_update": "2025-08-19 10:15:27",
+    "last_update": "2025-08-19 10:16:58",
     "data_points": 54,
     "timeframe": "Multi-timeframe",
     "market_condition": "عرضي/محايد - انتظار"
