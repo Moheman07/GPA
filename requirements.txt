@@ -9,4 +9,3 @@ spacy
 backtrader
 aiohttp
 joblib
-sqlite3
