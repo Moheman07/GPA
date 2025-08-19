@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-19T09:28:57.457113",
+  "timestamp": "2025-08-19T10:11:48.223747",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
@@ -15,7 +15,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 57.44
+    "current_position": 58.47
   },
   "support_resistance": {
     "resistance_levels": [
@@ -30,14 +30,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.74,
-    "price_to_support": 2.96
+    "price_to_resistance": 1.68,
+    "price_to_support": 3.02
   },
   "volume_analysis": {
-    "current_volume": 37307,
-    "avg_volume_5": 8256,
-    "avg_volume_20": 10080,
-    "volume_ratio": 3.7,
+    "current_volume": 39198,
+    "avg_volume_5": 8634,
+    "avg_volume_20": 10175,
+    "volume_ratio": 3.85,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -70,7 +70,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-19T09:28:55.943115",
+    "last_update": "2025-08-19T10:11:46.593984",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -279,6 +279,360 @@
         },
         {
           "type": "interest_rate",
+          "title": "Questions for the Fed",
+          "source": "Project Syndicate",
+          "published": "2025-08-18T10:10:06Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Donald Trump",
+              "PERSON"
+            ],
+            [
+              "the US Federal Reserve",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": -0.20833333333333331,
+          "impact_score": 0.62,
+          "url": "https://www.project-syndicate.org/commentary/federal-reserve-recent-performance-raises-questions-for-next-chair-by-glenn-hubbard-2025-08"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Best high-yield savings interest rates today, August 18, 2025 (Earn up to 4.3% APY)",
+          "source": "Biztoc.com",
+          "published": "2025-08-18T10:05:55Z",
+          "entities": [
+            [
+              "today",
+              "DATE"
+            ],
+            [
+              "August 18, 2025",
+              "DATE"
+            ],
+            [
+              "up to 4.3%",
+              "PERCENT"
+            ],
+            [
+              "APY",
+              "ORG"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "18",
+              "context": "today , August 18 , 2025"
+            },
+            {
+              "value": "2025",
+              "context": "August 18 , 2025 ( Earn"
+            },
+            {
+              "value": "4.3",
+              "context": "Earn up to 4.3 % APY"
+            },
+            {
+              "value": "%",
+              "context": "up to 4.3 % APY )"
+            }
+          ],
+          "sentiment_score": 0.55,
+          "impact_score": -1.65,
+          "url": "https://biztoc.com/x/a871326a93c4198e"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Rate cut watch: All eyes on Fed Chair Powell's final Jackson Hole speech",
+          "source": "Biztoc.com",
+          "published": "2025-08-18T10:05:42Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Chair Powell",
+              "PERSON"
+            ],
+            [
+              "Jackson Hole",
+              "GPE"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Jackson Hole",
+              "GPE"
+            ],
+            [
+              "Wyo.",
+              "GPE"
+            ],
+            [
+              "this week",
+              "DATE"
+            ],
+            [
+              "43rd",
+              "ORDINAL"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Jerome Powell",
+              "PERSON"
+            ],
+            [
+              "September",
+              "DATE"
+            ],
+            [
+              "ris",
+              "PERSON"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "43rd",
+              "context": "week for their 43rd annual economic"
+            }
+          ],
+          "sentiment_score": 0.09166666666666667,
+          "impact_score": -0.28,
+          "url": "https://biztoc.com/x/d55c52f389c2ce77"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Rate cut watch: All eyes on Fed Chair Powell's final Jackson Hole speech",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-18T10:00:23Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Chair Powell",
+              "PERSON"
+            ],
+            [
+              "Jackson Hole",
+              "GPE"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Jackson Hole",
+              "GPE"
+            ],
+            [
+              "Wyo.",
+              "GPE"
+            ],
+            [
+              "this week",
+              "DATE"
+            ],
+            [
+              "43rd",
+              "ORDINAL"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Jerome Powell",
+              "PERSON"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "43rd",
+              "context": "week for their 43rd annual economic"
+            }
+          ],
+          "sentiment_score": 0.1,
+          "impact_score": -0.3,
+          "url": "https://finance.yahoo.com/news/rate-cut-watch-all-eyes-on-fed-chair-powells-final-jackson-hole-speech-100023617.html"
+        },
+        {
+          "type": "interest_rate",
+          "title": "HELOC rates today, August 18, 2025: Get a low interest rate now, then look for the Fed to cut rates later",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-18T10:00:15Z",
+          "entities": [
+            [
+              "HELOC",
+              "ORG"
+            ],
+            [
+              "today",
+              "DATE"
+            ],
+            [
+              "August 18, 2025",
+              "DATE"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "today",
+              "DATE"
+            ],
+            [
+              "HELOC",
+              "ORG"
+            ],
+            [
+              "9%",
+              "PERCENT"
+            ],
+            [
+              "HELOC",
+              "ORG"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "18",
+              "context": "today , August 18 , 2025"
+            },
+            {
+              "value": "2025",
+              "context": "August 18 , 2025 : Get"
+            },
+            {
+              "value": "9",
+              "context": "are well under 9 % ,"
+            },
+            {
+              "value": "%",
+              "context": "well under 9 % , with"
+            }
+          ],
+          "sentiment_score": -0.049999999999999996,
+          "impact_score": 0.15,
+          "url": "https://finance.yahoo.com/personal-finance/mortgages/article/heloc-rates-today-monday-august-18-2025-100015071.html"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Best high-yield savings interest rates today, August 18, 2025 (Earn up to 4.3% APY)",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-18T10:00:14Z",
+          "entities": [
+            [
+              "today",
+              "DATE"
+            ],
+            [
+              "August 18, 2025",
+              "DATE"
+            ],
+            [
+              "up to 4.3%",
+              "PERCENT"
+            ],
+            [
+              "APY",
+              "ORG"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "18",
+              "context": "today , August 18 , 2025"
+            },
+            {
+              "value": "2025",
+              "context": "August 18 , 2025 ( Earn"
+            },
+            {
+              "value": "4.3",
+              "context": "Earn up to 4.3 % APY"
+            },
+            {
+              "value": "%",
+              "context": "up to 4.3 % APY )"
+            }
+          ],
+          "sentiment_score": 0.5,
+          "impact_score": -1.5,
+          "url": "https://finance.yahoo.com/personal-finance/article/best-high-yield-savings-interest-rates-today-monday-august-18-2025-100014641.html"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Stock Market Today: S&P 500, Nasdaq Futures Decline— Palo Alto, XP, Allarity Earnings In Focus",
+          "source": "Biztoc.com",
+          "published": "2025-08-18T09:53:55Z",
+          "entities": [
+            [
+              "Nasdaq Futures Decline",
+              "ORG"
+            ],
+            [
+              "Palo Alto",
+              "GPE"
+            ],
+            [
+              "XP",
+              "ORG"
+            ],
+            [
+              "Allarity Earnings",
+              "ORG"
+            ],
+            [
+              "Focus U.S.",
+              "ORG"
+            ],
+            [
+              "Monday",
+              "DATE"
+            ],
+            [
+              "Friday",
+              "DATE"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "the Jackson Hole Economic Policy Symposium",
+              "ORG"
+            ],
+            [
+              "Friday",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "500",
+              "context": "Today : S&P 500 , Nasdaq"
+            }
+          ],
+          "sentiment_score": -0.034375,
+          "impact_score": 0.1,
+          "url": "https://biztoc.com/x/c0f22fb2bb913533"
+        },
+        {
+          "type": "interest_rate",
           "title": "U.S. Treasury Yields More Stable Than Usual This Summer",
           "source": "Barron's",
           "published": "2025-08-18T07:30:01Z",
@@ -321,378 +675,25 @@
           "sentiment_score": 0.024999999999999994,
           "impact_score": -0.07,
           "url": "https://www.barrons.com/livecoverage/stock-market-news-today-081825"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Jerome Powell Set To Deliver Pivotal Jackson Hole Address As Analysts Warn It Could Be 'Make-Or-Break' Moment For Dovish Fed",
-          "source": "Biztoc.com",
-          "published": "2025-08-18T06:43:42Z",
-          "entities": [
-            [
-              "Jerome Powell",
-              "PERSON"
-            ],
-            [
-              "Jerome Powell",
-              "PERSON"
-            ],
-            [
-              "the Jackson Hole Economic Policy Symposium",
-              "ORG"
-            ],
-            [
-              "Friday",
-              "DATE"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.22857142857142856,
-          "impact_score": -0.69,
-          "url": "https://biztoc.com/x/3ca73fbaa213930e"
-        },
-        {
-          "type": "employment",
-          "title": "Coding boom turns bust: Computer science grads face AI-dominated hiring doldrums",
-          "source": "Naturalnews.com",
-          "published": "2025-08-18T06:00:00Z",
-          "entities": [
-            [
-              "A decade",
-              "DATE"
-            ],
-            [
-              "133 percent",
-              "PERCENT"
-            ],
-            [
-              "U.S.",
-              "GPE"
-            ],
-            [
-              "AI",
-              "GPE"
-            ],
-            [
-              "thousands",
-              "CARDINAL"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "133",
-              "context": "led to a 133 percent surge"
-            }
-          ],
-          "sentiment_score": 0.2,
-          "impact_score": 0.4,
-          "url": "https://www.naturalnews.com/2025-08-18-computer-science-grads-face-ai-dominated-hiring-doldrums.html"
-        },
-        {
-          "type": "inflation",
-          "title": "Surging Producer Price Index sparks inflation alarm as services and trade costs drive July jump",
-          "source": "Naturalnews.com",
-          "published": "2025-08-18T06:00:00Z",
-          "entities": [
-            [
-              "July",
-              "DATE"
-            ],
-            [
-              "Producer",
-              "ORG"
-            ],
-            [
-              "0.9%",
-              "PERCENT"
-            ],
-            [
-              "July",
-              "DATE"
-            ],
-            [
-              "June 2022",
-              "DATE"
-            ],
-            [
-              "3.3%",
-              "PERCENT"
-            ],
-            [
-              "annually",
-              "DATE"
-            ],
-            [
-              "3-year",
-              "DATE"
-            ],
-            [
-              "three-quarters",
-              "CARDINAL"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "0.9",
-              "context": "Producer prices surged 0.9 % month"
-            },
-            {
-              "value": "%",
-              "context": "prices surged 0.9 % month -"
-            },
-            {
-              "value": "2022",
-              "context": "rise since June 2022 , and"
-            },
-            {
-              "value": "3.3",
-              "context": "2022 , and 3.3 % annually"
-            },
-            {
-              "value": "%",
-              "context": ", and 3.3 % annually ,"
-            },
-            {
-              "value": "3",
-              "context": ", marking a 3 - year"
-            },
-            {
-              "value": "three",
-              "context": "Services prices drove three - quarters"
-            }
-          ],
-          "sentiment_score": 0.2,
-          "impact_score": -0.5,
-          "url": "https://www.naturalnews.com/2025-08-18-surging-producer-price-index-sparks-inflation-alarm.html"
-        },
-        {
-          "type": "geopolitical",
-          "title": "Report From ‘Blueprint for Peace’",
-          "source": "Lewrockwell.com",
-          "published": "2025-08-18T04:01:00Z",
-          "entities": [
-            [
-              "Ron Paul Institute",
-              "PERSON"
-            ],
-            [
-              "9",
-              "CARDINAL"
-            ],
-            [
-              "annual",
-              "DATE"
-            ],
-            [
-              "Blueprint for Peace",
-              "WORK_OF_ART"
-            ],
-            [
-              "Saturday",
-              "DATE"
-            ],
-            [
-              "US",
-              "GPE"
-            ],
-            [
-              "Russia",
-              "GPE"
-            ],
-            [
-              "Ukraine",
-              "GPE"
-            ],
-            [
-              "seconds",
-              "TIME"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "9",
-              "context": "and Prosperity ’s 9 annual conference"
-            }
-          ],
-          "sentiment_score": 0.16818181818181818,
-          "impact_score": 0.42,
-          "url": "https://www.lewrockwell.com/2025/08/karen-kwiatkowski/report-from-blueprint-for-peace/"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Base metals drift as traders await Trump-Zelenskiy meeting",
-          "source": "Bloomberg",
-          "published": "2025-08-18T03:59:03Z",
-          "entities": [
-            [
-              "Trump-Zelenskiy",
-              "ORG"
-            ],
-            [
-              "Metals",
-              "PRODUCT"
-            ],
-            [
-              "last week",
-              "DATE"
-            ],
-            [
-              "China",
-              "GPE"
-            ],
-            [
-              "second",
-              "ORDINAL"
-            ],
-            [
-              "US",
-              "GPE"
-            ],
-            [
-              "next month",
-              "DATE"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "second",
-              "context": "the world ’s second - biggest"
-            }
-          ],
-          "sentiment_score": -0.18000000000000002,
-          "impact_score": 0.54,
-          "url": "https://www.bloomberg.com/news/articles/2025-08-18/base-metals-drift-as-traders-await-trump-zelenskiy-meeting"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Hong Kong stocks steady as investors await key quarterly results, Powell’s speech",
-          "source": "Biztoc.com",
-          "published": "2025-08-18T02:48:32Z",
-          "entities": [
-            [
-              "Hong Kong",
-              "GPE"
-            ],
-            [
-              "quarterly",
-              "DATE"
-            ],
-            [
-              "Powell",
-              "PERSON"
-            ],
-            [
-              "Hong Kong",
-              "GPE"
-            ],
-            [
-              "the week",
-              "DATE"
-            ],
-            [
-              "more than 20",
-              "CARDINAL"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Jerome Powell’s",
-              "PERSON"
-            ],
-            [
-              "Jackson Hole",
-              "FAC"
-            ],
-            [
-              "0.2 per cent",
-              "MONEY"
-            ],
-            [
-              "25,333",
-              "CARDINAL"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "20",
-              "context": "from more than 20 blue chips"
-            },
-            {
-              "value": "0.2",
-              "context": "Seng Index rose 0.2 per cent"
-            },
-            {
-              "value": "25,333",
-              "context": "per cent to 25,333 …"
-            }
-          ],
-          "sentiment_score": 0.24898989898989898,
-          "impact_score": -0.75,
-          "url": "https://biztoc.com/x/77e5504af7fb2dea"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Dollar braces for busy week of geopolitics and Fed speak",
-          "source": "The Times of India",
-          "published": "2025-08-18T02:07:32Z",
-          "entities": [
-            [
-              "busy week",
-              "DATE"
-            ],
-            [
-              "Fed",
-              "ORG"
-            ],
-            [
-              "US",
-              "GPE"
-            ],
-            [
-              "Donald Trump",
-              "PERSON"
-            ],
-            [
-              "Ukraine",
-              "GPE"
-            ],
-            [
-              "Volodymyr Zelenskiy",
-              "ORG"
-            ],
-            [
-              "the Federal Reserve's",
-              "ORG"
-            ],
-            [
-              "Jackson Hole",
-              "GPE"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": -0.022222222222222216,
-          "impact_score": 0.07,
-          "url": "https://economictimes.indiatimes.com/markets/forex/forex-news/dollar-braces-for-busy-week-of-geopolitics-and-fed-speak/articleshow/123353626.cms"
         }
       ],
       "event_summary": {
-        "interest_rate": 12,
-        "geopolitical": 10,
+        "interest_rate": 19,
+        "geopolitical": 5,
         "employment": 2,
         "inflation": 8,
-        "dollar": 2,
-        "central_bank": 1
+        "central_bank": 2,
+        "dollar": 1
       },
-      "total_impact": -1.41,
-      "dominant_theme": "geopolitical",
-      "recommendation": "تأثير محايد أو مختلط"
+      "total_impact": -7.38,
+      "dominant_theme": "employment",
+      "recommendation": "أخبار سلبية قوية جداً للذهب"
     },
-    "articles_count": 83
+    "articles_count": 78
   },
   "backtest_results": null,
   "market_summary": {
-    "last_update": "2025-08-19 09:28:57",
+    "last_update": "2025-08-19 10:11:48",
     "data_points": 54,
     "timeframe": "Multi-timeframe",
     "market_condition": "عرضي/محايد - انتظار"
