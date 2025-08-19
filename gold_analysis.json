@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-19T06:21:04.185920",
+  "timestamp": "2025-08-19T09:14:40.939112",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": -2,
       "ma_cross": 3
     },
-    "current_price": 3381.6,
+    "current_price": 3383.8,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3335.25,
-        "conservative": 3319.8,
-        "moderate": 3288.9,
-        "wide": 3258.0
+        "tight": 3337.36,
+        "conservative": 3321.88,
+        "moderate": 3290.92,
+        "wide": 3259.96
       },
       "profit_targets": {
-        "target_1": 3443.4,
-        "target_2": 3505.2,
-        "target_3": 3587.6,
-        "target_4": 3711.2
+        "target_1": 3445.72,
+        "target_2": 3507.64,
+        "target_3": 3590.19,
+        "target_4": 3714.03
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 63.0,
-      "macd": 2.97,
-      "williams_r": -46.7,
-      "stoch_k": 53.3,
-      "bb_position": 0.68,
-      "volume_ratio": 2.7
+      "rsi": 63.2,
+      "macd": 3.14,
+      "williams_r": -45.7,
+      "stoch_k": 54.3,
+      "bb_position": 0.7,
+      "volume_ratio": 3.64
     },
     "key_levels": {
-      "sma_20": 3354.46,
-      "sma_50": 3350.98,
-      "sma_200": 3037.16,
-      "bb_upper": 3427.89,
-      "bb_lower": 3281.03
+      "sma_20": 3354.57,
+      "sma_50": 3351.03,
+      "sma_200": 3037.17,
+      "bb_upper": 3428.18,
+      "bb_lower": 3280.96
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 57.26
+    "current_position": 58.24
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.76,
-    "price_to_support": 2.95
+    "price_to_resistance": 1.69,
+    "price_to_support": 3.01
   },
   "volume_analysis": {
-    "current_volume": 25692,
-    "avg_volume_5": 5933,
-    "avg_volume_20": 9500,
-    "volume_ratio": 2.7,
+    "current_volume": 36611,
+    "avg_volume_5": 8116,
+    "avg_volume_20": 10046,
+    "volume_ratio": 3.64,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,7 +99,7 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.681,
-      "vix": 0.216,
+      "vix": 0.21,
       "treasury": 0.365,
       "oil": -0.641,
       "spy": 0.337,
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-19T06:21:03.564967",
+    "last_update": "2025-08-19T09:14:40.633134",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,13 +163,21 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 6,
+      "total_relevant_news": 14,
       "critical_count": 0,
-      "high_impact_count": 1,
+      "high_impact_count": 2,
       "overall_sentiment": "سلبي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Gold falls below Rs 1 lakh, trades near two-week low. Analysts predict further downside",
+          "source": "The Times of India",
+          "published": "2025-08-18T09:09:24Z",
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-falls-below-rs-1-lakh-trades-near-two-week-low-analysts-predict-further-downside/articleshow/123360562.cms",
+          "impact": "عالي",
+          "sentiment": "سلبي"
+        },
         {
           "title": "Gold Holds Weekly Drop on Growing Concern Over US Inflation",
           "source": "Biztoc.com",
@@ -181,6 +189,14 @@
       ],
       "medium_impact": [
         {
+          "title": "Bitcoin risks further slide toward $112,000 after surprise market correction",
+          "source": "CryptoSlate",
+          "published": "2025-08-18T08:16:02Z",
+          "url": "https://cryptoslate.com/bitcoin-risks-further-slide-toward-112000-after-surprise-market-correction/",
+          "impact": "متوسط",
+          "sentiment": null
+        },
+        {
           "title": "Oil falls on easing Russia supply concerns after Trump-Putin meet",
           "source": "The Times of India",
           "published": "2025-08-18T02:03:16Z",
@@ -191,26 +207,26 @@
       ],
       "gold_specific": [
         {
-          "title": "Gold Prices Soar!  Big Jump of ₹800! ",
-          "source": "Nep123.com",
-          "published": "2025-08-18T05:59:50Z",
-          "url": "https://nep123.com/gold-prices-soar-big-jump-of-800/",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "San Lorenzo Gold (CVE:SLG) Shares Up 37.9% – Time to Buy?",
+          "title": "Deutsche Bank AG Grows Stock Holdings in Seabridge Gold, Inc. $SA",
           "source": "ETF Daily News",
-          "published": "2025-08-18T05:49:07Z",
-          "url": "https://www.etfdailynews.com/2025/08/18/san-lorenzo-gold-cveslg-shares-up-37-9-time-to-buy/",
+          "published": "2025-08-18T08:20:57Z",
+          "url": "https://www.etfdailynews.com/2025/08/18/deutsche-bank-ag-grows-stock-holdings-in-seabridge-gold-inc-sa/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Gold Price : Up UP!  How Much is it TODAY?! ",
-          "source": "Nep123.com",
-          "published": "2025-08-18T05:46:55Z",
-          "url": "https://nep123.com/gold-price-up-up-how-much-is-it-today/",
+          "title": "Royal Gold, Inc. (NASDAQ:RGLD) Receives Average Rating of “Moderate Buy” from Analysts",
+          "source": "ETF Daily News",
+          "published": "2025-08-18T07:50:53Z",
+          "url": "https://www.etfdailynews.com/2025/08/18/royal-gold-inc-nasdaqrgld-receives-average-rating-of-moderate-buy-from-analysts/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "San Lorenzo Gold (CVE:SLG) Stock Price Up 37.9% – Here’s Why",
+          "source": "ETF Daily News",
+          "published": "2025-08-18T07:43:03Z",
+          "url": "https://www.etfdailynews.com/2025/08/18/san-lorenzo-gold-cveslg-stock-price-up-37-9-heres-why/",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -218,7 +234,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-19 06:21:04",
+    "last_update": "2025-08-19 09:14:40",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
