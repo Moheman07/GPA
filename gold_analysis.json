@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-08-19T21:18:19.602005",
+  "timestamp": "2025-08-20T01:28:06.294329",
   "status": "success",
   "gold_analysis": {
-    "signal": "Strong Buy",
-    "confidence": "Very High",
-    "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.35,
+    "signal": "Buy",
+    "confidence": "High",
+    "action_recommendation": "شراء - حجم متوسط",
+    "total_score": 1.9,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
-      "volume": 4,
+      "volume": 1,
       "fibonacci": -1,
       "correlation": 1,
       "support_resistance": 0,
@@ -17,21 +17,21 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3358.9,
+    "current_price": 3356.7,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3312.18,
-        "conservative": 3296.61,
-        "moderate": 3265.46,
-        "wide": 3234.31
+        "tight": 3312.33,
+        "conservative": 3297.54,
+        "moderate": 3267.95,
+        "wide": 3238.37
       },
       "profit_targets": {
-        "target_1": 3421.19,
-        "target_2": 3483.49,
-        "target_3": 3566.54,
-        "target_4": 3691.13
+        "target_1": 3415.86,
+        "target_2": 3475.03,
+        "target_3": 3553.91,
+        "target_4": 3672.24
       },
-      "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
+      "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
       "max_risk_per_trade": "2%"
     },
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 60.2,
-      "macd": 1.16,
-      "williams_r": -57.9,
-      "stoch_k": 42.1,
-      "bb_position": 0.54,
-      "volume_ratio": 8.81
+      "rsi": 60.0,
+      "macd": 0.98,
+      "williams_r": -58.9,
+      "stoch_k": 41.1,
+      "bb_position": 0.52,
+      "volume_ratio": 1.11
     },
     "key_levels": {
-      "sma_20": 3353.32,
-      "sma_50": 3350.53,
-      "sma_200": 3037.05,
-      "bb_upper": 3425.68,
-      "bb_lower": 3280.97
+      "sma_20": 3353.21,
+      "sma_50": 3350.49,
+      "sma_200": 3037.04,
+      "bb_upper": 3425.54,
+      "bb_lower": 3280.89
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 61.8% - ضعف نسبي",
-    "current_position": 47.09
+    "current_position": 46.1
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,16 +83,16 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 2.44,
-    "price_to_support": 2.29
+    "price_to_resistance": 2.51,
+    "price_to_support": 2.23
   },
   "volume_analysis": {
-    "current_volume": 129232,
-    "avg_volume_5": 26641,
-    "avg_volume_20": 14677,
-    "volume_ratio": 8.81,
-    "volume_strength": "قوي جداً",
-    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "current_volume": 9684,
+    "avg_volume_5": 2731,
+    "avg_volume_20": 8699,
+    "volume_ratio": 1.11,
+    "volume_strength": "طبيعي",
+    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
     "obv_trend": "صاعد",
     "volume_price_correlation": "إيجابي"
   },
@@ -103,7 +103,7 @@
       "treasury": 0.365,
       "oil": -0.641,
       "spy": 0.34,
-      "usdeur": 0.715,
+      "usdeur": 0.718,
       "silver": 0.818
     },
     "strength_analysis": {
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-19T21:18:18.887163",
+    "last_update": "2025-08-20T01:28:05.967397",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -165,11 +165,19 @@
     "summary": {
       "total_relevant_news": 24,
       "critical_count": 0,
-      "high_impact_count": 7,
+      "high_impact_count": 8,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Dollar Gains as Fed Rate Cut Chances Slip",
+          "source": "Barchart.com",
+          "published": "2025-08-18T14:32:24Z",
+          "url": "https://www.barchart.com/story/news/34223966/dollar-gains-as-fed-rate-cut-chances-slip",
+          "impact": "عالي",
+          "sentiment": "إيجابي"
+        },
         {
           "title": "Bitcoin’s record-breaking rally is a mirage measured by an ‘unpredictable ruler,’ analysts say",
           "source": "Dlnews.com",
@@ -185,17 +193,17 @@
           "url": "https://www.businessinsider.com/stock-market-this-week-fed-jackson-hole-rate-cut-earnings-2025-8",
           "impact": "عالي",
           "sentiment": "محايد"
-        },
-        {
-          "title": "Markets Log Weekly Gains As Import Prices, Retail Earnings, And Fed Policy Take Spotlight",
-          "source": "Forbes",
-          "published": "2025-08-18T12:29:48Z",
-          "url": "https://www.forbes.com/sites/jjkinahan/2025/08/18/markets-log-weekly-gains-as-import-prices-retail-earnings-and-fed-policy-take-spotlight/",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
         }
       ],
       "medium_impact": [
+        {
+          "title": "Stocks Slightly Lower on Concern Over Progress to End Russian-Ukrainian War",
+          "source": "Barchart.com",
+          "published": "2025-08-18T13:59:58Z",
+          "url": "https://www.barchart.com/story/news/34223161/stocks-slightly-lower-on-concern-over-progress-to-end-russian-ukrainian-war",
+          "impact": "متوسط",
+          "sentiment": null
+        },
         {
           "title": "Bitcoin risks further slide toward $112,000 after surprise market correction",
           "source": "CryptoSlate",
@@ -203,17 +211,17 @@
           "url": "https://cryptoslate.com/bitcoin-risks-further-slide-toward-112000-after-surprise-market-correction/",
           "impact": "متوسط",
           "sentiment": null
-        },
-        {
-          "title": "Oil falls on easing Russia supply concerns after Trump-Putin meet",
-          "source": "The Times of India",
-          "published": "2025-08-18T02:03:16Z",
-          "url": "https://economictimes.indiatimes.com/markets/commodities/news/oil-falls-on-easing-russia-supply-concerns-after-trump-putin-meet/articleshow/123353579.cms",
-          "impact": "متوسط",
-          "sentiment": null
         }
       ],
       "gold_specific": [
+        {
+          "title": "18K White Gold 2.00ct Round Halo Labgrown Diamond Engagement Ring $1,610.00 (RRP $2,477) & Free Delivery @ Pear Jewels",
+          "source": "Ozbargain.com.au",
+          "published": "2025-08-19T00:06:07Z",
+          "url": "https://www.ozbargain.com.au/node/920334",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
         {
           "title": "Royalty And Streaming Giants Report Blockbuster Results",
           "source": "Forbes",
@@ -229,22 +237,14 @@
           "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-prediction-for-august-end-experts-forecast-gold-rate-in-upcoming-days/articleshow/123366749.cms",
           "impact": "مباشر للذهب",
           "sentiment": null
-        },
-        {
-          "title": "SONORO GOLD PROVIDES SURFACE RIGHTS UPDATE FOR THE CERRO CALICHE GOLD PROJECT",
-          "source": "Financial Post",
-          "published": "2025-08-18T12:04:39Z",
-          "url": "https://financialpost.com/globe-newswire/sonoro-gold-provides-surface-rights-update-for-the-cerro-caliche-gold-project",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-19 21:18:19",
+    "last_update": "2025-08-20 01:28:06",
     "data_points": 54,
     "timeframe": "Daily",
-    "market_condition": "صاعد قوي"
+    "market_condition": "متقلب"
   }
 }
