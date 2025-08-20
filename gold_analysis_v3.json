@@ -1,0 +1,798 @@
+{
+  "timestamp": "2025-08-20T22:13:45.797932",
+  "status": "success",
+  "version": "3.0",
+  "gold_analysis": {
+    "signal": "Weak Buy",
+    "confidence": "Medium",
+    "action_recommendation": "شراء حذر - حجم صغير",
+    "total_score": 1.47,
+    "component_scores": {
+      "trend": 4,
+      "momentum": 0.5,
+      "volume": 0,
+      "fibonacci": 2,
+      "correlation": 1,
+      "support_resistance": -2,
+      "economic": 3,
+      "news": 0,
+      "ma_cross": 3,
+      "mtf_coherence": 0
+    },
+    "current_price": 3392.1,
+    "risk_management": {
+      "stop_loss_levels": {
+        "tight": 3344.3,
+        "conservative": 3328.37,
+        "moderate": 3296.51,
+        "wide": 3264.64
+      },
+      "profit_targets": {
+        "target_1": 3455.83,
+        "target_2": 3519.56,
+        "target_3": 3604.53,
+        "target_4": 3731.99
+      },
+      "position_size_recommendation": "متوسط (25-50%)",
+      "risk_reward_ratio": 2.0,
+      "max_risk_per_trade": "1%",
+      "volatility_adjusted": true,
+      "ml_adjusted": false
+    },
+    "entry_strategy": {
+      "entry_type": "دخول تدريجي",
+      "entry_zones": [
+        "قسّم الدخول على 2-3 مراحل"
+      ],
+      "conditions": [],
+      "warnings": [
+        "⚠️ حجم ضعيف - تأكيد مطلوب"
+      ],
+      "mtf_confirmation": ""
+    },
+    "ml_prediction": {
+      "probability": null,
+      "interpretation": ""
+    },
+    "mtf_summary": "",
+    "upcoming_events": [
+      {
+        "type": "economic",
+        "name": "US_CPI",
+        "date": "2025-02-12",
+        "expected_impact": "إيجابي للذهب - تضخم منخفض"
+      },
+      {
+        "type": "economic",
+        "name": "US_Interest_Rate",
+        "date": "2025-01-29 FOMC",
+        "expected_impact": "إيجابي للذهب - خفض الفائدة"
+      },
+      {
+        "type": "economic",
+        "name": "US_NFP",
+        "date": "2025-02-07",
+        "expected_impact": "سلبي للذهب - سوق عمل قوي"
+      },
+      {
+        "type": "news_theme",
+        "name": "interest_rate",
+        "impact": "مستمر",
+        "recommendation": "تأثير محايد أو مختلط"
+      }
+    ],
+    "technical_summary": {
+      "rsi": 63.2,
+      "macd": 1.32,
+      "williams_r": -43.3,
+      "stoch_k": 56.7,
+      "bb_position": 0.78,
+      "volume_ratio": 0.04
+    },
+    "key_levels": {
+      "sma_20": 3350.95,
+      "sma_50": 3351.04,
+      "sma_200": 3040.09,
+      "bb_upper": 3425.16,
+      "bb_lower": 3276.74
+    }
+  },
+  "mtf_analysis": {},
+  "fibonacci_levels": {
+    "high": 3477.0,
+    "low": 3253.8,
+    "fib_23_6": 3424.32,
+    "fib_38_2": 3391.74,
+    "fib_50_0": 3365.4,
+    "fib_61_8": 3339.06,
+    "fib_78_6": 3301.56,
+    "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
+    "current_position": 61.96
+  },
+  "support_resistance": {
+    "resistance_levels": [
+      3477.0,
+      3444.0,
+      3441.0
+    ],
+    "support_levels": [
+      3253.8,
+      3263.9,
+      3282.0
+    ],
+    "nearest_resistance": 3441.0,
+    "nearest_support": 3282.0,
+    "price_to_resistance": 1.44,
+    "price_to_support": 3.25
+  },
+  "volume_analysis": {
+    "current_volume": 313,
+    "avg_volume_5": 676,
+    "avg_volume_20": 8233,
+    "volume_ratio": 0.04,
+    "volume_strength": "ضعيف",
+    "volume_signal": "حجم ضعيف - حذر من الحركة الوهمية",
+    "obv_trend": "صاعد",
+    "volume_price_correlation": "سلبي"
+  },
+  "market_correlations": {
+    "correlations": {
+      "dxy": -0.506,
+      "vix": -0.017,
+      "treasury": 0.471,
+      "oil": -0.715,
+      "spy": 0.904,
+      "usdeur": 0.612,
+      "silver": 0.955
+    },
+    "strength_analysis": {
+      "dxy": "قوي",
+      "vix": "ضعيف",
+      "treasury": "متوسط",
+      "oil": "قوي جداً",
+      "spy": "قوي جداً",
+      "usdeur": "قوي",
+      "silver": "قوي جداً"
+    },
+    "interpretation": {
+      "dxy": "ارتباط عكسي قوي - إيجابي للذهب عند ضعف الدولار",
+      "vix": "تأثير محدود من التقلبات",
+      "oil": "ارتباط قوي - مؤشر على التضخم"
+    }
+  },
+  "economic_data": {
+    "status": "simulated",
+    "last_update": "2025-08-20T22:13:43.961744",
+    "indicators": {
+      "US_CPI": {
+        "value": 3.2,
+        "previous": 3.4,
+        "impact": "إيجابي للذهب - تضخم منخفض",
+        "next_release": "2025-02-12"
+      },
+      "US_Interest_Rate": {
+        "value": 4.5,
+        "previous": 4.75,
+        "impact": "إيجابي للذهب - خفض الفائدة",
+        "next_release": "2025-01-29 FOMC"
+      },
+      "US_NFP": {
+        "value": 256000,
+        "previous": 227000,
+        "impact": "سلبي للذهب - سوق عمل قوي",
+        "next_release": "2025-02-07"
+      },
+      "DXY_Index": {
+        "value": 108.5,
+        "trend": "هابط",
+        "impact": "إيجابي للذهب - ضعف الدولار"
+      },
+      "Geopolitical_Risk": {
+        "level": "متوسط",
+        "events": [
+          "توترات تجارية",
+          "قلق من التضخم"
+        ],
+        "impact": "محايد إلى إيجابي للذهب"
+      }
+    },
+    "overall_impact": "إيجابي للذهب",
+    "score": 3
+  },
+  "news_analysis": {
+    "status": "success",
+    "events_analysis": {
+      "events": [
+        {
+          "type": "geopolitical",
+          "title": "Gold smashes records in 2025 — outpacing stocks, bonds, bitcoin: UBS warns investors — are we on the brink of a historic surge?",
+          "source": "The Times of India",
+          "published": "2025-08-19T17:48:32Z",
+          "entities": [
+            [
+              "2025",
+              "DATE"
+            ],
+            [
+              "UBS",
+              "ORG"
+            ],
+            [
+              "2025",
+              "DATE"
+            ],
+            [
+              "Bitcoin",
+              "PERSON"
+            ],
+            [
+              "28%",
+              "PERCENT"
+            ],
+            [
+              "this year",
+              "DATE"
+            ],
+            [
+              "UBS",
+              "ORG"
+            ],
+            [
+              "3,600",
+              "MONEY"
+            ],
+            [
+              "March 2026",
+              "DATE"
+            ],
+            [
+              "3,700",
+              "MONEY"
+            ],
+            [
+              "mid-year",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "2025",
+              "context": "smashes records in 2025 — outpacing"
+            },
+            {
+              "value": "2025",
+              "context": "Gold is dominating 2025 . Outpacing"
+            },
+            {
+              "value": "28",
+              "context": "has delivered a 28 % gain"
+            },
+            {
+              "value": "%",
+              "context": "delivered a 28 % gain so"
+            },
+            {
+              "value": "3,600",
+              "context": "could hit $ 3,600 by March"
+            },
+            {
+              "value": "2026",
+              "context": "3,600 by March 2026 and $"
+            },
+            {
+              "value": "3,700",
+              "context": "2026 and $ 3,700 by mid"
+            }
+          ],
+          "sentiment_score": 0.25,
+          "impact_score": 0.62,
+          "url": "https://economictimes.indiatimes.com/news/international/us/gold-smashes-records-in-2025-outpacing-stocks-bonds-bitcoin-ubs-warns-investors-are-we-on-the-brink-of-a-historic-surge/articleshow/123392073.cms"
+        },
+        {
+          "type": "geopolitical",
+          "title": "Ventura Securities expects gold to hit $3,600 an ounce",
+          "source": "BusinessLine",
+          "published": "2025-08-19T13:33:02Z",
+          "entities": [
+            [
+              "Ventura Securities",
+              "ORG"
+            ],
+            [
+              "3,600",
+              "MONEY"
+            ],
+            [
+              "Ventura Securities",
+              "ORG"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "3,600",
+              "context": "to hit $ 3,600 an ounce"
+            }
+          ],
+          "sentiment_score": 0.1,
+          "impact_score": 0.25,
+          "url": "https://www.thehindubusinessline.com/news/ventura-securities-expects-gold-to-hit-3600-an-ounce/article69951785.ece"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Gold price today: Gold rate rises as U.S. Dollar falls",
+          "source": "The Times of India",
+          "published": "2025-08-19T12:57:39Z",
+          "entities": [
+            [
+              "today",
+              "DATE"
+            ],
+            [
+              "U.S. Dollar",
+              "ORG"
+            ],
+            [
+              "83 per cent",
+              "MONEY"
+            ],
+            [
+              "25",
+              "CARDINAL"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "September",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "83",
+              "context": "investors expect an 83 per cent"
+            },
+            {
+              "value": "25",
+              "context": "probability of a 25 - basis"
+            }
+          ],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-today-gold-rate-rises-as-u-s-dollar-falls/articleshow/123388291.cms"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Gold price edge lower on US talks with European, Ukrainian leaders; likely to fall below Rs 99k",
+          "source": "The Times of India",
+          "published": "2025-08-19T07:45:52Z",
+          "entities": [
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "European",
+              "NORP"
+            ],
+            [
+              "Ukrainian",
+              "NORP"
+            ],
+            [
+              "Tuesday",
+              "DATE"
+            ],
+            [
+              "October",
+              "DATE"
+            ],
+            [
+              "Rs 99,240",
+              "LAW"
+            ],
+            [
+              "0.16%",
+              "PERCENT"
+            ],
+            [
+              "the US Fed’s",
+              "ORG"
+            ],
+            [
+              "Jackson Hole",
+              "GPE"
+            ],
+            [
+              "Donald Trump’s",
+              "PERSON"
+            ],
+            [
+              "European",
+              "NORP"
+            ],
+            [
+              "Ukrainian",
+              "NORP"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "99,240",
+              "context": "futures at Rs 99,240 per 10"
+            },
+            {
+              "value": "10",
+              "context": "Rs 99,240 per 10 grams ,"
+            },
+            {
+              "value": "0.16",
+              "context": "grams , down 0.16 % ,"
+            },
+            {
+              "value": "%",
+              "context": ", down 0.16 % , as"
+            }
+          ],
+          "sentiment_score": -0.1388888888888889,
+          "impact_score": 0.42,
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-price-edge-lower-on-us-talks-with-european-ukrainian-leaders-likely-to-fall-below-rs-99k/articleshow/123381461.cms"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Gold price drops by Rs 1,200 per tola, silver also down",
+          "source": "Khabarhub.com",
+          "published": "2025-08-19T05:45:48Z",
+          "entities": [
+            [
+              "1,200",
+              "CARDINAL"
+            ],
+            [
+              "1,200",
+              "CARDINAL"
+            ],
+            [
+              "Tuesday",
+              "DATE"
+            ],
+            [
+              "the Federation of Nepal Gold",
+              "ORG"
+            ],
+            [
+              "195,100",
+              "CARDINAL"
+            ],
+            [
+              "196,300",
+              "CARDINAL"
+            ],
+            [
+              "Monday",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "1,200",
+              "context": "drops by Rs 1,200 per tola"
+            },
+            {
+              "value": "1,200",
+              "context": "fell by Rs 1,200 per tola"
+            },
+            {
+              "value": "195,100",
+              "context": "traded at Rs 195,100 per tola"
+            },
+            {
+              "value": "196,300",
+              "context": "down from Rs 196,300 per tola"
+            }
+          ],
+          "sentiment_score": -0.30370370370370375,
+          "impact_score": 0.91,
+          "url": "https://english.khabarhub.com/2025/19/491688/"
+        },
+        {
+          "type": "geopolitical",
+          "title": "Gold Price Dips Below Rs 1,00,000 After Trump-Zelensky Meet - Check Rates",
+          "source": "Ndtvprofit.com",
+          "published": "2025-08-19T03:02:11Z",
+          "entities": [
+            [
+              "Dips Below Rs",
+              "PERSON"
+            ],
+            [
+              "Trump-Zelensky Meet - Check Rates Gold",
+              "PERSON"
+            ],
+            [
+              "Tuesday",
+              "DATE"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "Donald Trump",
+              "PERSON"
+            ],
+            [
+              "Ukrainian",
+              "GPE"
+            ],
+            [
+              "Russia",
+              "GPE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "1,00,000",
+              "context": "Dips Below Rs 1,00,000 After Trump"
+            }
+          ],
+          "sentiment_score": -0.15555555555555559,
+          "impact_score": -0.39,
+          "url": "https://www.ndtvprofit.com/markets/gold-price-dips-below-rs-100000-after-trump-zelensky-meet-check-rates"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Gold price today, Monday, August 18: Gold opens above $3,380 as investors wait for interest rate clues",
+          "source": "Biztoc.com",
+          "published": "2025-08-18T12:19:47Z",
+          "entities": [
+            [
+              "today, Monday, August 18",
+              "DATE"
+            ],
+            [
+              "above $3,380",
+              "MONEY"
+            ],
+            [
+              "Gold (GC=F",
+              "ORG"
+            ],
+            [
+              "3,382.40",
+              "MONEY"
+            ],
+            [
+              "Monday",
+              "DATE"
+            ],
+            [
+              "1.4%",
+              "PERCENT"
+            ],
+            [
+              "Friday",
+              "DATE"
+            ],
+            [
+              "3,336",
+              "MONEY"
+            ],
+            [
+              "August",
+              "DATE"
+            ],
+            [
+              "$3,281 to $3,477",
+              "MONEY"
+            ],
+            [
+              "Friday",
+              "DATE"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Jerome Powell",
+              "PERSON"
+            ],
+            [
+              "Jack",
+              "PERSON"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "18",
+              "context": "Monday , August 18 : Gold"
+            },
+            {
+              "value": "3,380",
+              "context": "opens above $ 3,380 as investors"
+            },
+            {
+              "value": "3,382.40",
+              "context": "opened at $ 3,382.40 per ounce"
+            },
+            {
+              "value": "1.4",
+              "context": "Monday , up 1.4 % from"
+            },
+            {
+              "value": "%",
+              "context": ", up 1.4 % from Friday"
+            },
+            {
+              "value": "3,336",
+              "context": "close of $ 3,336 . In"
+            },
+            {
+              "value": "3,281",
+              "context": "ranged from $ 3,281 to $"
+            },
+            {
+              "value": "3,477",
+              "context": "3,281 to $ 3,477 . \n"
+            }
+          ],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://biztoc.com/x/a70954abbc32ba87"
+        },
+        {
+          "type": "employment",
+          "title": "Instead of job hopping, workers are now 'job hugging' for dear life",
+          "source": "Business Insider",
+          "published": "2025-08-19T22:11:04Z",
+          "entities": [
+            [
+              "Korn Ferry",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.3181818181818182,
+          "impact_score": 0.64,
+          "url": "https://www.businessinsider.com/workers-job-hugging-hopping-labor-market-growth-2025-8"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Federal Reserve says US banks should serve crypto without fear of penalties",
+          "source": "CryptoSlate",
+          "published": "2025-08-19T21:45:45Z",
+          "entities": [
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Michelle Bowman",
+              "PERSON"
+            ],
+            [
+              "the Wyoming Blockchain Symposium",
+              "EVENT"
+            ],
+            [
+              "Aug. 19",
+              "DATE"
+            ],
+            [
+              "Bowman",
+              "PERSON"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "19",
+              "context": "Symposium on Aug. 19 , Bowman"
+            }
+          ],
+          "sentiment_score": 0.3375,
+          "impact_score": -1.01,
+          "url": "https://cryptoslate.com/federal-reserve-says-us-banks-can-now-serve-crypto-without-fear-of-penalties/"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Trump admin to fast-track Miran's Fed confirmation",
+          "source": "Biztoc.com",
+          "published": "2025-08-19T21:37:20Z",
+          "entities": [
+            [
+              "Miran",
+              "GPE"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "The White House",
+              "ORG"
+            ],
+            [
+              "Stephen Miran",
+              "PERSON"
+            ],
+            [
+              "the Federal Reserve Board",
+              "ORG"
+            ],
+            [
+              "mid-September",
+              "DATE"
+            ],
+            [
+              "Politico",
+              "PERSON"
+            ],
+            [
+              "Miran",
+              "GPE"
+            ],
+            [
+              "Don",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://biztoc.com/x/595013a8ce57f5b2"
+        }
+      ],
+      "event_summary": {
+        "geopolitical": 10,
+        "interest_rate": 26,
+        "employment": 3,
+        "central_bank": 2,
+        "dollar": 3,
+        "inflation": 10
+      },
+      "total_impact": 0.06,
+      "dominant_theme": "interest_rate",
+      "recommendation": "تأثير محايد أو مختلط"
+    },
+    "articles_count": 88
+  },
+  "backtest_results": {
+    "initial_capital": 10000,
+    "final_value": -245827.02,
+    "total_return": -2558.27,
+    "sharpe_ratio": -0.703,
+    "max_drawdown": 1817.86,
+    "total_trades": 2,
+    "winning_trades": 0,
+    "losing_trades": 1,
+    "win_rate": 0.0,
+    "avg_trade_return": -Infinity,
+    "best_trade": 0.0,
+    "worst_trade": -0.95,
+    "avg_win": 0.0,
+    "avg_loss": -0.95,
+    "profit_factor": 0.0,
+    "recovery_factor": -1.41,
+    "risk_reward_ratio": 0.0
+  },
+  "market_summary": {
+    "last_update": "2025-08-20 22:13:45",
+    "data_points": 555,
+    "timeframe": "Multi-timeframe",
+    "market_condition": "عرضي/محايد - انتظار"
+  }
+}
