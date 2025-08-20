@@ -1,35 +1,35 @@
 {
-  "timestamp": "2025-08-20T03:40:46.349771",
+  "timestamp": "2025-08-20T06:30:32.043332",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.35,
+    "total_score": 2.55,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
       "volume": 4,
-      "fibonacci": -1,
+      "fibonacci": 1,
       "correlation": 1,
       "support_resistance": 0,
       "economic": 3,
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3359.0,
+    "current_price": 3368.0,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3314.61,
-        "conservative": 3299.81,
-        "moderate": 3270.22,
-        "wide": 3240.63
+        "tight": 3322.24,
+        "conservative": 3306.99,
+        "moderate": 3276.49,
+        "wide": 3245.99
       },
       "profit_targets": {
-        "target_1": 3418.19,
-        "target_2": 3477.37,
-        "target_3": 3556.29,
-        "target_4": 3674.66
+        "target_1": 3429.01,
+        "target_2": 3490.01,
+        "target_3": 3571.36,
+        "target_4": 3693.37
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 60.3,
-      "macd": 1.16,
-      "williams_r": -57.8,
-      "stoch_k": 42.2,
-      "bb_position": 0.54,
-      "volume_ratio": 2.13
+      "rsi": 60.6,
+      "macd": -0.6,
+      "williams_r": -55.6,
+      "stoch_k": 44.4,
+      "bb_position": 0.63,
+      "volume_ratio": 2.86
     },
     "key_levels": {
-      "sma_20": 3353.33,
-      "sma_50": 3350.53,
-      "sma_200": 3037.05,
-      "bb_upper": 3425.69,
-      "bb_lower": 3280.97
+      "sma_20": 3349.74,
+      "sma_50": 3350.56,
+      "sma_200": 3039.97,
+      "bb_upper": 3421.9,
+      "bb_lower": 3277.59
     }
   },
   "fibonacci_levels": {
@@ -67,8 +67,8 @@
     "fib_50_0": 3365.4,
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
-    "analysis": "السعر فوق 61.8% - ضعف نسبي",
-    "current_position": 47.13
+    "analysis": "السعر فوق 50% - منطقة محايدة",
+    "current_position": 51.16
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 2.44,
-    "price_to_support": 2.29
+    "price_to_resistance": 2.17,
+    "price_to_support": 2.55
   },
   "volume_analysis": {
-    "current_volume": 19503,
-    "avg_volume_5": 4587,
-    "avg_volume_20": 9163,
-    "volume_ratio": 2.13,
+    "current_volume": 27467,
+    "avg_volume_5": 6107,
+    "avg_volume_20": 9591,
+    "volume_ratio": 2.86,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -98,13 +98,13 @@
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.681,
-      "vix": 0.211,
-      "treasury": 0.365,
-      "oil": -0.641,
-      "spy": 0.34,
-      "usdeur": 0.718,
-      "silver": 0.818
+      "dxy": -0.687,
+      "vix": 0.208,
+      "treasury": 0.359,
+      "oil": -0.64,
+      "spy": 0.339,
+      "usdeur": 0.72,
+      "silver": 0.817
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-20T03:40:45.937881",
+    "last_update": "2025-08-20T06:30:31.582982",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,13 +163,29 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 24,
+      "total_relevant_news": 25,
       "critical_count": 0,
-      "high_impact_count": 8,
+      "high_impact_count": 10,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Gold price drops by Rs 1,200 per tola, silver also down",
+          "source": "Khabarhub.com",
+          "published": "2025-08-19T05:45:48Z",
+          "url": "https://english.khabarhub.com/2025/19/491688/",
+          "impact": "عالي",
+          "sentiment": "سلبي"
+        },
+        {
+          "title": "Inflation, not geopolitics, will guide Fed decisions: Andrew Ferris",
+          "source": "The Times of India",
+          "published": "2025-08-19T05:41:09Z",
+          "url": "https://economictimes.indiatimes.com/markets/expert-view/inflation-not-geopolitics-will-guide-fed-decisions-andrew-ferris/articleshow/123378924.cms",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
         {
           "title": "Dollar Gains as Fed Rate Cut Chances Slip",
           "source": "Barchart.com",
@@ -177,22 +193,6 @@
           "url": "https://www.barchart.com/story/news/34223966/dollar-gains-as-fed-rate-cut-chances-slip",
           "impact": "عالي",
           "sentiment": "إيجابي"
-        },
-        {
-          "title": "Bitcoin’s record-breaking rally is a mirage measured by an ‘unpredictable ruler,’ analysts say",
-          "source": "Dlnews.com",
-          "published": "2025-08-18T14:03:06Z",
-          "url": "https://www.dlnews.com/articles/markets/bitcoin-record-rally-a-mirage-measured-unpredictable-ruler/",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
-        },
-        {
-          "title": "Jackson Hole, key retail earnings, and fresh economic data: Here's everything the stock market is watching this week",
-          "source": "Business Insider",
-          "published": "2025-08-18T13:47:12Z",
-          "url": "https://www.businessinsider.com/stock-market-this-week-fed-jackson-hole-rate-cut-earnings-2025-8",
-          "impact": "عالي",
-          "sentiment": "محايد"
         }
       ],
       "medium_impact": [
@@ -211,38 +211,30 @@
           "url": "https://www.barchart.com/story/news/34223161/stocks-slightly-lower-on-concern-over-progress-to-end-russian-ukrainian-war",
           "impact": "متوسط",
           "sentiment": null
-        },
-        {
-          "title": "Bitcoin risks further slide toward $112,000 after surprise market correction",
-          "source": "CryptoSlate",
-          "published": "2025-08-18T08:16:02Z",
-          "url": "https://cryptoslate.com/bitcoin-risks-further-slide-toward-112000-after-surprise-market-correction/",
-          "impact": "متوسط",
-          "sentiment": null
         }
       ],
       "gold_specific": [
         {
-          "title": "18K White Gold 2.00ct Round Halo Labgrown Diamond Engagement Ring $1,610.00 (RRP $2,477) & Free Delivery @ Pear Jewels",
-          "source": "Ozbargain.com.au",
-          "published": "2025-08-19T00:06:07Z",
-          "url": "https://www.ozbargain.com.au/node/920334",
+          "title": "Royal Gold (NASDAQ:RGLD) Cut to Hold at Wall Street Zen",
+          "source": "ETF Daily News",
+          "published": "2025-08-19T06:26:51Z",
+          "url": "https://www.etfdailynews.com/2025/08/19/royal-gold-nasdaqrgld-cut-to-hold-at-wall-street-zen/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Royalty And Streaming Giants Report Blockbuster Results",
-          "source": "Forbes",
-          "published": "2025-08-18T18:12:31Z",
-          "url": "https://www.forbes.com/sites/greatspeculations/2025/08/18/royalty-and-streaming-giants-report-blockbuster-results/",
+          "title": "FY2025 EPS Estimates for Equinox Gold Boosted by Analyst",
+          "source": "ETF Daily News",
+          "published": "2025-08-19T06:16:54Z",
+          "url": "https://www.etfdailynews.com/2025/08/19/fy2025-eps-estimates-for-equinox-gold-boosted-by-analyst/",
           "impact": "مباشر للذهب",
           "sentiment": null
         },
         {
-          "title": "Gold price prediction for August-end: Experts forecast gold rate in upcoming days",
-          "source": "The Times of India",
-          "published": "2025-08-18T13:46:24Z",
-          "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-prediction-for-august-end-experts-forecast-gold-rate-in-upcoming-days/articleshow/123366749.cms",
+          "title": " Gold & Silver CRASH!  Shocking Price Drop Today! ",
+          "source": "Nep123.com",
+          "published": "2025-08-19T05:55:12Z",
+          "url": "https://nep123.com/gold-silver-crash-shocking-price-drop-today/",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -250,7 +242,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-20 03:40:46",
+    "last_update": "2025-08-20 06:30:32",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
