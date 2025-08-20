@@ -1,35 +1,35 @@
 {
-  "timestamp": "2025-08-20T09:21:38.687977",
+  "timestamp": "2025-08-20T12:40:33.421787",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.55,
+    "total_score": 2.35,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
       "volume": 4,
       "fibonacci": 1,
       "correlation": 1,
-      "support_resistance": 0,
+      "support_resistance": -2,
       "economic": 3,
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3369.3,
+    "current_price": 3382.1,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3323.41,
-        "conservative": 3308.11,
-        "moderate": 3277.52,
-        "wide": 3246.92
+        "tight": 3335.21,
+        "conservative": 3319.58,
+        "moderate": 3288.32,
+        "wide": 3257.06
       },
       "profit_targets": {
-        "target_1": 3430.49,
-        "target_2": 3491.68,
-        "target_3": 3573.26,
-        "target_4": 3695.64
+        "target_1": 3444.62,
+        "target_2": 3507.14,
+        "target_3": 3590.49,
+        "target_4": 3715.53
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 60.8,
-      "macd": -0.5,
-      "williams_r": -54.9,
-      "stoch_k": 45.1,
-      "bb_position": 0.63,
-      "volume_ratio": 3.93
+      "rsi": 62.2,
+      "macd": 0.52,
+      "williams_r": -48.4,
+      "stoch_k": 51.6,
+      "bb_position": 0.72,
+      "volume_ratio": 5.76
     },
     "key_levels": {
-      "sma_20": 3349.81,
-      "sma_50": 3350.59,
-      "sma_200": 3039.97,
-      "bb_upper": 3422.03,
-      "bb_lower": 3277.59
+      "sma_20": 3350.45,
+      "sma_50": 3350.84,
+      "sma_200": 3040.04,
+      "bb_upper": 3423.62,
+      "bb_lower": 3277.28
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 51.75
+    "current_position": 57.48
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 2.13,
-    "price_to_support": 2.59
+    "price_to_resistance": 1.74,
+    "price_to_support": 2.96
   },
   "volume_analysis": {
-    "current_volume": 40133,
-    "avg_volume_5": 8640,
-    "avg_volume_20": 10224,
-    "volume_ratio": 3.93,
+    "current_volume": 66502,
+    "avg_volume_5": 13914,
+    "avg_volume_20": 11542,
+    "volume_ratio": 5.76,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -100,11 +100,11 @@
     "correlations": {
       "dxy": -0.687,
       "vix": 0.204,
-      "treasury": 0.359,
+      "treasury": 0.358,
       "oil": -0.64,
       "spy": 0.339,
       "usdeur": 0.72,
-      "silver": 0.817
+      "silver": 0.818
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-20T09:21:38.287416",
+    "last_update": "2025-08-20T12:40:33.099094",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,13 +163,29 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 24,
+      "total_relevant_news": 25,
       "critical_count": 0,
-      "high_impact_count": 10,
+      "high_impact_count": 12,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Dow, S&P 500, Nasdaq futures slip as markets wait and watch Fed rate-cut hopes amid Ukraine tensions",
+          "source": "The Times of India",
+          "published": "2025-08-19T12:14:17Z",
+          "url": "https://economictimes.indiatimes.com/news/international/us/us-stock-market-futures-slip-dow-sp-500-nasdaq-futures-slip-as-markets-wait-and-watch-fed-rate-cut-hopes-amid-ukraine-tensions/articleshow/123386762.cms",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
+        {
+          "title": "Markets are usually bubbly in Jackson Hole week. This year that might not happen",
+          "source": "Fortune",
+          "published": "2025-08-19T10:16:28Z",
+          "url": "https://fortune.com/2025/08/19/markets-jackson-hole-stocks-fed/",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
         {
           "title": "Gold price edge lower on US talks with European, Ukrainian leaders; likely to fall below Rs 99k",
           "source": "The Times of India",
@@ -177,22 +193,6 @@
           "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-price-edge-lower-on-us-talks-with-european-ukrainian-leaders-likely-to-fall-below-rs-99k/articleshow/123381461.cms",
           "impact": "عالي",
           "sentiment": "سلبي"
-        },
-        {
-          "title": "Gold price drops by Rs 1,200 per tola, silver also down",
-          "source": "Khabarhub.com",
-          "published": "2025-08-19T05:45:48Z",
-          "url": "https://english.khabarhub.com/2025/19/491688/",
-          "impact": "عالي",
-          "sentiment": "سلبي"
-        },
-        {
-          "title": "Inflation, not geopolitics, will guide Fed decisions: Andrew Ferris",
-          "source": "The Times of India",
-          "published": "2025-08-19T05:41:09Z",
-          "url": "https://economictimes.indiatimes.com/markets/expert-view/inflation-not-geopolitics-will-guide-fed-decisions-andrew-ferris/articleshow/123378924.cms",
-          "impact": "عالي",
-          "sentiment": "محايد"
         }
       ],
       "medium_impact": [
@@ -215,6 +215,14 @@
       ],
       "gold_specific": [
         {
+          "title": "Centerra Gold price target raised by 25c at BofA, here's why",
+          "source": "Thefly.com",
+          "published": "2025-08-19T12:15:12Z",
+          "url": "https://thefly.com/permalinks/entry.php/id4185550/CGAU-Centerra-Gold-price-target-raised-by-c-at-BofA-heres-why",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
           "title": "Royal Gold (NASDAQ:RGLD) Cut to Hold at Wall Street Zen",
           "source": "ETF Daily News",
           "published": "2025-08-19T06:26:51Z",
@@ -229,20 +237,12 @@
           "url": "https://www.etfdailynews.com/2025/08/19/fy2025-eps-estimates-for-equinox-gold-boosted-by-analyst/",
           "impact": "مباشر للذهب",
           "sentiment": null
-        },
-        {
-          "title": " Gold & Silver CRASH!  Shocking Price Drop Today! ",
-          "source": "Nep123.com",
-          "published": "2025-08-19T05:55:12Z",
-          "url": "https://nep123.com/gold-silver-crash-shocking-price-drop-today/",
-          "impact": "مباشر للذهب",
-          "sentiment": null
         }
       ]
     }
   },
   "market_summary": {
-    "last_update": "2025-08-20 09:21:38",
+    "last_update": "2025-08-20 12:40:33",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
