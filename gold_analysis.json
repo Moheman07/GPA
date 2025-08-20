@@ -1,11 +1,11 @@
 {
-  "timestamp": "2025-08-20T12:40:33.421787",
+  "timestamp": "2025-08-20T15:21:12.091499",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
     "confidence": "Very High",
     "action_recommendation": "شراء قوي - حجم كبير",
-    "total_score": 2.35,
+    "total_score": 2.25,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
@@ -14,22 +14,22 @@
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 2,
+      "news": 0,
       "ma_cross": 3
     },
-    "current_price": 3382.1,
+    "current_price": 3386.4,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3335.21,
-        "conservative": 3319.58,
-        "moderate": 3288.32,
-        "wide": 3257.06
+        "tight": 3338.56,
+        "conservative": 3322.62,
+        "moderate": 3290.73,
+        "wide": 3258.84
       },
       "profit_targets": {
-        "target_1": 3444.62,
-        "target_2": 3507.14,
-        "target_3": 3590.49,
-        "target_4": 3715.53
+        "target_1": 3450.18,
+        "target_2": 3513.96,
+        "target_3": 3599.01,
+        "target_4": 3726.57
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 62.2,
-      "macd": 0.52,
-      "williams_r": -48.4,
-      "stoch_k": 51.6,
-      "bb_position": 0.72,
-      "volume_ratio": 5.76
+      "rsi": 62.6,
+      "macd": 0.87,
+      "williams_r": -46.2,
+      "stoch_k": 53.8,
+      "bb_position": 0.74,
+      "volume_ratio": 7.84
     },
     "key_levels": {
-      "sma_20": 3350.45,
-      "sma_50": 3350.84,
-      "sma_200": 3040.04,
-      "bb_upper": 3423.62,
-      "bb_lower": 3277.28
+      "sma_20": 3350.66,
+      "sma_50": 3350.93,
+      "sma_200": 3040.06,
+      "bb_upper": 3424.25,
+      "bb_lower": 3277.08
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 57.48
+    "current_position": 59.41
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.74,
-    "price_to_support": 2.96
+    "price_to_resistance": 1.61,
+    "price_to_support": 3.08
   },
   "volume_analysis": {
-    "current_volume": 66502,
-    "avg_volume_5": 13914,
-    "avg_volume_20": 11542,
-    "volume_ratio": 5.76,
+    "current_volume": 105870,
+    "avg_volume_5": 21787,
+    "avg_volume_20": 13511,
+    "volume_ratio": 7.84,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,10 +99,10 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.687,
-      "vix": 0.204,
-      "treasury": 0.358,
-      "oil": -0.64,
-      "spy": 0.339,
+      "vix": 0.205,
+      "treasury": 0.357,
+      "oil": -0.641,
+      "spy": 0.345,
       "usdeur": 0.72,
       "silver": 0.818
     },
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-20T12:40:33.099094",
+    "last_update": "2025-08-20T15:21:11.185118",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -165,11 +165,19 @@
     "summary": {
       "total_relevant_news": 25,
       "critical_count": 0,
-      "high_impact_count": 12,
-      "overall_sentiment": "إيجابي للذهب"
+      "high_impact_count": 10,
+      "overall_sentiment": "محايد"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Gold price today: Gold rate rises as U.S. Dollar falls",
+          "source": "The Times of India",
+          "published": "2025-08-19T12:57:39Z",
+          "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-today-gold-rate-rises-as-u-s-dollar-falls/articleshow/123388291.cms",
+          "impact": "عالي",
+          "sentiment": "محايد"
+        },
         {
           "title": "Dow, S&P 500, Nasdaq futures slip as markets wait and watch Fed rate-cut hopes amid Ukraine tensions",
           "source": "The Times of India",
@@ -185,17 +193,17 @@
           "url": "https://fortune.com/2025/08/19/markets-jackson-hole-stocks-fed/",
           "impact": "عالي",
           "sentiment": "محايد"
-        },
-        {
-          "title": "Gold price edge lower on US talks with European, Ukrainian leaders; likely to fall below Rs 99k",
-          "source": "The Times of India",
-          "published": "2025-08-19T07:45:52Z",
-          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-price-edge-lower-on-us-talks-with-european-ukrainian-leaders-likely-to-fall-below-rs-99k/articleshow/123381461.cms",
-          "impact": "عالي",
-          "sentiment": "سلبي"
         }
       ],
       "medium_impact": [
+        {
+          "title": "Ventura Securities expects gold to hit $3,600 an ounce",
+          "source": "BusinessLine",
+          "published": "2025-08-19T13:33:02Z",
+          "url": "https://www.thehindubusinessline.com/news/ventura-securities-expects-gold-to-hit-3600-an-ounce/article69951785.ece",
+          "impact": "متوسط",
+          "sentiment": null
+        },
         {
           "title": "Gold Price Dips Below Rs 1,00,000 After Trump-Zelensky Meet - Check Rates",
           "source": "Ndtvprofit.com",
@@ -215,26 +223,26 @@
       ],
       "gold_specific": [
         {
+          "title": "akshare-mcp-ikouhaha 0.4.0",
+          "source": "Pypi.org",
+          "published": "2025-08-19T15:15:19Z",
+          "url": "https://pypi.org/project/akshare-mcp-ikouhaha/0.4.0/",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
+          "title": "Artemis Gold price target raised by C$4 at RBC Capital",
+          "source": "Thefly.com",
+          "published": "2025-08-19T14:18:42Z",
+          "url": "https://thefly.com/permalinks/entry.php/id4185690/ARGTF-Artemis-Gold-price-target-raised-by-C-at-RBC-Capital",
+          "impact": "مباشر للذهب",
+          "sentiment": null
+        },
+        {
           "title": "Centerra Gold price target raised by 25c at BofA, here's why",
           "source": "Thefly.com",
           "published": "2025-08-19T12:15:12Z",
           "url": "https://thefly.com/permalinks/entry.php/id4185550/CGAU-Centerra-Gold-price-target-raised-by-c-at-BofA-heres-why",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "Royal Gold (NASDAQ:RGLD) Cut to Hold at Wall Street Zen",
-          "source": "ETF Daily News",
-          "published": "2025-08-19T06:26:51Z",
-          "url": "https://www.etfdailynews.com/2025/08/19/royal-gold-nasdaqrgld-cut-to-hold-at-wall-street-zen/",
-          "impact": "مباشر للذهب",
-          "sentiment": null
-        },
-        {
-          "title": "FY2025 EPS Estimates for Equinox Gold Boosted by Analyst",
-          "source": "ETF Daily News",
-          "published": "2025-08-19T06:16:54Z",
-          "url": "https://www.etfdailynews.com/2025/08/19/fy2025-eps-estimates-for-equinox-gold-boosted-by-analyst/",
           "impact": "مباشر للذهب",
           "sentiment": null
         }
@@ -242,7 +250,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-20 12:40:33",
+    "last_update": "2025-08-20 15:21:12",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
