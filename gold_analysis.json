@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-08-20T01:28:06.294329",
+  "timestamp": "2025-08-20T03:40:46.349771",
   "status": "success",
   "gold_analysis": {
-    "signal": "Buy",
-    "confidence": "High",
-    "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.9,
+    "signal": "Strong Buy",
+    "confidence": "Very High",
+    "action_recommendation": "شراء قوي - حجم كبير",
+    "total_score": 2.35,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
-      "volume": 1,
+      "volume": 4,
       "fibonacci": -1,
       "correlation": 1,
       "support_resistance": 0,
@@ -17,21 +17,21 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3356.7,
+    "current_price": 3359.0,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3312.33,
-        "conservative": 3297.54,
-        "moderate": 3267.95,
-        "wide": 3238.37
+        "tight": 3314.61,
+        "conservative": 3299.81,
+        "moderate": 3270.22,
+        "wide": 3240.63
       },
       "profit_targets": {
-        "target_1": 3415.86,
-        "target_2": 3475.03,
-        "target_3": 3553.91,
-        "target_4": 3672.24
+        "target_1": 3418.19,
+        "target_2": 3477.37,
+        "target_3": 3556.29,
+        "target_4": 3674.66
       },
-      "position_size_recommendation": "متوسط-كبير (50-75%)",
+      "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
       "max_risk_per_trade": "2%"
     },
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 60.0,
-      "macd": 0.98,
-      "williams_r": -58.9,
-      "stoch_k": 41.1,
-      "bb_position": 0.52,
-      "volume_ratio": 1.11
+      "rsi": 60.3,
+      "macd": 1.16,
+      "williams_r": -57.8,
+      "stoch_k": 42.2,
+      "bb_position": 0.54,
+      "volume_ratio": 2.13
     },
     "key_levels": {
-      "sma_20": 3353.21,
-      "sma_50": 3350.49,
-      "sma_200": 3037.04,
-      "bb_upper": 3425.54,
-      "bb_lower": 3280.89
+      "sma_20": 3353.33,
+      "sma_50": 3350.53,
+      "sma_200": 3037.05,
+      "bb_upper": 3425.69,
+      "bb_lower": 3280.97
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 61.8% - ضعف نسبي",
-    "current_position": 46.1
+    "current_position": 47.13
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,16 +83,16 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 2.51,
-    "price_to_support": 2.23
+    "price_to_resistance": 2.44,
+    "price_to_support": 2.29
   },
   "volume_analysis": {
-    "current_volume": 9684,
-    "avg_volume_5": 2731,
-    "avg_volume_20": 8699,
-    "volume_ratio": 1.11,
-    "volume_strength": "طبيعي",
-    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
+    "current_volume": 19503,
+    "avg_volume_5": 4587,
+    "avg_volume_20": 9163,
+    "volume_ratio": 2.13,
+    "volume_strength": "قوي جداً",
+    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
     "volume_price_correlation": "إيجابي"
   },
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-20T01:28:05.967397",
+    "last_update": "2025-08-20T03:40:45.937881",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -197,6 +197,14 @@
       ],
       "medium_impact": [
         {
+          "title": "Gold Price Dips Below Rs 1,00,000 After Trump-Zelensky Meet - Check Rates",
+          "source": "Ndtvprofit.com",
+          "published": "2025-08-19T03:02:11Z",
+          "url": "https://www.ndtvprofit.com/markets/gold-price-dips-below-rs-100000-after-trump-zelensky-meet-check-rates",
+          "impact": "متوسط",
+          "sentiment": null
+        },
+        {
           "title": "Stocks Slightly Lower on Concern Over Progress to End Russian-Ukrainian War",
           "source": "Barchart.com",
           "published": "2025-08-18T13:59:58Z",
@@ -242,9 +250,9 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-20 01:28:06",
+    "last_update": "2025-08-20 03:40:46",
     "data_points": 54,
     "timeframe": "Daily",
-    "market_condition": "متقلب"
+    "market_condition": "صاعد قوي"
   }
 }
