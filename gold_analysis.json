@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-20T15:21:12.091499",
+  "timestamp": "2025-08-20T18:29:02.182588",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 0,
       "ma_cross": 3
     },
-    "current_price": 3386.4,
+    "current_price": 3388.3,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3338.56,
-        "conservative": 3322.62,
-        "moderate": 3290.73,
-        "wide": 3258.84
+        "tight": 3340.46,
+        "conservative": 3324.52,
+        "moderate": 3292.63,
+        "wide": 3260.74
       },
       "profit_targets": {
-        "target_1": 3450.18,
-        "target_2": 3513.96,
-        "target_3": 3599.01,
-        "target_4": 3726.57
+        "target_1": 3452.08,
+        "target_2": 3515.86,
+        "target_3": 3600.91,
+        "target_4": 3728.47
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,19 +44,19 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 62.6,
-      "macd": 0.87,
-      "williams_r": -46.2,
-      "stoch_k": 53.8,
-      "bb_position": 0.74,
-      "volume_ratio": 7.84
+      "rsi": 62.8,
+      "macd": 1.02,
+      "williams_r": -45.3,
+      "stoch_k": 54.7,
+      "bb_position": 0.75,
+      "volume_ratio": 8.59
     },
     "key_levels": {
-      "sma_20": 3350.66,
-      "sma_50": 3350.93,
-      "sma_200": 3040.06,
-      "bb_upper": 3424.25,
-      "bb_lower": 3277.08
+      "sma_20": 3350.76,
+      "sma_50": 3350.97,
+      "sma_200": 3040.07,
+      "bb_upper": 3424.54,
+      "bb_lower": 3276.98
     }
   },
   "fibonacci_levels": {
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 59.41
+    "current_position": 60.26
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.61,
-    "price_to_support": 3.08
+    "price_to_resistance": 1.56,
+    "price_to_support": 3.14
   },
   "volume_analysis": {
-    "current_volume": 105870,
-    "avg_volume_5": 21787,
-    "avg_volume_20": 13511,
-    "volume_ratio": 7.84,
+    "current_volume": 123767,
+    "avg_volume_5": 25367,
+    "avg_volume_20": 14406,
+    "volume_ratio": 8.59,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,9 +99,9 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.687,
-      "vix": 0.205,
+      "vix": 0.204,
       "treasury": 0.357,
-      "oil": -0.641,
+      "oil": -0.64,
       "spy": 0.345,
       "usdeur": 0.72,
       "silver": 0.818
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-20T15:21:11.185118",
+    "last_update": "2025-08-20T18:29:01.533640",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,9 +163,9 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 25,
+      "total_relevant_news": 23,
       "critical_count": 0,
-      "high_impact_count": 10,
+      "high_impact_count": 9,
       "overall_sentiment": "محايد"
     },
     "categorized_news": {
@@ -197,6 +197,14 @@
       ],
       "medium_impact": [
         {
+          "title": "Gold smashes records in 2025 — outpacing stocks, bonds, bitcoin: UBS warns investors — are we on the brink of a historic surge?",
+          "source": "The Times of India",
+          "published": "2025-08-19T17:48:32Z",
+          "url": "https://economictimes.indiatimes.com/news/international/us/gold-smashes-records-in-2025-outpacing-stocks-bonds-bitcoin-ubs-warns-investors-are-we-on-the-brink-of-a-historic-surge/articleshow/123392073.cms",
+          "impact": "متوسط",
+          "sentiment": null
+        },
+        {
           "title": "Ventura Securities expects gold to hit $3,600 an ounce",
           "source": "BusinessLine",
           "published": "2025-08-19T13:33:02Z",
@@ -209,14 +217,6 @@
           "source": "Ndtvprofit.com",
           "published": "2025-08-19T03:02:11Z",
           "url": "https://www.ndtvprofit.com/markets/gold-price-dips-below-rs-100000-after-trump-zelensky-meet-check-rates",
-          "impact": "متوسط",
-          "sentiment": null
-        },
-        {
-          "title": "Stocks Slightly Lower on Concern Over Progress to End Russian-Ukrainian War",
-          "source": "Barchart.com",
-          "published": "2025-08-18T13:59:58Z",
-          "url": "https://www.barchart.com/story/news/34223161/stocks-slightly-lower-on-concern-over-progress-to-end-russian-ukrainian-war",
           "impact": "متوسط",
           "sentiment": null
         }
@@ -250,7 +250,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-20 15:21:12",
+    "last_update": "2025-08-20 18:29:02",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
