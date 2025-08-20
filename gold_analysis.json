@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-20T06:30:32.043332",
+  "timestamp": "2025-08-20T09:21:38.687977",
   "status": "success",
   "gold_analysis": {
     "signal": "Strong Buy",
@@ -17,19 +17,19 @@
       "news": 2,
       "ma_cross": 3
     },
-    "current_price": 3368.0,
+    "current_price": 3369.3,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3322.24,
-        "conservative": 3306.99,
-        "moderate": 3276.49,
-        "wide": 3245.99
+        "tight": 3323.41,
+        "conservative": 3308.11,
+        "moderate": 3277.52,
+        "wide": 3246.92
       },
       "profit_targets": {
-        "target_1": 3429.01,
-        "target_2": 3490.01,
-        "target_3": 3571.36,
-        "target_4": 3693.37
+        "target_1": 3430.49,
+        "target_2": 3491.68,
+        "target_3": 3573.26,
+        "target_4": 3695.64
       },
       "position_size_recommendation": "كبير (75-100% من رأس المال المخصص)",
       "risk_reward_ratio": 2.0,
@@ -44,18 +44,18 @@
       "warnings": []
     },
     "technical_summary": {
-      "rsi": 60.6,
-      "macd": -0.6,
-      "williams_r": -55.6,
-      "stoch_k": 44.4,
+      "rsi": 60.8,
+      "macd": -0.5,
+      "williams_r": -54.9,
+      "stoch_k": 45.1,
       "bb_position": 0.63,
-      "volume_ratio": 2.86
+      "volume_ratio": 3.93
     },
     "key_levels": {
-      "sma_20": 3349.74,
-      "sma_50": 3350.56,
+      "sma_20": 3349.81,
+      "sma_50": 3350.59,
       "sma_200": 3039.97,
-      "bb_upper": 3421.9,
+      "bb_upper": 3422.03,
       "bb_lower": 3277.59
     }
   },
@@ -68,7 +68,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 51.16
+    "current_position": 51.75
   },
   "support_resistance": {
     "resistance_levels": [
@@ -83,14 +83,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 2.17,
-    "price_to_support": 2.55
+    "price_to_resistance": 2.13,
+    "price_to_support": 2.59
   },
   "volume_analysis": {
-    "current_volume": 27467,
-    "avg_volume_5": 6107,
-    "avg_volume_20": 9591,
-    "volume_ratio": 2.86,
+    "current_volume": 40133,
+    "avg_volume_5": 8640,
+    "avg_volume_20": 10224,
+    "volume_ratio": 3.93,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -99,7 +99,7 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.687,
-      "vix": 0.208,
+      "vix": 0.204,
       "treasury": 0.359,
       "oil": -0.64,
       "spy": 0.339,
@@ -123,7 +123,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-20T06:30:31.582982",
+    "last_update": "2025-08-20T09:21:38.287416",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -163,13 +163,21 @@
   "news_analysis": {
     "status": "success",
     "summary": {
-      "total_relevant_news": 25,
+      "total_relevant_news": 24,
       "critical_count": 0,
       "high_impact_count": 10,
       "overall_sentiment": "إيجابي للذهب"
     },
     "categorized_news": {
       "high_impact": [
+        {
+          "title": "Gold price edge lower on US talks with European, Ukrainian leaders; likely to fall below Rs 99k",
+          "source": "The Times of India",
+          "published": "2025-08-19T07:45:52Z",
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-price-edge-lower-on-us-talks-with-european-ukrainian-leaders-likely-to-fall-below-rs-99k/articleshow/123381461.cms",
+          "impact": "عالي",
+          "sentiment": "سلبي"
+        },
         {
           "title": "Gold price drops by Rs 1,200 per tola, silver also down",
           "source": "Khabarhub.com",
@@ -185,14 +193,6 @@
           "url": "https://economictimes.indiatimes.com/markets/expert-view/inflation-not-geopolitics-will-guide-fed-decisions-andrew-ferris/articleshow/123378924.cms",
           "impact": "عالي",
           "sentiment": "محايد"
-        },
-        {
-          "title": "Dollar Gains as Fed Rate Cut Chances Slip",
-          "source": "Barchart.com",
-          "published": "2025-08-18T14:32:24Z",
-          "url": "https://www.barchart.com/story/news/34223966/dollar-gains-as-fed-rate-cut-chances-slip",
-          "impact": "عالي",
-          "sentiment": "إيجابي"
         }
       ],
       "medium_impact": [
@@ -242,7 +242,7 @@
     }
   },
   "market_summary": {
-    "last_update": "2025-08-20 06:30:32",
+    "last_update": "2025-08-20 09:21:38",
     "data_points": 54,
     "timeframe": "Daily",
     "market_condition": "صاعد قوي"
