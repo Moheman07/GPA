@@ -1,37 +1,37 @@
 {
-  "timestamp": "2025-08-21T11:02:22.116607",
+  "timestamp": "2025-08-21T12:40:27.002273",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
     "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.69,
+    "total_score": 1.67,
     "component_scores": {
       "trend": 4,
-      "momentum": 0.0,
+      "momentum": 0.5,
       "volume": 4,
       "fibonacci": 1,
       "correlation": 1,
-      "support_resistance": 0,
+      "support_resistance": -2,
       "economic": 3,
-      "news": -3,
+      "news": -2,
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3372.2,
+    "current_price": 3381.1,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3330.48,
-        "conservative": 3316.57,
-        "moderate": 3288.76,
-        "wide": 3260.94
+        "tight": 3339.38,
+        "conservative": 3325.47,
+        "moderate": 3297.66,
+        "wide": 3269.84
       },
       "profit_targets": {
-        "target_1": 3427.83,
-        "target_2": 3483.46,
-        "target_3": 3557.63,
-        "target_4": 3668.89
+        "target_1": 3436.73,
+        "target_2": 3492.36,
+        "target_3": 3566.53,
+        "target_4": 3677.79
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -76,23 +76,23 @@
         "type": "news_theme",
         "name": "geopolitical",
         "impact": "مستمر",
-        "recommendation": "أخبار سلبية قوية جداً للذهب"
+        "recommendation": "أخبار سلبية للذهب"
       }
     ],
     "technical_summary": {
-      "rsi": 54.1,
-      "macd": -0.31,
-      "williams_r": -62.8,
-      "stoch_k": 37.2,
-      "bb_position": 0.66,
-      "volume_ratio": 4.04
+      "rsi": 55.4,
+      "macd": 0.4,
+      "williams_r": -57.5,
+      "stoch_k": 42.5,
+      "bb_position": 0.72,
+      "volume_ratio": 5.14
     },
     "key_levels": {
-      "sma_20": 3348.57,
-      "sma_50": 3351.09,
-      "sma_200": 3043.02,
-      "bb_upper": 3420.33,
-      "bb_lower": 3276.82
+      "sma_20": 3349.02,
+      "sma_50": 3351.27,
+      "sma_200": 3043.07,
+      "bb_upper": 3421.5,
+      "bb_lower": 3276.54
     }
   },
   "mtf_analysis": {},
@@ -105,7 +105,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 53.05
+    "current_position": 57.03
   },
   "support_resistance": {
     "resistance_levels": [
@@ -120,14 +120,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 2.04,
-    "price_to_support": 2.67
+    "price_to_resistance": 1.77,
+    "price_to_support": 2.93
   },
   "volume_analysis": {
-    "current_volume": 41943,
-    "avg_volume_5": 9416,
-    "avg_volume_20": 10389,
-    "volume_ratio": 4.04,
+    "current_volume": 57403,
+    "avg_volume_5": 12508,
+    "avg_volume_20": 11162,
+    "volume_ratio": 5.14,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -140,6 +140,7 @@
       "treasury": 0.471,
       "oil": -0.716,
       "spy": 0.904,
+      "usdeur": 0.614,
       "silver": 0.956
     },
     "strength_analysis": {
@@ -148,6 +149,7 @@
       "treasury": "متوسط",
       "oil": "قوي جداً",
       "spy": "قوي جداً",
+      "usdeur": "قوي",
       "silver": "قوي جداً"
     },
     "interpretation": {
@@ -158,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T11:02:20.403935",
+    "last_update": "2025-08-21T12:40:25.557453",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -199,6 +201,39 @@
     "status": "success",
     "events_analysis": {
       "events": [
+        {
+          "type": "central_bank",
+          "title": "Institutions Keep Raising The Gold Bar Despite Short-Term Technical Weakness",
+          "source": "Biztoc.com",
+          "published": "2025-08-20T11:15:31Z",
+          "entities": [
+            [
+              "U.S.",
+              "GPE"
+            ],
+            [
+              "UBS",
+              "ORG"
+            ],
+            [
+              "Monday",
+              "DATE"
+            ],
+            [
+              "end-March 2026",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "2026",
+              "context": "end - March 2026 gold price"
+            }
+          ],
+          "sentiment_score": 0.16666666666666666,
+          "impact_score": 0.33,
+          "url": "https://biztoc.com/x/ee6e3fc85024482c"
+        },
         {
           "type": "interest_rate",
           "title": "Gold Price Below Rs 1,00,000; Eyes On Powell For Rate Cut Clues - Check Rates",
@@ -546,242 +581,152 @@
           "url": "https://english.khabarhub.com/2025/19/491688/"
         },
         {
-          "type": "geopolitical",
-          "title": "GDS Reports Second Quarter 2025 Results",
-          "source": "GlobeNewswire",
-          "published": "2025-08-20T11:00:00Z",
-          "entities": [
-            [
-              "GDS Reports",
-              "ORG"
-            ],
-            [
-              "China",
-              "GPE"
-            ],
-            [
-              "Aug. 20, 2025",
-              "DATE"
-            ],
-            [
-              "GLOBE NEWSWIRE",
-              "ORG"
-            ],
-            [
-              "GDS Holdings Limited",
-              "ORG"
-            ],
-            [
-              "GDS",
-              "ORG"
-            ],
-            [
-              "NASDAQ",
-              "ORG"
-            ],
-            [
-              "GDS",
-              "ORG"
-            ],
-            [
-              "China",
-              "GPE"
-            ],
-            [
-              "today",
-              "DATE"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "Second",
-              "context": "GDS Reports Second Quarter 2025"
-            },
-            {
-              "value": "2025",
-              "context": "Reports Second Quarter 2025 Results SHANGHAI"
-            },
-            {
-              "value": "20",
-              "context": "China , Aug. 20 , 2025"
-            },
-            {
-              "value": "2025",
-              "context": "Aug. 20 , 2025 ( GLOBE"
-            },
-            {
-              "value": "9698",
-              "context": "; HKEX : 9698 ) ,"
-            }
-          ],
-          "sentiment_score": -0.023809523809523808,
-          "impact_score": -0.06,
-          "url": "https://www.globenewswire.com/news-release/2025/08/20/3136302/0/en/GDS-Reports-Second-Quarter-2025-Results.html"
-        },
-        {
-          "type": "geopolitical",
-          "title": "KANZHUN LIMITED Announces Second Quarter 2025 Financial Results",
-          "source": "GlobeNewswire",
-          "published": "2025-08-20T11:00:00Z",
-          "entities": [
-            [
-              "KANZHUN LIMITED",
-              "ORG"
-            ],
-            [
-              "Second Quarter 2025",
-              "DATE"
-            ],
-            [
-              "Aug. 20, 2025",
-              "DATE"
-            ],
-            [
-              "GLOBE NEWSWIRE",
-              "ORG"
-            ],
-            [
-              "HKEX",
-              "ORG"
-            ],
-            [
-              "2076",
-              "CARDINAL"
-            ],
-            [
-              "China",
-              "GPE"
-            ],
-            [
-              "today",
-              "DATE"
-            ],
-            [
-              "the quarter ended June 30, 2025",
-              "DATE"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "Second",
-              "context": "KANZHUN LIMITED Announces Second Quarter 2025"
-            },
-            {
-              "value": "2025",
-              "context": "Announces Second Quarter 2025 Financial Results"
-            },
-            {
-              "value": "20",
-              "context": "BEIJING , Aug. 20 , 2025"
-            },
-            {
-              "value": "2025",
-              "context": "Aug. 20 , 2025 ( GLOBE"
-            },
-            {
-              "value": "2076",
-              "context": "; HKEX : 2076 ) ,"
-            },
-            {
-              "value": "30",
-              "context": "quarter ended June 30 , 2025"
-            },
-            {
-              "value": "2025",
-              "context": "June 30 , 2025 ."
-            }
-          ],
-          "sentiment_score": -0.02857142857142857,
-          "impact_score": -0.07,
-          "url": "https://www.globenewswire.com/news-release/2025/08/20/3136303/0/en/KANZHUN-LIMITED-Announces-Second-Quarter-2025-Financial-Results.html"
-        },
-        {
-          "type": "geopolitical",
-          "title": "A Stock-Market Crash Foretold",
-          "source": "Project Syndicate",
-          "published": "2025-08-20T10:43:06Z",
-          "entities": [
-            [
-              "the eve of",
-              "DATE"
-            ],
-            [
-              "World War I",
-              "EVENT"
-            ],
-            [
-              "US",
-              "GPE"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.016666666666666666,
-          "impact_score": 0.04,
-          "url": "https://www.project-syndicate.org/commentary/trump-economic-policy-could-lead-to-us-stock-market-crash-by-desmond-lachman-2025-08"
-        },
-        {
           "type": "interest_rate",
-          "title": "Gold Edges Up as Traders Await Powell Speech for Fed Rate Clues",
-          "source": "Yahoo Entertainment",
-          "published": "2025-08-20T10:37:29Z",
+          "title": "Zervos: Powell operates politically from the left",
+          "source": "Biztoc.com",
+          "published": "2025-08-20T12:22:59Z",
           "entities": [
-            [
-              "Fed Rate Clues Bullion",
-              "ORG"
-            ],
-            [
-              "above $3,320",
-              "MONEY"
-            ],
             [
               "Powell",
               "PERSON"
             ],
             [
-              "annual",
-              "DATE"
+              "David Zervos",
+              "PERSON"
+            ],
+            [
+              "United States",
+              "GPE"
+            ],
+            [
+              "Donald Trump",
+              "PERSON"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "CNBC",
+              "ORG"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "one",
+              "context": "who could be one of the"
+            }
+          ],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://biztoc.com/x/3078d5b8166eaeb8"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Fed Instructs Banks to Adopt Crypto Without Fear: Bitcoin Hyper to Pump",
+          "source": "Bitcoinist",
+          "published": "2025-08-20T12:16:03Z",
+          "entities": [
+            [
+              "Fed Instructs Banks",
+              "ORG"
+            ],
+            [
+              "Bitcoin Hyper",
+              "PERSON"
+            ],
+            [
+              "Pump The Federal Reserve",
+              "ORG"
+            ],
+            [
+              "U.S.",
+              "GPE"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Michelle Bowman",
+              "PERSON"
+            ],
+            [
+              "Wyom",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.21875,
+          "impact_score": -0.66,
+          "url": "https://bitcoinist.com/fed-tells-banks-to-adopt-crypto-without-fear-bitcoin-hyper-pumps/"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Powell faces economic crossroads in Jackson Hole speech as Fed chair tenure nears end",
+          "source": "Biztoc.com",
+          "published": "2025-08-20T12:11:25Z",
+          "entities": [
+            [
+              "Powell",
+              "PERSON"
             ],
             [
               "Jackson Hole",
               "GPE"
             ],
             [
-              "Wyoming",
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Jerome Powell",
+              "PERSON"
+            ],
+            [
+              "Jackson Hole",
               "GPE"
             ],
             [
               "Friday",
               "DATE"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Powell",
+              "PERSON"
             ]
           ],
-          "numbers": [
-            {
-              "value": "3,320",
-              "context": "traded above $ 3,320 an ounce"
-            }
-          ],
-          "sentiment_score": 0.08,
-          "impact_score": -0.24,
-          "url": "https://finance.yahoo.com/news/gold-holds-fall-ahead-powell-003832036.html"
+          "numbers": [],
+          "sentiment_score": 0.008888888888888885,
+          "impact_score": -0.03,
+          "url": "https://biztoc.com/x/53954e559865e3b1"
         }
       ],
       "event_summary": {
-        "interest_rate": 22,
-        "geopolitical": 7,
-        "dollar": 3,
-        "inflation": 14,
-        "central_bank": 1
+        "central_bank": 2,
+        "interest_rate": 28,
+        "geopolitical": 5,
+        "inflation": 12,
+        "dollar": 2
       },
-      "total_impact": -5.98,
+      "total_impact": -2.01,
       "dominant_theme": "geopolitical",
-      "recommendation": "أخبار سلبية قوية جداً للذهب"
+      "recommendation": "أخبار سلبية للذهب"
     },
-    "articles_count": 80
+    "articles_count": 87
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -240438.02,
-    "total_return": -2504.38,
+    "final_value": -242884.65,
+    "total_return": -2528.85,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -794,11 +739,11 @@
     "avg_win": 0.0,
     "avg_loss": -0.95,
     "profit_factor": 0.0,
-    "recovery_factor": -1.38,
+    "recovery_factor": -1.39,
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 11:02:22",
+    "last_update": "2025-08-21 12:40:27",
     "data_points": 556,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
