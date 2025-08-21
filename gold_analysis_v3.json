@@ -1,37 +1,37 @@
 {
-  "timestamp": "2025-08-21T01:27:58.393429",
+  "timestamp": "2025-08-21T03:40:43.857178",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
     "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.61,
+    "total_score": 1.69,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
-      "volume": 1,
+      "volume": 3,
       "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 2,
+      "news": 0,
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3386.7,
+    "current_price": 3385.2,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3338.86,
-        "conservative": 3322.91,
-        "moderate": 3291.01,
-        "wide": 3259.11
+        "tight": 3337.36,
+        "conservative": 3321.41,
+        "moderate": 3289.51,
+        "wide": 3257.61
       },
       "profit_targets": {
-        "target_1": 3450.49,
-        "target_2": 3514.29,
-        "target_3": 3599.34,
-        "target_4": 3726.93
+        "target_1": 3448.99,
+        "target_2": 3512.79,
+        "target_3": 3597.84,
+        "target_4": 3725.43
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -76,23 +76,23 @@
         "type": "news_theme",
         "name": "interest_rate",
         "impact": "مستمر",
-        "recommendation": "أخبار إيجابية للذهب"
+        "recommendation": "تأثير محايد أو مختلط"
       }
     ],
     "technical_summary": {
-      "rsi": 62.6,
-      "macd": 0.89,
-      "williams_r": -46.1,
-      "stoch_k": 53.9,
+      "rsi": 62.5,
+      "macd": 0.77,
+      "williams_r": -46.8,
+      "stoch_k": 53.2,
       "bb_position": 0.74,
-      "volume_ratio": 0.86
+      "volume_ratio": 1.56
     },
     "key_levels": {
-      "sma_20": 3350.68,
-      "sma_50": 3350.94,
-      "sma_200": 3040.06,
-      "bb_upper": 3424.3,
-      "bb_lower": 3277.06
+      "sma_20": 3350.6,
+      "sma_50": 3350.91,
+      "sma_200": 3040.05,
+      "bb_upper": 3424.07,
+      "bb_lower": 3277.14
     }
   },
   "mtf_analysis": {},
@@ -105,7 +105,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 59.54
+    "current_position": 58.87
   },
   "support_resistance": {
     "resistance_levels": [
@@ -120,18 +120,18 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.6,
-    "price_to_support": 3.09
+    "price_to_resistance": 1.65,
+    "price_to_support": 3.05
   },
   "volume_analysis": {
-    "current_volume": 7368,
-    "avg_volume_5": 2087,
-    "avg_volume_20": 8586,
-    "volume_ratio": 0.86,
-    "volume_strength": "طبيعي",
-    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
+    "current_volume": 13942,
+    "avg_volume_5": 3604,
+    "avg_volume_20": 8965,
+    "volume_ratio": 1.56,
+    "volume_strength": "قوي",
+    "volume_signal": "حجم فوق المتوسط - اهتمام متزايد",
     "obv_trend": "صاعد",
-    "volume_price_correlation": "سلبي"
+    "volume_price_correlation": "إيجابي"
   },
   "market_correlations": {
     "correlations": {
@@ -160,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T01:27:56.465415",
+    "last_update": "2025-08-21T03:40:41.946250",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -201,6 +201,59 @@
     "status": "success",
     "events_analysis": {
       "events": [
+        {
+          "type": "interest_rate",
+          "title": "Gold Price Below Rs 1,00,000; Eyes On Powell For Rate Cut Clues - Check Rates",
+          "source": "Ndtvprofit.com",
+          "published": "2025-08-20T02:43:13Z",
+          "entities": [
+            [
+              "Wednesday",
+              "DATE"
+            ],
+            [
+              "Russia",
+              "GPE"
+            ],
+            [
+              "Ukraine",
+              "GPE"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "Today",
+              "DATE"
+            ],
+            [
+              "India",
+              "GPE"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Jerome Powell's",
+              "PERSON"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "1,00,000",
+              "context": "Price Below Rs 1,00,000 ; Eyes"
+            },
+            {
+              "value": "1,00,000",
+              "context": "below the Rs 1,00,000 mark in"
+            }
+          ],
+          "sentiment_score": -0.1,
+          "impact_score": 0.3,
+          "url": "https://www.ndtvprofit.com/markets/gold-price-below-rs-100000-eyes-on-powell-for-rate-cut-clues-check-rates"
+        },
         {
           "type": "geopolitical",
           "title": "Gold smashes records in 2025 — outpacing stocks, bonds, bitcoin: UBS warns investors — are we on the brink of a historic surge?",
@@ -540,118 +593,13 @@
           "url": "https://www.ndtvprofit.com/markets/gold-price-dips-below-rs-100000-after-trump-zelensky-meet-check-rates"
         },
         {
-          "type": "interest_rate",
-          "title": "Gold price today, Monday, August 18: Gold opens above $3,380 as investors wait for interest rate clues",
-          "source": "Biztoc.com",
-          "published": "2025-08-18T12:19:47Z",
+          "type": "geopolitical",
+          "title": "Rupee rally to hit speed bump on weak Asian cues, tepid equity flows",
+          "source": "BusinessLine",
+          "published": "2025-08-20T03:12:28Z",
           "entities": [
             [
-              "today, Monday, August 18",
-              "DATE"
-            ],
-            [
-              "above $3,380",
-              "MONEY"
-            ],
-            [
-              "Gold (GC=F",
-              "ORG"
-            ],
-            [
-              "3,382.40",
-              "MONEY"
-            ],
-            [
-              "Monday",
-              "DATE"
-            ],
-            [
-              "1.4%",
-              "PERCENT"
-            ],
-            [
-              "Friday",
-              "DATE"
-            ],
-            [
-              "3,336",
-              "MONEY"
-            ],
-            [
-              "August",
-              "DATE"
-            ],
-            [
-              "$3,281 to $3,477",
-              "MONEY"
-            ],
-            [
-              "Friday",
-              "DATE"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Jerome Powell",
-              "PERSON"
-            ],
-            [
-              "Jack",
-              "PERSON"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "18",
-              "context": "Monday , August 18 : Gold"
-            },
-            {
-              "value": "3,380",
-              "context": "opens above $ 3,380 as investors"
-            },
-            {
-              "value": "3,382.40",
-              "context": "opened at $ 3,382.40 per ounce"
-            },
-            {
-              "value": "1.4",
-              "context": "Monday , up 1.4 % from"
-            },
-            {
-              "value": "%",
-              "context": ", up 1.4 % from Friday"
-            },
-            {
-              "value": "3,336",
-              "context": "close of $ 3,336 . In"
-            },
-            {
-              "value": "3,281",
-              "context": "ranged from $ 3,281 to $"
-            },
-            {
-              "value": "3,477",
-              "context": "3,281 to $ 3,477 . \n"
-            }
-          ],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://biztoc.com/x/a70954abbc32ba87"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Asian shares, Nasdaq futures fall after tech slide",
-          "source": "The Times of India",
-          "published": "2025-08-20T00:57:19Z",
-          "entities": [
-            [
-              "Asian",
-              "NORP"
-            ],
-            [
-              "Nasdaq",
+              "Rupee",
               "ORG"
             ],
             [
@@ -659,127 +607,147 @@
               "NORP"
             ],
             [
-              "Nvidia",
+              "Narendra Modi's",
+              "PERSON"
+            ],
+            [
+              "Ukraine",
               "GPE"
             ],
             [
-              "Jerome Powell's",
-              "PERSON"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": -0.05,
-          "impact_score": 0.15,
-          "url": "https://economictimes.indiatimes.com/markets/stocks/news/asian-shares-nasdaq-futures-fall-after-tech-slide/articleshow/123397024.cms"
-        },
-        {
-          "type": "inflation",
-          "title": "Bitcoin Sinks as Concerns Over Inflation, Economic Data Mount",
-          "source": "Decrypt",
-          "published": "2025-08-20T00:49:18Z",
-          "entities": [
-            [
-              "Bitcoin Sinks",
-              "PERSON"
+              "Russia",
+              "GPE"
             ],
             [
-              "below $113,000",
-              "MONEY"
-            ],
-            [
-              "first",
-              "ORDINAL"
-            ],
-            [
-              "August 2",
+              "seven weeks",
               "DATE"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "113,000",
-              "context": "sank below $ 113,000 for the"
-            },
-            {
-              "value": "first",
-              "context": "113,000 for the first time since"
-            },
-            {
-              "value": "2",
-              "context": "time since August 2 , as"
-            }
-          ],
-          "sentiment_score": 0.045,
-          "impact_score": -0.11,
-          "url": "https://decrypt.co/335927/bitcoin-sinks-concerns-inflation-economic-data-mount"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Trump criticizes Powell again, says Fed chair is ‘hurting’ the housing industry",
-          "source": "Biztoc.com",
-          "published": "2025-08-20T00:48:42Z",
-          "entities": [
-            [
-              "Powell",
-              "PERSON"
-            ],
-            [
-              "Fed",
-              "ORG"
-            ],
-            [
-              "Donald Trump",
-              "PERSON"
             ],
             [
               "Tuesday",
               "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "seven",
+              "context": "best day in seven weeks on"
+            }
+          ],
+          "sentiment_score": 0.20833333333333334,
+          "impact_score": 0.52,
+          "url": "https://www.thehindubusinessline.com/markets/forex/rupee-rally-to-hit-speed-bump-on-weak-asian-cues-tepid-equity-flows/article69954480.ece"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Asian Markets Dip After US Tech Slide",
+          "source": "International Business Times",
+          "published": "2025-08-20T03:03:16Z",
+          "entities": [
+            [
+              "Asian",
+              "NORP"
             ],
             [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Jerome Powell",
-              "PERSON"
-            ],
-            [
-              "U.S.",
+              "US",
               "GPE"
             ],
             [
-              "Jerome",
-              "PERSON"
+              "Asian",
+              "NORP"
             ],
             [
-              "Powell",
-              "PERSON"
+              "Wednesday",
+              "DATE"
+            ],
+            [
+              "morning",
+              "TIME"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "the previous day",
+              "DATE"
             ]
           ],
           "numbers": [],
-          "sentiment_score": -0.30333333333333323,
-          "impact_score": 0.91,
-          "url": "https://biztoc.com/x/dbdb4f2a67c7de0f"
+          "sentiment_score": 0.08333333333333334,
+          "impact_score": -0.25,
+          "url": "https://www.ibtimes.com/asian-markets-dip-after-us-tech-slide-3781249"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Asian markets dip after US tech slide",
+          "source": "Digital Journal",
+          "published": "2025-08-20T03:02:33Z",
+          "entities": [
+            [
+              "Asian",
+              "NORP"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "Asian",
+              "NORP"
+            ],
+            [
+              "Wednesday",
+              "DATE"
+            ],
+            [
+              "morning",
+              "TIME"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "the previous day",
+              "DATE"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "European",
+              "NORP"
+            ],
+            [
+              "Washington",
+              "GPE"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.10476190476190476,
+          "impact_score": -0.31,
+          "url": "https://www.digitaljournal.com/world/asian-markets-dip-after-us-tech-slide/article"
         }
       ],
       "event_summary": {
-        "geopolitical": 7,
-        "interest_rate": 28,
+        "interest_rate": 29,
+        "geopolitical": 8,
         "inflation": 11,
-        "employment": 2,
-        "dollar": 2,
-        "central_bank": 1
+        "employment": 1,
+        "central_bank": 2,
+        "dollar": 2
       },
-      "total_impact": 2.26,
+      "total_impact": 0.1,
       "dominant_theme": "interest_rate",
-      "recommendation": "أخبار إيجابية للذهب"
+      "recommendation": "تأثير محايد أو مختلط"
     },
-    "articles_count": 84
+    "articles_count": 85
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -244342.53,
-    "total_return": -2543.43,
+    "final_value": -243930.18,
+    "total_return": -2539.3,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -796,9 +764,9 @@
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 01:27:58",
+    "last_update": "2025-08-21 03:40:43",
     "data_points": 555,
     "timeframe": "Multi-timeframe",
-    "market_condition": "صاعد"
+    "market_condition": "صاعد قوي"
   }
 }
