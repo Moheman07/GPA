@@ -1,16 +1,16 @@
 {
-  "timestamp": "2025-08-21T03:40:43.857178",
+  "timestamp": "2025-08-21T06:39:03.117640",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
     "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.69,
+    "total_score": 1.71,
     "component_scores": {
       "trend": 4,
-      "momentum": 0.5,
-      "volume": 3,
+      "momentum": 0.0,
+      "volume": 4,
       "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
@@ -19,19 +19,19 @@
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3385.2,
+    "current_price": 3377.0,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3337.36,
-        "conservative": 3321.41,
-        "moderate": 3289.51,
-        "wide": 3257.61
+        "tight": 3335.28,
+        "conservative": 3321.37,
+        "moderate": 3293.56,
+        "wide": 3265.74
       },
       "profit_targets": {
-        "target_1": 3448.99,
-        "target_2": 3512.79,
-        "target_3": 3597.84,
-        "target_4": 3725.43
+        "target_1": 3432.63,
+        "target_2": 3488.26,
+        "target_3": 3562.43,
+        "target_4": 3673.69
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -80,19 +80,19 @@
       }
     ],
     "technical_summary": {
-      "rsi": 62.5,
-      "macd": 0.77,
-      "williams_r": -46.8,
-      "stoch_k": 53.2,
-      "bb_position": 0.74,
-      "volume_ratio": 1.56
+      "rsi": 54.8,
+      "macd": 0.08,
+      "williams_r": -59.9,
+      "stoch_k": 40.1,
+      "bb_position": 0.7,
+      "volume_ratio": 2.38
     },
     "key_levels": {
-      "sma_20": 3350.6,
-      "sma_50": 3350.91,
-      "sma_200": 3040.05,
-      "bb_upper": 3424.07,
-      "bb_lower": 3277.14
+      "sma_20": 3348.81,
+      "sma_50": 3351.18,
+      "sma_200": 3043.05,
+      "bb_upper": 3420.94,
+      "bb_lower": 3276.69
     }
   },
   "mtf_analysis": {},
@@ -105,7 +105,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 58.87
+    "current_position": 55.2
   },
   "support_resistance": {
     "resistance_levels": [
@@ -120,28 +120,28 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.65,
-    "price_to_support": 3.05
+    "price_to_resistance": 1.9,
+    "price_to_support": 2.81
   },
   "volume_analysis": {
-    "current_volume": 13942,
-    "avg_volume_5": 3604,
-    "avg_volume_20": 8965,
-    "volume_ratio": 1.56,
-    "volume_strength": "قوي",
-    "volume_signal": "حجم فوق المتوسط - اهتمام متزايد",
+    "current_volume": 22349,
+    "avg_volume_5": 5498,
+    "avg_volume_20": 9409,
+    "volume_ratio": 2.38,
+    "volume_strength": "قوي جداً",
+    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
     "volume_price_correlation": "إيجابي"
   },
   "market_correlations": {
     "correlations": {
-      "dxy": -0.506,
+      "dxy": -0.508,
       "vix": -0.017,
       "treasury": 0.471,
-      "oil": -0.715,
+      "oil": -0.716,
       "spy": 0.904,
-      "usdeur": 0.612,
-      "silver": 0.955
+      "usdeur": 0.614,
+      "silver": 0.956
     },
     "strength_analysis": {
       "dxy": "قوي",
@@ -160,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T03:40:41.946250",
+    "last_update": "2025-08-21T06:39:01.516327",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -548,70 +548,89 @@
           "url": "https://english.khabarhub.com/2025/19/491688/"
         },
         {
-          "type": "geopolitical",
-          "title": "Gold Price Dips Below Rs 1,00,000 After Trump-Zelensky Meet - Check Rates",
-          "source": "Ndtvprofit.com",
-          "published": "2025-08-19T03:02:11Z",
+          "type": "interest_rate",
+          "title": "Balancing Risks and Rewards: Fed official calls for embracing crypto",
+          "source": "Economictimes.com",
+          "published": "2025-08-20T06:07:43Z",
           "entities": [
             [
-              "Dips Below Rs",
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Michelle Bowman",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": -0.0375,
+          "impact_score": 0.11,
+          "url": "https://m.economictimes.com/markets/stocks/news/balancing-risks-and-rewards-fed-official-calls-for-embracing-crypto/fed-official-pushes-for-crypto-flexibility/slideshow/123402208.cms"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Trump turns up heat on Powell ahead of Jackson hole",
+          "source": "Economictimes.com",
+          "published": "2025-08-20T05:13:19Z",
+          "entities": [
+            [
+              "Powell",
               "PERSON"
             ],
             [
-              "Trump-Zelensky Meet - Check Rates Gold",
+              "Jackson",
               "PERSON"
-            ],
-            [
-              "Tuesday",
-              "DATE"
-            ],
-            [
-              "US",
-              "GPE"
             ],
             [
               "Donald Trump",
               "PERSON"
             ],
             [
-              "Ukrainian",
-              "GPE"
+              "Federal Reserve",
+              "ORG"
             ],
             [
-              "Russia",
-              "GPE"
+              "Jerome Powell",
+              "PERSON"
             ]
           ],
-          "numbers": [
-            {
-              "value": "1,00,000",
-              "context": "Dips Below Rs 1,00,000 After Trump"
-            }
-          ],
-          "sentiment_score": -0.15555555555555559,
-          "impact_score": -0.39,
-          "url": "https://www.ndtvprofit.com/markets/gold-price-dips-below-rs-100000-after-trump-zelensky-meet-check-rates"
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://m.economictimes.com/markets/stocks/news/trump-turns-up-heat-on-powell-ahead-of-jackson-hole/trump-targets-powell-again/slideshow/123401060.cms"
         },
         {
-          "type": "geopolitical",
-          "title": "Rupee rally to hit speed bump on weak Asian cues, tepid equity flows",
-          "source": "BusinessLine",
-          "published": "2025-08-20T03:12:28Z",
+          "type": "interest_rate",
+          "title": "Rupee falls 3 paise to 87.16 against US dollar in early trade",
+          "source": "The Times of India",
+          "published": "2025-08-20T04:39:23Z",
           "entities": [
             [
               "Rupee",
               "ORG"
             ],
             [
-              "Asian",
+              "3",
+              "CARDINAL"
+            ],
+            [
+              "87.16",
+              "CARDINAL"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "Indian",
               "NORP"
             ],
             [
-              "Narendra Modi's",
-              "PERSON"
-            ],
-            [
-              "Ukraine",
+              "US",
               "GPE"
             ],
             [
@@ -619,135 +638,107 @@
               "GPE"
             ],
             [
-              "seven weeks",
-              "DATE"
+              "Ukraine",
+              "GPE"
             ],
             [
-              "Tuesday",
+              "US Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Jerome Powell",
+              "PERSON"
+            ],
+            [
+              "Asian",
+              "NORP"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "3",
+              "context": "Rupee falls 3 paise to"
+            },
+            {
+              "value": "87.16",
+              "context": "3 paise to 87.16 against US"
+            }
+          ],
+          "sentiment_score": -0.1488095238095238,
+          "impact_score": 0.45,
+          "url": "https://economictimes.indiatimes.com/markets/forex/rupee-falls-3-paise-to-87-16-against-us-dollar-in-early-trade/articleshow/123400349.cms"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Rupee falls 3 paise to 87.16 against US dollar in early trade",
+          "source": "BusinessLine",
+          "published": "2025-08-20T04:38:01Z",
+          "entities": [
+            [
+              "Rupee",
+              "ORG"
+            ],
+            [
+              "3",
+              "CARDINAL"
+            ],
+            [
+              "87.16",
+              "CARDINAL"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "the US Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Jerome Powell",
+              "PERSON"
+            ],
+            [
+              "the Jackson Hole Symposium",
+              "FAC"
+            ],
+            [
+              "this weekend",
               "DATE"
             ]
           ],
           "numbers": [
             {
-              "value": "seven",
-              "context": "best day in seven weeks on"
+              "value": "3",
+              "context": "Rupee falls 3 paise to"
+            },
+            {
+              "value": "87.16",
+              "context": "3 paise to 87.16 against US"
             }
           ],
-          "sentiment_score": 0.20833333333333334,
-          "impact_score": 0.52,
-          "url": "https://www.thehindubusinessline.com/markets/forex/rupee-rally-to-hit-speed-bump-on-weak-asian-cues-tepid-equity-flows/article69954480.ece"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Asian Markets Dip After US Tech Slide",
-          "source": "International Business Times",
-          "published": "2025-08-20T03:03:16Z",
-          "entities": [
-            [
-              "Asian",
-              "NORP"
-            ],
-            [
-              "US",
-              "GPE"
-            ],
-            [
-              "Asian",
-              "NORP"
-            ],
-            [
-              "Wednesday",
-              "DATE"
-            ],
-            [
-              "morning",
-              "TIME"
-            ],
-            [
-              "US",
-              "GPE"
-            ],
-            [
-              "the previous day",
-              "DATE"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.08333333333333334,
-          "impact_score": -0.25,
-          "url": "https://www.ibtimes.com/asian-markets-dip-after-us-tech-slide-3781249"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Asian markets dip after US tech slide",
-          "source": "Digital Journal",
-          "published": "2025-08-20T03:02:33Z",
-          "entities": [
-            [
-              "Asian",
-              "NORP"
-            ],
-            [
-              "US",
-              "GPE"
-            ],
-            [
-              "Asian",
-              "NORP"
-            ],
-            [
-              "Wednesday",
-              "DATE"
-            ],
-            [
-              "morning",
-              "TIME"
-            ],
-            [
-              "US",
-              "GPE"
-            ],
-            [
-              "the previous day",
-              "DATE"
-            ],
-            [
-              "US",
-              "GPE"
-            ],
-            [
-              "European",
-              "NORP"
-            ],
-            [
-              "Washington",
-              "GPE"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.10476190476190476,
-          "impact_score": -0.31,
-          "url": "https://www.digitaljournal.com/world/asian-markets-dip-after-us-tech-slide/article"
+          "sentiment_score": 0.1,
+          "impact_score": -0.3,
+          "url": "https://www.thehindubusinessline.com/markets/forex/rupee-falls-3-paise-to-8716-against-us-dollar-in-early-trade/article69954572.ece"
         }
       ],
       "event_summary": {
-        "interest_rate": 29,
-        "geopolitical": 8,
-        "inflation": 11,
-        "employment": 1,
+        "interest_rate": 22,
+        "geopolitical": 5,
+        "inflation": 16,
         "central_bank": 2,
         "dollar": 2
       },
-      "total_impact": 0.1,
+      "total_impact": -1.24,
       "dominant_theme": "interest_rate",
       "recommendation": "تأثير محايد أو مختلط"
     },
-    "articles_count": 85
+    "articles_count": 84
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -243930.18,
-    "total_return": -2539.3,
+    "final_value": -241757.54,
+    "total_return": -2517.58,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -760,12 +751,12 @@
     "avg_win": 0.0,
     "avg_loss": -0.95,
     "profit_factor": 0.0,
-    "recovery_factor": -1.4,
+    "recovery_factor": -1.38,
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 03:40:43",
-    "data_points": 555,
+    "last_update": "2025-08-21 06:39:03",
+    "data_points": 556,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
   }
