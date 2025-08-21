@@ -1,6 +1,6 @@
 {
-  "timestamp": "2025-08-21T13:20:10.066348",
+  "timestamp": "2025-08-21T13:25:17.338892",
   "version": "3.0",
   "status": "error",
-  "error": "'ProfessionalGoldAnalyzerV3' object has no attribute 'calculate_fibonacci_levels'"
+  "error": "'ProfessionalGoldAnalyzerV3' object has no attribute 'analyze_correlations'"
 }
