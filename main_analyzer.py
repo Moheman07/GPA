@@ -1121,4 +1121,1114 @@ class ProfessionalGoldAnalyzerV3:
             return None
     
     def calculate_professional_indicators(self, gold_data):
-        """حساب المؤشرات الاحترافية المحسّنة"
+        """حساب المؤشرات الاحترافية المحسّنة"""
+        print("📊 حساب المؤشرات الاحترافية المحسّنة...")
+        try:
+            df = gold_data.copy()
+            
+            # المتوسطات المتحركة
+            df['SMA_10'] = df['Close'].rolling(window=10).mean()
+            df['SMA_20'] = df['Close'].rolling(window=20).mean()
+            df['SMA_50'] = df['Close'].rolling(window=50).mean()
+            df['SMA_100'] = df['Close'].rolling(window=100).mean()
+            df['SMA_200'] = df['Close'].rolling(window=200).mean()
+            
+            # EMA
+            df['EMA_9'] = df['Close'].ewm(span=9).mean()
+            df['EMA_21'] = df['Close'].ewm(span=21).mean()
+            # التقاطعات الذهبية/الموت
+            df['Golden_Cross'] = (df['SMA_50'] > df['SMA_200']).astype(int)
+            df['Death_Cross'] = (df['SMA_50'] < df['SMA_200']).astype(int)
+            
+            # RSI محسّن
+            delta = df['Close'].diff()
+            gain = delta.where(delta > 0, 0).rolling(window=14).mean()
+            loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+            df['RSI'] = 100 - (100 / (1 + gain / loss))
+            
+            # RSI Divergence
+            df['RSI_MA'] = df['RSI'].rolling(window=5).mean()
+            
+            # MACD محسّن
+            exp1 = df['Close'].ewm(span=12).mean()
+            exp2 = df['Close'].ewm(span=26).mean()
+            df['MACD'] = exp1 - exp2
+            df['MACD_Signal'] = df['MACD'].ewm(span=9).mean()
+            df['MACD_Histogram'] = df['MACD'] - df['MACD_Signal']
+            df['MACD_Cross'] = np.where(df['MACD'] > df['MACD_Signal'], 1, -1)
+            
+            # Bollinger Bands محسّن
+            std = df['Close'].rolling(window=20).std()
+            df['BB_Upper'] = df['SMA_20'] + (std * 2)
+            df['BB_Lower'] = df['SMA_20'] - (std * 2)
+            df['BB_Width'] = ((df['BB_Upper'] - df['BB_Lower']) / df['SMA_20']) * 100
+            df['BB_Position'] = (df['Close'] - df['BB_Lower']) / (df['BB_Upper'] - df['BB_Lower'])
+            
+            # ATR & Volatility
+            high_low = df['High'] - df['Low']
+            high_close = np.abs(df['High'] - df['Close'].shift())
+            low_close = np.abs(df['Low'] - df['Close'].shift())
+            true_range = pd.concat([high_low, high_close, low_close], axis=1).max(axis=1)
+            df['ATR'] = true_range.rolling(14).mean()
+            df['ATR_Percent'] = (df['ATR'] / df['Close']) * 100
+            
+            # Volume Analysis محسّن
+            df['Volume_SMA'] = df['Volume'].rolling(20).mean()
+            df['Volume_Ratio'] = df['Volume'] / df['Volume_SMA']
+            df['OBV'] = (df['Volume'] * (~df['Close'].diff().le(0) * 2 - 1)).cumsum()
+            df['Volume_Price_Trend'] = ((df['Close'] - df['Close'].shift(1)) / df['Close'].shift(1) * df['Volume']).cumsum()
+            
+            # مؤشرات إضافية
+            df['ROC'] = ((df['Close'] - df['Close'].shift(14)) / df['Close'].shift(14)) * 100
+            df['Williams_R'] = ((df['High'].rolling(14).max() - df['Close']) / 
+                                (df['High'].rolling(14).max() - df['Low'].rolling(14).min())) * -100
+            
+            # Stochastic
+            low_14 = df['Low'].rolling(14).min()
+            high_14 = df['High'].rolling(14).max()
+            df['Stoch_K'] = 100 * ((df['Close'] - low_14) / (high_14 - low_14))
+            df['Stoch_D'] = df['Stoch_K'].rolling(3).mean()
+            
+            # Ichimoku Cloud
+            high_9 = df['High'].rolling(9).max()
+            low_9 = df['Low'].rolling(9).min()
+            df['Tenkan_sen'] = (high_9 + low_9) / 2
+            
+            high_26 = df['High'].rolling(26).max()
+            low_26 = df['Low'].rolling(26).min()
+            df['Kijun_sen'] = (high_26 + low_26) / 2
+            
+            df['Senkou_Span_A'] = ((df['Tenkan_sen'] + df['Kijun_sen']) / 2).shift(26)
+            
+            high_52 = df['High'].rolling(52).max()
+            low_52 = df['Low'].rolling(52).min()
+            df['Senkou_Span_B'] = ((high_52 + low_52) / 2).shift(26)
+            
+            return df.dropna()
+        except Exception as e:
+            print(f"❌ خطأ في حساب المؤشرات: {e}")
+            return gold_data
+    
+    def calculate_support_resistance(self, data, window=20):
+        """حساب مستويات الدعم والمقاومة الديناميكية"""
+        try:
+            recent_data = data.tail(window * 3)
+            
+            # البحث عن القمم والقيعان
+            highs = recent_data['High'].rolling(5, center=True).max() == recent_data['High']
+            lows = recent_data['Low'].rolling(5, center=True).min() == recent_data['Low']
+            
+            resistance_levels = recent_data.loc[highs, 'High'].nlargest(3).tolist()
+            support_levels = recent_data.loc[lows, 'Low'].nsmallest(3).tolist()
+            
+            current_price = data['Close'].iloc[-1]
+            
+            # تحديد أقرب دعم ومقاومة
+            nearest_resistance = min([r for r in resistance_levels if r > current_price], default=None)
+            nearest_support = max([s for s in support_levels if s < current_price], default=None)
+            
+            return {
+                'resistance_levels': [round(r, 2) for r in resistance_levels],
+                'support_levels': [round(s, 2) for s in support_levels],
+                'nearest_resistance': round(nearest_resistance, 2) if nearest_resistance else None,
+                'nearest_support': round(nearest_support, 2) if nearest_support else None,
+                'price_to_resistance': round(((nearest_resistance - current_price) / current_price * 100), 2) if nearest_resistance else None,
+                'price_to_support': round(((current_price - nearest_support) / current_price * 100), 2) if nearest_support else None
+            }
+        except Exception as e:
+            print(f"خطأ في حساب الدعم والمقاومة: {e}")
+            return {}
+    
+    def calculate_fibonacci_levels(self, data, periods=50):
+        """حساب مستويات فيبوناتشي مع التحليل"""
+        try:
+            recent_data = data.tail(periods)
+            high, low = recent_data['High'].max(), recent_data['Low'].min()
+            diff = high - low
+            current_price = data['Close'].iloc[-1]
+            
+            fib_levels = {
+                'high': round(high, 2),
+                'low': round(low, 2),
+                'fib_23_6': round(high - (diff * 0.236), 2),
+                'fib_38_2': round(high - (diff * 0.382), 2),
+                'fib_50_0': round(high - (diff * 0.500), 2),
+                'fib_61_8': round(high - (diff * 0.618), 2),
+                'fib_78_6': round(high - (diff * 0.786), 2)
+            }
+            
+            # تحليل موقع السعر
+            if current_price > fib_levels['fib_23_6']:
+                fib_analysis = "السعر قوي جداً فوق 23.6% - اتجاه صاعد قوي"
+            elif current_price > fib_levels['fib_38_2']:
+                fib_analysis = "السعر فوق 38.2% - اتجاه صاعد معتدل"
+            elif current_price > fib_levels['fib_50_0']:
+                fib_analysis = "السعر فوق 50% - منطقة محايدة"
+            elif current_price > fib_levels['fib_61_8']:
+                fib_analysis = "السعر فوق 61.8% - ضعف نسبي"
+            else:
+                fib_analysis = "السعر تحت 61.8% - اتجاه هابط محتمل"
+            
+            fib_levels['analysis'] = fib_analysis
+            fib_levels['current_position'] = round(((current_price - low) / diff * 100), 2)
+            
+            return fib_levels
+        except Exception as e:
+            print(f"خطأ في حساب فيبوناتشي: {e}")
+            return {}
+    
+    def fetch_economic_data(self):
+        """
+        جلب البيانات الاقتصادية المؤثرة على الذهب
+        ملاحظة: هذه البيانات حالياً هي محاكاة (simulated).
+        للاستخدام الفعلي، يجب استبدالها باستدعاءات API حقيقية (مثل مكتبة Fred).
+        """
+        economic_data = {
+            'status': 'simulated',
+            'last_update': datetime.now().isoformat(),
+            'indicators': {}
+        }
+        
+        try:
+            # محاكاة البيانات الاقتصادية
+            economic_data['indicators'] = {
+                'US_CPI': {
+                    'value': 3.2,
+                    'previous': 3.4,
+                    'impact': 'إيجابي للذهب - تضخم منخفض',
+                    'next_release': '2025-02-12'
+                },
+                'US_Interest_Rate': {
+                    'value': 4.5,
+                    'previous': 4.75,
+                                        'impact': 'إيجابي للذهب - خفض الفائدة',
+                    'next_release': '2025-01-29 FOMC'
+                },
+                'US_NFP': {
+                    'value': 256000,
+                    'previous': 227000,
+                    'impact': 'سلبي للذهب - سوق عمل قوي',
+                    'next_release': '2025-02-07'
+                },
+                'DXY_Index': {
+                    'value': 108.5,
+                    'trend': 'هابط',
+                    'impact': 'إيجابي للذهب - ضعف الدولار'
+                },
+                'Geopolitical_Risk': {
+                    'level': 'متوسط',
+                    'events': ['توترات تجارية', 'قلق من التضخم'],
+                    'impact': 'محايد إلى إيجابي للذهب'
+                }
+            }
+            
+            # حساب التأثير الإجمالي
+            positive_factors = sum(1 for ind in economic_data['indicators'].values() 
+                                 if 'إيجابي' in str(ind.get('impact', '')))
+            negative_factors = sum(1 for ind in economic_data['indicators'].values() 
+                                 if 'سلبي' in str(ind.get('impact', '')))
+            
+            if positive_factors > negative_factors:
+                economic_data['overall_impact'] = 'إيجابي للذهب'
+                economic_data['score'] = positive_factors - negative_factors
+            elif negative_factors > positive_factors:
+                economic_data['overall_impact'] = 'سلبي للذهب'
+                economic_data['score'] = positive_factors - negative_factors
+            else:
+                economic_data['overall_impact'] = 'محايد'
+                economic_data['score'] = 0
+                
+        except Exception as e:
+            print(f"خطأ في جلب البيانات الاقتصادية: {e}")
+            economic_data['error'] = str(e)
+            
+        return economic_data
+    
+    def analyze_volume_profile(self, data):
+        """تحليل محسّن لحجم التداول"""
+        try:
+            latest = data.iloc[-1]
+            prev_5 = data.tail(5)
+            prev_20 = data.tail(20)
+            
+            current_volume = int(latest.get('Volume', 0))
+            avg_volume_5 = int(prev_5['Volume'].mean())
+            avg_volume_20 = int(prev_20['Volume'].mean())
+            volume_ratio = latest.get('Volume_Ratio', 1)
+            
+            # تحليل قوة الحجم
+            if volume_ratio > 2.0:
+                volume_strength = 'قوي جداً'
+                volume_signal = 'حجم استثنائي - احتمال حركة قوية'
+            elif volume_ratio > 1.5:
+                volume_strength = 'قوي'
+                volume_signal = 'حجم فوق المتوسط - اهتمام متزايد'
+            elif volume_ratio > 0.8:
+                volume_strength = 'طبيعي'
+                volume_signal = 'حجم طبيعي - لا إشارات خاصة'
+            else:
+                volume_strength = 'ضعيف'
+                volume_signal = 'حجم ضعيف - حذر من الحركة الوهمية'
+            
+            # تحليل OBV
+            obv_trend = 'صاعد' if data['OBV'].iloc[-1] > data['OBV'].iloc[-5] else 'هابط'
+            
+            return {
+                'current_volume': current_volume,
+                'avg_volume_5': avg_volume_5,
+                'avg_volume_20': avg_volume_20,
+                'volume_ratio': round(volume_ratio, 2),
+                'volume_strength': volume_strength,
+                'volume_signal': volume_signal,
+                'obv_trend': obv_trend,
+                'volume_price_correlation': 'إيجابي' if (latest['Close'] > data['Close'].iloc[-2] and current_volume > avg_volume_20) else 'سلبي'
+            }
+        except Exception as e:
+            print(f"خطأ في تحليل الحجم: {e}")
+            return {}
+    
+    def analyze_correlations(self, market_data):
+        """تحليل الارتباطات مع تفسير محسّن"""
+        try:
+            print("📊 تحليل الارتباطات المتقدم...")
+            daily_data = market_data['daily']
+            correlations = {}
+            strength = {}
+            interpretation = {}
+            
+            if hasattr(daily_data.columns, 'levels'):
+                available_symbols = daily_data.columns.get_level_values(0).unique()
+                gold_symbol = self.symbols['gold'] if self.symbols['gold'] in available_symbols else self.symbols['gold_etf']
+                
+                if gold_symbol in available_symbols:
+                    gold_prices = daily_data[gold_symbol]['Close'].dropna()
+                    
+                    for name, symbol in self.symbols.items():
+                        if name not in ['gold', 'gold_etf'] and symbol in available_symbols:
+                            if not daily_data[symbol].empty:
+                                asset_prices = daily_data[symbol]['Close'].dropna()
+                                common_index = gold_prices.index.intersection(asset_prices.index)
+                                
+                                if len(common_index) > 30:
+                                    corr = gold_prices.loc[common_index].corr(asset_prices.loc[common_index])
+                                    
+                                    if pd.notna(corr):
+                                        correlations[name] = round(corr, 3)
+                                        
+                                        # تحديد القوة
+                                        if abs(corr) > 0.7:
+                                            strength[name] = 'قوي جداً'
+                                        elif abs(corr) > 0.5:
+                                            strength[name] = 'قوي'
+                                        elif abs(corr) > 0.3:
+                                            strength[name] = 'متوسط'
+                                        else:
+                                            strength[name] = 'ضعيف'
+                                        
+                                        # التفسير
+                                        if name == 'dxy':
+                                            if corr < -0.5:
+                                                interpretation[name] = 'ارتباط عكسي قوي - إيجابي للذهب عند ضعف الدولار'
+                                            elif corr < -0.3:
+                                                interpretation[name] = 'ارتباط عكسي معتدل - فرصة محتملة'
+                                            else:
+                                                interpretation[name] = 'ارتباط ضعيف - تأثير محدود'
+                                        
+                                        elif name == 'vix':
+                                            if corr > 0.3:
+                                                interpretation[name] = 'الذهب يستفيد من زيادة التقلبات'
+                                            else:
+                                                interpretation[name] = 'تأثير محدود من التقلبات'
+                                        
+                                        elif name == 'oil':
+                                            if abs(corr) > 0.5:
+                                                interpretation[name] = 'ارتباط قوي - مؤشر على التضخم'
+                                            else:
+                                                interpretation[name] = 'ارتباط ضعيف'
+            
+            return {
+                'correlations': correlations,
+                'strength_analysis': strength,
+                'interpretation': interpretation
+            }
+        except Exception as e:
+            print(f"❌ خطأ في تحليل الارتباطات: {e}")
+            return {}
+    
+    async def fetch_news_enhanced(self):
+        """جلب وتحليل الأخبار بشكل متقدم"""
+        print("📰 جلب وتحليل أخبار الذهب المتقدم...")
+        
+        if not self.news_api_key:
+            return {"status": "no_api_key", "message": "يتطلب مفتاح API للأخبار"}
+        
+        try:
+            # جلب الأخبار بشكل غير متزامن
+            articles = await self.news_analyzer.fetch_news_async()
+            
+            # استخراج وتحليل الأحداث
+            events_analysis = self.news_analyzer.extract_events(articles)
+            
+            return {
+                "status": "success",
+                "events_analysis": events_analysis,
+                "articles_count": len(articles)
+            }
+            
+        except Exception as e:
+            print(f"❌ خطأ في جلب الأخبار: {e}")
+            return {"status": "error", "message": str(e)}
+    
+    def generate_professional_signals_v3(self, tech_data, correlations, volume, fib_levels, 
+                                       support_resistance, economic_data, news_analysis, 
+                                       mtf_analysis, ml_prediction):
+        """توليد إشارات احترافية محسّنة V3 مع ML والتحليل متعدد الأطر"""
+        print("🎯 توليد إشارات احترافية متقدمة V3...")
+        
+        try:
+            latest = tech_data.iloc[-1]
+            prev = tech_data.iloc[-2]
+            
+            # نظام النقاط المحسّن V3
+            scores = {
+                'trend': 0,
+                'momentum': 0,
+                'volume': 0,
+                'fibonacci': 0,
+                'correlation': 0,
+                'support_resistance': 0,
+                'economic': 0,
+                'news': 0,
+                'ma_cross': 0,
+                'mtf_coherence': 0  # جديد
+            }
+            
+            # 1. تحليل الاتجاه (25%)
+            if latest['Close'] > latest['SMA_200']:
+                scores['trend'] += 2
+                if latest['Close'] > latest['SMA_50']:
+                    scores['trend'] += 1
+                    if latest['Close'] > latest['SMA_20']:
+                        scores['trend'] += 1
+            else:
+                scores['trend'] -= 2
+                if latest['Close'] < latest['SMA_50']:
+                    scores['trend'] -= 1
+                    if latest['Close'] < latest['SMA_20']:
+                        scores['trend'] -= 1
+            # التقاطعات الذهبية
+            if latest.get('Golden_Cross', 0) == 1:
+                scores['ma_cross'] = 3
+            elif latest.get('Death_Cross', 0) == 1:
+                scores['ma_cross'] = -3
+            
+            # 2. تحليل الزخم (20%)
+            # MACD
+            if latest['MACD'] > latest['MACD_Signal']:
+                scores['momentum'] += 1
+                if latest['MACD_Histogram'] > prev['MACD_Histogram']:
+                    scores['momentum'] += 1
+            else:
+                scores['momentum'] -= 1
+                if latest['MACD_Histogram'] < prev['MACD_Histogram']:
+                    scores['momentum'] -= 1
+            
+            # RSI
+            if 30 <= latest['RSI'] <= 70:
+                if 45 <= latest['RSI'] <= 55:
+                    scores['momentum'] += 0.5
+                elif latest['RSI'] > 55:
+                    scores['momentum'] += 1
+                else:
+                    scores['momentum'] -= 0.5
+            elif latest['RSI'] < 30:
+                scores['momentum'] += 2
+            elif latest['RSI'] > 70:
+                scores['momentum'] -= 2
+            
+            # Stochastic
+            if latest.get('Stoch_K', 50) > latest.get('Stoch_D', 50):
+                scores['momentum'] += 0.5
+            
+            # 3. تحليل الحجم (10%)
+            if volume.get('volume_strength') == 'قوي جداً':
+                scores['volume'] = 3
+            elif volume.get('volume_strength') == 'قوي':
+                scores['volume'] = 2
+            elif volume.get('volume_strength') == 'طبيعي':
+                scores['volume'] = 0
+            else:
+                scores['volume'] = -1
+            
+            # OBV
+            if volume.get('obv_trend') == 'صاعد':
+                scores['volume'] += 1
+            
+            # 4. تحليل فيبوناتشي (8%)
+            if fib_levels:
+                current_price = latest['Close']
+                if current_price > fib_levels.get('fib_38_2', 0):
+                    scores['fibonacci'] = 2
+                elif current_price > fib_levels.get('fib_50_0', 0):
+                    scores['fibonacci'] = 1
+                elif current_price > fib_levels.get('fib_61_8', 0):
+                    scores['fibonacci'] = -1
+                else:
+                    scores['fibonacci'] = -2
+            
+            # 5. تحليل الدعم والمقاومة (8%)
+            if support_resistance:
+                if support_resistance.get('price_to_support') and support_resistance['price_to_support'] < 2:
+                    scores['support_resistance'] = 2
+                elif support_resistance.get('price_to_resistance') and support_resistance['price_to_resistance'] < 2:
+                    scores['support_resistance'] = -2
+            
+            # 6. تحليل الارتباطات (5%)
+            dxy_corr = correlations.get('correlations', {}).get('dxy', 0)
+            if dxy_corr < -0.7:
+                scores['correlation'] = 2
+            elif dxy_corr < -0.5:
+                scores['correlation'] = 1
+            elif dxy_corr > 0.5:
+                scores['correlation'] = -1
+            
+            # 7. البيانات الاقتصادية (8%)
+            if economic_data:
+                econ_score = economic_data.get('score', 0)
+                scores['economic'] = min(max(econ_score, -3), 3)
+            
+            # 8. تحليل الأخبار المتقدم (6%)
+            if news_analysis and news_analysis.get('status') == 'success':
+                events = news_analysis.get('events_analysis', {})
+                total_impact = events.get('total_impact', 0)
+                
+                if total_impact > 5:
+                    scores['news'] = 3
+                elif total_impact > 2:
+                    scores['news'] = 2
+                elif total_impact < -5:
+                    scores['news'] = -3
+                elif total_impact < -2:
+                    scores['news'] = -2
+                else:
+                    scores['news'] = 0
+            
+            # 9. توافق الأطر الزمنية (10%) - جديد
+            if mtf_analysis:
+                coherence_score = mtf_analysis.get('coherence_score', 0)
+                scores['mtf_coherence'] = coherence_score
+            
+            # حساب النتيجة النهائية مع الأوزان المحدثة
+            weights = {
+                'trend': 0.20,
+                'momentum': 0.15,
+                'volume': 0.10,
+                'fibonacci': 0.08,
+                'correlation': 0.05,
+                'support_resistance': 0.08,
+                'economic': 0.08,
+                'news': 0.06,
+                'ma_cross': 0.10,
+                'mtf_coherence': 0.10
+            }
+            
+            total_score = sum(scores[key] * weights.get(key, 0) for key in scores)
+            
+            # دمج التنبؤ بالتعلم الآلي
+            confidence_boost = 1.0
+            ml_interpretation = ""
+            
+            if ml_prediction and ml_prediction[0] is not None:
+                ml_probability = ml_prediction[0]
+                ml_interpretation = ml_prediction[1]
+                
+                # تعديل النتيجة بناءً على ML
+                if ml_probability > 0.75:
+                    confidence_boost = 1.3
+                elif ml_probability > 0.60:
+                    confidence_boost = 1.15
+                elif ml_probability < 0.40:
+                    confidence_boost = 0.7
+                elif ml_probability < 0.25:
+                    confidence_boost = 0.5
+                
+                total_score *= confidence_boost
+            
+            # تحديد الإشارة والثقة
+            if total_score >= 2.5:
+                signal = "Strong Buy"
+                confidence = "Very High"
+                action = "شراء قوي - حجم كبير"
+            elif total_score >= 1.5:
+                signal = "Buy"
+                confidence = "High"
+                action = "شراء - حجم متوسط"
+            elif total_score >= 0.5:
+                signal = "Weak Buy"
+                confidence = "Medium"
+                action = "شراء حذر - حجم صغير"
+            elif total_score <= -2.5:
+                signal = "Strong Sell"
+                confidence = "Very High"
+                action = "بيع قوي - حجم كبير"
+            elif total_score <= -1.5:
+                signal = "Sell"
+                confidence = "High"
+                action = "بيع - حجم متوسط"
+            elif total_score <= -0.5:
+                signal = "Weak Sell"
+                confidence = "Medium"
+                action = "بيع حذر - حجم صغير"
+            else:
+                signal = "Hold"
+                confidence = "Low"
+                action = "انتظار - لا توجد إشارة واضحة"
+            
+            # إدارة المخاطر المحسّنة V3
+            atr = latest.get('ATR', latest['Close'] * 0.02)
+            price = latest['Close']
+            volatility = latest.get('ATR_Percent', 2)
+            
+            # تعديل مستويات وقف الخسارة حسب التقلبات وML
+            sl_multiplier = 1.5 if volatility < 1.5 else (2.0 if volatility < 2.5 else 2.5)
+            
+            # تعديل إضافي بناءً على ML
+            if ml_prediction and ml_prediction[0] is not None:
+                if ml_prediction[0] < 0.4:
+                    sl_multiplier *= 0.8  # وقف خسارة أضيق للإشارات الضعيفة
+            
+            risk_management = {
+                'stop_loss_levels': {
+                    'tight': round(price - (atr * sl_multiplier * 0.75), 2),
+                    'conservative': round(price - (atr * sl_multiplier), 2),
+                    'moderate': round(price - (atr * sl_multiplier * 1.5), 2),
+                    'wide': round(price - (atr * sl_multiplier * 2), 2)
+                },
+                'profit_targets': {
+                    'target_1': round(price + (atr * 1.5), 2),
+                    'target_2': round(price + (atr * 3), 2),
+                    'target_3': round(price + (atr * 5), 2),
+                    'target_4': round(price + (atr * 8), 2)
+                },
+                'position_size_recommendation': self._calculate_position_size_v3(confidence, volatility, ml_prediction),
+                'risk_reward_ratio': round(3 / sl_multiplier, 2),
+                'max_risk_per_trade': '2%' if confidence in ['Very High', 'High'] else '1%',
+                'volatility_adjusted': True,
+                'ml_adjusted': ml_prediction is not None and ml_prediction[0] is not None
+            }
+            
+            # توصيات إضافية محسّنة
+            entry_strategy = self._generate_entry_strategy_v3(scores, latest, support_resistance, mtf_analysis)
+            
+            # تحليل الأحداث القادمة
+            upcoming_events = self._analyze_upcoming_events(economic_data, news_analysis)
+            
+            return {
+                'signal': signal,
+                'confidence': confidence,
+                'action_recommendation': action,
+                'total_score': round(total_score, 2),
+                'component_scores': scores,
+                'current_price': round(price, 2),
+                'risk_management': risk_management,
+                'entry_strategy': entry_strategy,
+                'ml_prediction': {
+                    'probability': round(ml_prediction[0], 3) if ml_prediction and ml_prediction[0] is not None else None,
+                    'interpretation': ml_interpretation
+                },
+                'mtf_summary': mtf_analysis.get('analysis', '') if mtf_analysis else '',
+                'upcoming_events': upcoming_events,
+                'technical_summary': {
+                    'rsi': round(latest.get('RSI', 0), 1),
+                    'macd': round(latest.get('MACD', 0), 2),
+                    'williams_r': round(latest.get('Williams_R', 0), 1),
+                    'stoch_k': round(latest.get('Stoch_K', 0), 1),
+                    'bb_position': round(latest.get('BB_Position', 0.5), 2),
+                    'volume_ratio': round(latest.get('Volume_Ratio', 1), 2)
+                },
+                'key_levels': {
+                    'sma_20': round(latest.get('SMA_20', 0), 2),
+                    'sma_50': round(latest.get('SMA_50', 0), 2),
+                    'sma_200': round(latest.get('SMA_200', 0), 2),
+                    'bb_upper': round(latest.get('BB_Upper', 0), 2),
+                    'bb_lower': round(latest.get('BB_Lower', 0), 2)
+                }
+            }
+            
+        except Exception as e:
+            print(f"❌ خطأ في توليد الإشارات: {e}")
+            return {"error": str(e)}
+    
+    def _calculate_position_size_v3(self, confidence, volatility, ml_prediction):
+        """حساب حجم المركز المحسّن مع ML"""
+        base_recommendation = ""
+        
+        # التوصية الأساسية
+        if confidence == "Very High" and volatility < 2:
+            base_recommendation = "كبير (75-100% من رأس المال المخصص)"
+        elif confidence == "High" and volatility < 2.5:
+            base_recommendation = "متوسط-كبير (50-75%)"
+        elif confidence == "High" or (confidence == "Medium" and volatility < 2):
+            base_recommendation = "متوسط (25-50%)"
+        elif confidence == "Medium":
+            base_recommendation = "صغير (10-25%)"
+        else:
+            base_recommendation = "صغير جداً (5-10%) أو عدم الدخول"
+        
+        # تعديل بناءً على ML
+        if ml_prediction and ml_prediction[0] is not None:
+            if ml_prediction[0] > 0.75:
+                base_recommendation += " (ML يؤكد بقوة)"
+            elif ml_prediction[0] < 0.4:
+                base_recommendation += " (ML يحذر - قلل الحجم)"
+        
+        return base_recommendation
+    
+    def _generate_entry_strategy_v3(self, scores, latest_data, support_resistance, mtf_analysis):
+        """توليد استراتيجية دخول محسّنة V3"""
+        strategy = {
+            'entry_type': '',
+            'entry_zones': [],
+            'conditions': [],
+            'warnings': [],
+            'mtf_confirmation': ''
+        }
+        
+        # تحليل توافق الأطر الزمنية
+        if mtf_analysis:
+            if mtf_analysis.get('coherence_score', 0) > 2:
+                strategy['mtf_confirmation'] = '✅ توافق قوي عبر جميع الأطر الزمنية'
+                strategy['entry_type'] = 'دخول مؤكد - توافق متعدد الأطر'
+            elif mtf_analysis.get('coherence_score', 0) < -1:
+                strategy['warnings'].append('⚠️ تضارب بين الأطر الزمنية')
+                strategy['entry_type'] = 'انتظار توضيح الاتجاه'
+            else:
+                strategy['mtf_confirmation'] = 'توافق جزئي - حذر مطلوب'
+        
+        # تحديد نوع الدخول
+        if scores['trend'] > 2 and scores['momentum'] > 1 and scores['mtf_coherence'] > 1:
+            strategy['entry_type'] = 'دخول قوي - اتجاه واضح مع توافق'
+            strategy['entry_zones'].append(f"دخول فوري عند {round(latest_data['Close'], 2)}")
+        elif scores['support_resistance'] == 2:
+            strategy['entry_type'] = 'دخول من الدعم'
+            if support_resistance.get('nearest_support'):
+                strategy['entry_zones'].append(f"انتظر ارتداد من {support_resistance['nearest_support']}")
+        elif scores['momentum'] < -1:
+            strategy['warnings'].append('⚠️ ذروة شراء - انتظر تصحيح')
+            strategy['entry_type'] = 'انتظار تصحيح'
+        else:
+            strategy['entry_type'] = 'دخول تدريجي'
+            strategy['entry_zones'].append('قسّم الدخول على 2-3 مراحل')
+        
+        # الشروط المطلوبة
+        if latest_data.get('RSI', 50) > 70:
+            strategy['conditions'].append('انتظر RSI < 70')
+        if latest_data.get('Volume_Ratio', 1) < 0.8:
+            strategy['warnings'].append('⚠️ حجم ضعيف - تأكيد مطلوب')
+        
+        # إضافة مناطق دخول بناءً على المستويات الفنية
+        if latest_data.get('BB_Position', 0.5) < 0.2:
+            strategy['entry_zones'].append(f"قرب الحد السفلي لبولينجر - فرصة شراء عند {round(latest_data.get('BB_Lower', 0), 2)}")
+        elif latest_data.get('BB_Position', 0.5) > 0.8:
+            strategy['warnings'].append('⚠️ قرب الحد العلوي لبولينجر - احتمال تصحيح')
+        
+        return strategy
+    
+    def _analyze_upcoming_events(self, economic_data, news_analysis):
+        """تحليل الأحداث القادمة المؤثرة"""
+        events = []
+        
+        # الأحداث الاقتصادية
+        if economic_data and 'indicators' in economic_data:
+            for indicator, data in economic_data['indicators'].items():
+                if 'next_release' in data:
+                    events.append({
+                        'type': 'economic',
+                        'name': indicator,
+                        'date': data['next_release'],
+                        'expected_impact': data.get('impact', 'غير محدد')
+                    })
+        
+        # الأحداث من الأخبار
+        if news_analysis and news_analysis.get('status') == 'success':
+            events_data = news_analysis.get('events_analysis', {})
+            if 'dominant_theme' in events_data:
+                events.append({
+                    'type': 'news_theme',
+                    'name': events_data['dominant_theme'],
+                    'impact': 'مستمر',
+                    'recommendation': events_data.get('recommendation', '')
+                })
+        
+        return events
+    
+    def generate_signal_for_backtest(self, data):
+        """توليد إشارة مبسطة للاختبار الخلفي"""
+        # نسخة مبسطة من generate_professional_signals_v3 للاختبار الخلفي
+        score = 0
+        
+        # تحليل بسيط بناءً على البيانات المتاحة
+        if 'close' in data and 'open' in data:
+            if data['close'] > data['open']:
+                score += 1
+            else:
+                score -= 1
+        
+        if score > 0:
+            return {'action': 'Buy', 'confidence': 'Medium'}
+        elif score < 0:
+            return {'action': 'Sell', 'confidence': 'Medium'}
+        else:
+            return {'action': 'Hold', 'confidence': 'Low'}
+    
+    def generate_report_v3(self, analysis_result):
+        """توليد تقرير نصي شامل V3"""
+        try:
+            report = []
+            report.append("=" * 80)
+            report.append("📊 تقرير التحليل الاحترافي للذهب - الإصدار 3.0")
+            report.append("=" * 80)
+            report.append(f"التاريخ: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            report.append("")
+            
+            # الإشارة الرئيسية
+            if 'gold_analysis' in analysis_result:
+                ga = analysis_result['gold_analysis']
+                report.append("🎯 الإشارة الرئيسية:")
+                report.append(f"  • الإشارة: {ga.get('signal', 'N/A')}")
+                report.append(f"  • الثقة: {ga.get('confidence', 'N/A')}")
+                report.append(f"  • التوصية: {ga.get('action_recommendation', 'N/A')}")
+                report.append(f"  • السعر الحالي: ${ga.get('current_price', 'N/A')}")
+                report.append(f"  • النقاط الإجمالية: {ga.get('total_score', 'N/A')}")
+                report.append("")
+                
+                # التنبؤ بالتعلم الآلي
+                if 'ml_prediction' in ga and ga['ml_prediction'].get('probability') is not None:
+                    report.append("🤖 تنبؤ التعلم الآلي:")
+                    report.append(f"  • احتمالية النجاح: {ga['ml_prediction']['probability']:.1%}")
+                    report.append(f"  • التفسير: {ga['ml_prediction']['interpretation']}")
+                    report.append("")
+                
+                # توافق الأطر الزمنية
+                if 'mtf_summary' in ga and ga['mtf_summary']:
+                    report.append("⏰ تحليل الأطر الزمنية المتعددة:")
+                    report.append(f"  • {ga['mtf_summary']}")
+                    report.append("")
+                
+                # تفاصيل النقاط
+                if 'component_scores' in ga:
+                    report.append("📈 تحليل المكونات:")
+                    for component, score in ga['component_scores'].items():
+                        report.append(f"  • {component}: {score}")
+                    report.append("")
+                
+                # إدارة المخاطر
+                if 'risk_management' in ga:
+                    rm = ga['risk_management']
+                    report.append("⚠️ إدارة المخاطر:")
+                    report.append(f"  • وقف الخسارة المحافظ: ${rm['stop_loss_levels'].get('conservative', 'N/A')}")
+                    report.append(f"  • الهدف الأول: ${rm['profit_targets'].get('target_1', 'N/A')}")
+                    report.append(f"  • الهدف الثاني: ${rm['profit_targets'].get('target_2', 'N/A')}")
+                    report.append(f"  • حجم المركز: {rm.get('position_size_recommendation', 'N/A')}")
+                    if rm.get('ml_adjusted'):
+                        report.append("  • ✅ تم تعديل المخاطر بناءً على التعلم الآلي")
+                    report.append("")
+                
+                # استراتيجية الدخول
+                if 'entry_strategy' in ga:
+                    es = ga['entry_strategy']
+                    report.append("📍 استراتيجية الدخول:")
+                    report.append(f"  • النوع: {es.get('entry_type', 'N/A')}")
+                    if es.get('mtf_confirmation'):
+                        report.append(f"  • {es['mtf_confirmation']}")
+                    for zone in es.get('entry_zones', []):
+                        report.append(f"  • {zone}")
+                    for warning in es.get('warnings', []):
+                        report.append(f"  • {warning}")
+                    report.append("")
+                
+                # الأحداث القادمة
+                if 'upcoming_events' in ga and ga['upcoming_events']:
+                    report.append("📅 الأحداث القادمة المؤثرة:")
+                    for event in ga['upcoming_events'][:5]:
+                        report.append(f"  • {event.get('name', 'N/A')}: {event.get('date', 'N/A')} - {event.get('expected_impact', 'N/A')}")
+                    report.append("")
+            
+            # تحليل الأطر الزمنية المتعددة المفصل
+            if 'mtf_analysis' in analysis_result and analysis_result['mtf_analysis']:
+                mtf = analysis_result['mtf_analysis']
+                report.append("⏱️ تفاصيل الأطر الزمنية:")
+                if 'timeframes' in mtf:
+                    for tf_name, tf_data in mtf['timeframes'].items():
+                        if tf_data:
+                            report.append(f"  • {tf_name}: {tf_data.get('trend', 'N/A')} (نقاط: {tf_data.get('score', 0):.1f})")
+                report.append(f"  • نقاط التوافق الإجمالية: {mtf.get('coherence_score', 0)}")
+                report.append(f"  • التوصية: {mtf.get('recommendation', 'N/A')}")
+                report.append("")
+            
+            # البيانات الاقتصادية
+            if 'economic_data' in analysis_result:
+                ed = analysis_result['economic_data']
+                if ed.get('status') != 'error':
+                    report.append("💰 البيانات الاقتصادية:")
+                    report.append(f"  • التأثير الإجمالي: {ed.get('overall_impact', 'N/A')}")
+                    if 'indicators' in ed:
+                        for ind_name, ind_data in ed['indicators'].items():
+                            if isinstance(ind_data, dict):
+                                report.append(f"  • {ind_name}: {ind_data.get('value', 'N/A')} - {ind_data.get('impact', '')}")
+                    report.append("")
+            
+            # تحليل الأخبار المتقدم
+            if 'news_analysis' in analysis_result:
+                na = analysis_result['news_analysis']
+                if na.get('status') == 'success' and 'events_analysis' in na:
+                    ea = na['events_analysis']
+                    report.append("📰 تحليل الأحداث الإخبارية:")
+                    report.append(f"  • التأثير الإجمالي: {ea.get('total_impact', 0):.1f}")
+                    report.append(f"  • الموضوع المهيمن: {ea.get('dominant_theme', 'N/A')}")
+                    report.append(f"  • التوصية: {ea.get('recommendation', 'N/A')}")
+                    
+                    if 'event_summary' in ea:
+                        report.append("  • ملخص الأحداث:")
+                        for event_type, count in ea['event_summary'].items():
+                            report.append(f"    - {event_type}: {count} حدث")
+                    report.append("")
+            
+            # الارتباطات
+            if 'market_correlations' in analysis_result:
+                mc = analysis_result['market_correlations']
+                if 'correlations' in mc:
+                    report.append("🔗 الارتباطات الرئيسية:")
+                    for asset, corr in mc['correlations'].items():
+                        interpretation = mc.get('interpretation', {}).get(asset, '')
+                        report.append(f"  • {asset.upper()}: {corr} - {interpretation}")
+                    report.append("")
+            
+            # نتائج الاختبار الخلفي (إن وجدت)
+            if 'backtest_results' in analysis_result:
+                bt_results = analysis_result['backtest_results']
+                # ✅ تصحيح: إضافة شرط للتحقق من وجود نتائج قبل محاولة طباعتها
+                if bt_results:
+                    report.append("🔄 نتائج الاختبار الخلفي:")
+                    report.append(f"  • العائد الإجمالي: {bt_results.get('total_return', 0):.2f}%")
+                    report.append(f"  • نسبة شارب: {bt_results.get('sharpe_ratio', 0):.3f}")
+                    report.append(f"  • معدل الفوز: {bt_results.get('win_rate', 0):.1f}%")
+                    report.append(f"  • عامل الربح: {bt_results.get('profit_factor', 0):.2f}")
+                    report.append("")
+            
+            # ملخص السوق
+            if 'market_summary' in analysis_result:
+                ms = analysis_result['market_summary']
+                report.append("📊 ملخص حالة السوق:")
+                report.append(f"  • الحالة العامة: {ms.get('market_condition', 'N/A')}")
+                report.append(f"  • آخر تحديث: {ms.get('last_update', 'N/A')}")
+                report.append(f"  • نقاط البيانات: {ms.get('data_points', 0)}")
+                report.append("")
+            
+            report.append("=" * 80)
+            report.append("انتهى التقرير - الإصدار 3.0")
+            report.append("تم دمج: التعلم الآلي | تحليل متعدد الأطر | تحليل أخبار متقدم | اختبار خلفي احترافي")
+            
+            return "\n".join(report)
+            
+        except Exception as e:
+            return f"خطأ في توليد التقرير: {e}"
+    
+    async def run_analysis_v3(self):
+        """تشغيل التحليل الاحترافي الشامل V3"""
+        print("🚀 بدء التحليل الاحترافي المتقدم للذهب - الإصدار 3.0...")
+        print("=" * 80)
+        
+        try:
+            # 1. جلب البيانات
+            market_data = self.fetch_multi_timeframe_data()
+            if market_data is None:
+                raise ValueError("فشل في جلب بيانات السوق")
+            
+            # 2. استخراج بيانات الذهب
+            gold_data = self.extract_gold_data(market_data)
+            if gold_data is None:
+                raise ValueError("فشل في استخراج بيانات الذهب")
+            
+            # 3. حساب المؤشرات الفنية
+            technical_data = self.calculate_professional_indicators(gold_data)
+            
+            # 4. تحليل متعدد الأطر الزمنية
+            print("\n⏰ تحليل الأطر الزمنية المتعددة...")
+            coherence_score, mtf_analysis = self.mtf_analyzer.get_coherence_score(self.symbols['gold'])
+            
+            # 5. حساب مستويات فيبوناتشي
+            fibonacci_levels = self.calculate_fibonacci_levels(technical_data)
+            
+            # 6. حساب الدعم والمقاومة
+            support_resistance = self.calculate_support_resistance(technical_data)
+            
+            # 7. تحليل الحجم
+            volume_analysis = self.analyze_volume_profile(technical_data)
+            
+            # 8. تحليل الارتباطات
+            correlations = self.analyze_correlations(market_data)
+            
+            # 9. جلب البيانات الاقتصادية
+            economic_data = self.fetch_economic_data()
+            
+            # 10. جلب وتحليل الأخبار المتقدم
+            news_data = await self.fetch_news_enhanced()
+            
+            # 11. التنبؤ بالتعلم الآلي
+            print("\n🤖 التنبؤ بالتعلم الآلي...")
+            # تحديث الأسعار المستقبلية للبيانات التاريخية
+            self.db_manager.update_future_prices()
+            
+            # جلب بيانات التدريب
+            training_data = self.db_manager.get_training_data()
+            
+            ml_prediction = None
+            if training_data and len(training_data) >= 100:
+                # تدريب النموذج إذا لزم الأمر
+                if not os.path.exists(self.ml_predictor.model_path):
+                    print("  • تدريب نموذج جديد...")
+                    self.ml_predictor.train_model(training_data)
+                
+                # التنبؤ
+                current_analysis = {
+                    'gold_analysis': {
+                        'component_scores': {},  # سيتم ملؤها لاحقاً
+                        'technical_summary': {}
+                    },
+                    'volume_analysis': volume_analysis,
+                    'market_correlations': correlations,
+                    'economic_data': economic_data
+                }
+                ml_prediction = self.ml_predictor.predict_probability(current_analysis)
+            else:
+                print("  • بيانات غير كافية للتعلم الآلي")
+            
+            # 12. توليد الإشارات النهائية V3
+            signals = self.generate_professional_signals_v3(
+                technical_data, correlations, volume_analysis, 
+                fibonacci_levels, support_resistance, 
+                economic_data, news_data, mtf_analysis, ml_prediction
+            )
+            
+            # 13. اختبار خلفي (اختياري)
+            backtest_results = None
+            if len(technical_data) > 100:
+                print("\n🔄 تشغيل الاختبار الخلفي...")
+                backtest_results = self.backtester.run_backtest(technical_data)
+            
+            # تجميع النتائج النهائية
+            final_result = {
+                'timestamp': datetime.now().isoformat(),
+                'status': 'success',
+                'version': '3.0',
+                'gold_analysis': signals,
+                'mtf_analysis': mtf_analysis,
+                'fibonacci_levels': fibonacci_levels,
+                'support_resistance': support_resistance,
+                'volume_analysis': volume_analysis,
+                'market_correlations': correlations,
+                'economic_data': economic_data,
+                'news_analysis': news_data,
+                'backtest_results': backtest_results,
+                'market_summary': {
+                    'last_update': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                    'data_points': len(technical_data),
+                    'timeframe': 'Multi-timeframe',
+                    'market_condition': self._determine_market_condition_v3(signals, volume_analysis, mtf_analysis)
+                }
+            }
+            
+            # حفظ في قاعدة البيانات
+            self.db_manager.save_analysis(final_result)
+            
+            # حفظ النتائج
+            self.save_results_v3(final_result)
+            
+            # توليد وطباعة التقرير
+            report = self.generate_report_v3(final_result)
+            print(report)
+            
+            print("\n✅ تم إتمام التحليل الاحترافي V3.0 بنجاح!")
+            return final_result
+            
+        except Exception as e:
+            error_message = f"❌ فشل التحليل الاحترافي: {e}"
+            print(error_message)
+            error_result = {
+                'timestamp': datetime.now().isoformat(),
+                'status': 'error',
+                'version': '3.0',
+                'error': str(e)
+            }
+            self.save_results_v3(error_result)
+            return error_result
+    
+    def _determine_market_condition_v3(self, signals, volume, mtf_analysis):
+        """تحديد حالة السوق العامة V3"""
+        if not signals or 'error' in signals:
+            return "فشل تحديد حالة السوق بسبب خطأ في التحليل"
+
+        conditions = []
+        
+        # تحليل الإشارة الأساسية
+        if signals.get('signal') in ['Strong Buy', 'Buy']:
+            if volume.get('volume_strength') in ['قوي', 'قوي جداً']:
+                conditions.append('صاعد قوي')
+            else:
+                conditions.append('صاعد')
+        elif signals.get('signal') in ['Strong Sell', 'Sell']:
+            if volume.get('volume_strength') in ['قوي', 'قوي جداً']:
+                conditions.append('هابط قوي')
+            else:
+                conditions.append('هابط')
+        else:
+            conditions.append('عرضي')
+        
+        # تحليل توافق الأطر الزمنية
+        if mtf_analysis and mtf_analysis.get('coherence_score', 0) > 2:
+            conditions.append('توافق قوي')
+        elif mtf_analysis and mtf_analysis.get('coherence_score', 0) < -2:
+            conditions.append('تضارب شديد')
+        
+        # تحليل ML
+        if signals.get('ml_prediction', {}).get('probability'):
+            ml_prob = signals['ml_prediction']['probability']
+            if ml_prob > 0.7:
+                conditions.append('ML إيجابي')
+            elif ml_prob < 0.3:
+                conditions.append('ML سلبي')
+        
+        # دمج الحالات
+        if 'صاعد قوي' in conditions and 'توافق قوي' in conditions:
+            return 'صاعد قوي جداً - فرصة ممتازة'
+        elif 'هابط قوي' in conditions and 'توافق قوي' in conditions:
+            return 'هابط قوي جداً - تجنب الشراء'
+        elif 'تضارب شديد' in conditions:
+            return 'متقلب - عدم وضوح'
+        elif 'عرضي' in conditions:
+            return 'عرضي/محايد - انتظار'
+        else:
+            return ' | '.join(conditions[:2])
+    
+    def save_results_v3(self, results):
+        """حفظ النتائج في ملفات متعددة V3"""
+        try:
+            # 1. حفظ JSON الرئيسي (مطلوب)
+            filename = "gold_analysis_v3.json"
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(results, f, ensure_ascii=False, indent=2, default=str)
+            print(f"💾 تم حفظ التحليل في: {filename}")
+            
+        except Exception as e:
+            print(f"❌ خطأ في حفظ النتائج: {e}")
+
+def main():
+    """الدالة الرئيسية لتشغيل المحلل"""
+    analyzer = ProfessionalGoldAnalyzerV3()
+    
+    # تشغيل التحليل بشكل غير متزامن
+    asyncio.run(analyzer.run_analysis_v3())
+
+if __name__ == "__main__":
+    main()
