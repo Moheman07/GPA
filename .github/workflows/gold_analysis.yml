@@ -16,8 +16,8 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
       with:
-        # ✅ تعديل مهم: نستخدم توكن خاص لتمكين السحب والدفع في نفس الـ Action
-        token: ${{ secrets.GITHUB_TOKEN }}
+        # استخدام التوكن الخاص لضمان صلاحيات الدفع الكاملة
+        token: ${{ secrets.PAT }}
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -41,19 +41,18 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "Gold Analysis Bot"
         
-        # ✅ تعديل مهم: سحب أي تغييرات قام بها تشغيل سابق قبل إضافة الملفات الجديدة
-        # هذا يمنع حدوث تعارض ويضمن أننا نبني على آخر نسخة من قاعدة البيانات
-        git pull
-
-        git add -A gold_analysis_v3.json analysis_history.db
+        echo "--- محتويات المجلد قبل الإضافة ---"
+        ls -la
         
-        if [ -f "gold_ml_model.pkl" ]; then
-          git add gold_ml_model.pkl
-        fi
-        if [ -f "gold_scaler.pkl" ]; then
-          git add gold_scaler.pkl
-        fi
+        git add -A
         
-        # The "|| exit 0" part prevents the workflow from failing if there are no changes
-        git commit -m "🔄 Update gold analysis - $(date +'%Y-%m-%d %H:%M UTC')" || exit 0
-        git push
+        echo "--- حالة git بعد الإضافة ---"
+        git status
+        
+        # التحقق من وجود تغييرات للحفظ
+        if git diff --staged --quiet; then
+          echo "No changes to commit."
+        else
+          git commit -m "📊 Automated analysis update"
+          git push
+        fi
