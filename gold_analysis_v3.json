@@ -1,37 +1,37 @@
 {
-  "timestamp": "2025-08-21T09:21:56.199156",
+  "timestamp": "2025-08-21T11:00:30.283841",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
     "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.79,
+    "total_score": 1.53,
     "component_scores": {
       "trend": 4,
-      "momentum": 0.5,
+      "momentum": 0.0,
       "volume": 4,
       "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 0,
+      "news": -3,
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3382.5,
+    "current_price": 3373.8,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3340.78,
-        "conservative": 3326.87,
-        "moderate": 3299.06,
-        "wide": 3271.24
+        "tight": 3332.08,
+        "conservative": 3318.17,
+        "moderate": 3290.36,
+        "wide": 3262.54
       },
       "profit_targets": {
-        "target_1": 3438.13,
-        "target_2": 3493.76,
-        "target_3": 3567.93,
-        "target_4": 3679.19
+        "target_1": 3429.43,
+        "target_2": 3485.06,
+        "target_3": 3559.23,
+        "target_4": 3670.49
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -74,25 +74,25 @@
       },
       {
         "type": "news_theme",
-        "name": "interest_rate",
+        "name": "geopolitical",
         "impact": "مستمر",
-        "recommendation": "تأثير محايد أو مختلط"
+        "recommendation": "أخبار سلبية قوية جداً للذهب"
       }
     ],
     "technical_summary": {
-      "rsi": 55.6,
-      "macd": 0.51,
-      "williams_r": -56.6,
-      "stoch_k": 43.4,
-      "bb_position": 0.73,
-      "volume_ratio": 3.24
+      "rsi": 54.3,
+      "macd": -0.18,
+      "williams_r": -61.8,
+      "stoch_k": 38.2,
+      "bb_position": 0.67,
+      "volume_ratio": 4.02
     },
     "key_levels": {
-      "sma_20": 3349.09,
-      "sma_50": 3351.29,
-      "sma_200": 3043.07,
-      "bb_upper": 3421.71,
-      "bb_lower": 3276.47
+      "sma_20": 3348.65,
+      "sma_50": 3351.12,
+      "sma_200": 3043.03,
+      "bb_upper": 3420.53,
+      "bb_lower": 3276.78
     }
   },
   "mtf_analysis": {},
@@ -105,7 +105,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 57.66
+    "current_position": 53.76
   },
   "support_resistance": {
     "resistance_levels": [
@@ -120,14 +120,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.73,
-    "price_to_support": 2.97
+    "price_to_resistance": 1.99,
+    "price_to_support": 2.72
   },
   "volume_analysis": {
-    "current_volume": 32043,
-    "avg_volume_5": 7436,
-    "avg_volume_20": 9894,
-    "volume_ratio": 3.24,
+    "current_volume": 41724,
+    "avg_volume_5": 9373,
+    "avg_volume_20": 10378,
+    "volume_ratio": 4.02,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -160,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T09:21:54.548132",
+    "last_update": "2025-08-21T11:00:28.535191",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -548,37 +548,90 @@
           "url": "https://english.khabarhub.com/2025/19/491688/"
         },
         {
-          "type": "interest_rate",
-          "title": "US Federal Regulators To Review State-Level Stablecoin Frameworks Under GENIUS Act",
-          "source": "Bitcoinist",
-          "published": "2025-08-20T09:00:24Z",
+          "type": "geopolitical",
+          "title": "GDS Reports Second Quarter 2025 Results",
+          "source": "GlobeNewswire",
+          "published": "2025-08-20T11:00:00Z",
           "entities": [
             [
-              "US Federal Regulators To Review State-Level Stablecoin Frameworks Under",
+              "GDS Reports",
               "ORG"
             ],
             [
-              "US",
+              "China",
               "GPE"
             ],
             [
-              "Establishing National Innovation",
+              "Aug. 20, 2025",
+              "DATE"
+            ],
+            [
+              "GLOBE NEWSWIRE",
               "ORG"
+            ],
+            [
+              "GDS Holdings Limited",
+              "ORG"
+            ],
+            [
+              "GDS",
+              "ORG"
+            ],
+            [
+              "NASDAQ",
+              "ORG"
+            ],
+            [
+              "GDS",
+              "ORG"
+            ],
+            [
+              "China",
+              "GPE"
+            ],
+            [
+              "today",
+              "DATE"
             ]
           ],
-          "numbers": [],
-          "sentiment_score": 0.13636363636363635,
-          "impact_score": -0.41,
-          "url": "https://bitcoinist.com/federal-regulators-state-level-stablecoin-framework/"
+          "numbers": [
+            {
+              "value": "Second",
+              "context": "GDS Reports Second Quarter 2025"
+            },
+            {
+              "value": "2025",
+              "context": "Reports Second Quarter 2025 Results SHANGHAI"
+            },
+            {
+              "value": "20",
+              "context": "China , Aug. 20 , 2025"
+            },
+            {
+              "value": "2025",
+              "context": "Aug. 20 , 2025 ( GLOBE"
+            },
+            {
+              "value": "9698",
+              "context": "; HKEX : 9698 ) ,"
+            }
+          ],
+          "sentiment_score": -0.023809523809523808,
+          "impact_score": -0.06,
+          "url": "https://www.globenewswire.com/news-release/2025/08/20/3136302/0/en/GDS-Reports-Second-Quarter-2025-Results.html"
         },
         {
           "type": "geopolitical",
-          "title": "iQIYI Announces Second Quarter 2025 Financial Results",
+          "title": "KANZHUN LIMITED Announces Second Quarter 2025 Financial Results",
           "source": "GlobeNewswire",
-          "published": "2025-08-20T09:00:00Z",
+          "published": "2025-08-20T11:00:00Z",
           "entities": [
             [
-              "2025",
+              "KANZHUN LIMITED",
+              "ORG"
+            ],
+            [
+              "Second Quarter 2025",
               "DATE"
             ],
             [
@@ -590,8 +643,12 @@
               "ORG"
             ],
             [
-              "iQIYI, Inc.",
+              "HKEX",
               "ORG"
+            ],
+            [
+              "2076",
+              "CARDINAL"
             ],
             [
               "China",
@@ -602,14 +659,14 @@
               "DATE"
             ],
             [
-              "the second quarter ended June 30, 2025",
+              "the quarter ended June 30, 2025",
               "DATE"
             ]
           ],
           "numbers": [
             {
               "value": "Second",
-              "context": "iQIYI Announces Second Quarter 2025"
+              "context": "KANZHUN LIMITED Announces Second Quarter 2025"
             },
             {
               "value": "2025",
@@ -624,8 +681,8 @@
               "context": "Aug. 20 , 2025 ( GLOBE"
             },
             {
-              "value": "second",
-              "context": "results for the second quarter ended"
+              "value": "2076",
+              "context": "; HKEX : 2076 ) ,"
             },
             {
               "value": "30",
@@ -636,166 +693,97 @@
               "context": "June 30 , 2025 ."
             }
           ],
-          "sentiment_score": 0.0,
-          "impact_score": 0.0,
-          "url": "https://www.globenewswire.com/news-release/2025/08/20/3136219/0/en/iQIYI-Announces-Second-Quarter-2025-Financial-Results.html"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Bitcoin, Ether ETFs record heavy outflows as traders await Fed signals",
-          "source": "Coinjournal.net",
-          "published": "2025-08-20T08:28:33Z",
-          "entities": [
-            [
-              "Fed",
-              "ORG"
-            ],
-            [
-              "SoSoValue",
-              "ORG"
-            ],
-            [
-              "Bitcoin",
-              "NORP"
-            ],
-            [
-              "daily",
-              "DATE"
-            ],
-            [
-              "$523 million",
-              "MONEY"
-            ],
-            [
-              "Tuesday",
-              "DATE"
-            ],
-            [
-              "$422.3 million",
-              "MONEY"
-            ],
-            [
-              "SoSoValue",
-              "ORG"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "523",
-              "context": "outflows of $ 523 million on"
-            },
-            {
-              "value": "million",
-              "context": "of $ 523 million on Tuesday"
-            },
-            {
-              "value": "422.3",
-              "context": "ETFs experienced $ 422.3 million in"
-            },
-            {
-              "value": "million",
-              "context": "experienced $ 422.3 million in total"
-            }
-          ],
-          "sentiment_score": 0.10000000000000002,
-          "impact_score": -0.3,
-          "url": "https://coinjournal.net/news/bitcoin-ether-etfs-record-heavy-outflows-as-traders-await-fed-signals/"
+          "sentiment_score": -0.02857142857142857,
+          "impact_score": -0.07,
+          "url": "https://www.globenewswire.com/news-release/2025/08/20/3136303/0/en/KANZHUN-LIMITED-Announces-Second-Quarter-2025-Financial-Results.html"
         },
         {
           "type": "geopolitical",
-          "title": "Sensex, Nifty gain momentum in midday trade as IT stocks lead rally",
-          "source": "BusinessLine",
-          "published": "2025-08-20T08:27:05Z",
+          "title": "A Stock-Market Crash Foretold",
+          "source": "Project Syndicate",
+          "published": "2025-08-20T10:43:06Z",
           "entities": [
             [
-              "Nifty",
-              "NORP"
-            ],
-            [
-              "midday",
-              "TIME"
-            ],
-            [
-              "Wednesday",
+              "the eve of",
               "DATE"
             ],
             [
-              "midday",
-              "TIME"
+              "World War I",
+              "EVENT"
             ],
             [
-              "Sensex",
+              "US",
+              "GPE"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.016666666666666666,
+          "impact_score": 0.04,
+          "url": "https://www.project-syndicate.org/commentary/trump-economic-policy-could-lead-to-us-stock-market-crash-by-desmond-lachman-2025-08"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Gold Edges Up as Traders Await Powell Speech for Fed Rate Clues",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-20T10:37:29Z",
+          "entities": [
+            [
+              "Fed Rate Clues Bullion",
               "ORG"
             ],
             [
-              "259.47",
-              "CARDINAL"
-            ],
-            [
-              "81,903.86",
-              "CARDINAL"
-            ],
-            [
-              "Nifty",
-              "ORG"
-            ],
-            [
-              "79.70",
-              "CARDINAL"
-            ],
-            [
-              "25,060.35",
-              "CARDINAL"
-            ],
-            [
-              "0.32 per cent",
+              "above $3,320",
               "MONEY"
+            ],
+            [
+              "Powell",
+              "PERSON"
+            ],
+            [
+              "annual",
+              "DATE"
+            ],
+            [
+              "Jackson Hole",
+              "GPE"
+            ],
+            [
+              "Wyoming",
+              "GPE"
+            ],
+            [
+              "Friday",
+              "DATE"
             ]
           ],
           "numbers": [
             {
-              "value": "259.47",
-              "context": "the Sensex climbing 259.47 points to"
-            },
-            {
-              "value": "81,903.86",
-              "context": "259.47 points to 81,903.86 and the"
-            },
-            {
-              "value": "79.70",
-              "context": "the Nifty advancing 79.70 points to"
-            },
-            {
-              "value": "25,060.35",
-              "context": "79.70 points to 25,060.35 , marking"
-            },
-            {
-              "value": "0.32",
-              "context": "marking gains of 0.32 per cent"
+              "value": "3,320",
+              "context": "traded above $ 3,320 an ounce"
             }
           ],
-          "sentiment_score": 0.2,
-          "impact_score": 0.5,
-          "url": "https://www.thehindubusinessline.com/markets/stock-markets/sensex-nifty-gain-momentum-in-midday-trade-as-it-stocks-lead-rally/article69955013.ece"
+          "sentiment_score": 0.08,
+          "impact_score": -0.24,
+          "url": "https://finance.yahoo.com/news/gold-holds-fall-ahead-powell-003832036.html"
         }
       ],
       "event_summary": {
-        "interest_rate": 24,
-        "geopolitical": 5,
+        "interest_rate": 22,
+        "geopolitical": 7,
+        "dollar": 3,
         "inflation": 14,
-        "dollar": 2,
         "central_bank": 1
       },
-      "total_impact": 2.0,
-      "dominant_theme": "interest_rate",
-      "recommendation": "تأثير محايد أو مختلط"
+      "total_impact": -5.98,
+      "dominant_theme": "geopolitical",
+      "recommendation": "أخبار سلبية قوية جداً للذهب"
     },
-    "articles_count": 89
+    "articles_count": 80
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -243269.48,
-    "total_return": -2532.69,
+    "final_value": -240877.88,
+    "total_return": -2508.78,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -808,11 +796,11 @@
     "avg_win": 0.0,
     "avg_loss": -0.95,
     "profit_factor": 0.0,
-    "recovery_factor": -1.39,
+    "recovery_factor": -1.38,
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 09:21:56",
+    "last_update": "2025-08-21 11:00:30",
     "data_points": 556,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
