@@ -1,12 +1,12 @@
 {
-  "timestamp": "2025-08-21T13:37:15.889659",
+  "timestamp": "2025-08-21T15:21:38.712208",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
     "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.61,
+    "total_score": 1.67,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
@@ -15,23 +15,23 @@
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": -3,
+      "news": -2,
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3386.5,
+    "current_price": 3383.4,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3344.78,
-        "conservative": 3330.87,
-        "moderate": 3303.06,
-        "wide": 3275.24
+        "tight": 3341.68,
+        "conservative": 3327.77,
+        "moderate": 3299.96,
+        "wide": 3272.14
       },
       "profit_targets": {
-        "target_1": 3442.13,
-        "target_2": 3497.76,
-        "target_3": 3571.93,
-        "target_4": 3683.19
+        "target_1": 3439.03,
+        "target_2": 3494.66,
+        "target_3": 3568.83,
+        "target_4": 3680.09
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -76,23 +76,23 @@
         "type": "news_theme",
         "name": "geopolitical",
         "impact": "مستمر",
-        "recommendation": "أخبار سلبية قوية جداً للذهب"
+        "recommendation": "أخبار سلبية للذهب"
       }
     ],
     "technical_summary": {
-      "rsi": 56.2,
-      "macd": 0.83,
-      "williams_r": -54.2,
-      "stoch_k": 45.8,
-      "bb_position": 0.75,
-      "volume_ratio": 5.96
+      "rsi": 55.7,
+      "macd": 0.59,
+      "williams_r": -56.1,
+      "stoch_k": 43.9,
+      "bb_position": 0.74,
+      "volume_ratio": 7.33
     },
     "key_levels": {
-      "sma_20": 3349.29,
-      "sma_50": 3351.37,
-      "sma_200": 3043.09,
-      "bb_upper": 3422.31,
-      "bb_lower": 3276.27
+      "sma_20": 3349.13,
+      "sma_50": 3351.31,
+      "sma_200": 3043.08,
+      "bb_upper": 3421.84,
+      "bb_lower": 3276.43
     }
   },
   "mtf_analysis": {},
@@ -105,7 +105,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 59.45
+    "current_position": 58.06
   },
   "support_resistance": {
     "resistance_levels": [
@@ -120,14 +120,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.61,
-    "price_to_support": 3.09
+    "price_to_resistance": 1.7,
+    "price_to_support": 3.0
   },
   "volume_analysis": {
-    "current_volume": 70336,
-    "avg_volume_5": 15095,
-    "avg_volume_20": 11808,
-    "volume_ratio": 5.96,
+    "current_volume": 95989,
+    "avg_volume_5": 20226,
+    "avg_volume_20": 13091,
+    "volume_ratio": 7.33,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -160,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T13:37:14.074810",
+    "last_update": "2025-08-21T15:21:36.578437",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -550,156 +550,171 @@
         },
         {
           "type": "interest_rate",
-          "title": "US stocks subdued at open on mixed retail earnings ahead of Fed meet",
-          "source": "The Times of India",
-          "published": "2025-08-20T13:33:54Z",
+          "title": "Trump Demands Fed's Cook Quit as Pulte Seeks Mortgage Probe (Josh Wingrove/Bloomberg)",
+          "source": "Memeorandum.com",
+          "published": "2025-08-20T15:15:00Z",
           "entities": [
             [
-              "US",
+              "Trump Demands Fed's",
+              "ORG"
+            ],
+            [
+              "Cook Quit",
+              "ORG"
+            ],
+            [
+              "Pulte Seeks Mortgage Probe",
+              "ORG"
+            ],
+            [
+              "Josh Wingrove/Bloomberg",
+              "PERSON"
+            ],
+            [
+              "Trump Demands Fed's",
+              "ORG"
+            ],
+            [
+              "Cook Quit",
+              "ORG"
+            ],
+            [
+              "Pulte Seeks Mortgage Probe",
+              "ORG"
+            ],
+            [
+              "Donald Trump",
+              "PERSON"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.1,
+          "impact_score": -0.3,
+          "url": "https://www.memeorandum.com/250820/p57"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Trump calls on Federal Reserve official to resign after ally accuses her of mortgage fraud",
+          "source": "Financial Post",
+          "published": "2025-08-20T15:11:28Z",
+          "entities": [
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "WASHINGTON",
               "GPE"
             ],
             [
-              "Fed",
+              "AP",
               "ORG"
+            ],
+            [
+              "Donald Trump",
+              "PERSON"
             ],
             [
               "Wednesday",
               "DATE"
             ],
             [
-              "Target",
+              "Federal Reserve",
               "ORG"
             ],
             [
-              "Lowe",
+              "Lisa Cook",
               "PERSON"
+            ],
+            [
+              "Cook",
+              "PERSON"
+            ],
+            [
+              "Bill Pulte",
+              "PERSON"
+            ],
+            [
+              "Fanni",
+              "ORG"
             ]
           ],
           "numbers": [],
           "sentiment_score": 0.0,
           "impact_score": -0.0,
-          "url": "https://economictimes.indiatimes.com/markets/stocks/news/us-stocks-subdued-at-open-on-mixed-retail-earnings-ahead-of-fed-meet/articleshow/123411827.cms"
+          "url": "https://financialpost.com/pmn/trump-calls-on-federal-reserve-official-to-resign-after-ally-accuses-her-of-mortgage-fraud"
         },
         {
           "type": "interest_rate",
-          "title": "S&P 500, Dow, Nasdaq futures dip amid retail earnings concerns and anticipation of Fed meeting insights",
-          "source": "The Times of India",
-          "published": "2025-08-20T13:25:41Z",
+          "title": "Trump Pressures Fed Official As Mortgage Fraud Claims Surface",
+          "source": "Biztoc.com",
+          "published": "2025-08-20T15:11:15Z",
           "entities": [
             [
-              "Dow",
+              "Trump Pressures Fed Official As Mortgage Fraud Claims Surface",
               "ORG"
             ],
             [
-              "Nasdaq",
+              "Donald Trump",
+              "PERSON"
+            ],
+            [
+              "Federal Reserve",
               "ORG"
             ],
             [
-              "Fed",
+              "Lisa Cook",
+              "PERSON"
+            ],
+            [
+              "CNN",
               "ORG"
             ],
             [
-              "US",
-              "GPE"
-            ],
-            [
-              "today",
-              "DATE"
-            ],
-            [
-              "Dow",
+              "Federal Housing Finance Agency",
               "ORG"
             ],
             [
-              "Nasdaq",
-              "ORG"
+              "Bill Pulte",
+              "PERSON"
             ],
             [
-              "Wednesday",
-              "DATE"
-            ],
-            [
-              "morning",
-              "TIME"
-            ],
-            [
-              "the Federal Reserve's",
-              "ORG"
-            ],
-            [
-              "Target",
-              "ORG"
-            ],
-            [
-              "Estee Lauder",
+              "Trump",
               "ORG"
             ]
           ],
-          "numbers": [
-            {
-              "value": "500",
-              "context": "S&P 500 , Dow"
-            },
-            {
-              "value": "500",
-              "context": "today : S&P 500 , Dow"
-            }
-          ],
-          "sentiment_score": 0.3166666666666667,
-          "impact_score": -0.95,
-          "url": "https://economictimes.indiatimes.com/news/international/us/us-stock-futures-today-latest-news-sp-500-dow-nasdaq-futures-dip-amid-retail-earnings-concerns-and-anticipation-of-fed-meeting-insightsus-retail-earnings-august-2025/articleshow/123411012.cms"
-        },
-        {
-          "type": "dollar",
-          "title": "Dollar demand surges but rupee defies 3 major threats",
-          "source": "Rolling Out",
-          "published": "2025-08-20T13:23:52Z",
-          "entities": [
-            [
-              "3",
-              "CARDINAL"
-            ],
-            [
-              "Indian",
-              "NORP"
-            ],
-            [
-              "87-per-dollar",
-              "QUANTITY"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "3",
-              "context": "but rupee defies 3 major threats"
-            },
-            {
-              "value": "87",
-              "context": "the psychologically important 87 - per"
-            }
-          ],
-          "sentiment_score": 0.16250000000000003,
-          "impact_score": 0.24,
-          "url": "https://rollingout.com/2025/08/20/dollar-demand-surges-but-rupee-defies-3/"
+          "numbers": [],
+          "sentiment_score": -0.1,
+          "impact_score": 0.3,
+          "url": "https://biztoc.com/x/fdf70d78bacaad6c"
         }
       ],
       "event_summary": {
-        "interest_rate": 30,
-        "central_bank": 2,
-        "geopolitical": 4,
-        "dollar": 3,
-        "inflation": 12
+        "interest_rate": 28,
+        "central_bank": 4,
+        "geopolitical": 3,
+        "employment": 1,
+        "inflation": 14,
+        "dollar": 2
       },
-      "total_impact": -6.54,
+      "total_impact": -4.69,
       "dominant_theme": "geopolitical",
-      "recommendation": "أخبار سلبية قوية جداً للذهب"
+      "recommendation": "أخبار سلبية للذهب"
     },
-    "articles_count": 86
+    "articles_count": 83
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -244369.08,
-    "total_return": -2543.69,
+    "final_value": -243516.87,
+    "total_return": -2535.17,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -712,11 +727,11 @@
     "avg_win": 0.0,
     "avg_loss": -0.95,
     "profit_factor": 0.0,
-    "recovery_factor": -1.4,
+    "recovery_factor": -1.39,
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 13:37:15",
+    "last_update": "2025-08-21 15:21:38",
     "data_points": 556,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
