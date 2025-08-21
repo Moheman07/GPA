@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-21T07:26:21.368861",
+  "timestamp": "2025-08-21T08:22:21.170013",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
@@ -19,19 +19,19 @@
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3380.2,
+    "current_price": 3382.3,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3338.48,
-        "conservative": 3324.57,
-        "moderate": 3296.76,
-        "wide": 3268.94
+        "tight": 3340.58,
+        "conservative": 3326.67,
+        "moderate": 3298.86,
+        "wide": 3271.04
       },
       "profit_targets": {
-        "target_1": 3435.83,
-        "target_2": 3491.46,
-        "target_3": 3565.63,
-        "target_4": 3676.89
+        "target_1": 3437.93,
+        "target_2": 3493.56,
+        "target_3": 3567.73,
+        "target_4": 3678.99
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -80,19 +80,19 @@
       }
     ],
     "technical_summary": {
-      "rsi": 55.3,
-      "macd": 0.33,
-      "williams_r": -58.0,
-      "stoch_k": 42.0,
-      "bb_position": 0.72,
-      "volume_ratio": 2.67
+      "rsi": 55.6,
+      "macd": 0.5,
+      "williams_r": -56.7,
+      "stoch_k": 43.3,
+      "bb_position": 0.73,
+      "volume_ratio": 2.93
     },
     "key_levels": {
-      "sma_20": 3348.97,
-      "sma_50": 3351.25,
-      "sma_200": 3043.06,
-      "bb_upper": 3421.37,
-      "bb_lower": 3276.58
+      "sma_20": 3349.08,
+      "sma_50": 3351.29,
+      "sma_200": 3043.07,
+      "bb_upper": 3421.68,
+      "bb_lower": 3276.48
     }
   },
   "mtf_analysis": {},
@@ -105,7 +105,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 56.63
+    "current_position": 57.57
   },
   "support_resistance": {
     "resistance_levels": [
@@ -120,14 +120,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.8,
-    "price_to_support": 2.91
+    "price_to_resistance": 1.74,
+    "price_to_support": 2.97
   },
   "volume_analysis": {
-    "current_volume": 25537,
-    "avg_volume_5": 6135,
-    "avg_volume_20": 9568,
-    "volume_ratio": 2.67,
+    "current_volume": 28510,
+    "avg_volume_5": 6730,
+    "avg_volume_20": 9717,
+    "volume_ratio": 2.93,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -136,7 +136,7 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.508,
-      "vix": -0.017,
+      "vix": -0.019,
       "treasury": 0.471,
       "oil": -0.716,
       "spy": 0.904,
@@ -160,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T07:26:19.770274",
+    "last_update": "2025-08-21T08:22:19.561498",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -548,6 +548,90 @@
           "url": "https://english.khabarhub.com/2025/19/491688/"
         },
         {
+          "type": "interest_rate",
+          "title": "The Federal Reserve Doesn't Have To Be An Enemy of Growth",
+          "source": "Biztoc.com",
+          "published": "2025-08-20T08:17:29Z",
+          "entities": [
+            [
+              "The Federal Reserve Does",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://biztoc.com/x/c9f1fa16465d14e8"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Asian Markets Waver As Japan Exports Show Tariff Strain",
+          "source": "International Business Times",
+          "published": "2025-08-20T08:00:24Z",
+          "entities": [
+            [
+              "Asian Markets Waver",
+              "ORG"
+            ],
+            [
+              "Asian",
+              "NORP"
+            ],
+            [
+              "Wednesday",
+              "DATE"
+            ],
+            [
+              "Japanese",
+              "NORP"
+            ],
+            [
+              "US",
+              "GPE"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://www.ibtimes.com/asian-markets-waver-japan-exports-show-tariff-strain-3781271"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Asian markets waver as Japan exports show tariff strain",
+          "source": "Digital Journal",
+          "published": "2025-08-20T07:57:32Z",
+          "entities": [
+            [
+              "Asian",
+              "NORP"
+            ],
+            [
+              "Japan",
+              "GPE"
+            ],
+            [
+              "Asian",
+              "NORP"
+            ],
+            [
+              "Wednesday",
+              "DATE"
+            ],
+            [
+              "Japanese",
+              "NORP"
+            ],
+            [
+              "US",
+              "GPE"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://www.digitaljournal.com/world/asian-markets-waver-as-japan-exports-show-tariff-strain/article"
+        },
+        {
           "type": "geopolitical",
           "title": "CNBC's The China Connection newsletter: New bets, old worries",
           "source": "CNBC",
@@ -570,129 +654,25 @@
           "sentiment_score": 0.08989898989898991,
           "impact_score": 0.22,
           "url": "https://www.cnbc.com/2025/08/20/cnbcs-the-china-connection-newsletter-new-bets-old-worries.html"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Trump again attacks Fed chair Powell",
-          "source": "RTE",
-          "published": "2025-08-20T07:02:45Z",
-          "entities": [
-            [
-              "Fed",
-              "ORG"
-            ],
-            [
-              "Powell US",
-              "ORG"
-            ],
-            [
-              "Donald Trump",
-              "PERSON"
-            ],
-            [
-              "yesterday",
-              "DATE"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Jerome Powell",
-              "PERSON"
-            ],
-            [
-              "US",
-              "GPE"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": -0.35499999999999987,
-          "impact_score": 1.06,
-          "url": "https://www.rte.ie/news/business/2025/0820/1529256-trump-again-attacks-fed-chair-powell/"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Bitcoin, Stocks Hit By $400B Liquidity Drain From U.S. Treasury Account, Not Jackson Hole: Analysts",
-          "source": "Biztoc.com",
-          "published": "2025-08-20T06:47:24Z",
-          "entities": [
-            [
-              "$400B",
-              "MONEY"
-            ],
-            [
-              "Liquidity Drain",
-              "ORG"
-            ],
-            [
-              "U.S. Treasury Account",
-              "ORG"
-            ],
-            [
-              "Jackson Hole",
-              "GPE"
-            ],
-            [
-              "U.S.",
-              "GPE"
-            ],
-            [
-              "TGA",
-              "ORG"
-            ],
-            [
-              "Federal",
-              "ORG"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": -0.03,
-          "impact_score": 0.09,
-          "url": "https://biztoc.com/x/0956e2c23b52a852"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Balancing Risks and Rewards: Fed official calls for embracing crypto",
-          "source": "Economictimes.com",
-          "published": "2025-08-20T06:07:43Z",
-          "entities": [
-            [
-              "Fed",
-              "ORG"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Michelle Bowman",
-              "PERSON"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": -0.0375,
-          "impact_score": 0.11,
-          "url": "https://m.economictimes.com/markets/stocks/news/balancing-risks-and-rewards-fed-official-calls-for-embracing-crypto/fed-official-pushes-for-crypto-flexibility/slideshow/123402208.cms"
         }
       ],
       "event_summary": {
-        "interest_rate": 19,
-        "geopolitical": 4,
-        "inflation": 19,
-        "central_bank": 2,
-        "dollar": 2
+        "interest_rate": 25,
+        "geopolitical": 3,
+        "inflation": 15,
+        "dollar": 2,
+        "central_bank": 1
       },
-      "total_impact": 0.56,
+      "total_impact": 1.52,
       "dominant_theme": "interest_rate",
       "recommendation": "تأثير محايد أو مختلط"
     },
-    "articles_count": 86
+    "articles_count": 88
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -242637.21,
-    "total_return": -2526.37,
+    "final_value": -243214.52,
+    "total_return": -2532.15,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -709,7 +689,7 @@
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 07:26:21",
+    "last_update": "2025-08-21 08:22:21",
     "data_points": 556,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
