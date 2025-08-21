@@ -2,8 +2,8 @@ name: Gold Analysis Auto-Commit
 
 on:
   schedule:
-    - cron: '0 */3 * * 1-5'
-  workflow_dispatch:
+    - cron: '0 */3 * * 1-5'  # كل 3 ساعات في أيام العمل
+  workflow_dispatch:  # للتشغيل اليدوي
 
 permissions:
   contents: write
@@ -11,48 +11,39 @@ permissions:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
       with:
-        # استخدام التوكن الخاص لضمان صلاحيات الدفع الكاملة
         token: ${{ secrets.PAT }}
-
+    
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        python -m spacy download en_core_web_sm
-        
+        python -m textblob.download_corpora
+    
     - name: Run Analysis
       env:
         NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-        FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
       run: python main_analyzer.py
-
+    
     - name: Commit and Push Results
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "Gold Analysis Bot"
         
-        echo "--- محتويات المجلد قبل الإضافة ---"
-        ls -la
-        
         git add -A
         
-        echo "--- حالة git بعد الإضافة ---"
-        git status
-        
-        # التحقق من وجود تغييرات للحفظ
         if git diff --staged --quiet; then
           echo "No changes to commit."
         else
-          git commit -m "📊 Automated analysis update"
+          git commit -m "📊 تحديث تحليل الذهب - $(date +'%Y-%m-%d %H:%M')"
           git push
         fi
