@@ -1,41 +1,41 @@
 {
-  "timestamp": "2025-08-20T22:13:45.797932",
+  "timestamp": "2025-08-21T01:27:58.393429",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
-    "signal": "Weak Buy",
-    "confidence": "Medium",
-    "action_recommendation": "شراء حذر - حجم صغير",
-    "total_score": 1.47,
+    "signal": "Buy",
+    "confidence": "High",
+    "action_recommendation": "شراء - حجم متوسط",
+    "total_score": 1.61,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
-      "volume": 0,
-      "fibonacci": 2,
+      "volume": 1,
+      "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 0,
+      "news": 2,
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3392.1,
+    "current_price": 3386.7,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3344.3,
-        "conservative": 3328.37,
-        "moderate": 3296.51,
-        "wide": 3264.64
+        "tight": 3338.86,
+        "conservative": 3322.91,
+        "moderate": 3291.01,
+        "wide": 3259.11
       },
       "profit_targets": {
-        "target_1": 3455.83,
-        "target_2": 3519.56,
-        "target_3": 3604.53,
-        "target_4": 3731.99
+        "target_1": 3450.49,
+        "target_2": 3514.29,
+        "target_3": 3599.34,
+        "target_4": 3726.93
       },
-      "position_size_recommendation": "متوسط (25-50%)",
+      "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
-      "max_risk_per_trade": "1%",
+      "max_risk_per_trade": "2%",
       "volatility_adjusted": true,
       "ml_adjusted": false
     },
@@ -45,9 +45,7 @@
         "قسّم الدخول على 2-3 مراحل"
       ],
       "conditions": [],
-      "warnings": [
-        "⚠️ حجم ضعيف - تأكيد مطلوب"
-      ],
+      "warnings": [],
       "mtf_confirmation": ""
     },
     "ml_prediction": {
@@ -78,23 +76,23 @@
         "type": "news_theme",
         "name": "interest_rate",
         "impact": "مستمر",
-        "recommendation": "تأثير محايد أو مختلط"
+        "recommendation": "أخبار إيجابية للذهب"
       }
     ],
     "technical_summary": {
-      "rsi": 63.2,
-      "macd": 1.32,
-      "williams_r": -43.3,
-      "stoch_k": 56.7,
-      "bb_position": 0.78,
-      "volume_ratio": 0.04
+      "rsi": 62.6,
+      "macd": 0.89,
+      "williams_r": -46.1,
+      "stoch_k": 53.9,
+      "bb_position": 0.74,
+      "volume_ratio": 0.86
     },
     "key_levels": {
-      "sma_20": 3350.95,
-      "sma_50": 3351.04,
-      "sma_200": 3040.09,
-      "bb_upper": 3425.16,
-      "bb_lower": 3276.74
+      "sma_20": 3350.68,
+      "sma_50": 3350.94,
+      "sma_200": 3040.06,
+      "bb_upper": 3424.3,
+      "bb_lower": 3277.06
     }
   },
   "mtf_analysis": {},
@@ -106,8 +104,8 @@
     "fib_50_0": 3365.4,
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
-    "analysis": "السعر فوق 38.2% - اتجاه صاعد معتدل",
-    "current_position": 61.96
+    "analysis": "السعر فوق 50% - منطقة محايدة",
+    "current_position": 59.54
   },
   "support_resistance": {
     "resistance_levels": [
@@ -122,16 +120,16 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.44,
-    "price_to_support": 3.25
+    "price_to_resistance": 1.6,
+    "price_to_support": 3.09
   },
   "volume_analysis": {
-    "current_volume": 313,
-    "avg_volume_5": 676,
-    "avg_volume_20": 8233,
-    "volume_ratio": 0.04,
-    "volume_strength": "ضعيف",
-    "volume_signal": "حجم ضعيف - حذر من الحركة الوهمية",
+    "current_volume": 7368,
+    "avg_volume_5": 2087,
+    "avg_volume_20": 8586,
+    "volume_ratio": 0.86,
+    "volume_strength": "طبيعي",
+    "volume_signal": "حجم طبيعي - لا إشارات خاصة",
     "obv_trend": "صاعد",
     "volume_price_correlation": "سلبي"
   },
@@ -162,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-20T22:13:43.961744",
+    "last_update": "2025-08-21T01:27:56.465415",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -643,137 +641,145 @@
           "url": "https://biztoc.com/x/a70954abbc32ba87"
         },
         {
-          "type": "employment",
-          "title": "Instead of job hopping, workers are now 'job hugging' for dear life",
-          "source": "Business Insider",
-          "published": "2025-08-19T22:11:04Z",
+          "type": "interest_rate",
+          "title": "Asian shares, Nasdaq futures fall after tech slide",
+          "source": "The Times of India",
+          "published": "2025-08-20T00:57:19Z",
           "entities": [
             [
-              "Korn Ferry",
+              "Asian",
+              "NORP"
+            ],
+            [
+              "Nasdaq",
+              "ORG"
+            ],
+            [
+              "Asian",
+              "NORP"
+            ],
+            [
+              "Nvidia",
+              "GPE"
+            ],
+            [
+              "Jerome Powell's",
               "PERSON"
             ]
           ],
           "numbers": [],
-          "sentiment_score": 0.3181818181818182,
-          "impact_score": 0.64,
-          "url": "https://www.businessinsider.com/workers-job-hugging-hopping-labor-market-growth-2025-8"
+          "sentiment_score": -0.05,
+          "impact_score": 0.15,
+          "url": "https://economictimes.indiatimes.com/markets/stocks/news/asian-shares-nasdaq-futures-fall-after-tech-slide/articleshow/123397024.cms"
         },
         {
-          "type": "interest_rate",
-          "title": "Federal Reserve says US banks should serve crypto without fear of penalties",
-          "source": "CryptoSlate",
-          "published": "2025-08-19T21:45:45Z",
+          "type": "inflation",
+          "title": "Bitcoin Sinks as Concerns Over Inflation, Economic Data Mount",
+          "source": "Decrypt",
+          "published": "2025-08-20T00:49:18Z",
           "entities": [
             [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "US",
-              "GPE"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Michelle Bowman",
+              "Bitcoin Sinks",
               "PERSON"
             ],
             [
-              "the Wyoming Blockchain Symposium",
-              "EVENT"
+              "below $113,000",
+              "MONEY"
             ],
             [
-              "Aug. 19",
+              "first",
+              "ORDINAL"
+            ],
+            [
+              "August 2",
               "DATE"
-            ],
-            [
-              "Bowman",
-              "PERSON"
-            ],
-            [
-              "Fed",
-              "ORG"
             ]
           ],
           "numbers": [
             {
-              "value": "19",
-              "context": "Symposium on Aug. 19 , Bowman"
+              "value": "113,000",
+              "context": "sank below $ 113,000 for the"
+            },
+            {
+              "value": "first",
+              "context": "113,000 for the first time since"
+            },
+            {
+              "value": "2",
+              "context": "time since August 2 , as"
             }
           ],
-          "sentiment_score": 0.3375,
-          "impact_score": -1.01,
-          "url": "https://cryptoslate.com/federal-reserve-says-us-banks-can-now-serve-crypto-without-fear-of-penalties/"
+          "sentiment_score": 0.045,
+          "impact_score": -0.11,
+          "url": "https://decrypt.co/335927/bitcoin-sinks-concerns-inflation-economic-data-mount"
         },
         {
           "type": "interest_rate",
-          "title": "Trump admin to fast-track Miran's Fed confirmation",
+          "title": "Trump criticizes Powell again, says Fed chair is ‘hurting’ the housing industry",
           "source": "Biztoc.com",
-          "published": "2025-08-19T21:37:20Z",
+          "published": "2025-08-20T00:48:42Z",
           "entities": [
             [
-              "Miran",
-              "GPE"
+              "Powell",
+              "PERSON"
             ],
             [
               "Fed",
               "ORG"
             ],
             [
-              "The White House",
-              "ORG"
-            ],
-            [
-              "Stephen Miran",
+              "Donald Trump",
               "PERSON"
             ],
             [
-              "the Federal Reserve Board",
-              "ORG"
-            ],
-            [
-              "mid-September",
+              "Tuesday",
               "DATE"
             ],
             [
-              "Politico",
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Jerome Powell",
               "PERSON"
             ],
             [
-              "Miran",
+              "U.S.",
               "GPE"
             ],
             [
-              "Don",
+              "Jerome",
+              "PERSON"
+            ],
+            [
+              "Powell",
               "PERSON"
             ]
           ],
           "numbers": [],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://biztoc.com/x/595013a8ce57f5b2"
+          "sentiment_score": -0.30333333333333323,
+          "impact_score": 0.91,
+          "url": "https://biztoc.com/x/dbdb4f2a67c7de0f"
         }
       ],
       "event_summary": {
-        "geopolitical": 10,
-        "interest_rate": 26,
-        "employment": 3,
-        "central_bank": 2,
-        "dollar": 3,
-        "inflation": 10
+        "geopolitical": 7,
+        "interest_rate": 28,
+        "inflation": 11,
+        "employment": 2,
+        "dollar": 2,
+        "central_bank": 1
       },
-      "total_impact": 0.06,
+      "total_impact": 2.26,
       "dominant_theme": "interest_rate",
-      "recommendation": "تأثير محايد أو مختلط"
+      "recommendation": "أخبار إيجابية للذهب"
     },
-    "articles_count": 88
+    "articles_count": 84
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -245827.02,
-    "total_return": -2558.27,
+    "final_value": -244342.53,
+    "total_return": -2543.43,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -786,13 +792,13 @@
     "avg_win": 0.0,
     "avg_loss": -0.95,
     "profit_factor": 0.0,
-    "recovery_factor": -1.41,
+    "recovery_factor": -1.4,
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-20 22:13:45",
+    "last_update": "2025-08-21 01:27:58",
     "data_points": 555,
     "timeframe": "Multi-timeframe",
-    "market_condition": "عرضي/محايد - انتظار"
+    "market_condition": "صاعد"
   }
 }
