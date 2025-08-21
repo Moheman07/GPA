@@ -1,12 +1,12 @@
 {
-  "timestamp": "2025-08-21T08:26:07.175103",
+  "timestamp": "2025-08-21T08:27:46.095458",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
     "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.79,
+    "total_score": 1.91,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
@@ -15,23 +15,23 @@
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 0,
+      "news": 2,
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3382.3,
+    "current_price": 3382.5,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3340.58,
-        "conservative": 3326.67,
-        "moderate": 3298.86,
-        "wide": 3271.04
+        "tight": 3340.78,
+        "conservative": 3326.87,
+        "moderate": 3299.06,
+        "wide": 3271.24
       },
       "profit_targets": {
-        "target_1": 3437.93,
-        "target_2": 3493.56,
-        "target_3": 3567.73,
-        "target_4": 3678.99
+        "target_1": 3438.13,
+        "target_2": 3493.76,
+        "target_3": 3567.93,
+        "target_4": 3679.19
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -76,23 +76,23 @@
         "type": "news_theme",
         "name": "interest_rate",
         "impact": "مستمر",
-        "recommendation": "تأثير محايد أو مختلط"
+        "recommendation": "أخبار إيجابية للذهب"
       }
     ],
     "technical_summary": {
       "rsi": 55.6,
-      "macd": 0.5,
-      "williams_r": -56.7,
-      "stoch_k": 43.3,
+      "macd": 0.51,
+      "williams_r": -56.6,
+      "stoch_k": 43.4,
       "bb_position": 0.73,
       "volume_ratio": 2.95
     },
     "key_levels": {
-      "sma_20": 3349.08,
+      "sma_20": 3349.09,
       "sma_50": 3351.29,
       "sma_200": 3043.07,
-      "bb_upper": 3421.68,
-      "bb_lower": 3276.48
+      "bb_upper": 3421.71,
+      "bb_lower": 3276.47
     }
   },
   "mtf_analysis": {},
@@ -105,7 +105,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 57.57
+    "current_position": 57.66
   },
   "support_resistance": {
     "resistance_levels": [
@@ -120,13 +120,13 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.74,
+    "price_to_resistance": 1.73,
     "price_to_support": 2.97
   },
   "volume_analysis": {
-    "current_volume": 28717,
-    "avg_volume_5": 6771,
-    "avg_volume_20": 9727,
+    "current_volume": 28743,
+    "avg_volume_5": 6776,
+    "avg_volume_20": 9729,
     "volume_ratio": 2.95,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
@@ -160,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T08:26:05.357617",
+    "last_update": "2025-08-21T08:27:44.204034",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -548,6 +548,83 @@
           "url": "https://english.khabarhub.com/2025/19/491688/"
         },
         {
+          "type": "geopolitical",
+          "title": "Sensex, Nifty gain momentum in midday trade as IT stocks lead rally",
+          "source": "BusinessLine",
+          "published": "2025-08-20T08:27:05Z",
+          "entities": [
+            [
+              "Nifty",
+              "NORP"
+            ],
+            [
+              "midday",
+              "TIME"
+            ],
+            [
+              "Wednesday",
+              "DATE"
+            ],
+            [
+              "midday",
+              "TIME"
+            ],
+            [
+              "Sensex",
+              "ORG"
+            ],
+            [
+              "259.47",
+              "CARDINAL"
+            ],
+            [
+              "81,903.86",
+              "CARDINAL"
+            ],
+            [
+              "Nifty",
+              "ORG"
+            ],
+            [
+              "79.70",
+              "CARDINAL"
+            ],
+            [
+              "25,060.35",
+              "CARDINAL"
+            ],
+            [
+              "0.32 per cent",
+              "MONEY"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "259.47",
+              "context": "the Sensex climbing 259.47 points to"
+            },
+            {
+              "value": "81,903.86",
+              "context": "259.47 points to 81,903.86 and the"
+            },
+            {
+              "value": "79.70",
+              "context": "the Nifty advancing 79.70 points to"
+            },
+            {
+              "value": "25,060.35",
+              "context": "79.70 points to 25,060.35 , marking"
+            },
+            {
+              "value": "0.32",
+              "context": "marking gains of 0.32 per cent"
+            }
+          ],
+          "sentiment_score": 0.2,
+          "impact_score": 0.5,
+          "url": "https://www.thehindubusinessline.com/markets/stock-markets/sensex-nifty-gain-momentum-in-midday-trade-as-it-stocks-lead-rally/article69955013.ece"
+        },
+        {
           "type": "interest_rate",
           "title": "The Federal Reserve Doesn't Have To Be An Enemy of Growth",
           "source": "Biztoc.com",
@@ -630,49 +707,25 @@
           "sentiment_score": 0.0,
           "impact_score": -0.0,
           "url": "https://www.digitaljournal.com/world/asian-markets-waver-as-japan-exports-show-tariff-strain/article"
-        },
-        {
-          "type": "geopolitical",
-          "title": "CNBC's The China Connection newsletter: New bets, old worries",
-          "source": "CNBC",
-          "published": "2025-08-20T07:20:14Z",
-          "entities": [
-            [
-              "CNBC",
-              "ORG"
-            ],
-            [
-              "The China Connection",
-              "ORG"
-            ],
-            [
-              "China",
-              "GPE"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.08989898989898991,
-          "impact_score": 0.22,
-          "url": "https://www.cnbc.com/2025/08/20/cnbcs-the-china-connection-newsletter-new-bets-old-worries.html"
         }
       ],
       "event_summary": {
         "interest_rate": 25,
-        "geopolitical": 3,
+        "geopolitical": 4,
         "inflation": 15,
         "dollar": 2,
         "central_bank": 1
       },
-      "total_impact": 1.52,
+      "total_impact": 2.02,
       "dominant_theme": "interest_rate",
-      "recommendation": "تأثير محايد أو مختلط"
+      "recommendation": "أخبار إيجابية للذهب"
     },
     "articles_count": 88
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -243214.52,
-    "total_return": -2532.15,
+    "final_value": -243269.48,
+    "total_return": -2532.69,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -689,7 +742,7 @@
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 08:26:07",
+    "last_update": "2025-08-21 08:27:46",
     "data_points": 556,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
