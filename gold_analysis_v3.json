@@ -1,6 +1,724 @@
 {
-  "timestamp": "2025-08-21T13:31:00.806659",
+  "timestamp": "2025-08-21T13:37:15.889659",
+  "status": "success",
   "version": "3.0",
-  "status": "error",
-  "error": "'ProfessionalBacktester' object is not callable"
+  "gold_analysis": {
+    "signal": "Buy",
+    "confidence": "High",
+    "action_recommendation": "شراء - حجم متوسط",
+    "total_score": 1.61,
+    "component_scores": {
+      "trend": 4,
+      "momentum": 0.5,
+      "volume": 4,
+      "fibonacci": 1,
+      "correlation": 1,
+      "support_resistance": -2,
+      "economic": 3,
+      "news": -3,
+      "ma_cross": 3,
+      "mtf_coherence": 0
+    },
+    "current_price": 3386.5,
+    "risk_management": {
+      "stop_loss_levels": {
+        "tight": 3344.78,
+        "conservative": 3330.87,
+        "moderate": 3303.06,
+        "wide": 3275.24
+      },
+      "profit_targets": {
+        "target_1": 3442.13,
+        "target_2": 3497.76,
+        "target_3": 3571.93,
+        "target_4": 3683.19
+      },
+      "position_size_recommendation": "متوسط-كبير (50-75%)",
+      "risk_reward_ratio": 2.0,
+      "max_risk_per_trade": "2%",
+      "volatility_adjusted": true,
+      "ml_adjusted": false
+    },
+    "entry_strategy": {
+      "entry_type": "دخول تدريجي",
+      "entry_zones": [
+        "قسّم الدخول على 2-3 مراحل"
+      ],
+      "conditions": [],
+      "warnings": [],
+      "mtf_confirmation": ""
+    },
+    "ml_prediction": {
+      "probability": null,
+      "interpretation": ""
+    },
+    "mtf_summary": "",
+    "upcoming_events": [
+      {
+        "type": "economic",
+        "name": "US_CPI",
+        "date": "2025-02-12",
+        "expected_impact": "إيجابي للذهب - تضخم منخفض"
+      },
+      {
+        "type": "economic",
+        "name": "US_Interest_Rate",
+        "date": "2025-01-29 FOMC",
+        "expected_impact": "إيجابي للذهب - خفض الفائدة"
+      },
+      {
+        "type": "economic",
+        "name": "US_NFP",
+        "date": "2025-02-07",
+        "expected_impact": "سلبي للذهب - سوق عمل قوي"
+      },
+      {
+        "type": "news_theme",
+        "name": "geopolitical",
+        "impact": "مستمر",
+        "recommendation": "أخبار سلبية قوية جداً للذهب"
+      }
+    ],
+    "technical_summary": {
+      "rsi": 56.2,
+      "macd": 0.83,
+      "williams_r": -54.2,
+      "stoch_k": 45.8,
+      "bb_position": 0.75,
+      "volume_ratio": 5.96
+    },
+    "key_levels": {
+      "sma_20": 3349.29,
+      "sma_50": 3351.37,
+      "sma_200": 3043.09,
+      "bb_upper": 3422.31,
+      "bb_lower": 3276.27
+    }
+  },
+  "mtf_analysis": {},
+  "fibonacci_levels": {
+    "high": 3477.0,
+    "low": 3253.8,
+    "fib_23_6": 3424.32,
+    "fib_38_2": 3391.74,
+    "fib_50_0": 3365.4,
+    "fib_61_8": 3339.06,
+    "fib_78_6": 3301.56,
+    "analysis": "السعر فوق 50% - منطقة محايدة",
+    "current_position": 59.45
+  },
+  "support_resistance": {
+    "resistance_levels": [
+      3477.0,
+      3444.0,
+      3441.0
+    ],
+    "support_levels": [
+      3253.8,
+      3263.9,
+      3282.0
+    ],
+    "nearest_resistance": 3441.0,
+    "nearest_support": 3282.0,
+    "price_to_resistance": 1.61,
+    "price_to_support": 3.09
+  },
+  "volume_analysis": {
+    "current_volume": 70336,
+    "avg_volume_5": 15095,
+    "avg_volume_20": 11808,
+    "volume_ratio": 5.96,
+    "volume_strength": "قوي جداً",
+    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "obv_trend": "صاعد",
+    "volume_price_correlation": "إيجابي"
+  },
+  "market_correlations": {
+    "correlations": {
+      "dxy": -0.508,
+      "vix": -0.018,
+      "treasury": 0.471,
+      "oil": -0.716,
+      "spy": 0.904,
+      "usdeur": 0.614,
+      "silver": 0.956
+    },
+    "strength_analysis": {
+      "dxy": "قوي",
+      "vix": "ضعيف",
+      "treasury": "متوسط",
+      "oil": "قوي جداً",
+      "spy": "قوي جداً",
+      "usdeur": "قوي",
+      "silver": "قوي جداً"
+    },
+    "interpretation": {
+      "dxy": "ارتباط عكسي قوي - إيجابي للذهب عند ضعف الدولار",
+      "vix": "تأثير محدود من التقلبات",
+      "oil": "ارتباط قوي - مؤشر على التضخم"
+    }
+  },
+  "economic_data": {
+    "status": "simulated",
+    "last_update": "2025-08-21T13:37:14.074810",
+    "indicators": {
+      "US_CPI": {
+        "value": 3.2,
+        "previous": 3.4,
+        "impact": "إيجابي للذهب - تضخم منخفض",
+        "next_release": "2025-02-12"
+      },
+      "US_Interest_Rate": {
+        "value": 4.5,
+        "previous": 4.75,
+        "impact": "إيجابي للذهب - خفض الفائدة",
+        "next_release": "2025-01-29 FOMC"
+      },
+      "US_NFP": {
+        "value": 256000,
+        "previous": 227000,
+        "impact": "سلبي للذهب - سوق عمل قوي",
+        "next_release": "2025-02-07"
+      },
+      "DXY_Index": {
+        "value": 108.5,
+        "trend": "هابط",
+        "impact": "إيجابي للذهب - ضعف الدولار"
+      },
+      "Geopolitical_Risk": {
+        "level": "متوسط",
+        "events": [
+          "توترات تجارية",
+          "قلق من التضخم"
+        ],
+        "impact": "محايد إلى إيجابي للذهب"
+      }
+    },
+    "overall_impact": "إيجابي للذهب",
+    "score": 3
+  },
+  "news_analysis": {
+    "status": "success",
+    "events_analysis": {
+      "events": [
+        {
+          "type": "interest_rate",
+          "title": "Gold rate prediction: Gold price nears three-week lows. What to expect this week?",
+          "source": "The Times of India",
+          "published": "2025-08-20T13:02:52Z",
+          "entities": [
+            [
+              "three-week",
+              "DATE"
+            ],
+            [
+              "this week",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "three",
+              "context": "Gold price nears three - week"
+            }
+          ],
+          "sentiment_score": 0.011111111111111118,
+          "impact_score": -0.03,
+          "url": "https://economictimes.indiatimes.com/news/international/us/gold-rate-prediction-gold-price-nears-three-week-lows-what-to-expect-this-week/articleshow/123411368.cms"
+        },
+        {
+          "type": "central_bank",
+          "title": "Institutions Keep Raising The Gold Bar Despite Short-Term Technical Weakness",
+          "source": "Biztoc.com",
+          "published": "2025-08-20T11:15:31Z",
+          "entities": [
+            [
+              "U.S.",
+              "GPE"
+            ],
+            [
+              "UBS",
+              "ORG"
+            ],
+            [
+              "Monday",
+              "DATE"
+            ],
+            [
+              "end-March 2026",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "2026",
+              "context": "end - March 2026 gold price"
+            }
+          ],
+          "sentiment_score": 0.16666666666666666,
+          "impact_score": 0.33,
+          "url": "https://biztoc.com/x/ee6e3fc85024482c"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Gold Price Below Rs 1,00,000; Eyes On Powell For Rate Cut Clues - Check Rates",
+          "source": "Ndtvprofit.com",
+          "published": "2025-08-20T02:43:13Z",
+          "entities": [
+            [
+              "Wednesday",
+              "DATE"
+            ],
+            [
+              "Russia",
+              "GPE"
+            ],
+            [
+              "Ukraine",
+              "GPE"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "Today",
+              "DATE"
+            ],
+            [
+              "India",
+              "GPE"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Jerome Powell's",
+              "PERSON"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "1,00,000",
+              "context": "Price Below Rs 1,00,000 ; Eyes"
+            },
+            {
+              "value": "1,00,000",
+              "context": "below the Rs 1,00,000 mark in"
+            }
+          ],
+          "sentiment_score": -0.1,
+          "impact_score": 0.3,
+          "url": "https://www.ndtvprofit.com/markets/gold-price-below-rs-100000-eyes-on-powell-for-rate-cut-clues-check-rates"
+        },
+        {
+          "type": "geopolitical",
+          "title": "Gold smashes records in 2025 — outpacing stocks, bonds, bitcoin: UBS warns investors — are we on the brink of a historic surge?",
+          "source": "The Times of India",
+          "published": "2025-08-19T17:48:32Z",
+          "entities": [
+            [
+              "2025",
+              "DATE"
+            ],
+            [
+              "UBS",
+              "ORG"
+            ],
+            [
+              "2025",
+              "DATE"
+            ],
+            [
+              "Bitcoin",
+              "PERSON"
+            ],
+            [
+              "28%",
+              "PERCENT"
+            ],
+            [
+              "this year",
+              "DATE"
+            ],
+            [
+              "UBS",
+              "ORG"
+            ],
+            [
+              "3,600",
+              "MONEY"
+            ],
+            [
+              "March 2026",
+              "DATE"
+            ],
+            [
+              "3,700",
+              "MONEY"
+            ],
+            [
+              "mid-year",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "2025",
+              "context": "smashes records in 2025 — outpacing"
+            },
+            {
+              "value": "2025",
+              "context": "Gold is dominating 2025 . Outpacing"
+            },
+            {
+              "value": "28",
+              "context": "has delivered a 28 % gain"
+            },
+            {
+              "value": "%",
+              "context": "delivered a 28 % gain so"
+            },
+            {
+              "value": "3,600",
+              "context": "could hit $ 3,600 by March"
+            },
+            {
+              "value": "2026",
+              "context": "3,600 by March 2026 and $"
+            },
+            {
+              "value": "3,700",
+              "context": "2026 and $ 3,700 by mid"
+            }
+          ],
+          "sentiment_score": 0.25,
+          "impact_score": 0.62,
+          "url": "https://economictimes.indiatimes.com/news/international/us/gold-smashes-records-in-2025-outpacing-stocks-bonds-bitcoin-ubs-warns-investors-are-we-on-the-brink-of-a-historic-surge/articleshow/123392073.cms"
+        },
+        {
+          "type": "geopolitical",
+          "title": "Ventura Securities expects gold to hit $3,600 an ounce",
+          "source": "BusinessLine",
+          "published": "2025-08-19T13:33:02Z",
+          "entities": [
+            [
+              "Ventura Securities",
+              "ORG"
+            ],
+            [
+              "3,600",
+              "MONEY"
+            ],
+            [
+              "Ventura Securities",
+              "ORG"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "3,600",
+              "context": "to hit $ 3,600 an ounce"
+            }
+          ],
+          "sentiment_score": 0.1,
+          "impact_score": 0.25,
+          "url": "https://www.thehindubusinessline.com/news/ventura-securities-expects-gold-to-hit-3600-an-ounce/article69951785.ece"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Gold price today: Gold rate rises as U.S. Dollar falls",
+          "source": "The Times of India",
+          "published": "2025-08-19T12:57:39Z",
+          "entities": [
+            [
+              "today",
+              "DATE"
+            ],
+            [
+              "U.S. Dollar",
+              "ORG"
+            ],
+            [
+              "83 per cent",
+              "MONEY"
+            ],
+            [
+              "25",
+              "CARDINAL"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "September",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "83",
+              "context": "investors expect an 83 per cent"
+            },
+            {
+              "value": "25",
+              "context": "probability of a 25 - basis"
+            }
+          ],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-today-gold-rate-rises-as-u-s-dollar-falls/articleshow/123388291.cms"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Gold price edge lower on US talks with European, Ukrainian leaders; likely to fall below Rs 99k",
+          "source": "The Times of India",
+          "published": "2025-08-19T07:45:52Z",
+          "entities": [
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "European",
+              "NORP"
+            ],
+            [
+              "Ukrainian",
+              "NORP"
+            ],
+            [
+              "Tuesday",
+              "DATE"
+            ],
+            [
+              "October",
+              "DATE"
+            ],
+            [
+              "Rs 99,240",
+              "LAW"
+            ],
+            [
+              "0.16%",
+              "PERCENT"
+            ],
+            [
+              "the US Fed’s",
+              "ORG"
+            ],
+            [
+              "Jackson Hole",
+              "GPE"
+            ],
+            [
+              "Donald Trump’s",
+              "PERSON"
+            ],
+            [
+              "European",
+              "NORP"
+            ],
+            [
+              "Ukrainian",
+              "NORP"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "99,240",
+              "context": "futures at Rs 99,240 per 10"
+            },
+            {
+              "value": "10",
+              "context": "Rs 99,240 per 10 grams ,"
+            },
+            {
+              "value": "0.16",
+              "context": "grams , down 0.16 % ,"
+            },
+            {
+              "value": "%",
+              "context": ", down 0.16 % , as"
+            }
+          ],
+          "sentiment_score": -0.1388888888888889,
+          "impact_score": 0.42,
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-price-edge-lower-on-us-talks-with-european-ukrainian-leaders-likely-to-fall-below-rs-99k/articleshow/123381461.cms"
+        },
+        {
+          "type": "interest_rate",
+          "title": "US stocks subdued at open on mixed retail earnings ahead of Fed meet",
+          "source": "The Times of India",
+          "published": "2025-08-20T13:33:54Z",
+          "entities": [
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Wednesday",
+              "DATE"
+            ],
+            [
+              "Target",
+              "ORG"
+            ],
+            [
+              "Lowe",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://economictimes.indiatimes.com/markets/stocks/news/us-stocks-subdued-at-open-on-mixed-retail-earnings-ahead-of-fed-meet/articleshow/123411827.cms"
+        },
+        {
+          "type": "interest_rate",
+          "title": "S&P 500, Dow, Nasdaq futures dip amid retail earnings concerns and anticipation of Fed meeting insights",
+          "source": "The Times of India",
+          "published": "2025-08-20T13:25:41Z",
+          "entities": [
+            [
+              "Dow",
+              "ORG"
+            ],
+            [
+              "Nasdaq",
+              "ORG"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "today",
+              "DATE"
+            ],
+            [
+              "Dow",
+              "ORG"
+            ],
+            [
+              "Nasdaq",
+              "ORG"
+            ],
+            [
+              "Wednesday",
+              "DATE"
+            ],
+            [
+              "morning",
+              "TIME"
+            ],
+            [
+              "the Federal Reserve's",
+              "ORG"
+            ],
+            [
+              "Target",
+              "ORG"
+            ],
+            [
+              "Estee Lauder",
+              "ORG"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "500",
+              "context": "S&P 500 , Dow"
+            },
+            {
+              "value": "500",
+              "context": "today : S&P 500 , Dow"
+            }
+          ],
+          "sentiment_score": 0.3166666666666667,
+          "impact_score": -0.95,
+          "url": "https://economictimes.indiatimes.com/news/international/us/us-stock-futures-today-latest-news-sp-500-dow-nasdaq-futures-dip-amid-retail-earnings-concerns-and-anticipation-of-fed-meeting-insightsus-retail-earnings-august-2025/articleshow/123411012.cms"
+        },
+        {
+          "type": "dollar",
+          "title": "Dollar demand surges but rupee defies 3 major threats",
+          "source": "Rolling Out",
+          "published": "2025-08-20T13:23:52Z",
+          "entities": [
+            [
+              "3",
+              "CARDINAL"
+            ],
+            [
+              "Indian",
+              "NORP"
+            ],
+            [
+              "87-per-dollar",
+              "QUANTITY"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "3",
+              "context": "but rupee defies 3 major threats"
+            },
+            {
+              "value": "87",
+              "context": "the psychologically important 87 - per"
+            }
+          ],
+          "sentiment_score": 0.16250000000000003,
+          "impact_score": 0.24,
+          "url": "https://rollingout.com/2025/08/20/dollar-demand-surges-but-rupee-defies-3/"
+        }
+      ],
+      "event_summary": {
+        "interest_rate": 30,
+        "central_bank": 2,
+        "geopolitical": 4,
+        "dollar": 3,
+        "inflation": 12
+      },
+      "total_impact": -6.54,
+      "dominant_theme": "geopolitical",
+      "recommendation": "أخبار سلبية قوية جداً للذهب"
+    },
+    "articles_count": 86
+  },
+  "backtest_results": {
+    "initial_capital": 10000,
+    "final_value": -244369.08,
+    "total_return": -2543.69,
+    "sharpe_ratio": -0.703,
+    "max_drawdown": 1817.86,
+    "total_trades": 2,
+    "winning_trades": 0,
+    "losing_trades": 1,
+    "win_rate": 0.0,
+    "avg_trade_return": -Infinity,
+    "best_trade": 0.0,
+    "worst_trade": -0.95,
+    "avg_win": 0.0,
+    "avg_loss": -0.95,
+    "profit_factor": 0.0,
+    "recovery_factor": -1.4,
+    "risk_reward_ratio": 0.0
+  },
+  "market_summary": {
+    "last_update": "2025-08-21 13:37:15",
+    "data_points": 556,
+    "timeframe": "Multi-timeframe",
+    "market_condition": "صاعد قوي"
+  }
 }
