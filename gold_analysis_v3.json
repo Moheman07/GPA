@@ -1,6 +1,6 @@
 {
-  "timestamp": "2025-08-21T13:25:17.338892",
+  "timestamp": "2025-08-21T13:31:00.806659",
   "version": "3.0",
   "status": "error",
-  "error": "'ProfessionalGoldAnalyzerV3' object has no attribute 'analyze_correlations'"
+  "error": "'ProfessionalBacktester' object is not callable"
 }
