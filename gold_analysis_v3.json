@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-21T18:28:35.982951",
+  "timestamp": "2025-08-21T21:18:23.474491",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
@@ -19,19 +19,19 @@
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3382.8,
+    "current_price": 3383.5,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3341.08,
-        "conservative": 3327.17,
-        "moderate": 3299.36,
-        "wide": 3271.54
+        "tight": 3341.78,
+        "conservative": 3327.87,
+        "moderate": 3300.06,
+        "wide": 3272.24
       },
       "profit_targets": {
-        "target_1": 3438.43,
-        "target_2": 3494.06,
-        "target_3": 3568.23,
-        "target_4": 3679.49
+        "target_1": 3439.13,
+        "target_2": 3494.76,
+        "target_3": 3568.93,
+        "target_4": 3680.19
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -80,19 +80,19 @@
       }
     ],
     "technical_summary": {
-      "rsi": 55.6,
-      "macd": 0.54,
-      "williams_r": -56.4,
-      "stoch_k": 43.6,
-      "bb_position": 0.73,
-      "volume_ratio": 8.19
+      "rsi": 55.7,
+      "macd": 0.59,
+      "williams_r": -56.0,
+      "stoch_k": 44.0,
+      "bb_position": 0.74,
+      "volume_ratio": 8.38
     },
     "key_levels": {
-      "sma_20": 3349.1,
-      "sma_50": 3351.3,
+      "sma_20": 3349.14,
+      "sma_50": 3351.31,
       "sma_200": 3043.08,
-      "bb_upper": 3421.75,
-      "bb_lower": 3276.46
+      "bb_upper": 3421.85,
+      "bb_lower": 3276.43
     }
   },
   "mtf_analysis": {},
@@ -105,7 +105,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 57.8
+    "current_position": 58.11
   },
   "support_resistance": {
     "resistance_levels": [
@@ -120,14 +120,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.72,
-    "price_to_support": 2.98
+    "price_to_resistance": 1.7,
+    "price_to_support": 3.0
   },
   "volume_analysis": {
-    "current_volume": 114950,
-    "avg_volume_5": 24018,
-    "avg_volume_20": 14039,
-    "volume_ratio": 8.19,
+    "current_volume": 119576,
+    "avg_volume_5": 24943,
+    "avg_volume_20": 14270,
+    "volume_ratio": 8.38,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -160,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T18:28:33.776622",
+    "last_update": "2025-08-21T21:18:21.722373",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -550,67 +550,77 @@
         },
         {
           "type": "interest_rate",
-          "title": "Trump calls on Federal Reserve governor Lisa Cook to resign, renewing attack on central bank",
-          "source": "Yahoo Entertainment",
-          "published": "2025-08-20T18:23:44Z",
-          "entities": [
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "first",
-              "ORDINAL"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "first",
-              "context": "has accused the first Black woman"
-            }
-          ],
-          "sentiment_score": 0.020833333333333336,
-          "impact_score": -0.06,
-          "url": "https://www.yahoo.com/news/articles/trump-calls-federal-governor-lisa-150516185.html"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Trump calls on Federal Reserve governor Lisa Cook to resign, renewing attack on central bank",
-          "source": "AOL",
-          "published": "2025-08-20T18:23:44Z",
-          "entities": [
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "first",
-              "ORDINAL"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "first",
-              "context": "has accused the first Black woman"
-            }
-          ],
-          "sentiment_score": 0.020833333333333336,
-          "impact_score": -0.06,
-          "url": "https://www.aol.com/finance/trump-calls-federal-governor-lisa-150516347.html"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Trump calls on Fed governor to resign after cabinet member raises accusation of mortgage fraud",
+          "title": "Federal Reserve minutes highlight split over effects of Trump’s tariffs on inflation",
           "source": "Biztoc.com",
-          "published": "2025-08-20T18:21:36Z",
+          "published": "2025-08-20T21:09:53Z",
+          "entities": [
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "minutes",
+              "TIME"
+            ],
+            [
+              "Trump",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": -0.0625,
+          "impact_score": 0.19,
+          "url": "https://biztoc.com/x/345cdc8e815a53f4"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Fed board battle flares",
+          "source": "Biztoc.com",
+          "published": "2025-08-20T21:09:46Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "WASHINGTON",
+              "GPE"
+            ],
+            [
+              "Donald Trump",
+              "PERSON"
+            ],
+            [
+              "Wednesday",
+              "DATE"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ],
+            [
+              "Cook",
+              "PERSON"
+            ],
+            [
+              "Trump",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.6,
+          "impact_score": -1.8,
+          "url": "https://biztoc.com/x/f9c565b5961807d7"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Fed board battle flares",
+          "source": "Boston Herald",
+          "published": "2025-08-20T20:49:06Z",
           "entities": [
             [
               "Fed",
@@ -648,26 +658,27 @@
           "numbers": [],
           "sentiment_score": 0.6,
           "impact_score": -1.8,
-          "url": "https://biztoc.com/x/36c785404e7c3e20"
+          "url": "https://www.bostonherald.com/2025/08/20/fed-board-battle-flares/"
         }
       ],
       "event_summary": {
-        "interest_rate": 30,
+        "interest_rate": 24,
         "central_bank": 2,
-        "geopolitical": 6,
-        "inflation": 14,
+        "geopolitical": 3,
+        "inflation": 18,
+        "employment": 1,
         "dollar": 2
       },
-      "total_impact": -9.45,
+      "total_impact": -7.42,
       "dominant_theme": "geopolitical",
       "recommendation": "أخبار سلبية قوية جداً للذهب"
     },
-    "articles_count": 83
+    "articles_count": 85
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -243351.97,
-    "total_return": -2533.52,
+    "final_value": -243544.38,
+    "total_return": -2535.44,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -684,7 +695,7 @@
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 18:28:35",
+    "last_update": "2025-08-21 21:18:23",
     "data_points": 556,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
