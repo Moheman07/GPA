@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-21T08:22:21.170013",
+  "timestamp": "2025-08-21T08:26:07.175103",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
@@ -85,7 +85,7 @@
       "williams_r": -56.7,
       "stoch_k": 43.3,
       "bb_position": 0.73,
-      "volume_ratio": 2.93
+      "volume_ratio": 2.95
     },
     "key_levels": {
       "sma_20": 3349.08,
@@ -124,10 +124,10 @@
     "price_to_support": 2.97
   },
   "volume_analysis": {
-    "current_volume": 28510,
-    "avg_volume_5": 6730,
-    "avg_volume_20": 9717,
-    "volume_ratio": 2.93,
+    "current_volume": 28717,
+    "avg_volume_5": 6771,
+    "avg_volume_20": 9727,
+    "volume_ratio": 2.95,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -160,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T08:22:19.561498",
+    "last_update": "2025-08-21T08:26:05.357617",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -689,7 +689,7 @@
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 08:22:21",
+    "last_update": "2025-08-21 08:26:07",
     "data_points": 556,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
