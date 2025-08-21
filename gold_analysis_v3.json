@@ -1,12 +1,12 @@
 {
-  "timestamp": "2025-08-21T08:27:46.095458",
+  "timestamp": "2025-08-21T09:21:56.199156",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
     "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.91,
+    "total_score": 1.79,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
@@ -15,7 +15,7 @@
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": 2,
+      "news": 0,
       "ma_cross": 3,
       "mtf_coherence": 0
     },
@@ -76,7 +76,7 @@
         "type": "news_theme",
         "name": "interest_rate",
         "impact": "مستمر",
-        "recommendation": "أخبار إيجابية للذهب"
+        "recommendation": "تأثير محايد أو مختلط"
       }
     ],
     "technical_summary": {
@@ -85,7 +85,7 @@
       "williams_r": -56.6,
       "stoch_k": 43.4,
       "bb_position": 0.73,
-      "volume_ratio": 2.95
+      "volume_ratio": 3.24
     },
     "key_levels": {
       "sma_20": 3349.09,
@@ -124,10 +124,10 @@
     "price_to_support": 2.97
   },
   "volume_analysis": {
-    "current_volume": 28743,
-    "avg_volume_5": 6776,
-    "avg_volume_20": 9729,
-    "volume_ratio": 2.95,
+    "current_volume": 32043,
+    "avg_volume_5": 7436,
+    "avg_volume_20": 9894,
+    "volume_ratio": 3.24,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -136,7 +136,7 @@
   "market_correlations": {
     "correlations": {
       "dxy": -0.508,
-      "vix": -0.019,
+      "vix": -0.018,
       "treasury": 0.471,
       "oil": -0.716,
       "spy": 0.904,
@@ -160,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T08:27:44.204034",
+    "last_update": "2025-08-21T09:21:54.548132",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -548,6 +548,160 @@
           "url": "https://english.khabarhub.com/2025/19/491688/"
         },
         {
+          "type": "interest_rate",
+          "title": "US Federal Regulators To Review State-Level Stablecoin Frameworks Under GENIUS Act",
+          "source": "Bitcoinist",
+          "published": "2025-08-20T09:00:24Z",
+          "entities": [
+            [
+              "US Federal Regulators To Review State-Level Stablecoin Frameworks Under",
+              "ORG"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "Establishing National Innovation",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.13636363636363635,
+          "impact_score": -0.41,
+          "url": "https://bitcoinist.com/federal-regulators-state-level-stablecoin-framework/"
+        },
+        {
+          "type": "geopolitical",
+          "title": "iQIYI Announces Second Quarter 2025 Financial Results",
+          "source": "GlobeNewswire",
+          "published": "2025-08-20T09:00:00Z",
+          "entities": [
+            [
+              "2025",
+              "DATE"
+            ],
+            [
+              "Aug. 20, 2025",
+              "DATE"
+            ],
+            [
+              "GLOBE NEWSWIRE",
+              "ORG"
+            ],
+            [
+              "iQIYI, Inc.",
+              "ORG"
+            ],
+            [
+              "China",
+              "GPE"
+            ],
+            [
+              "today",
+              "DATE"
+            ],
+            [
+              "the second quarter ended June 30, 2025",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "Second",
+              "context": "iQIYI Announces Second Quarter 2025"
+            },
+            {
+              "value": "2025",
+              "context": "Announces Second Quarter 2025 Financial Results"
+            },
+            {
+              "value": "20",
+              "context": "BEIJING , Aug. 20 , 2025"
+            },
+            {
+              "value": "2025",
+              "context": "Aug. 20 , 2025 ( GLOBE"
+            },
+            {
+              "value": "second",
+              "context": "results for the second quarter ended"
+            },
+            {
+              "value": "30",
+              "context": "quarter ended June 30 , 2025"
+            },
+            {
+              "value": "2025",
+              "context": "June 30 , 2025 ."
+            }
+          ],
+          "sentiment_score": 0.0,
+          "impact_score": 0.0,
+          "url": "https://www.globenewswire.com/news-release/2025/08/20/3136219/0/en/iQIYI-Announces-Second-Quarter-2025-Financial-Results.html"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Bitcoin, Ether ETFs record heavy outflows as traders await Fed signals",
+          "source": "Coinjournal.net",
+          "published": "2025-08-20T08:28:33Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "SoSoValue",
+              "ORG"
+            ],
+            [
+              "Bitcoin",
+              "NORP"
+            ],
+            [
+              "daily",
+              "DATE"
+            ],
+            [
+              "$523 million",
+              "MONEY"
+            ],
+            [
+              "Tuesday",
+              "DATE"
+            ],
+            [
+              "$422.3 million",
+              "MONEY"
+            ],
+            [
+              "SoSoValue",
+              "ORG"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "523",
+              "context": "outflows of $ 523 million on"
+            },
+            {
+              "value": "million",
+              "context": "of $ 523 million on Tuesday"
+            },
+            {
+              "value": "422.3",
+              "context": "ETFs experienced $ 422.3 million in"
+            },
+            {
+              "value": "million",
+              "context": "experienced $ 422.3 million in total"
+            }
+          ],
+          "sentiment_score": 0.10000000000000002,
+          "impact_score": -0.3,
+          "url": "https://coinjournal.net/news/bitcoin-ether-etfs-record-heavy-outflows-as-traders-await-fed-signals/"
+        },
+        {
           "type": "geopolitical",
           "title": "Sensex, Nifty gain momentum in midday trade as IT stocks lead rally",
           "source": "BusinessLine",
@@ -623,104 +777,20 @@
           "sentiment_score": 0.2,
           "impact_score": 0.5,
           "url": "https://www.thehindubusinessline.com/markets/stock-markets/sensex-nifty-gain-momentum-in-midday-trade-as-it-stocks-lead-rally/article69955013.ece"
-        },
-        {
-          "type": "interest_rate",
-          "title": "The Federal Reserve Doesn't Have To Be An Enemy of Growth",
-          "source": "Biztoc.com",
-          "published": "2025-08-20T08:17:29Z",
-          "entities": [
-            [
-              "The Federal Reserve Does",
-              "ORG"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://biztoc.com/x/c9f1fa16465d14e8"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Asian Markets Waver As Japan Exports Show Tariff Strain",
-          "source": "International Business Times",
-          "published": "2025-08-20T08:00:24Z",
-          "entities": [
-            [
-              "Asian Markets Waver",
-              "ORG"
-            ],
-            [
-              "Asian",
-              "NORP"
-            ],
-            [
-              "Wednesday",
-              "DATE"
-            ],
-            [
-              "Japanese",
-              "NORP"
-            ],
-            [
-              "US",
-              "GPE"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://www.ibtimes.com/asian-markets-waver-japan-exports-show-tariff-strain-3781271"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Asian markets waver as Japan exports show tariff strain",
-          "source": "Digital Journal",
-          "published": "2025-08-20T07:57:32Z",
-          "entities": [
-            [
-              "Asian",
-              "NORP"
-            ],
-            [
-              "Japan",
-              "GPE"
-            ],
-            [
-              "Asian",
-              "NORP"
-            ],
-            [
-              "Wednesday",
-              "DATE"
-            ],
-            [
-              "Japanese",
-              "NORP"
-            ],
-            [
-              "US",
-              "GPE"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://www.digitaljournal.com/world/asian-markets-waver-as-japan-exports-show-tariff-strain/article"
         }
       ],
       "event_summary": {
-        "interest_rate": 25,
-        "geopolitical": 4,
-        "inflation": 15,
+        "interest_rate": 24,
+        "geopolitical": 5,
+        "inflation": 14,
         "dollar": 2,
         "central_bank": 1
       },
-      "total_impact": 2.02,
+      "total_impact": 2.0,
       "dominant_theme": "interest_rate",
-      "recommendation": "أخبار إيجابية للذهب"
+      "recommendation": "تأثير محايد أو مختلط"
     },
-    "articles_count": 88
+    "articles_count": 89
   },
   "backtest_results": {
     "initial_capital": 10000,
@@ -742,7 +812,7 @@
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 08:27:46",
+    "last_update": "2025-08-21 09:21:56",
     "data_points": 556,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
