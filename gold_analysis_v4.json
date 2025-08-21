@@ -1,0 +1,22 @@
+{
+  "error": "Can only compare identically-labeled Series objects",
+  "mtf_analysis": {},
+  "news_analysis": {
+    "sentiment": 0.08020454545454545,
+    "count": 10,
+    "impact": "محايد"
+  },
+  "correlations": {},
+  "backtest": {
+    "initial_capital": 10000,
+    "final_capital": 10000,
+    "total_return": 0.0,
+    "total_trades": 0,
+    "winning_trades": 0,
+    "losing_trades": 0,
+    "win_rate": 0.0,
+    "avg_win": 0,
+    "avg_loss": 0
+  },
+  "timestamp": "2025-08-21T12:47:48.777722"
+}
