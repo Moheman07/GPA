@@ -70,43 +70,29 @@ class MLPredictor:
         print("🤖 بدء تدريب نموذج التعلم الآلي...")
         X, y = [], []
         
-        # تحديد الأعمدة من أول سجل صالح
         for record in historical_data:
             features = self.prepare_features(record['analysis'])
             if features:
-                self.feature_columns = list(features.keys())
-                break
-        
-        if not self.feature_columns:
-            print("⚠️ لم يتم العثور على بيانات صالحة لتحديد أعمدة الميزات.")
-            return False
+                if not self.feature_columns:
+                    self.feature_columns = list(features.keys())
+                X.append([features.get(col, 0) for col in self.feature_columns])
+                y.append(1 if record.get('price_change_5d', 0) > 1.0 else 0)
 
-        for record in historical_data:
-            features = self.prepare_features(record['analysis'])
-            X.append([features.get(col, 0) for col in self.feature_columns])
-            y.append(1 if record.get('price_change_5d', 0) > 1.0 else 0)
-        
         if len(X) < 100:
             print(f"⚠️ بيانات غير كافية للتدريب ({len(X)} سجل)")
             return False
         
-        X = np.array(X)
-        y = np.array(y)
-        
-        # Check if there's more than one class in the target variable
         if len(np.unique(y)) < 2:
             print("⚠️ لا يمكن التدريب لأن جميع البيانات تنتمي إلى فئة واحدة فقط.")
             return False
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+        X_train, X_test, y_train, y_test = train_test_split(np.array(X), np.array(y), test_size=0.2, random_state=42, stratify=y)
         X_train_scaled = self.scaler.fit_transform(X_train)
         X_test_scaled = self.scaler.transform(X_test)
         
-        models = {
-            'RandomForest': RandomForestClassifier(n_estimators=100, random_state=42),
-            'XGBoost': xgb.XGBClassifier(n_estimators=100, random_state=42, use_label_encoder=False, eval_metric='logloss')
-        }
+        models = {'XGBoost': xgb.XGBClassifier(n_estimators=100, random_state=42, use_label_encoder=False, eval_metric='logloss')}
         best_model, best_score = None, 0
+        
         for name, model in models.items():
             model.fit(X_train_scaled, y_train)
             f1 = f1_score(y_test, model.predict(X_test_scaled))
@@ -163,7 +149,6 @@ class MultiTimeframeAnalyzer:
             loss = -delta.where(delta < 0, 0).ewm(com=13, adjust=False).mean()
             rs = gain / loss.replace(0, np.nan)
             data['RSI'] = 100 - (100 / (1 + rs))
-            
             exp1 = data['Close'].ewm(span=12, adjust=False).mean()
             exp2 = data['Close'].ewm(span=26, adjust=False).mean()
             data['MACD'] = exp1 - exp2
@@ -175,7 +160,6 @@ class MultiTimeframeAnalyzer:
             if latest['RSI'] > 50: score += 0.5
             elif latest['RSI'] < 30: score += 1
             if latest['MACD'] > latest['MACD_Signal']: score += 1
-
             return {'score': score, 'trend': 'صاعد' if score > 1.5 else ('هابط' if score < 0 else 'محايد')}
         except Exception as e:
             print(f"خطأ في تحليل الإطار الزمني {interval}: {e}")
@@ -194,22 +178,16 @@ class MultiTimeframeAnalyzer:
                 total_weight += weights[tf_name]
 
         if total_weight == 0: return 0, {}
-        
         coherence_score = total_weighted_score / total_weight
         return coherence_score, {'coherence_score': round(coherence_score, 2)}
 
 class AdvancedNewsAnalyzer:
     def __init__(self, api_key):
         self.api_key = api_key
-        self.event_patterns = {
-            'interest_rate': {'keywords': ['interest rate', 'fomc', 'federal reserve'], 'multiplier': 3},
-            'inflation': {'keywords': ['inflation', 'cpi', 'pce'], 'multiplier': 2.5},
-            'employment': {'keywords': ['employment', 'jobs', 'nfp', 'unemployment'], 'multiplier': 2},
-            'geopolitical': {'keywords': ['war', 'conflict', 'sanctions', 'crisis', 'tension'], 'multiplier': 2.5}
-        }
 
     async def fetch_news_async(self):
-        keywords = ['"gold price"', '"federal reserve"', '"interest rates"', '"inflation data"', '"XAU/USD"']
+        if not self.api_key: return []
+        keywords = ['"gold price"', '"federal reserve"', '"interest rates"']
         all_articles = []
         async with aiohttp.ClientSession() as session:
             tasks = [self._fetch_url(session, f"https://newsapi.org/v2/everything?q={keyword}&language=en&sortBy=publishedAt&pageSize=20&apiKey={self.api_key}") for keyword in keywords]
@@ -218,8 +196,7 @@ class AdvancedNewsAnalyzer:
                 if isinstance(result, dict) and 'articles' in result:
                     all_articles.extend(result['articles'])
         
-        seen_urls = set()
-        unique_articles = []
+        seen_urls = {article['url'] for article in unique_articles} if (unique_articles := []) else set()
         for article in all_articles:
             url = article.get('url')
             if url and url not in seen_urls:
@@ -240,15 +217,11 @@ class AdvancedNewsAnalyzer:
         if not articles: return {'total_impact': 0}
         total_impact = 0
         for article in articles:
-            if not article or not article.get('title'): continue
-            text = f"{article['title']} {article.get('description', '')}".lower()
+            text = f"{article.get('title', '')} {article.get('description', '')}".lower()
             sentiment = TextBlob(text).sentiment.polarity
-            for event, details in self.event_patterns.items():
-                if any(kw in text for kw in details['keywords']):
-                    impact = sentiment * details['multiplier']
-                    if event in ['interest_rate', 'inflation']: impact *= -1
-                    total_impact += impact
-        return {'total_impact': round(total_impact / len(articles) if articles else 0, 2)}
+            total_impact += sentiment
+        # Normalize impact to a smaller scale
+        return {'total_impact': round(total_impact / len(articles) * 5 if articles else 0, 2)}
 
 class ProfessionalBacktester:
     class GoldStrategy(bt.Strategy):
@@ -269,15 +242,19 @@ class ProfessionalBacktester:
 
     def run(self, data, initial_cash=10000):
         print("🔄 بدء الاختبار الخلفي...")
-        cerebro = bt.Cerebro(stdstats=False)
-        data_feed = bt.feeds.PandasData(dataname=data)
-        cerebro.adddata(data_feed)
-        cerebro.addstrategy(self.GoldStrategy, analyzer=self.analyzer)
-        cerebro.broker.setcash(initial_cash)
-        cerebro.addanalyzer(bt.analyzers.TradeAnalyzer, _name='trades')
-        results = cerebro.run()
-        trades = results[0].analyzers.trades.get_analysis()
-        return {'total_trades': trades.get('total', {}).get('total', 0), 'winning_trades': trades.get('won', {}).get('total', 0)}
+        try:
+            cerebro = bt.Cerebro(stdstats=False)
+            data_feed = bt.feeds.PandasData(dataname=data)
+            cerebro.adddata(data_feed)
+            cerebro.addstrategy(self.GoldStrategy, analyzer=self.analyzer)
+            cerebro.broker.setcash(initial_cash)
+            cerebro.addanalyzer(bt.analyzers.TradeAnalyzer, _name='trades')
+            results = cerebro.run()
+            trades = results[0].analyzers.trades.get_analysis()
+            return {'total_trades': trades.get('total', {}).get('total', 0), 'winning_trades': trades.get('won', {}).get('total', 0)}
+        except Exception as e:
+            print(f"❌ خطأ في الاختبار الخلفي: {e}")
+            return None
 
 class DatabaseManager:
     def __init__(self, db_path="analysis_history.db"):
@@ -310,7 +287,7 @@ class DatabaseManager:
                     analysis_data.get('economic_data', {}).get('score', 0), analysis_data.get('news_analysis', {}).get('total_impact'),
                     analysis_data.get('mtf_analysis', {}).get('coherence_score'), gold_analysis.get('ml_prediction', {}).get('probability')
                 )
-                conn.execute("REPLACE INTO analysis_history (analysis_date, gold_price, signal, confidence, total_score, component_scores, technical_indicators, volume_analysis, correlations, economic_score, news_sentiment, mtf_coherence, ml_probability) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params)
+                conn.execute("INSERT OR REPLACE INTO analysis_history (analysis_date, gold_price, signal, confidence, total_score, component_scores, technical_indicators, volume_analysis, correlations, economic_score, news_sentiment, mtf_coherence, ml_probability) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params)
                 print("✅ تم حفظ التحليل في قاعدة البيانات")
         except Exception as e:
             print(f"❌ خطأ في حفظ التحليل: {e}")
@@ -336,32 +313,36 @@ class DatabaseManager:
             print(f"❌ خطأ في تحديث الأسعار المستقبلية: {e}")
 
     def get_training_data(self):
-        with sqlite3.connect(self.db_path) as conn:
-            df = pd.read_sql_query("SELECT * FROM analysis_history WHERE signal_success IS NOT NULL", conn)
-        print(f"⚠️ بيانات التدريب المتاحة: {len(df)} سجل")
-        if len(df) < 100: return None
-        
-        training_data = []
-        for _, row in df.iterrows():
-            try:
-                record = {
-                    'price_change_5d': row['price_change_5d'],
-                    'analysis': {
-                        'gold_analysis': {
-                            'component_scores': json.loads(row['component_scores'] or '{}'),
-                            'technical_summary': json.loads(row['technical_indicators'] or '{}'),
-                            'total_score': row['total_score']
-                        },
-                        'volume_analysis': json.loads(row['volume_analysis'] or '{}'),
-                        'market_correlations': {'correlations': json.loads(row['correlations'] or '{}')},
-                        'economic_data': {'score': row['economic_score']},
-                        'fibonacci_levels': {}
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                df = pd.read_sql_query("SELECT * FROM analysis_history WHERE signal_success IS NOT NULL", conn)
+            print(f"⚠️ بيانات التدريب المتاحة: {len(df)} سجل")
+            if len(df) < 100: return None
+            
+            training_data = []
+            for _, row in df.iterrows():
+                try:
+                    record = {
+                        'price_change_5d': row['price_change_5d'],
+                        'analysis': {
+                            'gold_analysis': {
+                                'component_scores': json.loads(row['component_scores'] or '{}'),
+                                'technical_summary': json.loads(row['technical_indicators'] or '{}'),
+                                'total_score': row['total_score']
+                            },
+                            'volume_analysis': json.loads(row['volume_analysis'] or '{}'),
+                            'market_correlations': {'correlations': json.loads(row['correlations'] or '{}')},
+                            'economic_data': {'score': row['economic_score']},
+                            'fibonacci_levels': {}
+                        }
                     }
-                }
-                training_data.append(record)
-            except (json.JSONDecodeError, TypeError):
-                continue
-        return training_data
+                    training_data.append(record)
+                except (json.JSONDecodeError, TypeError):
+                    continue
+            return training_data
+        except Exception as e:
+            print(f"❌ خطأ في جلب بيانات التدريب: {e}")
+            return None
 
 class ProfessionalGoldAnalyzerV3:
     def __init__(self):
@@ -387,12 +368,11 @@ class ProfessionalGoldAnalyzerV3:
         print("⚙️ معالجة البيانات...")
         try:
             gold_symbol = self.symbols['gold']
-            # Check if multi-level columns exist, which is the case for multiple tickers
             if isinstance(raw_data.columns, pd.MultiIndex):
                 if gold_symbol not in raw_data.columns.levels[0] or raw_data[gold_symbol].dropna().empty:
                     gold_symbol = self.symbols['gold_etf']
                 gold_df = raw_data[gold_symbol].copy().dropna(subset=['Close'])
-            else: # Handle case for single ticker download
+            else:
                 gold_df = raw_data.copy().dropna(subset=['Close'])
 
             if len(gold_df) < 200: raise ValueError("بيانات غير كافية")
@@ -413,7 +393,6 @@ class ProfessionalGoldAnalyzerV3:
             print(f"❌ خطأ في معالجة البيانات: {e}")
             return None, None
 
-    # ✅  تمت إعادة إضافة الدوال المفقودة هنا
     def calculate_fibonacci_levels(self, data, periods=50):
         try:
             recent_data = data.tail(periods)
@@ -421,21 +400,7 @@ class ProfessionalGoldAnalyzerV3:
             diff = high - low
             if diff == 0: return {}
             current_price = data['Close'].iloc[-1]
-            
-            levels = {
-                'high': round(high, 2), 'low': round(low, 2),
-                'fib_23_6': round(high - (diff * 0.236), 2),
-                'fib_38_2': round(high - (diff * 0.382), 2),
-                'fib_50_0': round(high - (diff * 0.500), 2),
-                'fib_61_8': round(high - (diff * 0.618), 2),
-            }
-            
-            if current_price > levels['fib_23_6']: analysis = "السعر قوي جداً فوق 23.6%"
-            elif current_price > levels['fib_38_2']: analysis = "السعر فوق 38.2% - اتجاه صاعد معتدل"
-            else: analysis = "السعر تحت 38.2%"
-            
-            levels['analysis'] = analysis
-            levels['current_position'] = round(((current_price - low) / diff * 100), 2)
+            levels = {'current_position': round(((current_price - low) / diff * 100), 2)}
             return levels
         except Exception as e:
             print(f"خطأ في حساب فيبوناتشي: {e}")
@@ -443,20 +408,33 @@ class ProfessionalGoldAnalyzerV3:
 
     def analyze_volume_profile(self, data):
         try:
-            latest = data.iloc[-1]
             avg_vol = data['Volume'].rolling(20).mean().iloc[-1]
-            current_vol = latest.get('Volume', 0)
+            current_vol = data['Volume'].iloc[-1]
             volume_ratio = current_vol / avg_vol if avg_vol else 1
-            
             if volume_ratio > 2.0: strength = 'قوي جداً'
             elif volume_ratio > 1.5: strength = 'قوي'
-            elif volume_ratio > 0.8: strength = 'طبيعي'
-            else: strength = 'ضعيف'
-
+            else: strength = 'طبيعي'
             return {'volume_strength': strength}
         except Exception as e:
             print(f"خطأ في تحليل الحجم: {e}")
             return {}
+            
+    def analyze_correlations(self, market_data):
+        print("📊 تحليل الارتباطات...")
+        try:
+            close_prices = market_data.xs('Close', level=1, axis=1)
+            correlations = close_prices.tail(90).corr()
+            gold_symbol = self.symbols['gold']
+            if gold_symbol not in correlations: gold_symbol = self.symbols['gold_etf']
+            gold_corrs = correlations[gold_symbol]
+            results = {name: round(gold_corrs.get(symbol, 0), 3) for name, symbol in self.symbols.items()}
+            return {'correlations': results}
+        except Exception as e:
+            print(f"❌ خطأ في تحليل الارتباطات: {e}")
+            return {}
+
+    def fetch_economic_data(self):
+        return {'score': 3} # Simulated
 
     def generate_signal(self, tech_data, correlations, volume, fib_levels, economic_data, news_analysis, mtf_analysis, ml_prediction):
         print("🎯 توليد الإشارة...")
@@ -467,7 +445,7 @@ class ProfessionalGoldAnalyzerV3:
             
             scores['trend'] = 2 if latest['Close'] > latest['SMA_50'] > latest['SMA_200'] else (-2 if latest['Close'] < latest['SMA_50'] < latest['SMA_200'] else 0)
             scores['momentum'] = (1 if latest['MACD'] > latest['MACD_Signal'] else -1) + (1 if latest['RSI'] > 55 else (-1 if latest['RSI'] < 45 else 0))
-            strength_map = {'ضعيف': -1, 'طبيعي': 0, 'قوي': 1, 'قوي جداً': 2}
+            strength_map = {'طبيعي': 0, 'قوي': 1, 'قوي جداً': 2}
             scores['volume'] = strength_map.get(volume.get('volume_strength', 'طبيعي'), 0)
             pos = fib_levels.get('current_position', 50)
             scores['fibonacci'] = 2 if pos > 70 else (-2 if pos < 30 else 0)
@@ -529,12 +507,11 @@ class ProfessionalGoldAnalyzerV3:
                 if not os.path.exists(self.ml_predictor.model_path):
                     self.ml_predictor.train_model(training_data)
                 
-                # Create a temporary analysis object for prediction
                 temp_signals = self.generate_signal(technical_data, correlations, volume_analysis, fib_levels, economic_data, news_analysis, mtf_analysis, None)
                 temp_analysis_for_ml = {
-                    'gold_analysis': temp_signals,
-                    'volume_analysis': volume_analysis, 'market_correlations': correlations,
-                    'economic_data': economic_data, 'fibonacci_levels': fib_levels
+                    'gold_analysis': temp_signals, 'volume_analysis': volume_analysis, 
+                    'market_correlations': correlations, 'economic_data': economic_data, 
+                    'fibonacci_levels': fib_levels
                 }
                 ml_prediction = self.ml_predictor.predict_probability(temp_analysis_for_ml)
 
@@ -543,14 +520,13 @@ class ProfessionalGoldAnalyzerV3:
                 economic_data, news_analysis, mtf_analysis, ml_prediction
             )
             
-            # Run backtester
-            cerebro = bt.Cerebro(stdstats=False)
-            cerebro.adddata(bt.feeds.PandasData(dataname=technical_data.copy()))
-            cerebro.addstrategy(self.backtester)
-            cerebro.run()
+            backtest_results = self.backtester(self).run(data=technical_data.copy())
             
             final_result.update({
-                'status': 'success', 'gold_analysis': signals
+                'status': 'success', 'gold_analysis': signals, 
+                'backtest_results': backtest_results,
+                'market_correlations': correlations, 'news_analysis': news_analysis,
+                'mtf_analysis': mtf_analysis, 'volume_analysis': volume_analysis
             })
             self.db_manager.save_analysis(final_result)
         except Exception as e:
