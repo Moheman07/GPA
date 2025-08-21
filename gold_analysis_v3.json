@@ -1,12 +1,12 @@
 {
-  "timestamp": "2025-08-21T15:21:38.712208",
+  "timestamp": "2025-08-21T18:28:35.982951",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
     "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.67,
+    "total_score": 1.61,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
@@ -15,23 +15,23 @@
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": -2,
+      "news": -3,
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3383.4,
+    "current_price": 3382.8,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3341.68,
-        "conservative": 3327.77,
-        "moderate": 3299.96,
-        "wide": 3272.14
+        "tight": 3341.08,
+        "conservative": 3327.17,
+        "moderate": 3299.36,
+        "wide": 3271.54
       },
       "profit_targets": {
-        "target_1": 3439.03,
-        "target_2": 3494.66,
-        "target_3": 3568.83,
-        "target_4": 3680.09
+        "target_1": 3438.43,
+        "target_2": 3494.06,
+        "target_3": 3568.23,
+        "target_4": 3679.49
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -76,23 +76,23 @@
         "type": "news_theme",
         "name": "geopolitical",
         "impact": "مستمر",
-        "recommendation": "أخبار سلبية للذهب"
+        "recommendation": "أخبار سلبية قوية جداً للذهب"
       }
     ],
     "technical_summary": {
-      "rsi": 55.7,
-      "macd": 0.59,
-      "williams_r": -56.1,
-      "stoch_k": 43.9,
-      "bb_position": 0.74,
-      "volume_ratio": 7.33
+      "rsi": 55.6,
+      "macd": 0.54,
+      "williams_r": -56.4,
+      "stoch_k": 43.6,
+      "bb_position": 0.73,
+      "volume_ratio": 8.19
     },
     "key_levels": {
-      "sma_20": 3349.13,
-      "sma_50": 3351.31,
+      "sma_20": 3349.1,
+      "sma_50": 3351.3,
       "sma_200": 3043.08,
-      "bb_upper": 3421.84,
-      "bb_lower": 3276.43
+      "bb_upper": 3421.75,
+      "bb_lower": 3276.46
     }
   },
   "mtf_analysis": {},
@@ -105,7 +105,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 58.06
+    "current_position": 57.8
   },
   "support_resistance": {
     "resistance_levels": [
@@ -120,14 +120,14 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.7,
-    "price_to_support": 3.0
+    "price_to_resistance": 1.72,
+    "price_to_support": 2.98
   },
   "volume_analysis": {
-    "current_volume": 95989,
-    "avg_volume_5": 20226,
-    "avg_volume_20": 13091,
-    "volume_ratio": 7.33,
+    "current_volume": 114950,
+    "avg_volume_5": 24018,
+    "avg_volume_20": 14039,
+    "volume_ratio": 8.19,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -160,7 +160,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T15:21:36.578437",
+    "last_update": "2025-08-21T18:28:33.776622",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -550,42 +550,10 @@
         },
         {
           "type": "interest_rate",
-          "title": "Trump Demands Fed's Cook Quit as Pulte Seeks Mortgage Probe (Josh Wingrove/Bloomberg)",
-          "source": "Memeorandum.com",
-          "published": "2025-08-20T15:15:00Z",
+          "title": "Trump calls on Federal Reserve governor Lisa Cook to resign, renewing attack on central bank",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-20T18:23:44Z",
           "entities": [
-            [
-              "Trump Demands Fed's",
-              "ORG"
-            ],
-            [
-              "Cook Quit",
-              "ORG"
-            ],
-            [
-              "Pulte Seeks Mortgage Probe",
-              "ORG"
-            ],
-            [
-              "Josh Wingrove/Bloomberg",
-              "PERSON"
-            ],
-            [
-              "Trump Demands Fed's",
-              "ORG"
-            ],
-            [
-              "Cook Quit",
-              "ORG"
-            ],
-            [
-              "Pulte Seeks Mortgage Probe",
-              "ORG"
-            ],
-            [
-              "Donald Trump",
-              "PERSON"
-            ],
             [
               "Federal Reserve",
               "ORG"
@@ -593,29 +561,59 @@
             [
               "Lisa Cook",
               "PERSON"
+            ],
+            [
+              "first",
+              "ORDINAL"
             ]
           ],
-          "numbers": [],
-          "sentiment_score": 0.1,
-          "impact_score": -0.3,
-          "url": "https://www.memeorandum.com/250820/p57"
+          "numbers": [
+            {
+              "value": "first",
+              "context": "has accused the first Black woman"
+            }
+          ],
+          "sentiment_score": 0.020833333333333336,
+          "impact_score": -0.06,
+          "url": "https://www.yahoo.com/news/articles/trump-calls-federal-governor-lisa-150516185.html"
         },
         {
           "type": "interest_rate",
-          "title": "Trump calls on Federal Reserve official to resign after ally accuses her of mortgage fraud",
-          "source": "Financial Post",
-          "published": "2025-08-20T15:11:28Z",
+          "title": "Trump calls on Federal Reserve governor Lisa Cook to resign, renewing attack on central bank",
+          "source": "AOL",
+          "published": "2025-08-20T18:23:44Z",
           "entities": [
             [
               "Federal Reserve",
               "ORG"
             ],
             [
-              "WASHINGTON",
-              "GPE"
+              "Lisa Cook",
+              "PERSON"
             ],
             [
-              "AP",
+              "first",
+              "ORDINAL"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "first",
+              "context": "has accused the first Black woman"
+            }
+          ],
+          "sentiment_score": 0.020833333333333336,
+          "impact_score": -0.06,
+          "url": "https://www.aol.com/finance/trump-calls-federal-governor-lisa-150516347.html"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Trump calls on Fed governor to resign after cabinet member raises accusation of mortgage fraud",
+          "source": "Biztoc.com",
+          "published": "2025-08-20T18:21:36Z",
+          "entities": [
+            [
+              "Fed",
               "ORG"
             ],
             [
@@ -639,82 +637,37 @@
               "PERSON"
             ],
             [
-              "Bill Pulte",
-              "PERSON"
-            ],
-            [
-              "Fanni",
-              "ORG"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://financialpost.com/pmn/trump-calls-on-federal-reserve-official-to-resign-after-ally-accuses-her-of-mortgage-fraud"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Trump Pressures Fed Official As Mortgage Fraud Claims Surface",
-          "source": "Biztoc.com",
-          "published": "2025-08-20T15:11:15Z",
-          "entities": [
-            [
-              "Trump Pressures Fed Official As Mortgage Fraud Claims Surface",
-              "ORG"
-            ],
-            [
-              "Donald Trump",
-              "PERSON"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "CNN",
-              "ORG"
-            ],
-            [
-              "Federal Housing Finance Agency",
-              "ORG"
-            ],
-            [
-              "Bill Pulte",
-              "PERSON"
-            ],
-            [
               "Trump",
+              "PERSON"
+            ],
+            [
+              "centra",
               "ORG"
             ]
           ],
           "numbers": [],
-          "sentiment_score": -0.1,
-          "impact_score": 0.3,
-          "url": "https://biztoc.com/x/fdf70d78bacaad6c"
+          "sentiment_score": 0.6,
+          "impact_score": -1.8,
+          "url": "https://biztoc.com/x/36c785404e7c3e20"
         }
       ],
       "event_summary": {
-        "interest_rate": 28,
-        "central_bank": 4,
-        "geopolitical": 3,
-        "employment": 1,
+        "interest_rate": 30,
+        "central_bank": 2,
+        "geopolitical": 6,
         "inflation": 14,
         "dollar": 2
       },
-      "total_impact": -4.69,
+      "total_impact": -9.45,
       "dominant_theme": "geopolitical",
-      "recommendation": "أخبار سلبية للذهب"
+      "recommendation": "أخبار سلبية قوية جداً للذهب"
     },
     "articles_count": 83
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -243516.87,
-    "total_return": -2535.17,
+    "final_value": -243351.97,
+    "total_return": -2533.52,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -731,7 +684,7 @@
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 15:21:38",
+    "last_update": "2025-08-21 18:28:35",
     "data_points": 556,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
