@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-22T12:31:14.317668",
+  "timestamp": "2025-08-22T12:35:21.572858",
   "version": "3.0",
   "status": "success",
   "gold_analysis": {
@@ -16,10 +16,10 @@
       "news": 0.78,
       "mtf_coherence": 0
     },
-    "current_price": 3370.1,
+    "current_price": 3368.4,
     "technical_summary": {
-      "rsi": 53.6,
-      "macd": -0.88
+      "rsi": 53.3,
+      "macd": -1.01
     },
     "ml_prediction": {
       "probability": null,
@@ -36,10 +36,10 @@
       "gold_etf": 0.98,
       "dxy": -0.602,
       "vix": -0.016,
-      "treasury": -0.22,
+      "treasury": -0.224,
       "oil": 0.366,
       "spy": 0.215,
-      "silver": 0.543
+      "silver": 0.542
     }
   },
   "news_analysis": {
@@ -53,6 +53,6 @@
     "score": 3
   },
   "fibonacci_levels": {
-    "current_position": 52.11
+    "current_position": 51.34
   }
 }
