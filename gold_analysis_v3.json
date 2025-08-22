@@ -1,41 +1,41 @@
 {
-  "timestamp": "2025-08-21T21:18:23.474491",
+  "timestamp": "2025-08-22T01:28:01.505093",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
-    "signal": "Buy",
-    "confidence": "High",
-    "action_recommendation": "شراء - حجم متوسط",
-    "total_score": 1.61,
+    "signal": "Weak Buy",
+    "confidence": "Medium",
+    "action_recommendation": "شراء حذر - حجم صغير",
+    "total_score": 1.27,
     "component_scores": {
       "trend": 4,
       "momentum": 0.5,
-      "volume": 4,
+      "volume": 0,
       "fibonacci": 1,
       "correlation": 1,
       "support_resistance": -2,
       "economic": 3,
-      "news": -3,
+      "news": -2,
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3383.5,
+    "current_price": 3381.8,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3341.78,
-        "conservative": 3327.87,
-        "moderate": 3300.06,
-        "wide": 3272.24
+        "tight": 3340.83,
+        "conservative": 3327.18,
+        "moderate": 3299.87,
+        "wide": 3272.56
       },
       "profit_targets": {
-        "target_1": 3439.13,
-        "target_2": 3494.76,
-        "target_3": 3568.93,
-        "target_4": 3680.19
+        "target_1": 3436.42,
+        "target_2": 3491.04,
+        "target_3": 3563.87,
+        "target_4": 3673.11
       },
-      "position_size_recommendation": "متوسط-كبير (50-75%)",
+      "position_size_recommendation": "متوسط (25-50%)",
       "risk_reward_ratio": 2.0,
-      "max_risk_per_trade": "2%",
+      "max_risk_per_trade": "1%",
       "volatility_adjusted": true,
       "ml_adjusted": false
     },
@@ -45,7 +45,9 @@
         "قسّم الدخول على 2-3 مراحل"
       ],
       "conditions": [],
-      "warnings": [],
+      "warnings": [
+        "⚠️ حجم ضعيف - تأكيد مطلوب"
+      ],
       "mtf_confirmation": ""
     },
     "ml_prediction": {
@@ -76,23 +78,23 @@
         "type": "news_theme",
         "name": "geopolitical",
         "impact": "مستمر",
-        "recommendation": "أخبار سلبية قوية جداً للذهب"
+        "recommendation": "أخبار سلبية للذهب"
       }
     ],
     "technical_summary": {
-      "rsi": 55.7,
-      "macd": 0.59,
-      "williams_r": -56.0,
-      "stoch_k": 44.0,
-      "bb_position": 0.74,
-      "volume_ratio": 8.38
+      "rsi": 55.5,
+      "macd": 0.46,
+      "williams_r": -57.0,
+      "stoch_k": 43.0,
+      "bb_position": 0.73,
+      "volume_ratio": 0.57
     },
     "key_levels": {
-      "sma_20": 3349.14,
-      "sma_50": 3351.31,
-      "sma_200": 3043.08,
-      "bb_upper": 3421.85,
-      "bb_lower": 3276.43
+      "sma_20": 3349.05,
+      "sma_50": 3351.28,
+      "sma_200": 3043.07,
+      "bb_upper": 3421.6,
+      "bb_lower": 3276.51
     }
   },
   "mtf_analysis": {},
@@ -105,7 +107,7 @@
     "fib_61_8": 3339.06,
     "fib_78_6": 3301.56,
     "analysis": "السعر فوق 50% - منطقة محايدة",
-    "current_position": 58.11
+    "current_position": 57.35
   },
   "support_resistance": {
     "resistance_levels": [
@@ -120,18 +122,18 @@
     ],
     "nearest_resistance": 3441.0,
     "nearest_support": 3282.0,
-    "price_to_resistance": 1.7,
-    "price_to_support": 3.0
+    "price_to_resistance": 1.75,
+    "price_to_support": 2.95
   },
   "volume_analysis": {
-    "current_volume": 119576,
-    "avg_volume_5": 24943,
-    "avg_volume_20": 14270,
-    "volume_ratio": 8.38,
-    "volume_strength": "قوي جداً",
-    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "current_volume": 4863,
+    "avg_volume_5": 2000,
+    "avg_volume_20": 8535,
+    "volume_ratio": 0.57,
+    "volume_strength": "ضعيف",
+    "volume_signal": "حجم ضعيف - حذر من الحركة الوهمية",
     "obv_trend": "صاعد",
-    "volume_price_correlation": "إيجابي"
+    "volume_price_correlation": "سلبي"
   },
   "market_correlations": {
     "correlations": {
@@ -160,7 +162,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-08-21T21:18:21.722373",
+    "last_update": "2025-08-22T01:27:59.776663",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -201,6 +203,30 @@
     "status": "success",
     "events_analysis": {
       "events": [
+        {
+          "type": "geopolitical",
+          "title": "Asia Morning Briefing: BTC Demand Cools While “Crypto Capital is Getting More Selective,” OKX’s Gracie Lin Warns",
+          "source": "CoinDesk",
+          "published": "2025-08-21T00:09:10Z",
+          "entities": [
+            [
+              "Crypto Capital",
+              "PERSON"
+            ],
+            [
+              "OKX",
+              "ORG"
+            ],
+            [
+              "Gracie Lin Warns With Bitcoin",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.6,
+          "impact_score": 1.5,
+          "url": "https://www.coindesk.com/markets/2025/08/21/asia-morning-briefing-btc-demand-cools-while-crypto-capital-is-getting-more-selective-okx-s-gracie-lin-warns"
+        },
         {
           "type": "interest_rate",
           "title": "Gold rate prediction: Gold price nears three-week lows. What to expect this week?",
@@ -428,85 +454,104 @@
         },
         {
           "type": "interest_rate",
-          "title": "Gold price today: Gold rate rises as U.S. Dollar falls",
-          "source": "The Times of India",
-          "published": "2025-08-19T12:57:39Z",
+          "title": "Fed Minutes Show Majority Of FOMC Saw Inflation As Greater Risk",
+          "source": "Ndtvprofit.com",
+          "published": "2025-08-21T01:19:59Z",
           "entities": [
-            [
-              "today",
-              "DATE"
-            ],
-            [
-              "U.S. Dollar",
-              "ORG"
-            ],
-            [
-              "83 per cent",
-              "MONEY"
-            ],
-            [
-              "25",
-              "CARDINAL"
-            ],
             [
               "Fed",
               "ORG"
             ],
             [
-              "September",
+              "last month",
               "DATE"
             ]
           ],
-          "numbers": [
-            {
-              "value": "83",
-              "context": "investors expect an 83 per cent"
-            },
-            {
-              "value": "25",
-              "context": "probability of a 25 - basis"
-            }
-          ],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://economictimes.indiatimes.com/news/international/us/gold-price-today-gold-rate-rises-as-u-s-dollar-falls/articleshow/123388291.cms"
+          "numbers": [],
+          "sentiment_score": 0.25,
+          "impact_score": -0.75,
+          "url": "https://www.ndtvprofit.com/economy-finance/fed-minutes-show-majority-of-fomc-saw-inflation-as-greater-risk"
         },
         {
           "type": "interest_rate",
-          "title": "Gold price edge lower on US talks with European, Ukrainian leaders; likely to fall below Rs 99k",
-          "source": "The Times of India",
-          "published": "2025-08-19T07:45:52Z",
+          "title": "Fed governor says she won't be 'bullied' as Trump demands she quit over mortgage claim",
+          "source": "Freerepublic.com",
+          "published": "2025-08-21T01:00:35Z",
           "entities": [
             [
-              "US",
-              "GPE"
+              "Fed",
+              "ORG"
             ],
             [
-              "European",
-              "NORP"
+              "Trump",
+              "ORG"
             ],
             [
-              "Ukrainian",
-              "NORP"
+              "the US Federal Reserve",
+              "ORG"
             ],
             [
-              "Tuesday",
+              "Donald Trump",
+              "PERSON"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.6,
+          "impact_score": -1.8,
+          "url": "https://freerepublic.com/focus/f-news/4335774/posts"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Fed minutes: Most officials worried about inflation moving higher",
+          "source": "The Times of India",
+          "published": "2025-08-21T01:00:13Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "July",
               "DATE"
             ],
             [
-              "October",
-              "DATE"
+              "Trump",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.22916666666666666,
+          "impact_score": -0.69,
+          "url": "https://economictimes.indiatimes.com/news/international/global-trends/fed-minutes-most-officials-worried-about-inflation-moving-higher/articleshow/123420521.cms"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Asian stocks mixed, bonds climb ahead of Powell speech",
+          "source": "The Times of India",
+          "published": "2025-08-21T00:57:43Z",
+          "entities": [
+            [
+              "Asian",
+              "NORP"
             ],
             [
-              "Rs 99,240",
-              "LAW"
+              "Powell",
+              "PERSON"
             ],
             [
-              "0.16%",
-              "PERCENT"
+              "Asian",
+              "NORP"
             ],
             [
-              "the US Fed’s",
+              "the Federal Reserve's",
               "ORG"
             ],
             [
@@ -514,171 +559,37 @@
               "GPE"
             ],
             [
-              "Donald Trump’s",
-              "PERSON"
-            ],
-            [
-              "European",
-              "NORP"
-            ],
-            [
-              "Ukrainian",
-              "NORP"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "99,240",
-              "context": "futures at Rs 99,240 per 10"
-            },
-            {
-              "value": "10",
-              "context": "Rs 99,240 per 10 grams ,"
-            },
-            {
-              "value": "0.16",
-              "context": "grams , down 0.16 % ,"
-            },
-            {
-              "value": "%",
-              "context": ", down 0.16 % , as"
-            }
-          ],
-          "sentiment_score": -0.1388888888888889,
-          "impact_score": 0.42,
-          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-price-edge-lower-on-us-talks-with-european-ukrainian-leaders-likely-to-fall-below-rs-99k/articleshow/123381461.cms"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Federal Reserve minutes highlight split over effects of Trump’s tariffs on inflation",
-          "source": "Biztoc.com",
-          "published": "2025-08-20T21:09:53Z",
-          "entities": [
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "minutes",
-              "TIME"
-            ],
-            [
-              "Trump",
-              "ORG"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": -0.0625,
-          "impact_score": 0.19,
-          "url": "https://biztoc.com/x/345cdc8e815a53f4"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Fed board battle flares",
-          "source": "Biztoc.com",
-          "published": "2025-08-20T21:09:46Z",
-          "entities": [
-            [
               "Fed",
               "ORG"
             ],
             [
-              "WASHINGTON",
-              "GPE"
-            ],
-            [
-              "Donald Trump",
-              "PERSON"
-            ],
-            [
-              "Wednesday",
-              "DATE"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "Cook",
-              "PERSON"
-            ],
-            [
-              "Trump",
-              "PERSON"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.6,
-          "impact_score": -1.8,
-          "url": "https://biztoc.com/x/f9c565b5961807d7"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Fed board battle flares",
-          "source": "Boston Herald",
-          "published": "2025-08-20T20:49:06Z",
-          "entities": [
-            [
-              "Fed",
-              "ORG"
-            ],
-            [
-              "Donald Trump",
-              "PERSON"
-            ],
-            [
-              "Wednesday",
-              "DATE"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "Cook",
-              "PERSON"
-            ],
-            [
-              "Trump",
-              "PERSON"
-            ],
-            [
-              "centra",
+              "the 'Magnificent",
               "ORG"
             ]
           ],
           "numbers": [],
-          "sentiment_score": 0.6,
-          "impact_score": -1.8,
-          "url": "https://www.bostonherald.com/2025/08/20/fed-board-battle-flares/"
+          "sentiment_score": 0.01428571428571429,
+          "impact_score": -0.04,
+          "url": "https://economictimes.indiatimes.com/markets/stocks/news/asian-stocks-mixed-bonds-climb-ahead-of-powell-speech/articleshow/123420500.cms"
         }
       ],
       "event_summary": {
-        "interest_rate": 24,
+        "geopolitical": 5,
+        "interest_rate": 25,
         "central_bank": 2,
-        "geopolitical": 3,
-        "inflation": 18,
-        "employment": 1,
+        "inflation": 15,
         "dollar": 2
       },
-      "total_impact": -7.42,
+      "total_impact": -4.15,
       "dominant_theme": "geopolitical",
-      "recommendation": "أخبار سلبية قوية جداً للذهب"
+      "recommendation": "أخبار سلبية للذهب"
     },
-    "articles_count": 85
+    "articles_count": 80
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -243544.38,
-    "total_return": -2535.44,
+    "final_value": -243077.07,
+    "total_return": -2530.77,
     "sharpe_ratio": -0.703,
     "max_drawdown": 1817.86,
     "total_trades": 2,
@@ -695,9 +606,9 @@
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-08-21 21:18:23",
+    "last_update": "2025-08-22 01:28:01",
     "data_points": 556,
     "timeframe": "Multi-timeframe",
-    "market_condition": "صاعد قوي"
+    "market_condition": "عرضي/محايد - انتظار"
   }
 }
