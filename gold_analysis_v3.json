@@ -1,25 +1,25 @@
 {
-  "timestamp": "2025-08-22T05:48:11.572897",
+  "timestamp": "2025-08-22T06:30:28.473941",
   "version": "3.0",
   "status": "success",
   "gold_analysis": {
     "signal": "Weak Buy",
     "confidence": "Medium",
-    "total_score": 0.92,
+    "total_score": 1.1,
     "component_scores": {
       "trend": 2,
       "momentum": -1,
-      "volume": 2,
+      "volume": 4,
       "fibonacci": 0,
       "correlation": 1,
       "economic": 3,
-      "news": 0.72,
+      "news": 0.54,
       "mtf_coherence": 0
     },
-    "current_price": 3371.7,
+    "current_price": 3372.2,
     "technical_summary": {
-      "rsi": 53.8,
-      "macd": -0.75
+      "rsi": 53.9,
+      "macd": -0.71
     },
     "ml_prediction": {
       "probability": null,
@@ -43,16 +43,16 @@
     }
   },
   "news_analysis": {
-    "total_impact": 0.72
+    "total_impact": 0.54
   },
   "mtf_analysis": {},
   "volume_analysis": {
-    "volume_strength": "قوي"
+    "volume_strength": "قوي جداً"
   },
   "economic_data": {
     "score": 3
   },
   "fibonacci_levels": {
-    "current_position": 52.82
+    "current_position": 53.05
   }
 }
