@@ -1,11 +1,11 @@
 {
-  "timestamp": "2025-08-22T18:28:19.613288",
+  "timestamp": "2025-08-22T21:17:47.783399",
   "version": "3.0",
   "status": "success",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
-    "total_score": 1.58,
+    "total_score": 1.6,
     "component_scores": {
       "trend": 2,
       "momentum": 1,
@@ -13,13 +13,13 @@
       "fibonacci": 2,
       "correlation": 1,
       "economic": 3,
-      "news": 0.33,
+      "news": 0.54,
       "mtf_coherence": 0
     },
-    "current_price": 3418.4,
+    "current_price": 3417.2,
     "technical_summary": {
-      "rsi": 59.8,
-      "macd": 2.97
+      "rsi": 59.7,
+      "macd": 2.88
     },
     "ml_prediction": {
       "probability": null,
@@ -34,16 +34,16 @@
     "correlations": {
       "gold": 1.0,
       "gold_etf": 0.976,
-      "dxy": -0.61,
+      "dxy": -0.609,
       "vix": -0.032,
-      "treasury": -0.237,
-      "oil": 0.359,
+      "treasury": -0.236,
+      "oil": 0.36,
       "spy": 0.234,
       "silver": 0.551
     }
   },
   "news_analysis": {
-    "total_impact": 0.33
+    "total_impact": 0.54
   },
   "mtf_analysis": {},
   "volume_analysis": {
@@ -53,6 +53,6 @@
     "score": 3
   },
   "fibonacci_levels": {
-    "current_position": 73.75
+    "current_position": 73.21
   }
 }
