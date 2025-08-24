@@ -47,7 +47,7 @@ jobs:
     - name: ⚡ تحديث pip وتثبيت المكتبات
       run: |
         python -m pip install --upgrade pip setuptools wheel
-        pip install -r requirements_enhanced.txt
+        pip install -r requirements.txt
         pip list
     
     - name: 🔧 فحص البيئة
@@ -65,10 +65,13 @@ jobs:
       run: |
         echo "🎯 نوع التحليل: $ANALYSIS_TYPE"
         
-        # دمج الملفات وتشغيل التحليل
-        cat enhanced_gold_analyzer_github.py enhanced_script_final.py > complete_analyzer.py
-        
-        python complete_analyzer.py
+        # تشغيل السكربت المبسط
+        if [ -f "simple_gold_analyzer.py" ]; then
+          python simple_gold_analyzer.py
+        else
+          echo "❌ لم يتم العثور على السكربت"
+          exit 1
+        fi
         
         echo "✅ تم إكمال التحليل"
     
