@@ -489,3 +489,10 @@ async def main():
     except KeyboardInterrupt:
         print("\n⏹️ تم إيقاف التحليل بواسطة المستخدم")
         sys.exit(130)
+    except Exception as e:
+        print(f"\n💥 خطأ فادح: {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    # تشغيل التحليل
+    asyncio.run(main())
