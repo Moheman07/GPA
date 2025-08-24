@@ -85,7 +85,7 @@ jobs:
         fi
     
     - name: 💾 رفع النتائج كـ Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: gold-analysis-results-${{ github.run_number }}
@@ -186,18 +186,3 @@ jobs:
         find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
         
         echo "🧹 تم التنظيف"
-
-  # وظيفة إضافية: إرسال إشعارات (اختيارية)
-  notification:
-    needs: enhanced-gold-analysis
-    runs-on: ubuntu-latest
-    if: always()
-    
-    steps:
-    - name: 📱 إرسال إشعار النتيجة
-      run: |
-        if [ "${{ needs.enhanced-gold-analysis.result }}" == "success" ]; then
-          echo "✅ تم التحليل بنجاح"
-        else
-          echo "❌ فشل التحليل"
-        fi
