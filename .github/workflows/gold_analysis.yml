@@ -33,26 +33,44 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         
-        # Check if requirements-github.txt exists, otherwise use fallback
-        if [ -f "requirements-github.txt" ]; then
-          echo "Using requirements-github.txt"
+        # Try installation in order of speed (fastest first)
+        if [ -f "requirements-github-lite.txt" ]; then
+          echo "Using requirements-github-lite.txt (fastest)"
+          pip install -r requirements-github-lite.txt
+        elif [ -f "requirements-github.txt" ]; then
+          echo "Using requirements-github.txt (medium speed)"
           pip install -r requirements-github.txt
         elif [ -f "requirements.txt" ]; then
-          echo "Using requirements.txt as fallback"
+          echo "Using requirements.txt as fallback (slower)"
           pip install -r requirements.txt
         else
           echo "No requirements file found, installing core dependencies"
-          pip install yfinance pandas numpy scikit-learn joblib xgboost textblob spacy aiohttp requests matplotlib setuptools wheel
+          pip install yfinance pandas numpy scikit-learn joblib aiohttp requests matplotlib setuptools wheel
         fi
         
-        # Install spaCy model
-        python -m spacy download en_core_web_sm
+        # Install spaCy model only if spacy is installed
+        if python -c "import spacy" 2>/dev/null; then
+          echo "Installing spaCy model..."
+          python -m spacy download en_core_web_sm
+        else
+          echo "spaCy not installed, skipping model download"
+        fi
         
     - name: Run Gold Analyzer
       env:
         NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
       run: |
-        python gold_analyzer_github.py
+        # Try to use the lightweight version first for faster execution
+        if [ -f "gold_analyzer_lite.py" ]; then
+          echo "Using lightweight analyzer for faster execution"
+          python gold_analyzer_lite.py
+        elif [ -f "gold_analyzer_github.py" ]; then
+          echo "Using standard GitHub analyzer"
+          python gold_analyzer_github.py
+        else
+          echo "No analyzer found"
+          exit 1
+        fi
         
     - name: Upload analysis results
       uses: actions/upload-artifact@v4
