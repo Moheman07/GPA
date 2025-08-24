@@ -2,7 +2,7 @@ name: Gold Analysis
 
 on:
   schedule:
-    - cron: '0 6:14 * * 1:5'
+    - cron: '0 6,14 * * 1-5'
   workflow_dispatch:
     inputs:
       analysis_type:
@@ -23,6 +23,10 @@ on:
         required: false
         default: false
         type: boolean
+
+permissions:
+  contents: read
+  issues: write
 
 env:
   PYTHONPATH: ${{ github.workspace }}
@@ -52,17 +56,21 @@ jobs:
       env:
         NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
         FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-        ANALYSIS_TYPE: ${{ inputs.analysis_type || 'full' }}
-        RUN_NEWS_ANALYSIS: ${{ inputs.run_news_analysis || 'true' }}
-        DEBUG_MODE: ${{ inputs.debug_mode || 'false' }}
+        ANALYSIS_TYPE: ${{ github.event.inputs.analysis_type || 'full' }}
+        RUN_NEWS_ANALYSIS: ${{ github.event.inputs.run_news_analysis || 'true' }}
+        DEBUG_MODE: ${{ github.event.inputs.debug_mode || 'false' }}
       run: |
         echo "Starting analysis..."
+        echo "Analysis type: $ANALYSIS_TYPE"
+        echo "Run news analysis: $RUN_NEWS_ANALYSIS"
+        echo "Debug mode: $DEBUG_MODE"
         
         if [ -f "simple_gold_analyzer.py" ]; then
+          echo "Running simple_gold_analyzer.py"
           python simple_gold_analyzer.py
         else
           echo "Creating emergency analyzer"
-          python3 << 'EOF'
+          cat > emergency_analyzer.py << 'SCRIPT_EOF'
 import yfinance as yf
 import json
 from datetime import datetime
@@ -95,7 +103,9 @@ except Exception as e:
     print(f"Error: {e}")
     with open("gold_analysis_v3.json", "w") as f:
         json.dump({"error": str(e), "timestamp": datetime.now().isoformat()}, f)
-EOF
+SCRIPT_EOF
+          
+          python emergency_analyzer.py
         fi
         
         echo "Analysis completed"
@@ -142,6 +152,8 @@ EOF
                 body: body,
                 labels: ['gold-analysis']
               });
+              
+              console.log('Issue created successfully');
             }
           } catch (error) {
             console.log('Error:', error.message);
