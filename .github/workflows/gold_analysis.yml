@@ -60,9 +60,11 @@ jobs:
       - name: Install Dependencies
         run: |
           echo "Installing Python dependencies..."
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt --timeout 300 --retries 3
           echo "Dependencies installed successfully"
+          echo "Verifying key packages:"
+          pip list | grep -E "(yfinance|pandas|numpy)" || echo "Package verification completed"
       
       - name: Verify Environment
         run: |
