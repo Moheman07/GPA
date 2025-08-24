@@ -19,6 +19,11 @@ on:
         - full
         - quick
         - ml_only
+      run_news_analysis:
+        description: 'Run news analysis'
+        required: false
+        default: true
+        type: boolean
       debug_mode:
         description: 'Enable debug mode'
         required: false
@@ -71,9 +76,11 @@ jobs:
         NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
         FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         ANALYSIS_TYPE: ${{ github.event.inputs.analysis_type || 'full' }}
+        RUN_NEWS_ANALYSIS: ${{ github.event.inputs.run_news_analysis || 'true' }}
         DEBUG_MODE: ${{ github.event.inputs.debug_mode || 'false' }}
       run: |
         echo "Analysis type: $ANALYSIS_TYPE"
+        echo "Run news analysis: $RUN_NEWS_ANALYSIS"
         echo "Debug mode: $DEBUG_MODE"
         
         # Try to run available scripts in order of preference
@@ -88,40 +95,43 @@ jobs:
           python gold_analyzer.py
         else
           echo "No analysis script found, creating emergency analyzer"
-          python3 -c "
+          # Create emergency analyzer script
+          cat > emergency_analyzer.py << 'ANALYZER_EOF'
 import yfinance as yf
 import json
 from datetime import datetime
 
 try:
-    print('Fetching gold data...')
-    data = yf.download('GC=F', period='5d', progress=False)
+    print("Fetching gold data...")
+    data = yf.download("GC=F", period="5d", progress=False)
     if not data.empty:
-        price = float(data['Close'].iloc[-1])
-        prev_price = float(data['Close'].iloc[-2])
+        price = float(data["Close"].iloc[-1])
+        prev_price = float(data["Close"].iloc[-2])
         change_pct = ((price - prev_price) / prev_price) * 100
         
         result = {
-            'timestamp': datetime.now().isoformat(),
-            'price': round(price, 2),
-            'change_pct': round(change_pct, 2),
-            'signal': 'Buy' if change_pct > 1 else 'Sell' if change_pct < -1 else 'Hold',
-            'status': 'success'
+            "timestamp": datetime.now().isoformat(),
+            "price": round(price, 2),
+            "change_pct": round(change_pct, 2),
+            "signal": "Buy" if change_pct > 1 else "Sell" if change_pct < -1 else "Hold",
+            "status": "success"
         }
         
-        with open('gold_analysis_v3.json', 'w') as f:
+        with open("gold_analysis_v3.json", "w") as f:
             json.dump(result, f, indent=2)
         
-        print(f'Gold Price: ${price:.2f}')
-        print(f'Change: {change_pct:.2f}%')
-        print(f'Signal: {result[\"signal\"]}')
+        print(f"Gold Price: ${price:.2f}")
+        print(f"Change: {change_pct:.2f}%")
+        print(f"Signal: {result['signal']}")
     else:
-        raise Exception('No data received')
+        raise Exception("No data received")
 except Exception as e:
-    print(f'Error: {e}')
-    with open('gold_analysis_v3.json', 'w') as f:
-        json.dump({'error': str(e), 'timestamp': datetime.now().isoformat()}, f)
-"
+    print(f"Error: {e}")
+    with open("gold_analysis_v3.json", "w") as f:
+        json.dump({"error": str(e), "timestamp": datetime.now().isoformat()}, f)
+ANALYZER_EOF
+          
+          python emergency_analyzer.py
         fi
         
         echo "Analysis completed successfully"
@@ -204,95 +214,3 @@ except Exception as e:
         find . -name "*.pyc" -delete 2>/dev/null || true
         find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
         echo "Cleanup completed"
-        retention-days: 30
-        if-no-files-found: warn
-    
-    - name: 📢 إنشاء Issue مع التقرير المفصل
-      if: success()
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const fs = require('fs');
-          const path = require('path');
-          
-          try {
-            // البحث عن ملفات التقرير
-            const files = fs.readdirSync('.');
-            const summaryFile = files.find(f => f.startsWith('gold_summary_') && f.endsWith('.json'));
-            const analysisFile = files.find(f => f.startsWith('gold_analysis_v3_') && f.endsWith('.json'));
-            
-            let issueBody = `## 🏆 تقرير التحليل الاحترافي للذهب V3.0\n\n`;
-            issueBody += `**⏰ وقت التحليل:** ${new Date().toISOString()}\n`;
-            issueBody += `**🔄 رقم التشغيل:** #${context.runNumber}\n`;
-            issueBody += `**⚙️ نوع التحليل:** ${process.env.ANALYSIS_TYPE || 'full'}\n\n`;
-            
-            // إضافة الملخص السريع
-            if (summaryFile) {
-              try {
-                const summary = JSON.parse(fs.readFileSync(summaryFile, 'utf8'));
-                issueBody += `### 📊 الملخص السريع\n\n`;
-                issueBody += `- **الإشارة:** ${summary.signal || 'N/A'}\n`;
-                issueBody += `- **الثقة:** ${summary.confidence || 'N/A'}\n`;
-                issueBody += `- **السعر:** $${summary.price || 'N/A'}\n`;
-                issueBody += `- **التوصية:** ${summary.recommendation || 'N/A'}\n\n`;
-              } catch (e) {
-                console.log('خطأ في قراءة الملخص:', e.message);
-              }
-            }
-            
-            // إضافة رابط للنتائج الكاملة
-            issueBody += `### 📁 النتائج الكاملة\n\n`;
-            issueBody += `🔗 [تحميل جميع النتائج](${context.payload.repository.html_url}/actions/runs/${context.runId})\n\n`;
-            
-            // إضافة تفاصيل تقنية
-            issueBody += `### 🔧 تفاصيل تقنية\n\n`;
-            issueBody += `- **المكتبات:** yfinance, scikit-learn, xgboost\n`;
-            issueBody += `- **الميزات:** تعلم آلي, تحليل متعدد الأطر, تحليل أخبار\n`;
-            issueBody += `- **البيئة:** GitHub Actions Ubuntu Latest\n\n`;
-            
-            // تحديد التسميات
-            const labels = ['gold-analysis', 'automated'];
-            if (summaryFile) {
-              const summary = JSON.parse(fs.readFileSync(summaryFile, 'utf8'));
-              if (summary.signal && summary.signal.includes('Buy')) {
-                labels.push('bullish');
-              } else if (summary.signal && summary.signal.includes('Sell')) {
-                labels.push('bearish');
-              }
-            }
-            
-            issueBody += `---\n*🤖 تم إنشاؤه تلقائياً بواسطة Enhanced Gold Analyzer V3.0*`;
-            
-            // إنشاء Issue
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `📊 تحليل الذهب V3.0 - ${new Date().toISOString().split('T')[0]}`,
-              body: issueBody,
-              labels: labels
-            });
-            
-            console.log('✅ تم إنشاء Issue بنجاح');
-            
-          } catch (error) {
-            console.log('⚠️ خطأ في إنشاء Issue:', error.message);
-            
-            // إنشاء issue مبسط في حالة الخطأ
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `⚠️ تحليل الذهب - ${new Date().toISOString().split('T')[0]}`,
-              body: `## تحليل الذهب الاحترافي\n\n❌ حدث خطأ في معالجة النتائج\n\n**الخطأ:** ${error.message}\n\n🔗 [عرض السجلات](${context.payload.repository.html_url}/actions/runs/${context.runId})`,
-              labels: ['gold-analysis', 'error']
-            });
-          }
-    
-    - name: 🧹 تنظيف الملفات المؤقتة
-      if: always()
-      run: |
-        # الاحتفاظ بالملفات المهمة فقط
-        find . -name "*.pyc" -delete 2>/dev/null || true
-        find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
-        
-        echo "🧹 تم التنظيف"
