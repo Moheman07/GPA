@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-GitHub-Optimized Gold Analyzer
-Specifically designed to run on GitHub Actions with enhanced CI/CD compatibility
+Ultra-Lightweight Gold Analyzer for GitHub Actions
+Optimized for fast installation and execution without heavy dependencies
 """
 
 import yfinance as yf
@@ -10,7 +10,6 @@ import numpy as np
 import json
 import os
 import sqlite3
-import joblib
 from datetime import datetime, timedelta
 import warnings
 from sklearn.ensemble import RandomForestClassifier
@@ -24,35 +23,16 @@ from typing import Dict, List, Optional, Tuple
 import sys
 import time
 
-# GitHub Actions optimized imports
+# Lightweight imports with fallbacks
 try:
-    import xgboost as xgb
-    XGB_AVAILABLE = True
-    print("✅ XGBoost available")
+    import requests
+    REQUESTS_AVAILABLE = True
 except ImportError:
-    print("⚠️ XGBoost not available, using RandomForest")
-    XGB_AVAILABLE = False
-
-try:
-    from textblob import TextBlob
-    TEXTBLOB_AVAILABLE = True
-    print("✅ TextBlob available")
-except ImportError:
-    print("⚠️ TextBlob not available, news analysis disabled")
-    TEXTBLOB_AVAILABLE = False
-
-try:
-    import spacy
-    nlp = spacy.load("en_core_web_sm")
-    SPACY_AVAILABLE = True
-    print("✅ spaCy model loaded")
-except (ImportError, OSError):
-    print("⚠️ spaCy not available")
-    SPACY_AVAILABLE = False
+    REQUESTS_AVAILABLE = False
 
 warnings.filterwarnings('ignore')
 
-# GitHub Actions compatible logging
+# Lightweight logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -63,27 +43,22 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-class GitHubGoldAnalyzer:
-    """GitHub Actions optimized Gold Analyzer"""
+class LightweightGoldAnalyzer:
+    """Ultra-lightweight Gold Analyzer optimized for GitHub Actions"""
     
     def __init__(self):
         self.symbols = {
             'gold': 'GC=F',
             'gold_etf': 'GLD',
             'dxy': 'DX-Y.NYB',
-            'vix': '^VIX',
-            'treasury': '^TNX',
-            'oil': 'CL=F',
             'spy': 'SPY'
         }
         
-        # Initialize components
-        self.ml_predictor = None
         self.news_api_key = os.getenv("NEWS_API_KEY")
         self.db_path = "analysis_history.db"
         self.init_database()
         
-        logger.info("🚀 GitHub Gold Analyzer initialized")
+        logger.info("🚀 Lightweight Gold Analyzer initialized")
 
     def init_database(self):
         """Initialize SQLite database"""
@@ -102,8 +77,7 @@ class GitHubGoldAnalyzer:
                         total_score REAL,
                         rsi REAL,
                         macd REAL,
-                        news_sentiment REAL,
-                        success_probability REAL
+                        news_sentiment REAL
                     )
                 ''')
                 conn.commit()
@@ -111,14 +85,16 @@ class GitHubGoldAnalyzer:
         except Exception as e:
             logger.error(f"❌ Database initialization failed: {e}")
 
-    def fetch_market_data(self, period="6mo") -> Optional[pd.DataFrame]:
-        """Fetch market data with GitHub Actions optimization"""
+    def fetch_market_data(self, period="3mo") -> Optional[pd.DataFrame]:
+        """Fetch market data with lightweight approach"""
         logger.info("📊 Fetching market data...")
         
         try:
-            # Use shorter period for faster execution in CI/CD
+            # Fetch fewer symbols for speed
+            symbols = [self.symbols['gold'], self.symbols['spy']]
+            
             data = yf.download(
-                list(self.symbols.values()),
+                symbols,
                 period=period,
                 interval="1d",
                 group_by='ticker',
@@ -138,41 +114,43 @@ class GitHubGoldAnalyzer:
             return None
 
     def process_technical_data(self, raw_data: pd.DataFrame) -> Optional[pd.DataFrame]:
-        """Process technical indicators"""
+        """Process technical indicators with lightweight calculations"""
         logger.info("⚙️ Processing technical indicators...")
         
         try:
             # Get gold data
             gold_symbol = self.symbols['gold']
             if isinstance(raw_data.columns, pd.MultiIndex):
-                if gold_symbol not in raw_data.columns.levels[0]:
-                    gold_symbol = self.symbols['gold_etf']
-                gold_df = raw_data[gold_symbol].copy()
+                if gold_symbol in raw_data.columns.levels[0]:
+                    gold_df = raw_data[gold_symbol].copy()
+                else:
+                    # Fallback to single symbol data
+                    gold_df = raw_data.copy()
             else:
                 gold_df = raw_data.copy()
             
             gold_df = gold_df.dropna(subset=['Close'])
             
-            if len(gold_df) < 50:
+            if len(gold_df) < 30:
                 logger.warning("⚠️ Insufficient data for analysis")
                 return None
 
-            # Calculate technical indicators
-            # Moving averages
+            # Lightweight technical indicators
+            # Simple Moving Averages
             gold_df['SMA_20'] = gold_df['Close'].rolling(20, min_periods=1).mean()
             gold_df['SMA_50'] = gold_df['Close'].rolling(50, min_periods=1).mean()
 
-            # RSI
+            # RSI (simplified)
             delta = gold_df['Close'].diff()
-            gain = delta.where(delta > 0, 0).ewm(com=13, adjust=False).mean()
-            loss = -delta.where(delta < 0, 0).ewm(com=13, adjust=False).mean()
+            gain = delta.where(delta > 0, 0).rolling(14, min_periods=1).mean()
+            loss = -delta.where(delta < 0, 0).rolling(14, min_periods=1).mean()
             rs = gain / (loss + 1e-10)  # Avoid division by zero
             gold_df['RSI'] = 100 - (100 / (1 + rs))
 
-            # MACD
-            exp1 = gold_df['Close'].ewm(span=12, adjust=False).mean()
-            exp2 = gold_df['Close'].ewm(span=26, adjust=False).mean()
-            gold_df['MACD'] = exp1 - exp2
+            # MACD (simplified)
+            ema12 = gold_df['Close'].ewm(span=12, adjust=False).mean()
+            ema26 = gold_df['Close'].ewm(span=26, adjust=False).mean()
+            gold_df['MACD'] = ema12 - ema26
             gold_df['MACD_Signal'] = gold_df['MACD'].ewm(span=9, adjust=False).mean()
 
             logger.info(f"✅ Processed {len(gold_df)} days of technical data")
@@ -182,42 +160,50 @@ class GitHubGoldAnalyzer:
             logger.error(f"❌ Technical processing failed: {e}")
             return None
 
-    async def fetch_news_sentiment(self) -> float:
-        """Fetch and analyze news sentiment"""
-        if not self.news_api_key or not TEXTBLOB_AVAILABLE:
-            logger.info("ℹ️ News analysis skipped (no API key or TextBlob)")
+    async def fetch_simple_news_sentiment(self) -> float:
+        """Simplified news sentiment without heavy NLP libraries"""
+        if not self.news_api_key:
+            logger.info("ℹ️ News analysis skipped (no API key)")
             return 0.0
         
-        logger.info("📰 Fetching news sentiment...")
+        logger.info("📰 Fetching simple news sentiment...")
         
         try:
             async with aiohttp.ClientSession() as session:
                 url = (f"https://newsapi.org/v2/everything?"
-                       f"q=gold+price&language=en&sortBy=publishedAt&pageSize=20&"
+                       f"q=gold+price&language=en&sortBy=publishedAt&pageSize=10&"
                        f"apiKey={self.news_api_key}")
                 
-                async with session.get(url, timeout=30) as response:
+                async with session.get(url, timeout=20) as response:
                     if response.status == 200:
                         data = await response.json()
                         articles = data.get('articles', [])
                         
-                        sentiments = []
-                        for article in articles[:10]:  # Limit for speed
+                        # Simple sentiment analysis based on keywords
+                        positive_keywords = ['rise', 'up', 'gain', 'bull', 'surge', 'rally', 'high']
+                        negative_keywords = ['fall', 'down', 'drop', 'bear', 'crash', 'low', 'decline']
+                        
+                        sentiment_score = 0
+                        article_count = 0
+                        
+                        for article in articles[:5]:  # Limit for speed
                             try:
-                                title = article.get('title', '')
-                                description = article.get('description', '')
+                                title = article.get('title', '').lower()
+                                description = article.get('description', '').lower()
                                 text = f"{title} {description}"
                                 
                                 if text.strip():
-                                    sentiment = TextBlob(text).sentiment.polarity
-                                    sentiments.append(sentiment)
+                                    positive_count = sum(1 for word in positive_keywords if word in text)
+                                    negative_count = sum(1 for word in negative_keywords if word in text)
+                                    sentiment_score += (positive_count - negative_count)
+                                    article_count += 1
                             except:
                                 continue
                         
-                        if sentiments:
-                            avg_sentiment = np.mean(sentiments)
-                            logger.info(f"✅ News sentiment: {avg_sentiment:.3f} from {len(sentiments)} articles")
-                            return avg_sentiment * 5  # Scale to -5 to +5
+                        if article_count > 0:
+                            avg_sentiment = sentiment_score / article_count
+                            logger.info(f"✅ Simple news sentiment: {avg_sentiment:.2f} from {article_count} articles")
+                            return avg_sentiment
                         
             return 0.0
             
@@ -225,25 +211,23 @@ class GitHubGoldAnalyzer:
             logger.warning(f"⚠️ News fetch failed: {e}")
             return 0.0
 
-    def generate_signal(self, tech_data: pd.DataFrame, news_sentiment: float = 0) -> Dict:
-        """Generate trading signal"""
-        logger.info("🎯 Generating trading signal...")
+    def generate_lightweight_signal(self, tech_data: pd.DataFrame, news_sentiment: float = 0) -> Dict:
+        """Generate trading signal with lightweight analysis"""
+        logger.info("🎯 Generating lightweight trading signal...")
         
         try:
             latest = tech_data.iloc[-1]
             
-            # Component scores
+            # Simplified scoring system
             scores = {}
             
-            # Trend analysis
+            # Trend analysis (simplified)
             if latest['Close'] > latest['SMA_50']:
-                scores['trend'] = 2
-            elif latest['Close'] < latest['SMA_50']:
-                scores['trend'] = -2
+                scores['trend'] = 1
             else:
-                scores['trend'] = 0
+                scores['trend'] = -1
             
-            # Momentum analysis
+            # Momentum analysis (simplified)
             momentum_score = 0
             if latest['MACD'] > latest['MACD_Signal']:
                 momentum_score += 1
@@ -252,29 +236,26 @@ class GitHubGoldAnalyzer:
             
             # RSI analysis
             if latest['RSI'] > 70:
-                momentum_score -= 1  # Overbought
+                momentum_score -= 0.5  # Overbought
             elif latest['RSI'] < 30:
-                momentum_score += 1  # Oversold
-            elif latest['RSI'] > 60:
-                momentum_score += 0.5
-            elif latest['RSI'] < 40:
-                momentum_score -= 0.5
+                momentum_score += 0.5  # Oversold
             
             scores['momentum'] = momentum_score
             scores['news_sentiment'] = news_sentiment
             
-            # Calculate total score
-            weights = {'trend': 0.4, 'momentum': 0.4, 'news_sentiment': 0.2}
-            total_score = sum(scores.get(k, 0) * v for k, v in weights.items())
+            # Simple weighted calculation
+            total_score = (scores['trend'] * 0.5 + 
+                          scores['momentum'] * 0.4 + 
+                          scores['news_sentiment'] * 0.1)
             
             # Generate signal
-            if total_score >= 1.5:
-                signal, confidence = "Strong Buy", "High"
-            elif total_score > 0.5:
+            if total_score >= 1.0:
+                signal, confidence = "Buy", "High"
+            elif total_score > 0.2:
                 signal, confidence = "Buy", "Medium"
-            elif total_score <= -1.5:
-                signal, confidence = "Strong Sell", "High"
-            elif total_score < -0.5:
+            elif total_score <= -1.0:
+                signal, confidence = "Sell", "High"
+            elif total_score < -0.2:
                 signal, confidence = "Sell", "Medium"
             else:
                 signal, confidence = "Hold", "Low"
@@ -324,7 +305,7 @@ class GitHubGoldAnalyzer:
                     'status': 'success',
                     'gold_analysis': analysis,
                     'timestamp': datetime.now().isoformat(),
-                    'version': '3.0-GitHub'
+                    'version': '3.0-Lightweight'
                 }, f, ensure_ascii=False, indent=2, default=str)
             
             logger.info("✅ Analysis saved successfully")
@@ -333,13 +314,13 @@ class GitHubGoldAnalyzer:
             logger.error(f"❌ Save failed: {e}")
 
     def generate_report(self, analysis: Dict) -> str:
-        """Generate analysis report"""
+        """Generate lightweight analysis report"""
         if 'error' in analysis:
             return f"❌ Analysis failed: {analysis['error']}"
         
         report = []
         report.append("=" * 60)
-        report.append("📊 GOLD MARKET ANALYSIS REPORT")
+        report.append("📊 LIGHTWEIGHT GOLD ANALYSIS REPORT")
         report.append(f"📅 Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC")
         report.append("-" * 60)
         report.append(f"🎯 SIGNAL: {analysis['signal']} ({analysis['confidence']} confidence)")
@@ -351,13 +332,15 @@ class GitHubGoldAnalyzer:
         if analysis.get('news_sentiment', 0) != 0:
             report.append(f"📰 News Sentiment: {analysis['news_sentiment']:.2f}")
         
+        report.append("-" * 60)
+        report.append("⚡ Lightweight Mode: Fast execution, core features only")
         report.append("=" * 60)
         
         return "\n".join(report)
 
-    async def run_analysis(self):
-        """Run complete analysis"""
-        logger.info("🚀 Starting GitHub Gold Analysis...")
+    async def run_lightweight_analysis(self):
+        """Run lightweight analysis optimized for speed"""
+        logger.info("🚀 Starting Lightweight Gold Analysis...")
         
         start_time = time.time()
         
@@ -371,11 +354,11 @@ class GitHubGoldAnalyzer:
             if tech_data is None:
                 raise ValueError("Failed to process technical data")
             
-            # Get news sentiment
-            news_sentiment = await self.fetch_news_sentiment()
+            # Get simple news sentiment
+            news_sentiment = await self.fetch_simple_news_sentiment()
             
             # Generate analysis
-            analysis = self.generate_signal(tech_data, news_sentiment)
+            analysis = self.generate_lightweight_signal(tech_data, news_sentiment)
             
             if 'error' not in analysis:
                 # Save results
@@ -387,7 +370,7 @@ class GitHubGoldAnalyzer:
                 
                 # Log execution time
                 execution_time = time.time() - start_time
-                logger.info(f"✅ Analysis completed in {execution_time:.2f} seconds")
+                logger.info(f"✅ Lightweight analysis completed in {execution_time:.2f} seconds")
                 
                 # GitHub Actions specific output
                 if os.getenv('GITHUB_ACTIONS'):
@@ -397,11 +380,6 @@ class GitHubGoldAnalyzer:
                             print(f"signal={analysis['signal']}", file=fh)
                             print(f"price={analysis['current_price']}", file=fh)
                             print(f"confidence={analysis['confidence']}", file=fh)
-                    else:
-                        # Fallback for older GitHub Actions
-                        print(f"::set-output name=signal::{analysis['signal']}")
-                        print(f"::set-output name=price::{analysis['current_price']}")
-                        print(f"::set-output name=confidence::{analysis['confidence']}")
                 
             else:
                 logger.error(f"❌ Analysis failed: {analysis['error']}")
@@ -416,15 +394,14 @@ class GitHubGoldAnalyzer:
 def main():
     """Main function optimized for GitHub Actions"""
     try:
-        # GitHub Actions environment check
         if os.getenv('GITHUB_ACTIONS'):
-            print("🐙 Running on GitHub Actions")
+            print("🐙 Running Lightweight Gold Analyzer on GitHub Actions")
         
-        analyzer = GitHubGoldAnalyzer()
-        success = asyncio.run(analyzer.run_analysis())
+        analyzer = LightweightGoldAnalyzer()
+        success = asyncio.run(analyzer.run_lightweight_analysis())
         
         if success:
-            print("🎉 Analysis completed successfully!")
+            print("🎉 Lightweight analysis completed successfully!")
             sys.exit(0)
         else:
             print("❌ Analysis failed!")
