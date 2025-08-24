@@ -91,7 +91,10 @@ jobs:
           echo ""
           
           # Try to find and run the main analysis script
-          if [ -f "complete_gold_analyzer.py" ]; then
+          if [ -f "github_gold_analyzer.py" ]; then
+            echo "Found github_gold_analyzer.py - executing GitHub-optimized analysis..."
+            python github_gold_analyzer.py
+          elif [ -f "complete_gold_analyzer.py" ]; then
             echo "Found complete_gold_analyzer.py - executing complete analysis..."
             python complete_gold_analyzer.py
           elif [ -f "test_gold_analyzer.py" ]; then
@@ -377,7 +380,4 @@ EMERGENCY_SCRIPT
               
               // Create simple error issue
               await github.rest.issues.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                title: `⚠️ Gold Analysis Error - ${new Date().toISOString().split('T')[0]}`,
              
