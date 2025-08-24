@@ -1,160 +1,377 @@
-name: Gold Analysis
+name: Enhanced Gold Analysis
 
 on:
+  # Scheduled runs
   schedule:
-    - cron: '0 6,14 * * 1-5'
+    - cron: '0 6,14 * * 1-5'  # 6 AM and 2 PM on weekdays
+  
+  # Manual trigger
   workflow_dispatch:
     inputs:
       analysis_type:
-        description: 'Analysis Type'
+        description: 'Type of analysis to run'
         required: false
         default: 'full'
         type: choice
         options:
-        - full
-        - quick
+          - full
+          - quick
+          - basic
       run_news_analysis:
-        description: 'Run news analysis'
+        description: 'Include news analysis'
         required: false
         default: true
         type: boolean
       debug_mode:
-        description: 'Enable debug mode'
+        description: 'Enable debug output'
         required: false
         default: false
         type: boolean
 
+# Required permissions
 permissions:
   contents: read
   issues: write
+  actions: read
 
+# Environment variables
 env:
   PYTHONPATH: ${{ github.workspace }}
   TZ: 'UTC'
 
 jobs:
-  analysis:
+  gold-analysis:
+    name: Gold Price Analysis
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-        cache: 'pip'
-    
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    
-    - name: Run Analysis
-      env:
-        NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-        FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-        ANALYSIS_TYPE: ${{ github.event.inputs.analysis_type || 'full' }}
-        RUN_NEWS_ANALYSIS: ${{ github.event.inputs.run_news_analysis || 'true' }}
-        DEBUG_MODE: ${{ github.event.inputs.debug_mode || 'false' }}
-      run: |
-        echo "Starting analysis..."
-        echo "Analysis type: $ANALYSIS_TYPE"
-        echo "Run news analysis: $RUN_NEWS_ANALYSIS"
-        echo "Debug mode: $DEBUG_MODE"
-        
-        if [ -f "simple_gold_analyzer.py" ]; then
-          echo "Running simple_gold_analyzer.py"
-          python simple_gold_analyzer.py
-        else
-          echo "Creating emergency analyzer"
-          cat > emergency_analyzer.py << 'SCRIPT_EOF'
-import yfinance as yf
-import json
-from datetime import datetime
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install Dependencies
+        run: |
+          echo "Installing Python dependencies..."
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          echo "Dependencies installed successfully"
+      
+      - name: Verify Environment
+        run: |
+          echo "=== Environment Information ==="
+          echo "Python version: $(python --version)"
+          echo "Current directory: $(pwd)"
+          echo "Available files:"
+          ls -la
+          echo "Python files in directory:"
+          find . -name "*.py" -type f | head -10
+      
+      - name: Execute Gold Analysis
+        env:
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          ANALYSIS_TYPE: ${{ github.event.inputs.analysis_type || 'full' }}
+          RUN_NEWS_ANALYSIS: ${{ github.event.inputs.run_news_analysis || 'true' }}
+          DEBUG_MODE: ${{ github.event.inputs.debug_mode || 'false' }}
+        run: |
+          echo "=== Starting Gold Analysis ==="
+          echo "Analysis Type: $ANALYSIS_TYPE"
+          echo "News Analysis: $RUN_NEWS_ANALYSIS"
+          echo "Debug Mode: $DEBUG_MODE"
+          echo ""
+          
+          # Try to find and run the main analysis script
+          if [ -f "simple_gold_analyzer.py" ]; then
+            echo "Found simple_gold_analyzer.py - executing..."
+            python simple_gold_analyzer.py
+          elif [ -f "enhanced_gold_analyzer_github.py" ]; then
+            echo "Found enhanced_gold_analyzer_github.py - executing..."
+            python enhanced_gold_analyzer_github.py
+          elif [ -f "gold_analyzer.py" ]; then
+            echo "Found gold_analyzer.py - executing..."
+            python gold_analyzer.py
+          else
+            echo "No main script found - creating emergency analyzer..."
+            
+            # Create emergency gold analyzer
+            cat << 'EMERGENCY_SCRIPT' > emergency_gold_analyzer.py
+#!/usr/bin/env python3
+"""
+Emergency Gold Price Analyzer
+Generated automatically when main script is not available
+"""
 
-try:
-    print("Fetching gold data...")
-    data = yf.download("GC=F", period="5d", progress=False)
-    if not data.empty:
-        price = float(data["Close"].iloc[-1])
-        prev_price = float(data["Close"].iloc[-2])
-        change_pct = ((price - prev_price) / prev_price) * 100
+import yfinance as yf
+import pandas as pd
+import json
+import os
+from datetime import datetime, timedelta
+
+def emergency_gold_analysis():
+    """
+    Emergency gold price analysis function
+    """
+    try:
+        print("🔍 Emergency Gold Analysis Starting...")
+        print("📊 Fetching gold price data...")
         
-        result = {
+        # Fetch gold futures data
+        gold_data = yf.download("GC=F", period="1mo", interval="1d", progress=False)
+        
+        if gold_data.empty:
+            print("⚠️ No data from GC=F, trying GLD ETF...")
+            gold_data = yf.download("GLD", period="1mo", interval="1d", progress=False)
+        
+        if gold_data.empty:
+            raise ValueError("Unable to fetch gold price data")
+        
+        # Calculate basic metrics
+        current_price = float(gold_data['Close'].iloc[-1])
+        previous_price = float(gold_data['Close'].iloc[-2])
+        week_ago_price = float(gold_data['Close'].iloc[-5]) if len(gold_data) >= 5 else previous_price
+        
+        # Calculate changes
+        daily_change = current_price - previous_price
+        daily_change_pct = (daily_change / previous_price) * 100
+        weekly_change_pct = ((current_price - week_ago_price) / week_ago_price) * 100
+        
+        # Simple RSI calculation
+        def calculate_simple_rsi(prices, period=14):
+            delta = prices.diff()
+            gain = delta.where(delta > 0, 0).rolling(window=period).mean()
+            loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+            rs = gain / loss
+            rsi = 100 - (100 / (1 + rs))
+            return rsi.iloc[-1]
+        
+        rsi = calculate_simple_rsi(gold_data['Close'])
+        
+        # Generate signal
+        if rsi < 30 and daily_change_pct > 0:
+            signal = "Strong Buy"
+            signal_strength = "High"
+        elif rsi < 40 and daily_change_pct > 1:
+            signal = "Buy"
+            signal_strength = "Medium"
+        elif rsi > 70 and daily_change_pct < 0:
+            signal = "Strong Sell"
+            signal_strength = "High"
+        elif rsi > 60 and daily_change_pct < -1:
+            signal = "Sell"
+            signal_strength = "Medium"
+        elif abs(daily_change_pct) < 0.5:
+            signal = "Hold"
+            signal_strength = "Low"
+        elif daily_change_pct > 2:
+            signal = "Buy"
+            signal_strength = "Medium"
+        elif daily_change_pct < -2:
+            signal = "Sell"
+            signal_strength = "Medium"
+        else:
+            signal = "Hold"
+            signal_strength = "Low"
+        
+        # Create analysis result
+        analysis_result = {
             "timestamp": datetime.now().isoformat(),
-            "price": round(price, 2),
-            "change_pct": round(change_pct, 2),
-            "signal": "Buy" if change_pct > 1 else "Sell" if change_pct < -1 else "Hold",
+            "analysis_type": "emergency",
+            "current_price": round(current_price, 2),
+            "daily_change": round(daily_change, 2),
+            "daily_change_pct": round(daily_change_pct, 2),
+            "weekly_change_pct": round(weekly_change_pct, 2),
+            "rsi": round(rsi, 1),
+            "signal": signal,
+            "signal_strength": signal_strength,
+            "data_points": len(gold_data),
             "status": "success"
         }
         
+        # Save results
         with open("gold_analysis_v3.json", "w") as f:
-            json.dump(result, f, indent=2)
+            json.dump(analysis_result, f, indent=2, ensure_ascii=False)
         
-        print(f"Gold Price: ${price:.2f}")
-        print(f"Change: {change_pct:.2f}%")
-        print(f"Signal: {result['signal']}")
-    else:
-        raise Exception("No data received")
-except Exception as e:
-    print(f"Error: {e}")
-    with open("gold_analysis_v3.json", "w") as f:
-        json.dump({"error": str(e), "timestamp": datetime.now().isoformat()}, f)
-SCRIPT_EOF
-          
-          python emergency_analyzer.py
-        fi
+        # Create summary file
+        summary = {
+            "signal": signal,
+            "confidence": signal_strength,
+            "price": current_price,
+            "recommendation": f"{signal} - {signal_strength} confidence"
+        }
         
-        echo "Analysis completed"
-    
-    - name: Upload Results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: gold-results-${{ github.run_number }}
-        path: '*.json'
-        retention-days: 30
-    
-    - name: Create Report
-      if: success()
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const fs = require('fs');
-          
-          try {
-            const files = fs.readdirSync('.');
-            const resultFile = files.find(f => f.includes('gold') && f.endsWith('.json'));
+        with open("gold_summary.json", "w") as f:
+            json.dump(summary, f, indent=2)
+        
+        # Print results
+        print("\n" + "="*50)
+        print("📊 GOLD ANALYSIS RESULTS")
+        print("="*50)
+        print(f"💰 Current Price: ${current_price:.2f}")
+        print(f"📈 Daily Change: {daily_change:+.2f} ({daily_change_pct:+.2f}%)")
+        print(f"📅 Weekly Change: {weekly_change_pct:+.2f}%")
+        print(f"📊 RSI: {rsi:.1f}")
+        print(f"🎯 Signal: {signal}")
+        print(f"💪 Strength: {signal_strength}")
+        print("="*50)
+        
+        return analysis_result
+        
+    except Exception as e:
+        error_result = {
+            "timestamp": datetime.now().isoformat(),
+            "error": str(e),
+            "status": "error",
+            "analysis_type": "emergency_failed"
+        }
+        
+        with open("gold_analysis_v3.json", "w") as f:
+            json.dump(error_result, f, indent=2)
+        
+        print(f"❌ Error in analysis: {e}")
+        return error_result
+
+if __name__ == "__main__":
+    emergency_gold_analysis()
+EMERGENCY_SCRIPT
             
-            if (resultFile) {
-              const result = JSON.parse(fs.readFileSync(resultFile, 'utf8'));
+            echo "Running emergency analyzer..."
+            python emergency_gold_analyzer.py
+          fi
+          
+          echo "\n✅ Analysis completed successfully"
+      
+      - name: Display Results
+        if: always()
+        run: |
+          echo "=== Analysis Results ==="
+          if [ -f "gold_analysis_v3.json" ]; then
+            echo "📄 Main analysis file found:"
+            cat gold_analysis_v3.json | head -20
+          fi
+          
+          if [ -f "gold_summary.json" ]; then
+            echo "\n📋 Summary file found:"
+            cat gold_summary.json
+          fi
+          
+          echo "\n📁 All generated files:"
+          ls -la *.json *.txt 2>/dev/null || echo "No result files found"
+      
+      - name: Upload Analysis Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gold-analysis-results-${{ github.run_number }}
+          path: |
+            *.json
+            *.txt
+            *.csv
+          retention-days: 30
+          if-no-files-found: warn
+      
+      - name: Create Analysis Issue
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            
+            try {
+              // Find analysis files
+              const files = fs.readdirSync('.');
+              const mainFile = files.find(f => f.includes('gold_analysis') && f.endsWith('.json'));
+              const summaryFile = files.find(f => f.includes('summary') && f.endsWith('.json'));
               
-              let body = `## Gold Analysis Report\n\n`;
-              body += `**Time:** ${new Date().toISOString()}\n`;
-              body += `**Run:** #${context.runNumber}\n\n`;
+              let issueTitle = `Gold Analysis Report - ${new Date().toISOString().split('T')[0]}`;
+              let issueBody = `## 📊 Gold Price Analysis Report\n\n`;
+              issueBody += `**🕒 Analysis Time:** ${new Date().toISOString()}\n`;
+              issueBody += `**🔄 Workflow Run:** #${context.runNumber}\n`;
+              issueBody += `**⚙️ Analysis Type:** ${process.env.ANALYSIS_TYPE || 'full'}\n\n`;
               
-              if (result.price) {
-                body += `### Results\n`;
-                body += `- Price: $${result.price}\n`;
-                body += `- Change: ${result.change_pct}%\n`;
-                body += `- Signal: ${result.signal}\n`;
-              } else if (result.error) {
-                body += `### Error\n${result.error}\n`;
+              if (mainFile) {
+                const mainResult = JSON.parse(fs.readFileSync(mainFile, 'utf8'));
+                
+                if (mainResult.status === 'success') {
+                  issueBody += `### 📈 Analysis Results\n\n`;
+                  issueBody += `- **💰 Current Price:** $${mainResult.current_price || mainResult.price || 'N/A'}\n`;
+                  
+                  if (mainResult.daily_change_pct) {
+                    issueBody += `- **📊 Daily Change:** ${mainResult.daily_change_pct > 0 ? '+' : ''}${mainResult.daily_change_pct}%\n`;
+                  } else if (mainResult.change_pct) {
+                    issueBody += `- **📊 Change:** ${mainResult.change_pct > 0 ? '+' : ''}${mainResult.change_pct}%\n`;
+                  }
+                  
+                  issueBody += `- **🎯 Signal:** ${mainResult.signal || 'N/A'}\n`;
+                  
+                  if (mainResult.signal_strength) {
+                    issueBody += `- **💪 Confidence:** ${mainResult.signal_strength}\n`;
+                  }
+                  
+                  if (mainResult.rsi) {
+                    issueBody += `- **📊 RSI:** ${mainResult.rsi}\n`;
+                  }
+                  
+                  // Add labels based on signal
+                  const labels = ['gold-analysis', 'automated'];
+                  const signal = mainResult.signal || '';
+                  if (signal.toLowerCase().includes('buy')) {
+                    labels.push('bullish');
+                    issueTitle = `🟢 ${issueTitle} - ${signal}`;
+                  } else if (signal.toLowerCase().includes('sell')) {
+                    labels.push('bearish');
+                    issueTitle = `🔴 ${issueTitle} - ${signal}`;
+                  } else {
+                    labels.push('neutral');
+                    issueTitle = `🟡 ${issueTitle} - ${signal}`;
+                  }
+                  
+                } else {
+                  issueBody += `### ❌ Analysis Error\n\n`;
+                  issueBody += `**Error:** ${mainResult.error || 'Unknown error'}\n\n`;
+                  issueTitle = `❌ ${issueTitle} - Error`;
+                }
               }
               
+              issueBody += `\n### 📁 Download Results\n\n`;
+              issueBody += `[📥 Download Full Analysis Results](${context.payload.repository.html_url}/actions/runs/${context.runId})\n\n`;
+              
+              issueBody += `### 🛠️ Technical Details\n\n`;
+              issueBody += `- **🐍 Python Version:** 3.11\n`;
+              issueBody += `- **📚 Libraries:** yfinance, pandas, numpy\n`;
+              issueBody += `- **☁️ Environment:** GitHub Actions (Ubuntu Latest)\n`;
+              issueBody += `- **⏱️ Execution Time:** ~${Math.ceil(Date.now() / 1000 / 60)} minutes\n\n`;
+              
+              issueBody += `---\n*🤖 This report was generated automatically by Enhanced Gold Analyzer*`;
+              
+              // Create the issue
               await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                title: `Gold Analysis - ${new Date().toISOString().split('T')[0]}`,
-                body: body,
-                labels: ['gold-analysis']
+                title: issueTitle,
+                body: issueBody,
+                labels: ['gold-analysis', 'automated']
               });
               
-              console.log('Issue created successfully');
+              console.log('✅ Analysis issue created successfully');
+              
+            } catch (error) {
+              console.log('❌ Error creating issue:', error.message);
+              
+              // Create simple error issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `⚠️ Gold Analysis Error - ${new Date().toISOString().split('T')[0]}`,
+                body: `## Analysis Error\n\n**Error:** ${error.message}\n\n**Run:** #${context.runNumber}\n\n[View Logs](${context.payload.repository.html_url}/actions/runs/${context.runId})`,
+                labels: ['gold-analysis', 'error']
+              });
             }
-          } catch (error) {
-            console.log('Error:', error.message);
-          }
