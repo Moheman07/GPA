@@ -38,17 +38,22 @@ jobs:
       with:
         fetch-depth: 1
     
-    - name: 🐍 إعداد Python 3.9
+    - name: 🐍 إعداد Python 3.11
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.11'
         cache: 'pip'
     
     - name: ⚡ تحديث pip وتثبيت المكتبات
       run: |
+        echo "🚀 تحديث pip..."
         python -m pip install --upgrade pip setuptools wheel
-        pip install -r requirements.txt
-        pip list
+        
+        echo "📦 تثبيت المكتبات المطلوبة..."
+        pip install -r requirements.txt --timeout 300 --retries 3
+        
+        echo "📋 قائمة المكتبات المثبتة:"
+        pip list | grep -E "(yfinance|pandas|numpy|scikit|xgboost)"
     
     - name: 🔧 فحص البيئة
       run: |
