@@ -248,7 +248,8 @@ EMERGENCY_SCRIPT
             python emergency_gold_analyzer.py
           fi
           
-          echo "\n✅ Analysis completed successfully"
+          echo ""
+          echo "✅ Analysis completed successfully"
       
       - name: Display Results
         if: always()
