@@ -28,6 +28,7 @@ warnings.filterwarnings('ignore')
 
 # إعداد متغيرات البيئة
 NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
+DEBUG_MODE = os.getenv("DEBUG_MODE", "false").lower() == "true"
 
 class GoldAnalyzer:
     """محلل الذهب المحسّن"""
@@ -457,6 +458,12 @@ def setup_environment():
         print("✅ مفتاح API للأخبار متوفر")
     else:
         print("⚠️ مفتاح API للأخبار غير متوفر - سيتم تخطي تحليل الأخبار")
+    
+    if DEBUG_MODE:
+        print("🔍 وضع التشخيص مفعّل")
+        print(f"  • Python نسخة: {sys.version}")
+        print(f"  • مجلد العمل: {os.getcwd()}")
+        print(f"  • NEWS_API_KEY: {'***معيّن***' if NEWS_API_KEY else 'غير معيّن'}")
 
 async def main():
     """الدالة الرئيسية"""
@@ -482,10 +489,3 @@ async def main():
     except KeyboardInterrupt:
         print("\n⏹️ تم إيقاف التحليل بواسطة المستخدم")
         sys.exit(130)
-    except Exception as e:
-        print(f"\n💥 خطأ فادح: {e}")
-        sys.exit(1)
-
-if __name__ == "__main__":
-    # تشغيل التحليل
-    asyncio.run(main())
