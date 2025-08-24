@@ -391,9 +391,17 @@ class GitHubGoldAnalyzer:
                 
                 # GitHub Actions specific output
                 if os.getenv('GITHUB_ACTIONS'):
-                    print(f"::set-output name=signal::{analysis['signal']}")
-                    print(f"::set-output name=price::{analysis['current_price']}")
-                    print(f"::set-output name=confidence::{analysis['confidence']}")
+                    github_output = os.getenv('GITHUB_OUTPUT')
+                    if github_output:
+                        with open(github_output, 'a') as fh:
+                            print(f"signal={analysis['signal']}", file=fh)
+                            print(f"price={analysis['current_price']}", file=fh)
+                            print(f"confidence={analysis['confidence']}", file=fh)
+                    else:
+                        # Fallback for older GitHub Actions
+                        print(f"::set-output name=signal::{analysis['signal']}")
+                        print(f"::set-output name=price::{analysis['current_price']}")
+                        print(f"::set-output name=confidence::{analysis['confidence']}")
                 
             else:
                 logger.error(f"❌ Analysis failed: {analysis['error']}")
