@@ -4,7 +4,7 @@ on:
   # Automatic run every 4 hours during trading days
   schedule:
     - cron: '0 */4 * * 1-5'  # Every 4 hours Monday to Friday
-    - cron: '0 9,21 * * 6-0'  # Twice on Saturday and Sunday
+    - cron: '0 9,21 * * 0,6'  # Twice on Saturday and Sunday
   
   # Manual trigger
   workflow_dispatch:
@@ -56,7 +56,7 @@ jobs:
         python enhanced_gold_analyzer.py
         
     - name: 📁 Upload Results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: gold-analysis-results-${{ github.run_number }}
