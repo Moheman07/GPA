@@ -22,10 +22,10 @@ jobs:
         python-version: '3.9'
         
     - name: Cache pip dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-github.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
           
@@ -42,7 +42,7 @@ jobs:
         python gold_analyzer_github.py
         
     - name: Upload analysis results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: gold-analysis-${{ github.run_number }}
         path: |
@@ -53,7 +53,7 @@ jobs:
         
     - name: Create release with results
       if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: analysis-${{ github.run_number }}
         name: Gold Analysis ${{ github.run_number }}
