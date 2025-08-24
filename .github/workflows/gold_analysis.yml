@@ -25,14 +25,27 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-github.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
           
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements-github.txt
+        
+        # Check if requirements-github.txt exists, otherwise use fallback
+        if [ -f "requirements-github.txt" ]; then
+          echo "Using requirements-github.txt"
+          pip install -r requirements-github.txt
+        elif [ -f "requirements.txt" ]; then
+          echo "Using requirements.txt as fallback"
+          pip install -r requirements.txt
+        else
+          echo "No requirements file found, installing core dependencies"
+          pip install yfinance pandas numpy scikit-learn joblib xgboost textblob spacy aiohttp requests matplotlib setuptools wheel
+        fi
+        
+        # Install spaCy model
         python -m spacy download en_core_web_sm
         
     - name: Run Gold Analyzer
