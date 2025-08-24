@@ -91,7 +91,10 @@ jobs:
           echo ""
           
           # Try to find and run the main analysis script
-          if [ -f "test_gold_analyzer.py" ]; then
+          if [ -f "complete_gold_analyzer.py" ]; then
+            echo "Found complete_gold_analyzer.py - executing complete analysis..."
+            python complete_gold_analyzer.py
+          elif [ -f "test_gold_analyzer.py" ]; then
             echo "Found test_gold_analyzer.py - executing test mode..."
             python test_gold_analyzer.py
           elif [ -f "simple_gold_analyzer.py" ]; then
@@ -377,7 +380,4 @@ EMERGENCY_SCRIPT
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: `⚠️ Gold Analysis Error - ${new Date().toISOString().split('T')[0]}`,
-                body: `## Analysis Error\n\n**Error:** ${error.message}\n\n**Run:** #${context.runNumber}\n\n[View Logs](${context.payload.repository.html_url}/actions/runs/${context.runId})`,
-                labels: ['gold-analysis', 'error']
-              });
-            }
+             
