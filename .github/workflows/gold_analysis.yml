@@ -1,13 +1,8 @@
-name: Enhanced Gold Analysis V3.0
+name: Gold Analysis
 
 on:
   schedule:
-    # Run every 4 hours on weekdays during active market hours
-    - cron: '0 6,10,14,18,22 * * 1-5'
-    # Run twice daily on weekends
-    - cron: '0 12 * * 0,6'
-  
-  # Manual trigger
+    - cron: '0 6,14 * * 1-5'
   workflow_dispatch:
     inputs:
       analysis_type:
@@ -18,7 +13,6 @@ on:
         options:
         - full
         - quick
-        - ml_only
       run_news_analysis:
         description: 'Run news analysis'
         required: false
@@ -35,17 +29,15 @@ env:
   TZ: 'UTC'
 
 jobs:
-  gold-analysis:
+  analysis:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     
     steps:
-    - name: Checkout Repository
+    - name: Checkout
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 1
     
-    - name: Setup Python 3.11
+    - name: Setup Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
@@ -53,50 +45,24 @@ jobs:
     
     - name: Install Dependencies
       run: |
-        echo "Updating pip and tools..."
-        python -m pip install --upgrade pip setuptools wheel
-        
-        echo "Installing required libraries..."
-        pip install -r requirements.txt --timeout 300 --retries 3
-        
-        echo "Installed libraries:"
-        pip list | grep -E "(yfinance|pandas|numpy|scikit|xgboost)" || echo "Core libraries check completed"
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
     
-    - name: Environment Check
-      run: |
-        echo "Timezone: $(date)"
-        echo "Python version: $(python --version)"
-        echo "Disk space: $(df -h . | tail -1)"
-        echo "Memory: $(free -h | head -2)"
-        echo "Available Python files:"
-        ls -la *.py 2>/dev/null || echo "No Python files found in root"
-    
-    - name: Run Gold Analysis
+    - name: Run Analysis
       env:
         NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
         FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-        ANALYSIS_TYPE: ${{ github.event.inputs.analysis_type || 'full' }}
-        RUN_NEWS_ANALYSIS: ${{ github.event.inputs.run_news_analysis || 'true' }}
-        DEBUG_MODE: ${{ github.event.inputs.debug_mode || 'false' }}
+        ANALYSIS_TYPE: ${{ inputs.analysis_type || 'full' }}
+        RUN_NEWS_ANALYSIS: ${{ inputs.run_news_analysis || 'true' }}
+        DEBUG_MODE: ${{ inputs.debug_mode || 'false' }}
       run: |
-        echo "Analysis type: $ANALYSIS_TYPE"
-        echo "Run news analysis: $RUN_NEWS_ANALYSIS"
-        echo "Debug mode: $DEBUG_MODE"
+        echo "Starting analysis..."
         
-        # Try to run available scripts in order of preference
         if [ -f "simple_gold_analyzer.py" ]; then
-          echo "Running simple_gold_analyzer.py"
           python simple_gold_analyzer.py
-        elif [ -f "enhanced_gold_analyzer_github.py" ]; then
-          echo "Running enhanced_gold_analyzer_github.py"
-          python enhanced_gold_analyzer_github.py
-        elif [ -f "gold_analyzer.py" ]; then
-          echo "Running gold_analyzer.py"
-          python gold_analyzer.py
         else
-          echo "No analysis script found, creating emergency analyzer"
-          # Create emergency analyzer script
-          cat > emergency_analyzer.py << 'ANALYZER_EOF'
+          echo "Creating emergency analyzer"
+          python3 << 'EOF'
 import yfinance as yf
 import json
 from datetime import datetime
@@ -129,88 +95,54 @@ except Exception as e:
     print(f"Error: {e}")
     with open("gold_analysis_v3.json", "w") as f:
         json.dump({"error": str(e), "timestamp": datetime.now().isoformat()}, f)
-ANALYZER_EOF
-          
-          python emergency_analyzer.py
+EOF
         fi
         
-        echo "Analysis completed successfully"
-    
-    - name: Process Results
-      if: always()
-      run: |
-        echo "Available result files:"
-        ls -la *.json *.txt 2>/dev/null || echo "No result files found"
-        
-        # Show summary if available
-        if ls gold_*.json 1> /dev/null 2>&1; then
-          echo "Analysis summary:"
-          cat gold_*.json | head -10
-        fi
+        echo "Analysis completed"
     
     - name: Upload Results
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: gold-analysis-results-${{ github.run_number }}
-        path: |
-          *.json
-          *.txt
-          *.pkl
-          *.db
+        name: gold-results-${{ github.run_number }}
+        path: '*.json'
         retention-days: 30
-        if-no-files-found: warn
     
-    - name: Create Analysis Report
+    - name: Create Report
       if: success()
       uses: actions/github-script@v6
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const fs = require('fs');
           
           try {
-            // Find the analysis result file
             const files = fs.readdirSync('.');
-            const resultFile = files.find(f => f.startsWith('gold_') && f.endsWith('.json'));
+            const resultFile = files.find(f => f.includes('gold') && f.endsWith('.json'));
             
             if (resultFile) {
               const result = JSON.parse(fs.readFileSync(resultFile, 'utf8'));
               
-              let issueBody = `## Gold Analysis Report\n\n`;
-              issueBody += `**Time:** ${new Date().toISOString()}\n`;
-              issueBody += `**Run:** #${context.runNumber}\n\n`;
+              let body = `## Gold Analysis Report\n\n`;
+              body += `**Time:** ${new Date().toISOString()}\n`;
+              body += `**Run:** #${context.runNumber}\n\n`;
               
               if (result.price) {
-                issueBody += `### Results\n`;
-                issueBody += `- **Price:** $${result.price}\n`;
-                issueBody += `- **Change:** ${result.change_pct}%\n`;
-                issueBody += `- **Signal:** ${result.signal}\n\n`;
+                body += `### Results\n`;
+                body += `- Price: $${result.price}\n`;
+                body += `- Change: ${result.change_pct}%\n`;
+                body += `- Signal: ${result.signal}\n`;
               } else if (result.error) {
-                issueBody += `### Error\n${result.error}\n\n`;
+                body += `### Error\n${result.error}\n`;
               }
-              
-              issueBody += `[Download Full Results](${context.payload.repository.html_url}/actions/runs/${context.runId})\n`;
-              issueBody += `\n---\n*Generated by Enhanced Gold Analyzer V3.0*`;
               
               await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: `Gold Analysis - ${new Date().toISOString().split('T')[0]}`,
-                body: issueBody,
-                labels: ['gold-analysis', 'automated']
+                body: body,
+                labels: ['gold-analysis']
               });
-              
-              console.log('Issue created successfully');
             }
           } catch (error) {
-            console.log('Error creating issue:', error.message);
+            console.log('Error:', error.message);
           }
-    
-    - name: Cleanup
-      if: always()
-      run: |
-        # Clean temporary files
-        find . -name "*.pyc" -delete 2>/dev/null || true
-        find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
-        echo "Cleanup completed"
