@@ -28,8 +28,6 @@ warnings.filterwarnings('ignore')
 
 # إعداد متغيرات البيئة
 NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
 
 class GoldAnalyzer:
     """محلل الذهب المحسّن"""
@@ -309,55 +307,7 @@ class GoldAnalyzer:
             'article_count': len(articles)
         }
     
-    async def send_telegram_notification(self, analysis_result):
-        """إرسال إشعار تيليجرام"""
-        if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
-            print("ℹ️ لم يتم تكوين تيليجرام - تخطي الإرسال")
-            return
-        
-        try:
-            signal = analysis_result.get('signal', 'غير محدد')
-            price = analysis_result.get('current_price', 0)
-            confidence = analysis_result.get('confidence', 'غير محدد')
-            
-            # أيقونات الإشارات
-            signal_icons = {
-                'Strong Buy': '🚀',
-                'Buy': '📈',
-                'Hold': '⏸️',
-                'Sell': '📉',
-                'Strong Sell': '🔻'
-            }
-            
-            icon = signal_icons.get(signal, '📊')
-            
-            message = f"""
-{icon} <b>تحليل الذهب الاحترافي</b>
 
-💰 <b>السعر الحالي:</b> ${price:.2f}
-📊 <b>الإشارة:</b> {signal}
-🎯 <b>مستوى الثقة:</b> {confidence}
-
-⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-            """.strip()
-            
-            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-            data = {
-                'chat_id': TELEGRAM_CHAT_ID,
-                'text': message,
-                'parse_mode': 'HTML'
-            }
-            
-            async with aiohttp.ClientSession() as session:
-                async with session.post(url, json=data) as response:
-                    if response.status == 200:
-                        print("✅ تم إرسال التقرير إلى تيليجرام")
-                    else:
-                        print(f"❌ فشل إرسال تيليجرام: {response.status}")
-                        
-        except Exception as e:
-            print(f"❌ خطأ في إرسال تيليجرام: {e}")
-    
     def save_results(self, result):
         """حفظ النتائج في ملفات"""
         try:
@@ -475,10 +425,7 @@ class GoldAnalyzer:
             # 5. حفظ النتائج
             self.save_results(final_result)
             
-            # 6. إرسال إشعار تيليجرام
-            await self.send_telegram_notification(final_result)
-            
-            # 7. طباعة التقرير
+            # 6. طباعة التقرير
             report = self.generate_text_report(final_result)
             print(report)
             
@@ -510,11 +457,6 @@ def setup_environment():
         print("✅ مفتاح API للأخبار متوفر")
     else:
         print("⚠️ مفتاح API للأخبار غير متوفر - سيتم تخطي تحليل الأخبار")
-    
-    if TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID:
-        print("✅ إعدادات تيليجرام متوفرة")
-    else:
-        print("ℹ️ إعدادات تيليجرام غير مكتملة - سيتم تخطي الإشعارات")
 
 async def main():
     """الدالة الرئيسية"""
