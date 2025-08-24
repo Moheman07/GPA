@@ -91,7 +91,10 @@ jobs:
           echo ""
           
           # Try to find and run the main analysis script
-          if [ -f "simple_gold_analyzer.py" ]; then
+          if [ -f "test_gold_analyzer.py" ]; then
+            echo "Found test_gold_analyzer.py - executing test mode..."
+            python test_gold_analyzer.py
+          elif [ -f "simple_gold_analyzer.py" ]; then
             echo "Found simple_gold_analyzer.py - executing..."
             python simple_gold_analyzer.py
           elif [ -f "enhanced_gold_analyzer_github.py" ]; then
