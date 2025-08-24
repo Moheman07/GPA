@@ -70,17 +70,29 @@ class GoldAnalyzer:
         try:
             df = data.copy()
             
-            # المتوسطات المتحركة
-            df['SMA_20'] = df['Close'].rolling(20).mean()
-            df['SMA_50'] = df['Close'].rolling(50).mean()
-            df['SMA_200'] = df['Close'].rolling(200).mean()
+            # Ensure we have enough data
+            if len(df) < 50:
+                print("⚠️ بيانات غير كافية للمؤشرات")
+                return df
             
-            # RSI
-            delta = df['Close'].diff()
-            gain = delta.where(delta > 0, 0).rolling(14).mean()
-            loss = (-delta.where(delta < 0, 0)).rolling(14).mean()
-            rs = gain / loss
-            df['RSI'] = 100 - (100 / (1 + rs))
+            # المتوسطات المتحركة
+            df['SMA_20'] = df['Close'].rolling(20, min_periods=1).mean()
+            df['SMA_50'] = df['Close'].rolling(50, min_periods=1).mean()
+            df['SMA_200'] = df['Close'].rolling(200, min_periods=1).mean()
+            
+            # RSI with better error handling
+            try:
+                delta = df['Close'].diff()
+                gain = delta.where(delta > 0, 0).rolling(14, min_periods=1).mean()
+                loss = (-delta.where(delta < 0, 0)).rolling(14, min_periods=1).mean()
+                # Avoid division by zero
+                rs = gain / loss.replace(0, 0.0001)
+                df['RSI'] = 100 - (100 / (1 + rs))
+                # Ensure RSI is within valid range
+                df['RSI'] = df['RSI'].clip(0, 100)
+            except Exception as e:
+                print(f"⚠️ خطأ في حساب RSI: {e}")
+                df['RSI'] = 50  # Default neutral value
             
             # MACD
             ema_12 = df['Close'].ewm(span=12).mean()
@@ -93,7 +105,11 @@ class GoldAnalyzer:
             std_20 = df['Close'].rolling(20).std()
             df['BB_Upper'] = sma_20 + (std_20 * 2)
             df['BB_Lower'] = sma_20 - (std_20 * 2)
-            df['BB_Position'] = (df['Close'] - df['BB_Lower']) / (df['BB_Upper'] - df['BB_Lower'])
+            
+            # Calculate BB_Position safely
+            bb_width = df['BB_Upper'] - df['BB_Lower']
+            bb_position = (df['Close'] - df['BB_Lower']) / bb_width
+            df['BB_Position'] = bb_position.fillna(0.5)  # Fill NaN with neutral position
             
             # ATR
             high_low = df['High'] - df['Low']
@@ -133,44 +149,55 @@ class GoldAnalyzer:
                 'volatility': 0
             }
             
-            # نقاط الاتجاه
-            if latest['Close'] > latest.get('SMA_200', 0):
+            # نقاط الاتجاه - Fix Series comparison issues
+            sma_200 = latest.get('SMA_200', 0)
+            sma_50 = latest.get('SMA_50', 0)
+            sma_20 = latest.get('SMA_20', 0)
+            current_price = latest['Close']
+            
+            if pd.notna(sma_200) and current_price > sma_200:
                 scores['trend'] += 2
-            if latest['Close'] > latest.get('SMA_50', 0):
+            if pd.notna(sma_50) and current_price > sma_50:
                 scores['trend'] += 1
-            if latest['Close'] > latest.get('SMA_20', 0):
+            if pd.notna(sma_20) and current_price > sma_20:
                 scores['trend'] += 1
             scores['trend'] -= 2  # تطبيع
             
-            # نقاط الزخم
+            # نقاط الزخم - Fix potential NaN and Series issues
             rsi = latest.get('RSI', 50)
-            if 30 <= rsi <= 70:
-                scores['momentum'] += 1
-            elif rsi < 30:
-                scores['momentum'] += 2  # ذروة بيع
-            elif rsi > 70:
-                scores['momentum'] -= 2  # ذروة شراء
+            if pd.notna(rsi):
+                if 30 <= rsi <= 70:
+                    scores['momentum'] += 1
+                elif rsi < 30:
+                    scores['momentum'] += 2  # ذروة بيع
+                elif rsi > 70:
+                    scores['momentum'] -= 2  # ذروة شراء
             
-            if latest.get('MACD', 0) > latest.get('MACD_Signal', 0):
-                scores['momentum'] += 1
-            else:
-                scores['momentum'] -= 1
+            macd = latest.get('MACD', 0)
+            macd_signal = latest.get('MACD_Signal', 0)
+            if pd.notna(macd) and pd.notna(macd_signal):
+                if macd > macd_signal:
+                    scores['momentum'] += 1
+                else:
+                    scores['momentum'] -= 1
             
             # نقاط الحجم
             volume_ratio = latest.get('Volume_Ratio', 1)
-            if volume_ratio > 1.5:
-                scores['volume'] = 2
-            elif volume_ratio > 1.2:
-                scores['volume'] = 1
-            elif volume_ratio < 0.8:
-                scores['volume'] = -1
+            if pd.notna(volume_ratio):
+                if volume_ratio > 1.5:
+                    scores['volume'] = 2
+                elif volume_ratio > 1.2:
+                    scores['volume'] = 1
+                elif volume_ratio < 0.8:
+                    scores['volume'] = -1
             
-            # نقاط التقلب
+            # نقاط التقلب - Fix BB_Position handling
             bb_position = latest.get('BB_Position', 0.5)
-            if bb_position < 0.2:
-                scores['volatility'] = 2  # قرب الحد السفلي
-            elif bb_position > 0.8:
-                scores['volatility'] = -2  # قرب الحد العلوي
+            if pd.notna(bb_position):
+                if bb_position < 0.2:
+                    scores['volatility'] = 2  # قرب الحد السفلي
+                elif bb_position > 0.8:
+                    scores['volatility'] = -2  # قرب الحد العلوي
             
             # حساب النقاط الإجمالية
             weights = {'trend': 0.4, 'momentum': 0.3, 'volume': 0.15, 'volatility': 0.15}
@@ -198,9 +225,17 @@ class GoldAnalyzer:
                 confidence = "Low"
                 action = "انتظار - لا توجد إشارة واضحة"
             
-            # إدارة المخاطر
-            price = latest['Close']
-            atr = latest.get('ATR', price * 0.02)
+            # إدارة المخاطر - Fix potential issues with ATR and price
+            try:
+                price = float(latest['Close'])
+                atr = latest.get('ATR', price * 0.02)
+                if pd.isna(atr) or atr <= 0:
+                    atr = price * 0.02
+                else:
+                    atr = float(atr)
+            except (ValueError, TypeError):
+                price = 2000.0  # Default fallback price
+                atr = price * 0.02
             
             risk_management = {
                 'stop_loss': round(price - (atr * 2), 2),
@@ -438,61 +473,4 @@ class GoldAnalyzer:
                 'timestamp': datetime.now().isoformat(),
                 'status': 'error',
                 'error': str(e),
-                'version': '4.0_github_optimized'
-            }
-            
-            print(f"❌ فشل في التحليل: {e}")
-            self.save_results(error_result)
-            
-            return error_result
-
-def setup_environment():
-    """إعداد البيئة"""
-    print("🔧 إعداد البيئة...")
-    
-    # إنشاء المجلدات المطلوبة
-    Path("results").mkdir(exist_ok=True)
-    
-    # التحقق من متغيرات البيئة
-    if NEWS_API_KEY:
-        print("✅ مفتاح API للأخبار متوفر")
-    else:
-        print("⚠️ مفتاح API للأخبار غير متوفر - سيتم تخطي تحليل الأخبار")
-    
-    if DEBUG_MODE:
-        print("🔍 وضع التشخيص مفعّل")
-        print(f"  • Python نسخة: {sys.version}")
-        print(f"  • مجلد العمل: {os.getcwd()}")
-        print(f"  • NEWS_API_KEY: {'***معيّن***' if NEWS_API_KEY else 'غير معيّن'}")
-
-async def main():
-    """الدالة الرئيسية"""
-    try:
-        # إعداد البيئة
-        setup_environment()
-        
-        # إنشاء المحلل وتشغيله
-        analyzer = GoldAnalyzer()
-        result = await analyzer.run_analysis()
-        
-        # التحقق من النتيجة
-        if result.get('status') == 'success':
-            print("\n🎉 تم التحليل بنجاح!")
-            exit_code = 0
-        else:
-            print(f"\n❌ فشل التحليل: {result.get('error', 'خطأ غير معروف')}")
-            exit_code = 1
-        
-        # إنهاء البرنامج مع كود الخروج المناسب
-        sys.exit(exit_code)
-        
-    except KeyboardInterrupt:
-        print("\n⏹️ تم إيقاف التحليل بواسطة المستخدم")
-        sys.exit(130)
-    except Exception as e:
-        print(f"\n💥 خطأ فادح: {e}")
-        sys.exit(1)
-
-if __name__ == "__main__":
-    # تشغيل التحليل
-    asyncio.run(main())
+                'version': '4.0_git
