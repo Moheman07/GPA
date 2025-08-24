@@ -16,6 +16,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
+    - name: Verify repository contents
+      run: |
+        echo "📁 Repository contents:"
+        ls -la
+        echo ""
+        echo "🐍 Python files:"
+        find . -name "*.py" -type f || echo "No Python files found"
+        echo ""
+        echo "📋 Requirements files:"
+        find . -name "requirements*.txt" -type f || echo "No requirements files found"
+      
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
@@ -60,15 +71,34 @@ jobs:
       env:
         NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
       run: |
-        # Try to use the lightweight version first for faster execution
+        echo "📁 Checking available files..."
+        ls -la *.py || echo "No Python files found"
+        
+        # Try to use analyzers in order of preference
         if [ -f "gold_analyzer_lite.py" ]; then
-          echo "Using lightweight analyzer for faster execution"
+          echo "✅ Using lightweight analyzer for faster execution"
           python gold_analyzer_lite.py
         elif [ -f "gold_analyzer_github.py" ]; then
-          echo "Using standard GitHub analyzer"
+          echo "✅ Using standard GitHub analyzer"
           python gold_analyzer_github.py
+        elif [ -f "gold_analyzer_complete.py" ]; then
+          echo "✅ Using complete analyzer (slower)"
+          python gold_analyzer_complete.py
+        elif [ -f "fallback_analyzer.py" ]; then
+          echo "⚠️ Using fallback analyzer (basic features only)"
+          python fallback_analyzer.py
         else
-          echo "No analyzer found"
+          echo "❌ No analyzer found. Available Python files:"
+          find . -name "*.py" -type f || echo "No Python files in repository"
+          echo ""
+          echo "📋 Expected files (in order of preference):"
+          echo "  1. gold_analyzer_lite.py (recommended - fast)"
+          echo "  2. gold_analyzer_github.py (alternative - medium)"
+          echo "  3. gold_analyzer_complete.py (full features - slow)"
+          echo "  4. fallback_analyzer.py (basic features only)"
+          echo ""
+          echo "📤 Please upload at least one analyzer file to your repository."
+          echo "💡 Visit: https://github.com/your-username/your-repo/upload"
           exit 1
         fi
         
@@ -109,51 +139,3 @@ jobs:
           gold_analysis_v3_enhanced.json
           gold_analyzer.log
           analysis_history.db
-        
-    - name: Post results to repository
-      run: |
-        # Create results directory if it doesn't exist
-        mkdir -p results
-        
-        # Copy latest results with timestamp
-        TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-        cp gold_analysis_v3_enhanced.json "results/analysis_${TIMESTAMP}.json"
-        
-        # Create a summary file
-        echo "# Latest Gold Analysis Results" > ANALYSIS_SUMMARY.md
-        echo "" >> ANALYSIS_SUMMARY.md
-        echo "📅 **Last Updated**: $(date)" >> ANALYSIS_SUMMARY.md
-        echo "🔄 **Run Number**: ${{ github.run_number }}" >> ANALYSIS_SUMMARY.md
-        echo "" >> ANALYSIS_SUMMARY.md
-        
-        # Extract key information from JSON if possible
-        if command -v jq &> /dev/null; then
-          echo "## 📊 Quick Summary" >> ANALYSIS_SUMMARY.md
-          echo "" >> ANALYSIS_SUMMARY.md
-          
-          # Extract signal and price
-          SIGNAL=$(jq -r '.gold_analysis.signal // "N/A"' gold_analysis_v3_enhanced.json)
-          CONFIDENCE=$(jq -r '.gold_analysis.confidence // "N/A"' gold_analysis_v3_enhanced.json)
-          PRICE=$(jq -r '.gold_analysis.current_price // "N/A"' gold_analysis_v3_enhanced.json)
-          SCORE=$(jq -r '.gold_analysis.total_score // "N/A"' gold_analysis_v3_enhanced.json)
-          
-          echo "- **Signal**: $SIGNAL" >> ANALYSIS_SUMMARY.md
-          echo "- **Confidence**: $CONFIDENCE" >> ANALYSIS_SUMMARY.md
-          echo "- **Current Price**: \$$PRICE" >> ANALYSIS_SUMMARY.md
-          echo "- **Total Score**: $SCORE" >> ANALYSIS_SUMMARY.md
-          echo "" >> ANALYSIS_SUMMARY.md
-        fi
-        
-        echo "📁 **Download Full Results**: Check the latest release or artifacts" >> ANALYSIS_SUMMARY.md
-        echo "" >> ANALYSIS_SUMMARY.md
-        echo "🔄 **View All Results**: [Browse results folder](./results/)" >> ANALYSIS_SUMMARY.md
-        
-    - name: Commit and push results
-      run: |
-        git config --global user.name 'Gold Analyzer Bot'
-        git config --global user.email 'gold-analyzer@github-actions.local'
-        git add results/ ANALYSIS_SUMMARY.md
-        git commit -m "📊 Gold analysis results - Run #${{ github.run_number }}" || exit 0
-        git push || echo "Nothing to push"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
