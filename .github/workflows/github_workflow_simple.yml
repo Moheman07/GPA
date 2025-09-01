@@ -1,9 +1,12 @@
-name: Gold Market Full Analysis (Unified) - Simple
+name: Gold Market Analysis (unified)
+
+permissions:
+  contents: write
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 */6 * * *'
-  workflow_dispatch:
   push:
     branches: [ main, master ]
 
@@ -12,18 +15,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
-      - name: Setup Python
+      - name: Repo debug - list files
+        run: |
+          echo "PWD: $(pwd)"
+          ls -la
+          echo "Worktree:"
+          ls -R
+
+      - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      - name: Prepare requirements file if missing and install deps
+      - name: Install pip deps (use requirements_simple.txt)
         run: |
           python -m pip install --upgrade pip
           if [ ! -f requirements_simple.txt ]; then
+            echo "requirements_simple.txt not found, creating default..."
             cat > requirements_simple.txt <<'REQ'
 yfinance>=0.2.18
 pandas>=2.0.0
@@ -38,56 +51,43 @@ pandas-ta>=0.3.14b
 scikit-learn>=1.3.0
 requests>=2.28.0
 REQ
-            echo "Created default requirements_simple.txt"
-          else
-            echo "Using existing requirements_simple.txt"
           fi
           pip install -r requirements_simple.txt
 
-      - name: (Optional) Try to build/install TA-Lib (may take time)
+      - name: Show python env
         run: |
-          set -e
-          wget -q http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz || true
-          if [ -f ta-lib-0.4.0-src.tar.gz ]; then
-            tar -xzf ta-lib-0.4.0-src.tar.gz
-            cd ta-lib || exit 0
-            ./configure --prefix=/usr || true
-            make || true
-            sudo make install || true
-            cd ..
-            python -m pip install TA-Lib || true
-          else
-            echo "TA-Lib source not downloaded; skipping build."
-          fi
+          python -V
+          pip -V
+          python -c "import sys, os; print('cwd files:', os.listdir('.'))"
 
-      - name: Run analysis script (tries common names)
+      - name: Run analysis (pick the right script)
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
         run: |
-          set -e || true
-          echo "Looking for analysis script..."
-          # try several filenames (you can add/remove names you use)
-          CANDIDATES=("gold_analyzer_unified_full.py" "gold_analysis_unified_full.py" "gold_analyzer_full.py" "gold_analyzer_advanced.py" "gold_analyzer_enhancements.py")
+          set -e
+          CAND=("gold_analyzer_unified_full.py" "gold_analyzer_full.py" "gold_analyzer_advanced.py" "gold_analyzer_enhancements.py")
           FOUND=""
-          for f in "${CANDIDATES[@]}"; do
+          for f in "${CAND[@]}"; do
             if [ -f "$f" ]; then
               FOUND="$f"
               break
             fi
           done
           if [ -z "$FOUND" ]; then
-            echo "No analysis script found. Repository files:" >&2
+            echo "No analysis script found. Listing repo:" >&2
             ls -la
             exit 2
           fi
-          echo "Running $FOUND"
+          echo "Running: $FOUND"
           python "$FOUND"
 
-      - name: List files (debug)
-        run: ls -la
+      - name: List produced JSON files
+        run: |
+          echo "Produced files:"
+          ls -la *.json || true
 
-      - name: Upload JSON artifact (if exists)
+      - name: Upload analysis artifact
         uses: actions/upload-artifact@v4
         with:
           name: gold-analysis-results
@@ -96,17 +96,15 @@ REQ
             gold_analysis_advanced_v6.json
             gold_analysis_enhancements.json
 
-      - name: Commit & push produced JSON (optional)
+      - name: Commit & push JSON results (best-effort)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          # add possible outputs (only add if exist)
           git add gold_analysis_unified_full.json || echo "no unified json"
           git add gold_analysis_advanced_v6.json || echo "no advanced json"
           git add gold_analysis_enhancements.json || echo "no enhancements json"
           git commit -m "Update analysis results - $(date -u)" || echo "no changes to commit"
-          # try to pull/rebase then push
           git pull --rebase origin main || true
           git push origin main || echo "push failed or not permitted"
