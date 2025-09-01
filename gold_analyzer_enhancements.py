@@ -42,6 +42,37 @@ logger = logging.getLogger(__name__)
 # تجاهل التحذيرات
 warnings.filterwarnings('ignore')
 
+class NumpyEncoder(json.JSONEncoder):
+    """مشفر JSON للتعامل مع أنواع numpy"""
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif pd.isna(obj):
+            return None
+        return super(NumpyEncoder, self).default(obj)
+
+def convert_numpy_types(obj):
+    """تحويل أنواع numpy إلى أنواع Python القياسية"""
+    if isinstance(obj, dict):
+        return {key: convert_numpy_types(value) for key, value in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_numpy_types(item) for item in obj]
+    elif isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif pd.isna(obj):
+        return None
+    elif hasattr(obj, 'item'):  # للتعامل مع pandas scalar types
+        return obj.item()
+    return obj
+
 class GoldAnalyzerEnhancements:
     """محسنات محلل الذهب"""
     
@@ -258,9 +289,7 @@ class GoldAnalyzerEnhancements:
             
             # تحليل توزيع الحجم حسب السعر
             price_bins = pd.cut(price_data, bins=20)
-            volume_profile = price_data.groupby(price_bins).agg({
-                'Volume': 'sum'
-            }).sort_values('Volume', ascending=False)
+            volume_profile = self.data.groupby(price_bins)['Volume'].sum().sort_values(ascending=False)
             
             # تحديد مستويات الحجم العالي
             high_volume_levels = volume_profile.head(5)
@@ -666,19 +695,19 @@ class GoldAnalyzerEnhancements:
                     'analysis_date': datetime.datetime.now().isoformat(),
                     'data_points': len(self.data) if self.data is not None else 0
                 },
-                'fibonacci_analysis': fib_levels,
-                'support_resistance_analysis': support_resistance,
-                'volume_profile_analysis': volume_profile,
-                'market_structure_analysis': market_structure,
-                'divergence_analysis': divergences,
-                'correlation_analysis': correlations,
-                'advanced_metrics': metrics,
-                'enhanced_signals': signals,
+                'fibonacci_analysis': convert_numpy_types(fib_levels),
+                'support_resistance_analysis': convert_numpy_types(support_resistance),
+                'volume_profile_analysis': convert_numpy_types(volume_profile),
+                'market_structure_analysis': convert_numpy_types(market_structure),
+                'divergence_analysis': convert_numpy_types(divergences),
+                'correlation_analysis': convert_numpy_types(correlations),
+                'advanced_metrics': convert_numpy_types(metrics),
+                'enhanced_signals': convert_numpy_types(signals),
                 'summary': {
-                    'current_price': self.data['Close'].iloc[-1] if self.data is not None else 0,
+                    'current_price': convert_numpy_types(self.data['Close'].iloc[-1]) if self.data is not None else 0,
                     'key_levels': {
-                        'nearest_support': fib_levels.get('support_price') or support_resistance.get('nearest_support'),
-                        'nearest_resistance': fib_levels.get('resistance_price') or support_resistance.get('nearest_resistance')
+                        'nearest_support': convert_numpy_types(fib_levels.get('support_price') or support_resistance.get('nearest_support')),
+                        'nearest_resistance': convert_numpy_types(fib_levels.get('resistance_price') or support_resistance.get('nearest_resistance'))
                     },
                     'market_structure': market_structure.get('market_structure', 'غير محدد'),
                     'volume_trend': volume_profile.get('volume_trend', 'عادي'),
@@ -699,7 +728,7 @@ class GoldAnalyzerEnhancements:
             report = self.create_enhanced_report()
             
             with open(filename, 'w', encoding='utf-8') as f:
-                json.dump(report, f, ensure_ascii=False, indent=2)
+                json.dump(report, f, ensure_ascii=False, indent=2, cls=NumpyEncoder)
             
             logger.info(f"تم حفظ التقرير المحسن في {filename}")
             return True
