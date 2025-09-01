@@ -3,7 +3,7 @@
     "version": "enhanced",
     "symbol": "GC=F",
     "period": "1y",
-    "analysis_date": "2025-09-01T21:01:03.261675",
+    "analysis_date": "2025-09-01T21:20:38.540040",
     "data_points": 252
   },
   "fibonacci_analysis": {
@@ -98,7 +98,7 @@
   "correlation_analysis": {
     "asset_correlations": {
       "USD": -0.7546630028989499,
-      "SPY": 0.35689895358603274
+      "SPY": 0.3568989275842808
     },
     "time_correlation": null,
     "volume_correlation": 0.04076607061994116,
@@ -109,7 +109,7 @@
     ],
     "weakest_correlation": [
       "SPY",
-      0.35689895358603274
+      0.3568989275842808
     ]
   },
   "advanced_metrics": {
