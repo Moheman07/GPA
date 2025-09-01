@@ -1,9 +1,9 @@
-name: Professional Gold Analysis
+name: Gold Analysis Runner
 
 on:
-  workflow_dispatch: # يسمح بالتشغيل اليدوي
+  workflow_dispatch: # للتشغيل اليدوي
   schedule:
-    # يعمل من الإثنين إلى الجمعة الساعة 21:00 بتوقيت UTC
+    # يعمل مرة واحدة يوميًا (من الإثنين للجمعة) الساعة 21:00 بتوقيت UTC
     # (أي بعد ساعة من إغلاق سوق نيويورك)
     - cron: '0 21 * * 1-5'
 
@@ -24,20 +24,22 @@ jobs:
       - name: Set up Python with Caching
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11' # يمكنك استخدام 3.10 إذا كنت تفضل
-          cache: 'pip' # تفعيل التخزين المؤقت للسرعة
+          python-version: '3.10'
+          cache: 'pip'
+          # ✅ تم تحديث المسار ليطابق اسم ملفك
+          cache-dependency-path: requirements_simple.txt
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt # تأكد من أن اسم الملف صحيح
-
-      - name: Run Professional Analyzer
-        # تأكد من أن اسم السكربت هنا يطابق اسم ملفك
-        run: python gold_analyzer_unified_full.py 
+        # ✅ تم تحديث الأمر ليستخدم اسم ملفك
+        run: pip install -r requirements_simple.txt
+        
+      - name: Run Gold Analyzer Script
+        # ✅ تم تحديث الأمر ليستخدم اسم السكربت الخاص بك
+        run: python gold_analyzer_unified_full.py
 
       - name: Commit and Push Results
-        # هذا الأكشن أفضل وأكثر أمانًا
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: '🏆 Update Professional Gold Analysis Report'
-          # يقوم بحفظ الملف الذي ينتجه السكربت
+          commit_message: '🏆 Update Gold Analysis Report'
+          # ✅ تم تحديث اسم الملف ليطابق مخرجات السكربت الخاص بك
           file_pattern: 'gold_analysis_unified_full.json'
