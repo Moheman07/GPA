@@ -21,7 +21,12 @@ import seaborn as sns
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
-import talib
+try:
+    import talib
+    TALIB_AVAILABLE = True
+except ImportError:
+    TALIB_AVAILABLE = False
+    print("Warning: TA-Lib not available, using alternative indicators")
 import warnings
 import json
 import datetime
@@ -369,10 +374,14 @@ class GoldAnalyzerEnhancements:
             
         try:
             # حساب RSI
-            rsi = talib.RSI(self.data['Close'], timeperiod=14)
-            
-            # حساب MACD
-            macd, macd_signal, macd_hist = talib.MACD(self.data['Close'])
+            if TALIB_AVAILABLE:
+                rsi = talib.RSI(self.data['Close'], timeperiod=14)
+                macd, macd_signal, macd_hist = talib.MACD(self.data['Close'])
+            else:
+                # بدائل بسيطة
+                rsi = self._calculate_rsi(self.data['Close'], 14)
+                macd = self._calculate_macd(self.data['Close'])
+                macd_signal = macd.ewm(span=9).mean()
             
             # كشف التباعدات
             divergences = []
@@ -725,6 +734,28 @@ class GoldAnalyzerEnhancements:
         except Exception as e:
             logger.error(f"خطأ في التحليل المحسن: {e}")
             return False
+    
+    def _calculate_rsi(self, prices: pd.Series, period: int = 14) -> pd.Series:
+        """حساب RSI بدون talib"""
+        try:
+            delta = prices.diff()
+            gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
+            loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+            rs = gain / loss
+            rsi = 100 - (100 / (1 + rs))
+            return rsi
+        except:
+            return pd.Series([50] * len(prices), index=prices.index)
+    
+    def _calculate_macd(self, prices: pd.Series, fast: int = 12, slow: int = 26) -> pd.Series:
+        """حساب MACD بدون talib"""
+        try:
+            ema_fast = prices.ewm(span=fast).mean()
+            ema_slow = prices.ewm(span=slow).mean()
+            macd = ema_fast - ema_slow
+            return macd
+        except:
+            return pd.Series([0] * len(prices), index=prices.index)
 
 def main():
     """الدالة الرئيسية"""
