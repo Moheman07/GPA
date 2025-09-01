@@ -76,16 +76,18 @@ def convert_numpy_types(obj):
 class GoldAnalyzerEnhancements:
     """محسنات محلل الذهب"""
     
-    def __init__(self, symbol: str = "GC=F", period: str = "1y"):
+    def __init__(self, symbol: str = "GC=F", period: str = "1y", fast_mode: bool = True):
         """
         تهيئة المحسنات
         
         Args:
             symbol: رمز الذهب
             period: الفترة الزمنية
+            fast_mode: وضع التشغيل السريع (يقلل من دقة التحليل لزيادة السرعة)
         """
         self.symbol = symbol
         self.period = period
+        self.fast_mode = fast_mode
         self.data = None
         self.enhancements = {}
         
@@ -305,11 +307,16 @@ class GoldAnalyzerEnhancements:
             uptrend_volume = volume_data[price_change > 0].mean()
             downtrend_volume = volume_data[price_change < 0].mean()
             
+            # تحويل Interval objects إلى strings
+            volume_profile_dict = {}
+            for interval, volume in high_volume_levels.items():
+                volume_profile_dict[str(interval)] = convert_numpy_types(volume)
+            
             result = {
                 'current_volume': current_volume,
                 'average_volume': avg_volume,
                 'volume_ratio': volume_ratio,
-                'volume_profile': high_volume_levels.to_dict(),
+                'volume_profile': volume_profile_dict,
                 'price_volume_correlation': correlation,
                 'uptrend_volume': uptrend_volume,
                 'downtrend_volume': downtrend_volume,
@@ -415,8 +422,9 @@ class GoldAnalyzerEnhancements:
             # كشف التباعدات
             divergences = []
             
-            # التباعد السعري مع RSI
-            for i in range(20, len(self.data) - 20):
+            # التباعد السعري مع RSI (محدود في الوضع السريع)
+            step = 5 if self.fast_mode else 1
+            for i in range(20, len(self.data) - 20, step):
                 # تباعد إيجابي (سعر هابط، RSI صاعد)
                 if (self.data['Close'].iloc[i] < self.data['Close'].iloc[i-10] and
                     rsi.iloc[i] > rsi.iloc[i-10] and
@@ -443,8 +451,8 @@ class GoldAnalyzerEnhancements:
                         'indicator_value': rsi.iloc[i]
                     })
             
-            # التباعد مع MACD
-            for i in range(20, len(self.data) - 20):
+            # التباعد مع MACD (محدود في الوضع السريع)
+            for i in range(20, len(self.data) - 20, step):
                 # تباعد إيجابي
                 if (self.data['Close'].iloc[i] < self.data['Close'].iloc[i-10] and
                     macd.iloc[i] > macd.iloc[i-10] and
@@ -497,14 +505,20 @@ class GoldAnalyzerEnhancements:
             return {}
             
         try:
-            # جلب بيانات الأصول المرتبطة
-            assets = {
-                'USD': 'DX-Y.NYB',  # مؤشر الدولار
-                'SPY': 'SPY',       # S&P 500
-                'TLT': 'TLT',        # السندات طويلة الأجل
-                'VIX': '^VIX',       # مؤشر الخوف
-                'OIL': 'USO'         # النفط
-            }
+            # جلب بيانات الأصول المرتبطة (محدودة في الوضع السريع)
+            if self.fast_mode:
+                assets = {
+                    'USD': 'DX-Y.NYB',  # مؤشر الدولار
+                    'SPY': 'SPY',       # S&P 500
+                }
+            else:
+                assets = {
+                    'USD': 'DX-Y.NYB',  # مؤشر الدولار
+                    'SPY': 'SPY',       # S&P 500
+                    'TLT': 'TLT',        # السندات طويلة الأجل
+                    'VIX': '^VIX',       # مؤشر الخوف
+                    'OIL': 'USO'         # النفط
+                }
             
             correlations = {}
             
