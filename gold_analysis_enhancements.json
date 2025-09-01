@@ -1,0 +1,156 @@
+{
+  "metadata": {
+    "version": "enhanced",
+    "symbol": "GC=F",
+    "period": "1y",
+    "analysis_date": "2025-09-01T21:01:03.261675",
+    "data_points": 252
+  },
+  "fibonacci_analysis": {
+    "levels": {
+      "0.0": 2476.300048828125,
+      "0.236": 2731.3688603515625,
+      "0.382": 2889.165667480469,
+      "0.5": 3016.7000732421875,
+      "0.618": 3144.234479003906,
+      "0.786": 3325.808887207031,
+      "1.0": 3557.10009765625
+    },
+    "extensions": {
+      "1.272": 3851.0777109375,
+      "1.618": 4225.034527832031,
+      "2.0": 4637.900146484375,
+      "2.618": 5305.834576660156
+    },
+    "current_price": 3542.0,
+    "nearest_support": "0.786",
+    "nearest_resistance": "1.0",
+    "support_price": 3325.808887207031,
+    "resistance_price": 3557.10009765625
+  },
+  "support_resistance_analysis": {
+    "pivot_points": {
+      "pivot": 3535.0333658854165,
+      "r1": 3564.066731770833,
+      "r2": 3586.1334635416665,
+      "r3": 3615.166829427083,
+      "s1": 3512.966634114583,
+      "s2": 3483.9332682291665,
+      "s3": 3461.866536458333
+    },
+    "historical_support": [
+      2554.199951171875,
+      2599.7750244140625,
+      2834.10009765625,
+      2949.699951171875,
+      3125.0,
+      3198.60009765625,
+      3266.419970703125
+    ],
+    "historical_resistance": [
+      2722.1500244140625,
+      2789.0,
+      2957.89990234375,
+      3050.89990234375,
+      3168.60009765625,
+      3362.0,
+      3428.9749755859375,
+      3485.60009765625
+    ],
+    "current_price": 3542.0,
+    "nearest_support": 3266.419970703125,
+    "nearest_resistance": null
+  },
+  "volume_profile_analysis": {
+    "current_volume": 120792,
+    "average_volume": 4882.8015873015875,
+    "volume_ratio": 24.73825688804079,
+    "volume_profile": {
+      "(3278.975, 3331.58]": 305999,
+      "(2595.11, 2647.715]": 255544,
+      "(2752.925, 2805.53]": 136390,
+      "(3015.95, 3068.555]": 127630,
+      "(3489.395, 3542.0]": 120792
+    },
+    "price_volume_correlation": NaN,
+    "uptrend_volume": 6686.431506849315,
+    "downtrend_volume": 2419.4380952380952,
+    "volume_trend": "مرتفع"
+  },
+  "market_structure_analysis": {
+    "market_structure": "اتجاه صاعد",
+    "peak_trend": "صاعد",
+    "trough_trend": "صاعد",
+    "peaks_count": 14,
+    "troughs_count": 16,
+    "relative_strength": 1.0555659225882867,
+    "structure_confidence": "عالية"
+  },
+  "divergence_analysis": {
+    "total_divergences": 0,
+    "recent_divergences": 0,
+    "positive_divergences": 0,
+    "negative_divergences": 0,
+    "rsi_divergences": 0,
+    "macd_divergences": 0,
+    "latest_divergences": []
+  },
+  "correlation_analysis": {
+    "asset_correlations": {
+      "USD": -0.7546630028989499,
+      "SPY": 0.35689895358603274
+    },
+    "time_correlation": null,
+    "volume_correlation": 0.04076607061994116,
+    "volatility_correlation": 0.32925561243439316,
+    "strongest_correlation": [
+      "USD",
+      -0.7546630028989499
+    ],
+    "weakest_correlation": [
+      "SPY",
+      0.35689895358603274
+    ]
+  },
+  "advanced_metrics": {
+    "annualized_return": 0.370447908643612,
+    "annualized_volatility": 0.18101572280507194,
+    "sharpe_ratio": 2.046495756849428,
+    "max_drawdown": -0.07989960510242966,
+    "var_95": -0.017970805246110555,
+    "var_99": -0.03154989261694058,
+    "skewness": -0.3922266234305259,
+    "kurtosis": 1.2189344518952576,
+    "calmar_ratio": 4.63641726600157,
+    "sortino_ratio": 2.8069898193308895,
+    "win_rate": 0.5816733067729084,
+    "avg_win": 0.008739380651601313,
+    "avg_loss": -0.008637825694035105,
+    "profit_factor": 1.0117570047328388
+  },
+  "enhanced_signals": {
+    "fibonacci_signals": {},
+    "support_resistance_signals": {},
+    "volume_signals": {
+      "high_volume": "حجم مرتفع - تأكيد الحركة"
+    },
+    "structure_signals": {
+      "uptrend": "بنية سوق صاعدة"
+    },
+    "divergence_signals": {},
+    "correlation_signals": {},
+    "risk_signals": {
+      "good_risk_reward": "مخاطرة/مكافأة جيدة"
+    }
+  },
+  "summary": {
+    "current_price": 3542.0,
+    "key_levels": {
+      "nearest_support": 3325.808887207031,
+      "nearest_resistance": 3557.10009765625
+    },
+    "market_structure": "اتجاه صاعد",
+    "volume_trend": "مرتفع",
+    "risk_level": "منخفضة"
+  }
+}
