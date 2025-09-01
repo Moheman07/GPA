@@ -458,7 +458,7 @@ class AdvancedGoldAnalyzerV6:
             pattern_signals = []
             for pattern_name, pattern_data in patterns.items():
                 if isinstance(pattern_data, list) and len(pattern_data) > 0:
-                    if pattern_data[-1] == len(self.data) - 1:  # نمط حديث
+                    if pattern_data[-1] == self.data.shape[0] - 1:  # نمط حديث
                         pattern_signals.append(pattern_name)
                 elif isinstance(pattern_data, pd.Series) and not pattern_data.empty:
                     if pattern_data.iloc[-1] != 0:  # نمط موجود
