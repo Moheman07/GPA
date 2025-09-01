@@ -74,16 +74,18 @@ def convert_numpy_types(obj):
 class AdvancedGoldAnalyzerV6:
     """محلل الذهب المتقدم الإصدار 6.0"""
     
-    def __init__(self, symbol: str = "GC=F", period: str = "1y"):
+    def __init__(self, symbol: str = "GC=F", period: str = "1y", fast_mode: bool = True):
         """
         تهيئة المحلل المتقدم
         
         Args:
             symbol: رمز الذهب (GC=F للعقود الآجلة)
             period: الفترة الزمنية
+            fast_mode: وضع التشغيل السريع (يقلل من دقة التحليل لزيادة السرعة)
         """
         self.symbol = symbol
         self.period = period
+        self.fast_mode = fast_mode
         self.data = None
         self.analysis_results = {}
         self.risk_metrics = {}
@@ -599,8 +601,8 @@ class AdvancedGoldAnalyzerV6:
                 },
                 'current_market_data': {
                     'current_price': convert_numpy_types(self.data['Close'].iloc[-1]) if self.data is not None else 0,
-                    'daily_change': convert_numpy_types(self.data['Close'].iloc[-1] - self.data['Close'].iloc[-2]) if self.data is not None and len(self.data) > 1 else 0,
-                    'daily_change_percent': convert_numpy_types(((self.data['Close'].iloc[-1] - self.data['Close'].iloc[-2]) / self.data['Close'].iloc[-2] * 100)) if self.data is not None and len(self.data) > 1 else 0,
+                    'daily_change': convert_numpy_types(self.data['Close'].iloc[-1] - self.data['Close'].iloc[-2]) if self.data is not None and self.data.shape[0] > 1 else 0,
+                    'daily_change_percent': convert_numpy_types(((self.data['Close'].iloc[-1] - self.data['Close'].iloc[-2]) / self.data['Close'].iloc[-2] * 100)) if self.data is not None and self.data.shape[0] > 1 else 0,
                     'volume': convert_numpy_types(self.data['Volume'].iloc[-1]) if self.data is not None else 0,
                     'high': convert_numpy_types(self.data['High'].iloc[-1]) if self.data is not None else 0,
                     'low': convert_numpy_types(self.data['Low'].iloc[-1]) if self.data is not None else 0
