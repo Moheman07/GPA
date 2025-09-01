@@ -40,6 +40,37 @@ logger = logging.getLogger(__name__)
 # تجاهل التحذيرات
 warnings.filterwarnings('ignore')
 
+class NumpyEncoder(json.JSONEncoder):
+    """مشفر JSON للتعامل مع أنواع numpy"""
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif pd.isna(obj):
+            return None
+        return super(NumpyEncoder, self).default(obj)
+
+def convert_numpy_types(obj):
+    """تحويل أنواع numpy إلى أنواع Python القياسية"""
+    if isinstance(obj, dict):
+        return {key: convert_numpy_types(value) for key, value in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_numpy_types(item) for item in obj]
+    elif isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif pd.isna(obj):
+        return None
+    elif hasattr(obj, 'item'):  # للتعامل مع pandas scalar types
+        return obj.item()
+    return obj
+
 class AdvancedGoldAnalyzerV6:
     """محلل الذهب المتقدم الإصدار 6.0"""
     
@@ -567,35 +598,35 @@ class AdvancedGoldAnalyzerV6:
                     'data_points': len(self.data) if self.data is not None else 0
                 },
                 'current_market_data': {
-                    'current_price': self.data['Close'].iloc[-1] if self.data is not None else 0,
-                    'daily_change': self.data['Close'].iloc[-1] - self.data['Close'].iloc[-2] if self.data is not None and len(self.data) > 1 else 0,
-                    'daily_change_percent': ((self.data['Close'].iloc[-1] - self.data['Close'].iloc[-2]) / self.data['Close'].iloc[-2] * 100) if self.data is not None and len(self.data) > 1 else 0,
-                    'volume': self.data['Volume'].iloc[-1] if self.data is not None else 0,
-                    'high': self.data['High'].iloc[-1] if self.data is not None else 0,
-                    'low': self.data['Low'].iloc[-1] if self.data is not None else 0
+                    'current_price': convert_numpy_types(self.data['Close'].iloc[-1]) if self.data is not None else 0,
+                    'daily_change': convert_numpy_types(self.data['Close'].iloc[-1] - self.data['Close'].iloc[-2]) if self.data is not None and len(self.data) > 1 else 0,
+                    'daily_change_percent': convert_numpy_types(((self.data['Close'].iloc[-1] - self.data['Close'].iloc[-2]) / self.data['Close'].iloc[-2] * 100)) if self.data is not None and len(self.data) > 1 else 0,
+                    'volume': convert_numpy_types(self.data['Volume'].iloc[-1]) if self.data is not None else 0,
+                    'high': convert_numpy_types(self.data['High'].iloc[-1]) if self.data is not None else 0,
+                    'low': convert_numpy_types(self.data['Low'].iloc[-1]) if self.data is not None else 0
                 },
-                'signals': signals,
+                'signals': convert_numpy_types(signals),
                 'technical_indicators': {
-                    'rsi': float(indicators.get('rsi', pd.Series()).iloc[-1]) if not indicators.get('rsi', pd.Series()).empty else 50,
-                    'macd': float(indicators.get('macd', pd.Series()).iloc[-1]) if not indicators.get('macd', pd.Series()).empty else 0,
-                    'macd_signal': float(indicators.get('macd_signal', pd.Series()).iloc[-1]) if not indicators.get('macd_signal', pd.Series()).empty else 0,
-                    'sma_20': float(indicators.get('sma_20', pd.Series()).iloc[-1]) if not indicators.get('sma_20', pd.Series()).empty else 0,
-                    'sma_50': float(indicators.get('sma_50', pd.Series()).iloc[-1]) if not indicators.get('sma_50', pd.Series()).empty else 0,
-                    'sma_200': float(indicators.get('sma_200', pd.Series()).iloc[-1]) if not indicators.get('sma_200', pd.Series()).empty else 0,
-                    'bb_upper': float(indicators.get('bbands_upper', pd.Series()).iloc[-1]) if not indicators.get('bbands_upper', pd.Series()).empty else 0,
-                    'bb_lower': float(indicators.get('bbands_lower', pd.Series()).iloc[-1]) if not indicators.get('bbands_lower', pd.Series()).empty else 0,
-                    'atr': float(indicators.get('atr', pd.Series()).iloc[-1]) if not indicators.get('atr', pd.Series()).empty else 0
+                    'rsi': convert_numpy_types(indicators.get('rsi', pd.Series()).iloc[-1]) if not indicators.get('rsi', pd.Series()).empty else 50,
+                    'macd': convert_numpy_types(indicators.get('macd', pd.Series()).iloc[-1]) if not indicators.get('macd', pd.Series()).empty else 0,
+                    'macd_signal': convert_numpy_types(indicators.get('macd_signal', pd.Series()).iloc[-1]) if not indicators.get('macd_signal', pd.Series()).empty else 0,
+                    'sma_20': convert_numpy_types(indicators.get('sma_20', pd.Series()).iloc[-1]) if not indicators.get('sma_20', pd.Series()).empty else 0,
+                    'sma_50': convert_numpy_types(indicators.get('sma_50', pd.Series()).iloc[-1]) if not indicators.get('sma_50', pd.Series()).empty else 0,
+                    'sma_200': convert_numpy_types(indicators.get('sma_200', pd.Series()).iloc[-1]) if not indicators.get('sma_200', pd.Series()).empty else 0,
+                    'bb_upper': convert_numpy_types(indicators.get('bbands_upper', pd.Series()).iloc[-1]) if not indicators.get('bbands_upper', pd.Series()).empty else 0,
+                    'bb_lower': convert_numpy_types(indicators.get('bbands_lower', pd.Series()).iloc[-1]) if not indicators.get('bbands_lower', pd.Series()).empty else 0,
+                    'atr': convert_numpy_types(indicators.get('atr', pd.Series()).iloc[-1]) if not indicators.get('atr', pd.Series()).empty else 0
                 },
-                'patterns': patterns,
-                'sentiment': sentiment,
-                'risk_metrics': risk_metrics,
+                'patterns': convert_numpy_types(patterns),
+                'sentiment': convert_numpy_types(sentiment),
+                'risk_metrics': convert_numpy_types(risk_metrics),
                 'summary': {
                     'overall_recommendation': signals.get('recommendation', 'انتظار'),
                     'confidence_level': signals.get('confidence', 'منخفضة'),
                     'risk_level': signals.get('risk_level', 'متوسطة'),
                     'trend_direction': signals.get('trend', 'متذبذب'),
-                    'key_support': signals.get('stop_loss', 0),
-                    'key_resistance': signals.get('take_profit', 0)
+                    'key_support': convert_numpy_types(signals.get('stop_loss', 0)),
+                    'key_resistance': convert_numpy_types(signals.get('take_profit', 0))
                 }
             }
             
@@ -612,7 +643,7 @@ class AdvancedGoldAnalyzerV6:
             report = self.generate_advanced_report_v6()
             
             with open(filename, 'w', encoding='utf-8') as f:
-                json.dump(report, f, ensure_ascii=False, indent=2)
+                json.dump(report, f, ensure_ascii=False, indent=2, cls=NumpyEncoder)
             
             logger.info(f"تم حفظ التقرير في {filename}")
             return True
