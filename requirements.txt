@@ -1,19 +1,19 @@
-# Core Data Processing
-yfinance>=0.2.0
-pandas>=1.5.0
-numpy>=1.21.0
+# Data and Finance
+yfinance
+pandas
+numpy
+backtrader
 
 # Machine Learning
-scikit-learn>=1.1.0
-xgboost>=1.6.0
-joblib>=1.2.0
+scikit-learn
+xgboost
+joblib
 
-# Text Processing
-textblob>=0.17.0
+# Natural Language Processing (NLP)
+spacy==3.7.2
+textblob
+https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz#egg=en_core_web_sm
 
-# HTTP and Async
-requests>=2.28.0
-aiohttp>=3.8.0
-
-# Utilities
-urllib3>=1.26.0
+# Web and Async
+requests
+aiohttp
