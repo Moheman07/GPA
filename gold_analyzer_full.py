@@ -1,19 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Gold Analyzer — Unified Full Powerful Script
-Features:
- - Advanced technical indicators (TA-Lib if available, otherwise pure pandas)
- - Candlestick & price-pattern detection
- - Fibonacci levels, support/resistance, pivot points
- - Volume profile, market structure, divergences, correlations
- - Advanced risk metrics (VaR, Sharpe, Sortino, Calmar, drawdown)
- - News analysis (NewsAPI) with simple sentiment scoring
- - Fundamental indicators from FRED (FRED_API_KEY)
- - Robust error handling; always produces a single JSON output
- - Output: gold_analysis_unified_full.json (+ optional CSVs)
+Gold Analyzer — Unified Full Powerful Script (updated)
+- Full technical indicators (uses TA-Lib if available, otherwise pandas)
+- Price patterns, Fibonacci, support/resistance, volume profile
+- Market structure, divergences, correlations (with USD fallback)
+- Advanced risk metrics
+- News (NewsAPI) and Fundamentals (FRED)
+- Robust fetch with retries, logs, and single JSON output
+Output: gold_analysis_unified_full.json
 """
-
 import os
 import sys
 import math
@@ -36,9 +32,9 @@ except Exception:
 
 # Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-log = logging.getLogger("gold-full")
+log = logging.getLogger("gold-unified")
 
-# API keys from env (set them in GitHub Actions secrets)
+# API keys from env
 FRED_API_KEY = os.getenv("FRED_API_KEY", "")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
 
@@ -96,7 +92,7 @@ def fetch_yfinance(symbol: str, period: str = "1y", tries: int = 3, pause: float
                 last_err = Exception("Empty dataframe")
                 time.sleep(pause)
                 continue
-            # Ensure columns
+            # Ensure required columns
             for col in ["Open", "High", "Low", "Close", "Volume"]:
                 if col not in df.columns:
                     raise ValueError(f"Missing column {col} from {symbol}")
@@ -110,14 +106,37 @@ def fetch_yfinance(symbol: str, period: str = "1y", tries: int = 3, pause: float
     log.error(f"Failed to fetch {symbol}: {last_err}")
     return pd.DataFrame()
 
+# -------------------- Robust Market Universe (USD fallback) --------------------
 def fetch_market_universe(period: str = "1y") -> Dict[str, pd.DataFrame]:
-    symbols = {"GC=F": "gold", "^DXY": "dxy", "SPY": "spy"}
-    out = {}
-    for s in symbols:
-        out[s] = fetch_yfinance(s, period=period)
+    """
+    Returns dict with keys used elsewhere:
+      - "GC=F"  -> gold futures
+      - "^DXY"  -> USD index (one of fallback symbols)
+      - "SPY"   -> S&P 500 ETF
+    Tries multiple tickers for USD index automatically.
+    """
+    candidates = {
+        "GC=F": ["GC=F"],
+        "^DXY": ["^DXY", "DX-Y.NYB", "DXY", "DX=F", "USDX"],
+        "SPY": ["SPY"]
+    }
+    out: Dict[str, pd.DataFrame] = {}
+    for out_key, tries in candidates.items():
+        fetched = pd.DataFrame()
+        for sym in tries:
+            df = fetch_yfinance(sym, period=period)
+            if df is not None and not df.empty:
+                fetched = df
+                out[out_key] = df
+                log.info(f"Using symbol '{sym}' for key '{out_key}'")
+                break
+            else:
+                log.debug(f"No data for symbol {sym} (key {out_key})")
+        if fetched.empty:
+            log.warning(f"No data found for any of {tries} (key={out_key})")
     return out
 
-# -------------------- Technical indicators --------------------
+# -------------------- Technical functions --------------------
 def ema(series: pd.Series, span: int) -> pd.Series:
     return series.ewm(span=span, adjust=False).mean()
 
@@ -141,7 +160,6 @@ def technical_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
     high = df["High"]
     low = df["Low"]
     vol = df["Volume"]
-
     # trend
     if TALIB_AVAILABLE:
         ind["sma_20"] = talib.SMA(close, timeperiod=20)
@@ -155,7 +173,6 @@ def technical_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
         ind["sma_200"] = close.rolling(200).mean()
         ind["ema_12"] = ema(close, 12)
         ind["ema_26"] = ema(close, 26)
-
     # momentum
     if TALIB_AVAILABLE:
         ind["rsi"] = talib.RSI(close, timeperiod=14)
@@ -171,7 +188,6 @@ def technical_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
         ind["rsi"] = calc_rsi(close, 14)
         macd, macd_sig, macd_hist = calc_macd(close)
         ind["macd"], ind["macd_signal"], ind["macd_hist"] = macd, macd_sig, macd_hist
-
     # volatility / bands
     try:
         if TALIB_AVAILABLE:
@@ -189,8 +205,7 @@ def technical_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
             ind["atr"] = tr.rolling(14).mean()
     except Exception as e:
         log.warning(f"BB/ATR calc error: {e}")
-
-    # volume-based (attempts)
+    # volume-based
     try:
         if TALIB_AVAILABLE:
             ind["obv"] = talib.OBV(close, vol)
@@ -198,7 +213,6 @@ def technical_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
             ind["adosc"] = talib.ADOSC(high, low, close, vol)
             ind["mfi"] = talib.MFI(high, low, close, vol, timeperiod=14)
         else:
-            # simple OBV
             obv = (np.sign(close.diff().fillna(0)) * vol).cumsum()
             ind["obv"] = obv
             ind["ad"] = None
@@ -206,13 +220,11 @@ def technical_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
             ind["mfi"] = None
     except Exception as e:
         log.warning(f"Volume indicators error: {e}")
-
     return ind
 
-# -------------------- Price patterns & candles --------------------
+# -------------------- Patterns & Candles --------------------
 def detect_candlestick_patterns(df: pd.DataFrame) -> Dict[str, Any]:
     if not TALIB_AVAILABLE:
-        # fallback: return zero series or note
         return {"note": "TA-Lib not available - candlestick patterns skipped"}
     o, h, l, c = df["Open"], df["High"], df["Low"], df["Close"]
     patterns = {
@@ -288,7 +300,6 @@ def support_resistance(df: pd.DataFrame) -> Dict[str, Any]:
                 resistances.append(float(df["High"].iloc[i]))
         clustered_support = cluster_levels(supports)
         clustered_resistance = cluster_levels(resistances)
-        # pivot on last 20
         recent = df.tail(20)
         pivot = (recent["High"].mean() + recent["Low"].mean() + recent["Close"].mean()) / 3.0
         r1 = 2 * pivot - recent["Low"].mean()
@@ -312,7 +323,6 @@ def volume_profile(df: pd.DataFrame, bins: int = 20) -> Dict[str, Any]:
         cats = pd.cut(close, bins=bins)
         vp = vol.groupby(cats).sum().sort_values(ascending=False).head(6)
         profile = {str(k): int(v) for k, v in vp.items()}
-        # correlation price-volume
         price_change = safe_pct_change(close)
         vol_aligned = vol.reindex(price_change.index)
         try:
@@ -413,7 +423,6 @@ def advanced_metrics(df: pd.DataFrame) -> Dict[str, Any]:
         drawdown = (equity - run_max) / run_max
         mdd = float(drawdown.min()) if not drawdown.empty else None
         downside = ret[ret < 0]
-        down_std = downside.std() * np.sqrt(252) if not downside.empty else None
         sortino = float(((ret.mean() - rf/252) / downside.std()) * np.sqrt(252)) if (not downside.empty and downside.std() != 0) else None
         calmar = float(ann_ret / abs(mdd)) if (mdd not in (None, 0) and not math.isnan(mdd)) else None
         wins = ret[ret > 0]
@@ -467,7 +476,6 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], patterns: Dict
         sma20 = ind.get("sma_20", pd.Series(dtype=float))
         sma50 = ind.get("sma_50", pd.Series(dtype=float))
         sma200 = ind.get("sma_200", pd.Series(dtype=float))
-        # Trend
         if not sma20.empty and not sma50.empty and not sma200.empty:
             if close_price > sma20.iloc[-1] > sma50.iloc[-1] > sma200.iloc[-1]:
                 out["trend"] = "صاعد قوي"
@@ -479,7 +487,6 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], patterns: Dict
                 out["trend"] = "هابط"
             else:
                 out["trend"] = "متذبذب"
-        # RSI-based
         rsi = ind.get("rsi", pd.Series(dtype=float))
         if not rsi.empty:
             rv = float(rsi.iloc[-1])
@@ -493,7 +500,6 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], patterns: Dict
                 out["rsi_signal"] = "بيع"
             else:
                 out["rsi_signal"] = "محايد"
-        # MACD cross
         macd = ind.get("macd", pd.Series(dtype=float))
         macd_sig = ind.get("macd_signal", pd.Series(dtype=float))
         if not macd.empty and not macd_sig.empty and len(macd) > 2:
@@ -503,12 +509,10 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], patterns: Dict
                 out["macd_signal"] = "بيع"
             else:
                 out["macd_signal"] = "محايد"
-        # Bollinger
         bbu = ind.get("bb_upper", pd.Series(dtype=float))
         bbl = ind.get("bb_lower", pd.Series(dtype=float))
         if not bbu.empty and not bbl.empty:
             out["bb_signal"] = "شراء" if close_price < bbl.iloc[-1] else ("بيع" if close_price > bbu.iloc[-1] else "محايد")
-        # Patterns
         pt_signals = []
         for k, v in patterns.items():
             if isinstance(v, (pd.Series, np.ndarray)):
@@ -521,7 +525,6 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], patterns: Dict
                 if v[-1] == len(df) - 1:
                     pt_signals.append(k)
         out["patterns"] = pt_signals
-        # Aggregate recommendation
         buy = 0.0
         sell = 0.0
         if out.get("rsi_signal") in ("شراء قوي", "شراء"): buy += 1
@@ -542,7 +545,6 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], patterns: Dict
             out["recommendation"], out["confidence"] = "بيع", "متوسطة"
         else:
             out["recommendation"], out["confidence"] = "انتظار", "منخفضة"
-        # Risk via ATR
         atr = ind.get("atr", pd.Series(dtype=float))
         try:
             if not atr.empty and not math.isnan(float(atr.iloc[-1])):
@@ -574,7 +576,6 @@ def simple_sentiment_text(text: str) -> float:
     for w in neg:
         if w in txt:
             score -= 1
-    # normalize
     return max(-1.0, min(1.0, score / 3.0))
 
 def fetch_news_articles(api_key: str, q: str = "gold OR XAU OR bullion OR \"precious metals\"", page_size: int = 20) -> Dict[str, Any]:
@@ -650,7 +651,6 @@ def fundamental_block(api_key: str) -> Dict[str, Any]:
             except Exception:
                 yoy = None
         out[sid] = {"series": sid, "name": name, "latest": latest, "yoy_change": yoy}
-    # quick bias
     bias = 0
     fed = out.get("FEDFUNDS", {})
     dxy = out.get("DTWEXBGS", {})
@@ -669,12 +669,10 @@ def build_unified_report(data: Dict[str, pd.DataFrame]) -> Dict[str, Any]:
     gold = data.get("GC=F", pd.DataFrame())
     if gold is None or gold.empty:
         return {"error": "GC=F data unavailable"}
-    # indicators
     ind = technical_indicators(gold)
     patterns_candles = detect_candlestick_patterns(gold)
     patterns_price = detect_price_patterns(gold)
     patterns_all = {**patterns_candles, **patterns_price} if isinstance(patterns_candles, dict) else patterns_price
-    # enhancements
     low, high = float(gold["Low"].min()), float(gold["High"].max())
     fibo = fibonacci_levels(low, high)
     sr = support_resistance(gold)
@@ -707,11 +705,6 @@ def save_report(report: Dict[str, Any], filename: str = "gold_analysis_unified_f
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(report, f, ensure_ascii=False, indent=2, cls=NumpyEncoder)
         log.info(f"Saved {filename}")
-        # Optional CSV outputs for indicators (uncomment if desired)
-        # try:
-        #     pd.DataFrame(report['technical_indicators']).to_csv('indicators_snapshot.csv', index=False)
-        # except Exception:
-        #     pass
         return True
     except Exception as e:
         log.error(f"save_report error: {e}")
