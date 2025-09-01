@@ -60,6 +60,7 @@ jobs:
           git add *.json || echo "No JSON files to add"
           git add *.txt || echo "No TXT files to add"
           git commit -m "Update gold analysis results - $(date)" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
