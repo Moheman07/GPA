@@ -1,0 +1,354 @@
+{
+  "metadata": {
+    "version": "unified-full-v1",
+    "symbol": "GC=F",
+    "period": "1y",
+    "analysis_date": "2025-09-01T22:36:27.639705",
+    "data_points": 252,
+    "talib": false
+  },
+  "current_market_data": {
+    "current_price": 3542.0,
+    "daily_change": 68.300048828125,
+    "daily_change_percent": 1.9662046172146619,
+    "volume": 123170,
+    "high": 3557.10009765625,
+    "low": 3506.0
+  },
+  "signals": {
+    "current_price": 3542.0,
+    "timestamp": "2025-09-01T22:36:26.718518",
+    "trend": "صاعد قوي",
+    "rsi_signal": "بيع قوي",
+    "macd_signal": "محايد",
+    "bb_signal": "بيع",
+    "patterns": [],
+    "recommendation": "بيع قوي",
+    "confidence": "عالية",
+    "stop_loss": 3481.1142229352677,
+    "take_profit": 3633.3286655970983,
+    "risk_level": "منخفضة"
+  },
+  "technical_indicators": {
+    "sma_20": 3382.3749877929686,
+    "sma_50": 3355.5459912109377,
+    "sma_200": 3069.8619982910154,
+    "ema_12": 3414.151885651493,
+    "ema_26": 3384.3708175153715,
+    "rsi": 82.23707807282972,
+    "macd": 29.781068136121576,
+    "macd_signal": 12.072722977102083,
+    "macd_hist": 17.708345159019494,
+    "bb_upper": 3493.1661856775427,
+    "bb_middle": 3382.3749877929686,
+    "bb_lower": 3271.5837899083945,
+    "atr": 30.442888532366073,
+    "obv": 724556.0,
+    "ad": null,
+    "adosc": null,
+    "mfi": null
+  },
+  "patterns": {
+    "note": "TA-Lib not available - candlestick patterns skipped",
+    "double_top": [],
+    "double_bottom": [],
+    "head_shoulders": [],
+    "triangle": []
+  },
+  "enhancements": {
+    "fibonacci": {
+      "levels": {
+        "0.0": 2476.300048828125,
+        "0.236": 2731.3688603515625,
+        "0.382": 2889.165667480469,
+        "0.5": 3016.7000732421875,
+        "0.618": 3144.234479003906,
+        "0.786": 3325.808887207031,
+        "1.0": 3557.10009765625
+      },
+      "extensions": {
+        "1.272": 3851.0777109375,
+        "1.618": 4225.034527832031,
+        "2.0": 4637.900146484375,
+        "2.618": 5305.834576660156
+      }
+    },
+    "support_resistance": {
+      "pivot_points": {
+        "pivot": 3380.299991861979,
+        "r1": 3396.324995930989,
+        "r2": 3410.2750040690103,
+        "s1": 3366.349983723958,
+        "s2": 3350.3249796549476
+      },
+      "historical_support": [
+        2502.300048828125,
+        2551.699951171875,
+        2622.3230731670674,
+        2730.1499837239585,
+        2780.89990234375,
+        2835.2000732421875,
+        2885.980029296875,
+        2957.75,
+        3010.199951171875,
+        3125.0,
+        3203.7000325520835,
+        3293.0647116268383
+      ],
+      "historical_resistance": [
+        2581.800048828125,
+        2653.600048828125,
+        2750.5125122070312,
+        2880.5,
+        2940.2142508370534,
+        3004.800048828125,
+        3050.89990234375,
+        3168.60009765625,
+        3235.0,
+        3382.51904296875
+      ]
+    },
+    "volume_profile": {
+      "current_volume": 123170,
+      "average_volume": 4892.238095238095,
+      "volume_ratio": 15.718278225137503,
+      "volume_profile": {
+        "(3278.975, 3331.58]": 305999,
+        "(2595.11, 2647.715]": 255544,
+        "(2752.925, 2805.53]": 136390,
+        "(3015.95, 3068.555]": 127630,
+        "(3489.395, 3542.0]": 123170,
+        "(2805.53, 2858.135]": 52526
+      },
+      "price_volume_correlation": 0.08131420771029517,
+      "uptrend_volume": 6702.719178082192,
+      "downtrend_volume": 2419.4380952380952,
+      "volume_trend": "مرتفع"
+    },
+    "market_structure": {
+      "market_structure": "اتجاه صاعد",
+      "peaks_count": 67,
+      "troughs_count": 67,
+      "relative_strength": 1.0079954191217475,
+      "structure_confidence": "عالية"
+    },
+    "divergences": {
+      "total_divergences": 0,
+      "recent_divergences": 0,
+      "rsi_divergences": 0,
+      "macd_divergences": 0
+    },
+    "correlations": {
+      "asset_correlations": {
+        "USD": -0.4589554583472559,
+        "SPY": -0.0056389389054689425
+      },
+      "strongest_correlation": [
+        "USD",
+        -0.4589554583472559
+      ],
+      "weakest_correlation": [
+        "SPY",
+        -0.0056389389054689425
+      ]
+    },
+    "advanced_metrics": {
+      "annualized_return": 0.4479892793451101,
+      "annualized_volatility": 0.18101572280507194,
+      "sharpe_ratio": 1.9360081169357553,
+      "max_drawdown": -0.07989960510242895,
+      "var_95": -0.017970805246110555,
+      "var_99": -0.03154989261694058,
+      "skewness": -0.3922266234305259,
+      "kurtosis": 1.2189344518952576,
+      "calmar_ratio": 5.606902296585834,
+      "sortino_ratio": 2.6554440956900875,
+      "win_rate": 0.5816733067729084,
+      "avg_win": 0.008739380651601313,
+      "avg_loss": -0.008637825694035105,
+      "profit_factor": 1.4068240256285187
+    }
+  },
+  "sentiment": {
+    "rsi_sentiment": "مفرط في الشراء",
+    "macd_sentiment": "إيجابي",
+    "bb_sentiment": "مفرط في الشراء",
+    "volume_sentiment": "مرتفع"
+  },
+  "fundamentals": {
+    "FEDFUNDS": {
+      "series": "FEDFUNDS",
+      "name": "Effective Fed Funds Rate",
+      "latest": 3.5,
+      "yoy_change": 0.18243243243243246
+    },
+    "CPIAUCSL": {
+      "series": "CPIAUCSL",
+      "name": "CPI (All Urban Consumers)",
+      "latest": 23.65,
+      "yoy_change": -0.01128762541806033
+    },
+    "DTWEXBGS": {
+      "series": "DTWEXBGS",
+      "name": "Trade Weighted U.S. Dollar Index: Broad, Goods",
+      "latest": 100.2594,
+      "yoy_change": -0.0022739056145067897
+    },
+    "DGS10": {
+      "series": "DGS10",
+      "name": "10-Year Treasury Rate",
+      "latest": 4.0,
+      "yoy_change": -0.014778325123152615
+    },
+    "UNRATE": {
+      "series": "UNRATE",
+      "name": "Unemployment Rate",
+      "latest": 3.1,
+      "yoy_change": -0.46551724137931033
+    },
+    "fundamental_bias": "hawkish/bearish"
+  },
+  "news": {
+    "count": 18,
+    "average_sentiment": 0.0,
+    "impact": "neutral",
+    "articles": [
+      {
+        "title": "Chicago Cubs Agree to 1-Year Contract With First Baseman Carlos Santana",
+        "source": "Fox Sports",
+        "publishedAt": "2025-08-31T22:11:16Z",
+        "url": "https://www.foxsports.com/stories/mlb/chicago-cubs-agree-1-year-contract-first-baseman-carlos-santana",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Sarault, Dandjinou secure women's, men's titles at Canadian short track championships",
+        "source": "CBC News",
+        "publishedAt": "2025-08-31T22:10:57Z",
+        "url": "https://www.cbc.ca/sports/olympics/winter/short-track-speed-skating/canadian-short-track-speedskating-championship-montreal-aug-31-1.7622355",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Postgame P (UNLOCKED): Unicycles, Canadian rock bands and the Ott quandary",
+        "source": "On3.com",
+        "publishedAt": "2025-08-31T22:03:14Z",
+        "url": "https://www.on3.com/sites/ou-insider/news/postgame-p-unlocked-unicycles-canadian-rock-bands-and-the-ott-quandary/",
+        "sentiment": 0.0
+      },
+      {
+        "title": "How to Watch Notre Dame vs Miami: Live Stream NCAA College Football, TV Channel",
+        "source": "Newsweek",
+        "publishedAt": "2025-08-31T22:00:01Z",
+        "url": "https://www.newsweek.com/sports/ncaa/how-watch-notre-dame-vs-miami-live-stream-ncaa-college-football-tv-channel-2119966",
+        "sentiment": 0.0
+      },
+      {
+        "title": "When Men’s Jewelry Becomes A Personal Statement",
+        "source": "Forbes",
+        "publishedAt": "2025-08-31T21:57:06Z",
+        "url": "https://www.forbes.com/sites/katematthams/2025/08/31/when-mens-jewelry-becomes-a-personal-statement/",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Be a Good Girl, Get Good Girl Things",
+        "source": "Jenhatmaker.com",
+        "publishedAt": "2025-08-31T21:55:39Z",
+        "url": "https://jenhatmaker.com/blog/be-a-good-girl-get-good-girl-things/",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Canada settles for silver after lopsided loss to U.S. in women's Para hockey worlds final",
+        "source": "CBC News",
+        "publishedAt": "2025-08-31T21:35:10Z",
+        "url": "https://www.cbc.ca/sports/paralympics/winter-sports/para-ice-hockey/para-ice-hockey-womens-world-championships-final-canada-us-1.7622343",
+        "sentiment": 0.0
+      },
+      {
+        "title": "'Weapons' regains top spot as North American summer box office winds down",
+        "source": "Japan Today",
+        "publishedAt": "2025-08-31T21:22:38Z",
+        "url": "https://japantoday.com/category/entertainment/%27weapons%27-regains-the-top-spot-as-the-summer-box-office-winds-down",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Macquarie's top ASX 200 share picks in each of the 11 market sectors",
+        "source": "Motley Fool Australia",
+        "publishedAt": "2025-08-31T21:22:01Z",
+        "url": "https://www.fool.com.au/2025/09/01/macquaries-top-asx-200-share-picks-in-each-of-the-11-market-sectors/",
+        "sentiment": 0.0
+      },
+      {
+        "title": "PM in Mann Ki Baat: 2 sports milestones show changing face of Valley",
+        "source": "The Times of India",
+        "publishedAt": "2025-08-31T21:20:18Z",
+        "url": "https://timesofindia.indiatimes.com/india/pm-in-mann-ki-baat-2-sports-milestones-show-changing-face-of-valley/articleshow/123622154.cms",
+        "sentiment": -0.3333333333333333
+      },
+      {
+        "title": "Shi downs Kunlavut to win first men's world title; Yamaguchi takes women's crown",
+        "source": "Japan Today",
+        "publishedAt": "2025-08-31T21:19:28Z",
+        "url": "https://japantoday.com/category/sports/shi-downs-kunlavut-to-win-first-world-title-yamaguchi-takes-women%27s-crown",
+        "sentiment": 0.0
+      },
+      {
+        "title": "These were the best-performing ASX 200 shares in August",
+        "source": "Motley Fool Australia",
+        "publishedAt": "2025-08-31T21:18:00Z",
+        "url": "https://www.fool.com.au/2025/09/01/these-were-the-best-performing-asx-200-shares-in-august-5/",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "The Flying Vet retires after 45 years treating cattle, rhinos and crocs",
+        "source": "ABC News (AU)",
+        "publishedAt": "2025-08-31T21:12:06Z",
+        "url": "https://www.abc.net.au/news/2025-09-01/the-flying-vet-peter-trembath-retires/105668480",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Live: ASX set to open lower after tech sell-off dragged Wall Street down",
+        "source": "ABC News (AU)",
+        "publishedAt": "2025-08-31T21:06:05Z",
+        "url": "https://www.abc.net.au/news/2025-09-01/asx-markets-business-news-live-updates/105718228",
+        "sentiment": 0.0
+      },
+      {
+        "title": "AI will make stocks obsolete, driving investors to Bitcoin: Analyst",
+        "source": "Cointelegraph",
+        "publishedAt": "2025-08-31T21:04:07Z",
+        "url": "https://cointelegraph.com/news/ai-stocks-obsolete-driving-investors-bitcoin",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Capstone Copper Reports Temporary Production Interruption at Mantoverde Operation",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-31T21:00:49Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/capstone-copper-reports-temporary-production-interruption-at-mantoverde-operation",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Antiques Roadshow UK S48E02 1080p HDTV H264-FTP",
+        "source": "Rlsbb.cc",
+        "publishedAt": "2025-08-31T21:00:16Z",
+        "url": "https://post.rlsbb.cc/antiques-roadshow-uk-s48e02-1080p-hdtv-h264-ftp/",
+        "sentiment": 0.0
+      },
+      {
+        "title": "1985 BMW R80 at No Reserve",
+        "source": "Bringatrailer.com",
+        "publishedAt": "2025-08-31T21:00:11Z",
+        "url": "https://bringatrailer.com/listing/1985-bmw-r80-4/",
+        "sentiment": 0.0
+      }
+    ]
+  },
+  "summary": {
+    "overall_recommendation": "بيع قوي",
+    "confidence": "عالية",
+    "risk_level": "منخفضة",
+    "trend": "صاعد قوي",
+    "key_support": 3481.1142229352677,
+    "key_resistance": 3633.3286655970983,
+    "fundamental_bias": "hawkish/bearish",
+    "news_impact": "neutral"
+  }
+}
