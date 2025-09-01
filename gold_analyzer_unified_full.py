@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Gold Analyzer — Unified Full Powerful Script (updated)
-- Full technical indicators (uses TA-Lib if available, otherwise pandas)
-- Price patterns, Fibonacci, support/resistance, volume profile
-- Market structure, divergences, correlations (with USD fallback)
-- Advanced risk metrics
-- News (NewsAPI) and Fundamentals (FRED)
-- Robust fetch with retries, logs, and single JSON output
+Gold Analyzer — Unified Full Powerful Script (updated with TA-Lib attempt, better news filter,
+USD ticker logging, improved divergence detection)
 Output: gold_analysis_unified_full.json
 """
 import os
@@ -30,6 +25,13 @@ try:
 except Exception:
     TALIB_AVAILABLE = False
 
+# For peak detection in divergence logic
+try:
+    from scipy.signal import find_peaks
+    SCIPY_AVAILABLE = True
+except Exception:
+    SCIPY_AVAILABLE = False
+
 # Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 log = logging.getLogger("gold-unified")
@@ -38,7 +40,6 @@ log = logging.getLogger("gold-unified")
 FRED_API_KEY = os.getenv("FRED_API_KEY", "")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
 
-# -------------------- Helpers --------------------
 class NumpyEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, (np.integer,)):
@@ -79,7 +80,7 @@ def safe_pct_change(series: pd.Series) -> pd.Series:
     except Exception:
         return pd.Series(dtype=float)
 
-# -------------------- Fetch market data --------------------
+# ------------- Fetch helpers -------------
 def fetch_yfinance(symbol: str, period: str = "1y", tries: int = 3, pause: float = 1.0) -> pd.DataFrame:
     import yfinance as yf
     last_err = None
@@ -92,7 +93,6 @@ def fetch_yfinance(symbol: str, period: str = "1y", tries: int = 3, pause: float
                 last_err = Exception("Empty dataframe")
                 time.sleep(pause)
                 continue
-            # Ensure required columns
             for col in ["Open", "High", "Low", "Close", "Volume"]:
                 if col not in df.columns:
                     raise ValueError(f"Missing column {col} from {symbol}")
@@ -106,37 +106,39 @@ def fetch_yfinance(symbol: str, period: str = "1y", tries: int = 3, pause: float
     log.error(f"Failed to fetch {symbol}: {last_err}")
     return pd.DataFrame()
 
-# -------------------- Robust Market Universe (USD fallback) --------------------
-def fetch_market_universe(period: str = "1y") -> Dict[str, pd.DataFrame]:
+def fetch_market_universe(period: str = "1y") -> Dict[str, Any]:
     """
-    Returns dict with keys used elsewhere:
-      - "GC=F"  -> gold futures
-      - "^DXY"  -> USD index (one of fallback symbols)
-      - "SPY"   -> S&P 500 ETF
-    Tries multiple tickers for USD index automatically.
+    Returns dict with market data plus used_symbols mapping
+    Keys: "GC=F", "^DXY", "SPY"
+    Also includes 'used_symbols' -> which symbol was used for USD index
     """
     candidates = {
         "GC=F": ["GC=F"],
         "^DXY": ["^DXY", "DX-Y.NYB", "DXY", "DX=F", "USDX"],
         "SPY": ["SPY"]
     }
-    out: Dict[str, pd.DataFrame] = {}
+    out: Dict[str, Any] = {"used_symbols": {}}
     for out_key, tries in candidates.items():
         fetched = pd.DataFrame()
+        chosen = None
         for sym in tries:
             df = fetch_yfinance(sym, period=period)
             if df is not None and not df.empty:
                 fetched = df
+                chosen = sym
                 out[out_key] = df
+                out["used_symbols"][out_key] = sym
                 log.info(f"Using symbol '{sym}' for key '{out_key}'")
                 break
             else:
                 log.debug(f"No data for symbol {sym} (key {out_key})")
         if fetched.empty:
             log.warning(f"No data found for any of {tries} (key={out_key})")
+            out[out_key] = pd.DataFrame()
+            out["used_symbols"][out_key] = None
     return out
 
-# -------------------- Technical functions --------------------
+# ------------- Technicals -------------
 def ema(series: pd.Series, span: int) -> pd.Series:
     return series.ewm(span=span, adjust=False).mean()
 
@@ -222,7 +224,7 @@ def technical_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
         log.warning(f"Volume indicators error: {e}")
     return ind
 
-# -------------------- Patterns & Candles --------------------
+# ------------- Patterns & Candles -------------
 def detect_candlestick_patterns(df: pd.DataFrame) -> Dict[str, Any]:
     if not TALIB_AVAILABLE:
         return {"note": "TA-Lib not available - candlestick patterns skipped"}
@@ -252,7 +254,7 @@ def detect_price_patterns(df: pd.DataFrame) -> Dict[str, List[int]]:
             continue
     return {"double_top": double_tops, "double_bottom": double_bottoms, "head_shoulders": [], "triangle": []}
 
-# -------------------- Enhancements --------------------
+# ------------- Enhancements -------------
 def fibonacci_levels(low: float, high: float) -> Dict[str, Dict[str, float]]:
     diff = high - low
     levels = {
@@ -360,22 +362,81 @@ def market_structure(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict[str, A
         log.warning(f"market_structure error: {e}")
         return {"error": str(e)}
 
+# ------------- Improved divergence detection -------------
 def detect_divergences(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict[str, Any]:
+    """
+    Use peak/trough detection on price and compare corresponding indicator peaks
+    to identify classic bullish/bearish divergences for RSI and MACD.
+    Returns counts, recent list (dates & type).
+    """
     try:
-        def slope(s: pd.Series) -> float:
-            s = s.dropna()
-            if len(s) < 3:
-                return 0.0
-            y = s.values
-            x = np.arange(len(y))
-            return float(np.polyfit(x, y, 1)[0])
-        window = 20
-        price_slope = slope(df["Close"].tail(window))
-        rsi_slope = slope(ind.get("rsi", pd.Series(dtype=float)).tail(window))
-        macd_slope = slope(ind.get("macd", pd.Series(dtype=float)).tail(window))
-        rsi_div = int((price_slope > 0 and rsi_slope < 0) or (price_slope < 0 and rsi_slope > 0))
-        macd_div = int((price_slope > 0 and macd_slope < 0) or (price_slope < 0 and macd_slope > 0))
-        return {"total_divergences": rsi_div + macd_div, "recent_divergences": rsi_div + macd_div, "rsi_divergences": rsi_div, "macd_divergences": macd_div}
+        close = df["Close"].values
+        dates = df.index.to_numpy()
+        window_min_prom = 1  # minimal prominence for find_peaks (small)
+        divergences = []
+        # Use scipy.find_peaks if available, else fallback to simple local-extrema method
+        if SCIPY_AVAILABLE:
+            # detect peaks and troughs
+            peaks_idx, _ = find_peaks(close, prominence=window_min_prom)
+            troughs_idx, _ = find_peaks(-close, prominence=window_min_prom)
+        else:
+            # simple deterministic local maxima/minima:
+            peaks_idx = [i for i in range(1, len(close)-1) if close[i] > close[i-1] and close[i] > close[i+1]]
+            troughs_idx = [i for i in range(1, len(close)-1) if close[i] < close[i-1] and close[i] < close[i+1]]
+        # indicators
+        rsi = ind.get("rsi", pd.Series(dtype=float)).values
+        macd = ind.get("macd", pd.Series(dtype=float)).values
+        def sample_at(idx_list, arr):
+            out = []
+            for i in idx_list:
+                if 0 <= i < len(arr):
+                    out.append((i, float(arr[i]) if not math.isnan(arr[i]) else None))
+            return out
+        # check peaks (bearish divergence: price makes higher high, indicator makes lower high)
+        peak_pairs = []
+        # consider adjacent peaks pairs
+        p_samples = sample_at(peaks_idx, close)
+        for j in range(1, len(p_samples)):
+            i0, p0 = p_samples[j-1]
+            i1, p1 = p_samples[j]
+            if p0 is None or p1 is None: continue
+            # price higher high
+            if p1 > p0:
+                # RSI at those indexes
+                r0 = rsi[i0] if i0 < len(rsi) else None
+                r1 = rsi[i1] if i1 < len(rsi) else None
+                if r0 is not None and r1 is not None and r1 < r0:
+                    divergences.append({"type":"bearish","indicator":"RSI","price_idx":int(i1),"price_date":str(dates[i1]),"price":float(p1),"indicator_prev":float(r0),"indicator_now":float(r1)})
+                # MACD
+                m0 = macd[i0] if i0 < len(macd) else None
+                m1 = macd[i1] if i1 < len(macd) else None
+                if m0 is not None and m1 is not None and m1 < m0:
+                    divergences.append({"type":"bearish","indicator":"MACD","price_idx":int(i1),"price_date":str(dates[i1]),"price":float(p1),"indicator_prev":float(m0),"indicator_now":float(m1)})
+        # check trough pairs (bullish divergence: price lower low, indicator higher low)
+        t_samples = sample_at(troughs_idx, close)
+        for j in range(1, len(t_samples)):
+            i0, p0 = t_samples[j-1]
+            i1, p1 = t_samples[j]
+            if p0 is None or p1 is None: continue
+            if p1 < p0:
+                r0 = rsi[i0] if i0 < len(rsi) else None
+                r1 = rsi[i1] if i1 < len(rsi) else None
+                if r0 is not None and r1 is not None and r1 > r0:
+                    divergences.append({"type":"bullish","indicator":"RSI","price_idx":int(i1),"price_date":str(dates[i1]),"price":float(p1),"indicator_prev":float(r0),"indicator_now":float(r1)})
+                m0 = macd[i0] if i0 < len(macd) else None
+                m1 = macd[i1] if i1 < len(macd) else None
+                if m0 is not None and m1 is not None and m1 > m0:
+                    divergences.append({"type":"bullish","indicator":"MACD","price_idx":int(i1),"price_date":str(dates[i1]),"price":float(p1),"indicator_prev":float(m0),"indicator_now":float(m1)})
+        # summarise
+        recent = sorted(divergences, key=lambda x: x["price_idx"])[-10:]
+        summary = {
+            "total_divergences": len(divergences),
+            "recent_divergences": len(recent),
+            "positive_divergences": len([d for d in recent if d["type"] == "bullish"]),
+            "negative_divergences": len([d for d in recent if d["type"] == "bearish"]),
+            "latest_divergences": recent
+        }
+        return summary
     except Exception as e:
         log.warning(f"divergence error: {e}")
         return {"error": str(e)}
@@ -436,7 +497,7 @@ def advanced_metrics(df: pd.DataFrame) -> Dict[str, Any]:
         log.warning(f"advanced_metrics error: {e}")
         return {"error": str(e)}
 
-# -------------------- Sentiment & signals --------------------
+# ------------- Sentiment & signals -------------
 def technical_sentiment(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict[str, Any]:
     try:
         out = {}
@@ -562,7 +623,7 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], patterns: Dict
         log.warning(f"generate_signals error: {e}")
         return {"error": str(e)}
 
-# -------------------- News & Fundamentals --------------------
+# ------------- News & Fundamentals (improved filter) -------------
 def simple_sentiment_text(text: str) -> float:
     if not isinstance(text, str) or not text:
         return 0.0
@@ -578,11 +639,15 @@ def simple_sentiment_text(text: str) -> float:
             score -= 1
     return max(-1.0, min(1.0, score / 3.0))
 
-def fetch_news_articles(api_key: str, q: str = "gold OR XAU OR bullion OR \"precious metals\"", page_size: int = 20) -> Dict[str, Any]:
+def fetch_news_articles(api_key: str, q: str = None, page_size: int = 25) -> Dict[str, Any]:
     if not api_key:
         return {"error": "NEWS_API_KEY missing"}
+    # improved query and preferred domains
+    if q is None:
+        q = '(gold OR "gold price" OR XAU OR bullion OR "precious metals" OR COMEX) AND (goldman OR bloomberg OR reuters OR fed OR inflation OR cpi OR dollar OR usd OR fed OR goldman OR etf OR mining OR "safe haven")'
+    domains = "reuters.com,bloomberg.com,ft.com,wsj.com,marketwatch.com,barrons.com,investing.com,kitco.com,kitco,zerohedge.com,financialpost.com"
     url = "https://newsapi.org/v2/everything"
-    params = {"q": q, "language": "en", "sortBy": "publishedAt", "pageSize": page_size, "apiKey": api_key}
+    params = {"q": q, "language": "en", "sortBy": "publishedAt", "pageSize": page_size, "apiKey": api_key, "domains": domains}
     try:
         r = requests.get(url, params=params, timeout=15)
         r.raise_for_status()
@@ -664,8 +729,8 @@ def fundamental_block(api_key: str) -> Dict[str, Any]:
     out["fundamental_bias"] = "dovish/bullish" if bias > 0 else ("hawkish/bearish" if bias < 0 else "neutral")
     return out
 
-# -------------------- Build report --------------------
-def build_unified_report(data: Dict[str, pd.DataFrame]) -> Dict[str, Any]:
+# ------------- Build report -------------
+def build_unified_report(data: Dict[str, Any]) -> Dict[str, Any]:
     gold = data.get("GC=F", pd.DataFrame())
     if gold is None or gold.empty:
         return {"error": "GC=F data unavailable"}
@@ -687,6 +752,7 @@ def build_unified_report(data: Dict[str, pd.DataFrame]) -> Dict[str, Any]:
     news = fetch_news_articles(NEWS_API_KEY)
     report = {
         "metadata": {"version": "unified-full-v1", "symbol": "GC=F", "period": "1y", "analysis_date": dt.datetime.utcnow().isoformat(), "data_points": int(gold.shape[0]), "talib": TALIB_AVAILABLE},
+        "used_symbols": data.get("used_symbols", {}),
         "current_market_data": {"current_price": clean_scalar(gold["Close"].iloc[-1]), "daily_change": clean_scalar(gold["Close"].iloc[-1] - gold["Close"].iloc[-2]) if gold.shape[0] > 1 else None, "daily_change_percent": clean_scalar(((gold["Close"].iloc[-1] / gold["Close"].iloc[-2]) - 1) * 100) if gold.shape[0] > 1 else None, "volume": clean_scalar(int(gold["Volume"].iloc[-1])), "high": clean_scalar(gold["High"].iloc[-1]), "low": clean_scalar(gold["Low"].iloc[-1])},
         "signals": convert_numpy_types(sig),
         "technical_indicators": convert_numpy_types({k: (v.iloc[-1] if (isinstance(v, pd.Series) and not v.empty) else None) for k, v in ind.items()}),
@@ -699,7 +765,6 @@ def build_unified_report(data: Dict[str, pd.DataFrame]) -> Dict[str, Any]:
     }
     return convert_numpy_types(report)
 
-# -------------------- Save --------------------
 def save_report(report: Dict[str, Any], filename: str = "gold_analysis_unified_full.json") -> bool:
     try:
         with open(filename, "w", encoding="utf-8") as f:
@@ -710,7 +775,6 @@ def save_report(report: Dict[str, Any], filename: str = "gold_analysis_unified_f
         log.error(f"save_report error: {e}")
         return False
 
-# -------------------- Main --------------------
 def main():
     log.info("Starting unified full gold analysis...")
     data = fetch_market_universe(period="1y")
