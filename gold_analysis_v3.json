@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-09-01T15:21:38.712806",
+  "timestamp": "2025-09-01T18:29:35.981321",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
@@ -19,19 +19,19 @@
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3546.4,
+    "current_price": 3542.0,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3512.15,
-        "conservative": 3500.74,
-        "moderate": 3477.9,
-        "wide": 3455.07
+        "tight": 3507.75,
+        "conservative": 3496.34,
+        "moderate": 3473.5,
+        "wide": 3450.67
       },
       "profit_targets": {
-        "target_1": 3592.06,
-        "target_2": 3637.73,
-        "target_3": 3698.61,
-        "target_4": 3789.94
+        "target_1": 3587.66,
+        "target_2": 3633.33,
+        "target_3": 3694.21,
+        "target_4": 3785.54
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -84,19 +84,19 @@
       }
     ],
     "technical_summary": {
-      "rsi": 82.5,
-      "macd": 30.13,
-      "williams_r": -4.3,
-      "stoch_k": 95.7,
-      "bb_position": 1.23,
-      "volume_ratio": 15.42
+      "rsi": 82.2,
+      "macd": 29.78,
+      "williams_r": -6.1,
+      "stoch_k": 93.9,
+      "bb_position": 1.22,
+      "volume_ratio": 15.65
     },
     "key_levels": {
-      "sma_20": 3382.59,
-      "sma_50": 3355.63,
-      "sma_200": 3069.88,
-      "bb_upper": 3494.73,
-      "bb_lower": 3270.46
+      "sma_20": 3382.37,
+      "sma_50": 3355.55,
+      "sma_200": 3069.86,
+      "bb_upper": 3493.17,
+      "bb_lower": 3271.58
     }
   },
   "mtf_analysis": {},
@@ -109,7 +109,7 @@
     "fib_61_8": 3369.66,
     "fib_78_6": 3318.71,
     "analysis": "السعر قوي جداً فوق 23.6% - اتجاه صاعد قوي",
-    "current_position": 96.47
+    "current_position": 95.02
   },
   "support_resistance": {
     "resistance_levels": [
@@ -125,13 +125,13 @@
     "nearest_resistance": null,
     "nearest_support": 3282.0,
     "price_to_resistance": null,
-    "price_to_support": 7.46
+    "price_to_support": 7.34
   },
   "volume_analysis": {
-    "current_volume": 113110,
-    "avg_volume_5": 23861,
-    "avg_volume_20": 7333,
-    "volume_ratio": 15.42,
+    "current_volume": 120535,
+    "avg_volume_5": 25346,
+    "avg_volume_20": 7704,
+    "volume_ratio": 15.65,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -164,7 +164,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-09-01T15:21:37.186560",
+    "last_update": "2025-09-01T18:29:34.740037",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -316,6 +316,236 @@
           "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-prices-rally-to-3-week-high-silver-hits-new-peak-above-rs-1-17-lakh/kg-should-you-buy/articleshow/123579016.cms"
         },
         {
+          "type": "central_bank",
+          "title": "Yen-Backed Stablecoin Can’t Come at a Better Time as BOJ Seen Raising Rates",
+          "source": "CoinDesk",
+          "published": "2025-08-31T18:00:44Z",
+          "entities": [
+            [
+              "Yen-Backed Stablecoin",
+              "PERSON"
+            ],
+            [
+              "Better Time",
+              "ORG"
+            ],
+            [
+              "Seen Raising Rates Top",
+              "ORG"
+            ],
+            [
+              "BOJ",
+              "ORG"
+            ],
+            [
+              "the fourth quarter",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "fourth",
+              "context": "rates in the fourth quarter ,"
+            }
+          ],
+          "sentiment_score": 0.3333333333333333,
+          "impact_score": 0.67,
+          "url": "https://www.coindesk.com/markets/2025/08/31/yen-backed-stablecoin-can-t-come-at-a-better-time-as-boj-seen-raising-rates"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Republican lawmaker Lankford says it's important for Fed to be independent",
+          "source": "Yahoo Entertainment",
+          "published": "2025-08-31T17:35:18Z",
+          "entities": [
+            [
+              "Republican",
+              "NORP"
+            ],
+            [
+              "Lankford",
+              "PERSON"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "WASHINGTON",
+              "GPE"
+            ],
+            [
+              "Reuters",
+              "ORG"
+            ],
+            [
+              "Republican",
+              "NORP"
+            ],
+            [
+              "U.S.",
+              "GPE"
+            ],
+            [
+              "Sunday",
+              "DATE"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.13333333333333333,
+          "impact_score": -0.4,
+          "url": "https://ca.finance.yahoo.com/news/republican-lawmaker-lankford-says-important-173518877.html"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Duplicity at the Fed",
+          "source": "Freerepublic.com",
+          "published": "2025-08-31T17:19:28Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Federal Reserve System",
+              "ORG"
+            ],
+            [
+              "Congressionally",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.38750000000000007,
+          "impact_score": -1.16,
+          "url": "https://freerepublic.com/focus/f-news/4337816/posts"
+        },
+        {
+          "type": "interest_rate",
+          "title": "How interest rate changes impact your home loan",
+          "source": "Rolling Out",
+          "published": "2025-08-31T16:00:59Z",
+          "entities": [
+            [
+              "quarter",
+              "CARDINAL"
+            ],
+            [
+              "monthly",
+              "DATE"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://rollingout.com/2025/08/31/interest-rate-change-impact-home-loan/"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Khanna Calls Trump's Fed Moves 'Nixon Playbook'",
+          "source": "Biztoc.com",
+          "published": "2025-08-31T15:55:17Z",
+          "entities": [
+            [
+              "Khanna Calls",
+              "PERSON"
+            ],
+            [
+              "Trump",
+              "ORG"
+            ],
+            [
+              "Fed Moves '",
+              "ORG"
+            ],
+            [
+              "Nixon Playbook'",
+              "PERSON"
+            ],
+            [
+              "12",
+              "CARDINAL"
+            ],
+            [
+              "Khanna Calls",
+              "PERSON"
+            ],
+            [
+              "Trump",
+              "ORG"
+            ],
+            [
+              "Fed Moves '",
+              "ORG"
+            ],
+            [
+              "Nixon Playbook'",
+              "PERSON"
+            ],
+            [
+              "Khanna",
+              "PERSON"
+            ],
+            [
+              "NBC News",
+              "ORG"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "12",
+              "context": "Nixon Playbook ' 12 min ago"
+            }
+          ],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://biztoc.com/x/647de846a5dff9d9"
+        },
+        {
+          "type": "interest_rate",
+          "title": "How the Fed losing its independence could affect Americans' everyday lives",
+          "source": "The Times of India",
+          "published": "2025-08-31T15:37:21Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Americans",
+              "NORP"
+            ],
+            [
+              "Trump",
+              "PERSON"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": -0.010000000000000009,
+          "impact_score": 0.03,
+          "url": "https://economictimes.indiatimes.com/news/international/global-trends/how-the-fed-losing-its-independence-could-affect-americans-everyday-lives/articleshow/123617545.cms"
+        },
+        {
           "type": "interest_rate",
           "title": "WATCH: Peter Navarro reveals what Fed Governor Lisa Cook needs to do amid Trump’s push to fire her",
           "source": "Wnd.com",
@@ -415,311 +645,27 @@
           "sentiment_score": 0.2898989898989899,
           "impact_score": 0.72,
           "url": "http://www.newsbtc.com/altcoin/eth-and-btc-etfs-reverse-gains-with-291m-in-outflows-ahead-of-new-week/"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Fed governor Lisa Cook should release mortgage documents, Democratic lawmaker says",
-          "source": "USA Today",
-          "published": "2025-08-31T14:49:08Z",
-          "entities": [
-            [
-              "Fed",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "Democratic",
-              "NORP"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "Trump",
-              "PERSON"
-            ],
-            [
-              "Ro Khanna",
-              "PERSON"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://www.usatoday.com/story/news/politics/2025/08/31/fed-governor-lisa-cook-release-mortgage-documents/85919673007/"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Ro Khanna says Lisa Cook ‘should release’ her records despite Trump trying to ‘bully the Fed’",
-          "source": "Biztoc.com",
-          "published": "2025-08-31T14:25:39Z",
-          "entities": [
-            [
-              "Ro Khanna",
-              "PERSON"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "Trump",
-              "ORG"
-            ],
-            [
-              "Fed",
-              "ORG"
-            ],
-            [
-              "Ro Khanna",
-              "PERSON"
-            ],
-            [
-              "Calif.",
-              "GPE"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "Trump",
-              "PERSON"
-            ],
-            [
-              "Richard Nixon",
-              "PERSON"
-            ],
-            [
-              "Fed",
-              "ORG"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://biztoc.com/x/69c0411a80514964"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Rep. Ro Khanna says Trump is following Nixon's playbook in attempt to 'interfere' with the Federal Reserve",
-          "source": "Biztoc.com",
-          "published": "2025-08-31T14:14:11Z",
-          "entities": [
-            [
-              "Ro Khanna",
-              "PERSON"
-            ],
-            [
-              "Trump",
-              "PERSON"
-            ],
-            [
-              "Nixon",
-              "PERSON"
-            ],
-            [
-              "the Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Ro Khanna",
-              "PERSON"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "Trump",
-              "ORG"
-            ],
-            [
-              "Nixon",
-              "PERSON"
-            ],
-            [
-              "Fed",
-              "ORG"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://biztoc.com/x/94ed84c00ddabd35"
-        },
-        {
-          "type": "interest_rate",
-          "title": "The Fed’s Lisa Cook doesn’t get the joke: Trump can fire her for ANY reason",
-          "source": "New York Post",
-          "published": "2025-08-31T14:12:03Z",
-          "entities": [
-            [
-              "Fed",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "Donald Trump",
-              "PERSON"
-            ],
-            [
-              "the Federal Reserve",
-              "ORG"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.1,
-          "impact_score": -0.3,
-          "url": "https://nypost.com/2025/08/31/opinion/the-feds-lisa-cook-doesnt-get-the-joke-trump-can-fire-her-for-any-reason/"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Gold's Record Run Faces Test As Focus Shifts To US Data, Fed Rate Cut Signals",
-          "source": "Ndtvprofit.com",
-          "published": "2025-08-31T14:07:47Z",
-          "entities": [
-            [
-              "Focus Shifts",
-              "PERSON"
-            ],
-            [
-              "US Data",
-              "ORG"
-            ],
-            [
-              "Fed Rate Cut Signals Gold",
-              "ORG"
-            ],
-            [
-              "last week",
-              "DATE"
-            ],
-            [
-              "the coming days",
-              "DATE"
-            ],
-            [
-              "US",
-              "GPE"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.1,
-          "impact_score": -0.3,
-          "url": "https://www.ndtvprofit.com/markets/golds-record-run-faces-test-as-focus-shifts-to-us-data-and-fed-rate-cut-signals-analysts"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Rep. Ro Khanna says Trump is following Nixon's playbook in attempt to 'interfere' with the Federal Reserve (Megan Lebowitz/NBC News)",
-          "source": "Memeorandum.com",
-          "published": "2025-08-31T14:05:00Z",
-          "entities": [
-            [
-              "Ro Khanna",
-              "PERSON"
-            ],
-            [
-              "Trump",
-              "PERSON"
-            ],
-            [
-              "Nixon",
-              "PERSON"
-            ],
-            [
-              "the Federal Reserve",
-              "ORG"
-            ],
-            [
-              "Megan Lebowitz",
-              "ORG"
-            ],
-            [
-              "NBC News",
-              "ORG"
-            ],
-            [
-              "Megan Lebowitz",
-              "PERSON"
-            ],
-            [
-              "NBC News",
-              "ORG"
-            ],
-            [
-              "Ro Khanna",
-              "PERSON"
-            ],
-            [
-              "Trump",
-              "PERSON"
-            ],
-            [
-              "Nixon",
-              "PERSON"
-            ],
-            [
-              "the Federal Reserve",
-              "ORG"
-            ],
-            [
-              "California",
-              "GPE"
-            ],
-            [
-              "Fed",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.0,
-          "impact_score": -0.0,
-          "url": "https://www.memeorandum.com/250831/p55"
         }
       ],
       "event_summary": {
-        "interest_rate": 24,
+        "interest_rate": 18,
         "dollar": 3,
-        "geopolitical": 5,
-        "inflation": 5,
-        "central_bank": 1
+        "central_bank": 2,
+        "geopolitical": 7,
+        "inflation": 5
       },
-      "total_impact": -1.79,
+      "total_impact": -0.31,
       "dominant_theme": "geopolitical",
       "recommendation": "تأثير محايد أو مختلط"
     },
-    "articles_count": 92
+    "articles_count": 88
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -277278.48,
-    "total_return": -2872.78,
+    "final_value": -276095.37,
+    "total_return": -2860.95,
     "sharpe_ratio": -0.674,
-    "max_drawdown": 2058.21,
+    "max_drawdown": 2049.85,
     "total_trades": 2,
     "winning_trades": 0,
     "losing_trades": 1,
@@ -734,7 +680,7 @@
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-09-01 15:21:38",
+    "last_update": "2025-09-01 18:29:35",
     "data_points": 555,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
