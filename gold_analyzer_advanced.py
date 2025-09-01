@@ -21,7 +21,12 @@ import seaborn as sns
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
-import talib
+try:
+    import talib
+    TALIB_AVAILABLE = True
+except ImportError:
+    TALIB_AVAILABLE = False
+    print("Warning: TA-Lib not available, using alternative indicators")
 import warnings
 import json
 import datetime
@@ -79,27 +84,42 @@ class AdvancedGoldAnalyzerV6:
         indicators = {}
         
         try:
-            # مؤشرات الاتجاه
-            indicators['sma_20'] = talib.SMA(self.data['Close'], timeperiod=20)
-            indicators['sma_50'] = talib.SMA(self.data['Close'], timeperiod=50)
-            indicators['sma_200'] = talib.SMA(self.data['Close'], timeperiod=200)
-            indicators['ema_12'] = talib.EMA(self.data['Close'], timeperiod=12)
-            indicators['ema_26'] = talib.EMA(self.data['Close'], timeperiod=26)
+            if TALIB_AVAILABLE:
+                # مؤشرات الاتجاه
+                indicators['sma_20'] = talib.SMA(self.data['Close'], timeperiod=20)
+                indicators['sma_50'] = talib.SMA(self.data['Close'], timeperiod=50)
+                indicators['sma_200'] = talib.SMA(self.data['Close'], timeperiod=200)
+                indicators['ema_12'] = talib.EMA(self.data['Close'], timeperiod=12)
+                indicators['ema_26'] = talib.EMA(self.data['Close'], timeperiod=26)
+            else:
+                # استخدام pandas للبدائل
+                indicators['sma_20'] = self.data['Close'].rolling(window=20).mean()
+                indicators['sma_50'] = self.data['Close'].rolling(window=50).mean()
+                indicators['sma_200'] = self.data['Close'].rolling(window=200).mean()
+                indicators['ema_12'] = self.data['Close'].ewm(span=12).mean()
+                indicators['ema_26'] = self.data['Close'].ewm(span=26).mean()
             
             # مؤشرات الزخم
-            indicators['rsi'] = talib.RSI(self.data['Close'], timeperiod=14)
-            indicators['macd'], indicators['macd_signal'], indicators['macd_hist'] = talib.MACD(
-                self.data['Close'], fastperiod=12, slowperiod=26, signalperiod=9
-            )
-            indicators['stoch_k'], indicators['stoch_d'] = talib.STOCH(
-                self.data['High'], self.data['Low'], self.data['Close'],
-                fastk_period=14, slowk_period=3, slowd_period=3
-            )
-            indicators['williams_r'] = talib.WILLR(self.data['High'], self.data['Low'], self.data['Close'], timeperiod=14)
-            indicators['cci'] = talib.CCI(self.data['High'], self.data['Low'], self.data['Close'], timeperiod=14)
-            indicators['adx'] = talib.ADX(self.data['High'], self.data['Low'], self.data['Close'], timeperiod=14)
-            indicators['trix'] = talib.TRIX(self.data['Close'], timeperiod=30)
-            indicators['ultosc'] = talib.ULTOSC(self.data['High'], self.data['Low'], self.data['Close'])
+            if TALIB_AVAILABLE:
+                indicators['rsi'] = talib.RSI(self.data['Close'], timeperiod=14)
+                indicators['macd'], indicators['macd_signal'], indicators['macd_hist'] = talib.MACD(
+                    self.data['Close'], fastperiod=12, slowperiod=26, signalperiod=9
+                )
+                indicators['stoch_k'], indicators['stoch_d'] = talib.STOCH(
+                    self.data['High'], self.data['Low'], self.data['Close'],
+                    fastk_period=14, slowk_period=3, slowd_period=3
+                )
+                indicators['williams_r'] = talib.WILLR(self.data['High'], self.data['Low'], self.data['Close'], timeperiod=14)
+                indicators['cci'] = talib.CCI(self.data['High'], self.data['Low'], self.data['Close'], timeperiod=14)
+                indicators['adx'] = talib.ADX(self.data['High'], self.data['Low'], self.data['Close'], timeperiod=14)
+                indicators['trix'] = talib.TRIX(self.data['Close'], timeperiod=30)
+                indicators['ultosc'] = talib.ULTOSC(self.data['High'], self.data['Low'], self.data['Close'])
+            else:
+                # بدائل بسيطة
+                indicators['rsi'] = self._calculate_rsi(self.data['Close'], 14)
+                indicators['macd'] = self._calculate_macd(self.data['Close'])
+                indicators['macd_signal'] = indicators['macd'].ewm(span=9).mean()
+                indicators['macd_hist'] = indicators['macd'] - indicators['macd_signal']
             
             # مؤشرات التذبذب
             indicators['bbands_upper'], indicators['bbands_middle'], indicators['bbands_lower'] = talib.BBANDS(
@@ -504,6 +524,28 @@ class AdvancedGoldAnalyzerV6:
                 return current_price * 1.08  # 8% ربح
         except:
             return current_price * 1.08
+    
+    def _calculate_rsi(self, prices: pd.Series, period: int = 14) -> pd.Series:
+        """حساب RSI بدون talib"""
+        try:
+            delta = prices.diff()
+            gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
+            loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+            rs = gain / loss
+            rsi = 100 - (100 / (1 + rs))
+            return rsi
+        except:
+            return pd.Series([50] * len(prices), index=prices.index)
+    
+    def _calculate_macd(self, prices: pd.Series, fast: int = 12, slow: int = 26) -> pd.Series:
+        """حساب MACD بدون talib"""
+        try:
+            ema_fast = prices.ewm(span=fast).mean()
+            ema_slow = prices.ewm(span=slow).mean()
+            macd = ema_fast - ema_slow
+            return macd
+        except:
+            return pd.Series([0] * len(prices), index=prices.index)
     
     def generate_advanced_report_v6(self) -> Dict:
         """توليد التقرير المتقدم V6.0"""
