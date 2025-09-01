@@ -1,19 +1,106 @@
-# Data and Finance
-yfinance
-pandas
-numpy
-backtrader
+# متطلبات النسخة المتقدمة V6.0
+yfinance>=0.2.18
+pandas>=1.5.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+xgboost>=1.7.0
+textblob>=0.17.1
+spacy>=3.5.0
+backtrader>=1.9.76
+aiohttp>=3.8.0
+requests>=2.28.0
 
-# Machine Learning
-scikit-learn
-xgboost
-joblib
+# مكتبات جديدة للنسخة المتقدمة
+talib-binary>=0.4.24
+plotly>=5.15.0
+seaborn>=0.12.0
+matplotlib>=3.6.0
 
-# Natural Language Processing (NLP)
-spacy==3.7.2
-textblob
-https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1.tar.gz#egg=en_core_web_sm
+# مكتبات إضافية للتحليل المتقدم
+scipy>=1.10.0
+statsmodels>=0.14.0
+ta>=0.10.2
+pandas-ta>=0.3.14b
 
-# Web and Async
-requests
-aiohttp
+# مكتبات للتعلم الآلي المتقدم
+tensorflow>=2.12.0
+torch>=2.0.0
+lightgbm>=3.3.0
+catboost>=1.2.0
+
+# مكتبات للتحليل الإحصائي
+scipy>=1.10.0
+statsmodels>=0.14.0
+
+# مكتبات للرسوم البيانية المتقدمة
+plotly>=5.15.0
+dash>=2.10.0
+bokeh>=3.1.0
+
+# مكتبات للتحليل الزمني
+arch>=6.2.0
+pykalman>=0.9.5
+
+# مكتبات للتحليل المالي المتقدم
+empyrical>=0.5.5
+pyfolio>=0.9.2
+quantstats>=0.0.59
+
+# مكتبات للتحليل الاجتماعي
+tweepy>=4.14.0
+reddit-api>=1.0.0
+
+# مكتبات للتحليل الاقتصادي
+fredapi>=0.5.0
+alpha-vantage>=2.3.1
+
+# مكتبات للتحليل الجغرافي
+geopy>=2.3.0
+folium>=0.14.0
+
+# مكتبات للتحليل اللغوي المتقدم
+nltk>=3.8.1
+transformers>=4.25.0
+sentence-transformers>=2.2.2
+
+# مكتبات للتحليل الصوتي
+librosa>=0.10.0
+soundfile>=0.12.1
+
+# مكتبات للتحليل البصري
+opencv-python>=4.7.0
+pillow>=9.4.0
+
+# مكتبات للتحليل الشبكي
+networkx>=3.0
+igraph>=0.10.0
+
+# مكتبات للتحليل المتوازي
+multiprocessing-logging>=0.3.4
+joblib>=1.2.0
+
+# مكتبات للتحليل الآمن
+cryptography>=40.0.0
+hashlib>=3.2
+
+# مكتبات للتحليل السريع
+numba>=0.57.0
+cython>=0.29.33
+
+# مكتبات للتحليل التفاعلي
+ipywidgets>=8.0.0
+jupyter>=1.0.0
+
+# مكتبات للتحليل الموزع
+dask>=2023.3.0
+vaex>=4.14.0
+
+# مكتبات للتحليل في الوقت الفعلي
+websockets>=11.0.0
+asyncio-mqtt>=0.11.0
+
+# مكتبات للتحليل المحسن
+numba>=0.57.0
+mypy>=1.3.0
+black>=23.3.0
+flake8>=6.0.0
