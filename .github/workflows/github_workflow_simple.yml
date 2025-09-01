@@ -1,0 +1,654 @@
+name: Gold Analysis Advanced V6.0 - Auto-Commit
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # كل 4 ساعات
+  workflow_dispatch:  # تشغيل يدوي
+  push:
+    branches: [ main ]
+
+jobs:
+  analyze-gold:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install yfinance pandas numpy scikit-learn xgboost
+        pip install textblob spacy backtrader aiohttp requests
+        pip install plotly seaborn matplotlib scipy statsmodels
+        python -m spacy download en_core_web_sm
+        
+    - name: Create main analyzer script
+      run: |
+        cat > gold_analyzer_advanced.py << 'EOF'
+#!/usr/bin/env python3
+"""
+محلل الذهب المتقدم - الإصدار 6.0
+نسخة قوية جداً مع ميزات متقدمة للتداول الاحترافي
+"""
+
+import yfinance as yf
+import pandas as pd
+import numpy as np
+import json
+import os
+from datetime import datetime, timedelta
+import warnings
+
+warnings.filterwarnings('ignore')
+
+class AdvancedGoldAnalyzerV6:
+    """محلل الذهب المتقدم الإصدار 6.0"""
+    
+    def __init__(self):
+        self.symbols = {
+            'gold': 'GC=F', 'gold_etf': 'GLD', 'dxy': 'DX-Y.NYB',
+            'vix': '^VIX', 'treasury': '^TNX', 'oil': 'CL=F',
+            'spy': 'SPY', 'usdeur': 'EURUSD=X', 'silver': 'SI=F'
+        }
+        
+        # إعدادات متقدمة
+        self.overbought_threshold = 70
+        self.oversold_threshold = 30
+        self.extreme_overbought = 80
+        self.extreme_oversold = 20
+    
+    def fetch_advanced_data(self):
+        """جلب بيانات متقدمة مع معالجة الأخطاء"""
+        print("📊 جلب بيانات متقدمة...")
+        try:
+            # البيانات اليومية
+            daily_data = yf.download(self.symbols['gold'], 
+                                    period="2y", interval="1d", 
+                                    progress=False)
+            
+            if daily_data.empty: 
+                raise ValueError("فشل جلب البيانات")
+            
+            return daily_data
+        except Exception as e:
+            print(f"❌ خطأ في جلب البيانات: {e}")
+            return None
+    
+    def calculate_advanced_indicators(self, data):
+        """حساب المؤشرات المتقدمة"""
+        print("📊 حساب المؤشرات المتقدمة...")
+        try:
+            df = data.copy()
+            
+            # المتوسطات المتحركة
+            df['SMA_10'] = df['Close'].rolling(window=10).mean()
+            df['SMA_20'] = df['Close'].rolling(window=20).mean()
+            df['SMA_50'] = df['Close'].rolling(window=50).mean()
+            df['SMA_200'] = df['Close'].rolling(window=200).mean()
+            
+            # EMA
+            df['EMA_9'] = df['Close'].ewm(span=9).mean()
+            df['EMA_21'] = df['Close'].ewm(span=21).mean()
+            
+            # RSI
+            delta = df['Close'].diff()
+            gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
+            loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
+            rs = gain / loss
+            df['RSI'] = 100 - (100 / (1 + rs))
+            
+            # MACD
+            exp1 = df['Close'].ewm(span=12).mean()
+            exp2 = df['Close'].ewm(span=26).mean()
+            df['MACD'] = exp1 - exp2
+            df['MACD_Signal'] = df['MACD'].ewm(span=9).mean()
+            df['MACD_Histogram'] = df['MACD'] - df['MACD_Signal']
+            
+            # Bollinger Bands
+            df['BB_Middle'] = df['Close'].rolling(window=20).mean()
+            bb_std = df['Close'].rolling(window=20).std()
+            df['BB_Upper'] = df['BB_Middle'] + (bb_std * 2)
+            df['BB_Lower'] = df['BB_Middle'] - (bb_std * 2)
+            df['BB_Position'] = (df['Close'] - df['BB_Lower']) / (df['BB_Upper'] - df['BB_Lower'])
+            
+            # Stochastic
+            low_min = df['Low'].rolling(window=14).min()
+            high_max = df['High'].rolling(window=14).max()
+            df['Stoch_K'] = 100 * ((df['Close'] - low_min) / (high_max - low_min))
+            df['Stoch_D'] = df['Stoch_K'].rolling(window=3).mean()
+            
+            # Williams %R
+            df['Williams_R'] = -100 * ((high_max - df['Close']) / (high_max - low_min))
+            
+            # ATR
+            high_low = df['High'] - df['Low']
+            high_close = np.abs(df['High'] - df['Close'].shift())
+            low_close = np.abs(df['Low'] - df['Close'].shift())
+            ranges = pd.concat([high_low, high_close, low_close], axis=1)
+            true_range = np.max(ranges, axis=1)
+            df['ATR'] = true_range.rolling(window=14).mean()
+            
+            # Volume indicators
+            df['Volume_SMA'] = df['Volume'].rolling(window=20).mean()
+            df['Volume_Ratio'] = df['Volume'] / df['Volume_SMA']
+            
+            return df.dropna()
+        except Exception as e:
+            print(f"❌ خطأ في حساب المؤشرات: {e}")
+            return data
+    
+    def analyze_market_sentiment(self, data):
+        """تحليل مشاعر السوق المتقدم"""
+        print("😊 تحليل مشاعر السوق...")
+        try:
+            latest = data.iloc[-1]
+            
+            sentiment_score = 0
+            sentiment_factors = []
+            
+            # RSI Sentiment
+            rsi = latest.get('RSI', 50)
+            if rsi > 70:
+                sentiment_score -= 2
+                sentiment_factors.append(f"RSI تشبع ({rsi:.1f})")
+            elif rsi < 30:
+                sentiment_score += 2
+                sentiment_factors.append(f"RSI ذروة بيع ({rsi:.1f})")
+            
+            # MACD Sentiment
+            macd = latest.get('MACD', 0)
+            macd_signal = latest.get('MACD_Signal', 0)
+            if macd > macd_signal:
+                sentiment_score += 1
+                sentiment_factors.append("MACD إيجابي")
+            else:
+                sentiment_score -= 1
+                sentiment_factors.append("MACD سلبي")
+            
+            # Bollinger Bands Sentiment
+            bb_position = latest.get('BB_Position', 0.5)
+            if bb_position > 1.0:
+                sentiment_score -= 1
+                sentiment_factors.append("فوق بولينجر العلوي")
+            elif bb_position < 0.0:
+                sentiment_score += 1
+                sentiment_factors.append("تحت بولينجر السفلي")
+            
+            # Stochastic Sentiment
+            stoch_k = latest.get('Stoch_K', 50)
+            stoch_d = latest.get('Stoch_D', 50)
+            if stoch_k > 80 and stoch_d > 80:
+                sentiment_score -= 1
+                sentiment_factors.append("Stochastic تشبع")
+            elif stoch_k < 20 and stoch_d < 20:
+                sentiment_score += 1
+                sentiment_factors.append("Stochastic ذروة بيع")
+            
+            # تحديد المشاعر
+            if sentiment_score >= 3:
+                sentiment = "إيجابي قوي"
+            elif sentiment_score >= 1:
+                sentiment = "إيجابي"
+            elif sentiment_score <= -3:
+                sentiment = "سلبي قوي"
+            elif sentiment_score <= -1:
+                sentiment = "سلبي"
+            else:
+                sentiment = "محايد"
+            
+            return {
+                'score': sentiment_score,
+                'sentiment': sentiment,
+                'factors': sentiment_factors,
+                'confidence': abs(sentiment_score) / 4
+            }
+        except Exception as e:
+            print(f"❌ خطأ في تحليل المشاعر: {e}")
+            return {'score': 0, 'sentiment': 'محايد', 'factors': [], 'confidence': 0}
+    
+    def calculate_advanced_risk_metrics(self, data):
+        """حساب مقاييس المخاطر المتقدمة"""
+        print("⚠️ حساب مقاييس المخاطر المتقدمة...")
+        try:
+            latest = data.iloc[-1]
+            
+            # حساب التذبذب التاريخي
+            returns = data['Close'].pct_change().dropna()
+            volatility = returns.std() * np.sqrt(252)
+            
+            # حساب Value at Risk (VaR)
+            var_95 = np.percentile(returns, 5)
+            
+            # حساب Maximum Drawdown
+            cumulative_returns = (1 + returns).cumprod()
+            running_max = cumulative_returns.expanding().max()
+            drawdown = (cumulative_returns - running_max) / running_max
+            max_drawdown = drawdown.min()
+            
+            # حساب Sharpe Ratio
+            risk_free_rate = 0.02
+            excess_returns = returns - risk_free_rate/252
+            sharpe_ratio = excess_returns.mean() / returns.std() * np.sqrt(252)
+            
+            return {
+                'volatility': volatility,
+                'var_95': var_95,
+                'max_drawdown': max_drawdown,
+                'sharpe_ratio': sharpe_ratio,
+                'current_risk_level': self._calculate_current_risk_level(volatility, var_95, latest)
+            }
+        except Exception as e:
+            print(f"❌ خطأ في حساب مقاييس المخاطر: {e}")
+            return {}
+    
+    def _calculate_current_risk_level(self, volatility, var_95, latest):
+        """حساب مستوى المخاطر الحالي"""
+        try:
+            risk_score = 0
+            
+            if volatility > 0.3:
+                risk_score += 3
+            elif volatility > 0.2:
+                risk_score += 2
+            elif volatility > 0.15:
+                risk_score += 1
+            
+            if var_95 < -0.05:
+                risk_score += 2
+            elif var_95 < -0.03:
+                risk_score += 1
+            
+            rsi = latest.get('RSI', 50)
+            if rsi > 80:
+                risk_score += 2
+            elif rsi > 70:
+                risk_score += 1
+            
+            bb_position = latest.get('BB_Position', 0.5)
+            if bb_position > 1.0:
+                risk_score += 1
+            
+            if risk_score >= 5:
+                return "عالي جداً"
+            elif risk_score >= 3:
+                return "عالي"
+            elif risk_score >= 1:
+                return "متوسط"
+            else:
+                return "منخفض"
+        except:
+            return "متوسط"
+    
+    def generate_advanced_signals_v6(self, data, sentiment, risk_metrics):
+        """توليد إشارات متقدمة V6"""
+        print("🎯 توليد إشارات متقدمة V6...")
+        
+        try:
+            latest = data.iloc[-1]
+            current_price = latest['Close']
+            
+            # تحليل شامل
+            technical_analysis = self._analyze_technical_indicators(latest)
+            sentiment_analysis = self._analyze_sentiment(sentiment)
+            risk_analysis = self._analyze_risk(risk_metrics)
+            
+            # حساب النتيجة الإجمالية
+            total_score = (
+                technical_analysis['score'] * 0.5 +
+                sentiment_analysis['score'] * 0.3 +
+                risk_analysis['score'] * 0.2
+            )
+            
+            # تحديد الإشارة
+            if total_score >= 2:
+                signal = "Strong Buy"
+                confidence = "Very High"
+                action = "شراء قوي - فرصة ممتازة"
+            elif total_score >= 1:
+                signal = "Buy"
+                confidence = "High"
+                action = "شراء - فرصة جيدة"
+            elif total_score <= -2:
+                signal = "Strong Sell"
+                confidence = "Very High"
+                action = "بيع قوي - خطر كبير"
+            elif total_score <= -1:
+                signal = "Sell"
+                confidence = "High"
+                action = "بيع - خطر واضح"
+            else:
+                signal = "Hold"
+                confidence = "Low"
+                action = "انتظار - عدم وضوح"
+            
+            # إدارة المخاطر المتقدمة
+            risk_management = self._generate_advanced_risk_management(
+                current_price, risk_metrics, technical_analysis
+            )
+            
+            return {
+                'signal': signal,
+                'confidence': confidence,
+                'action': action,
+                'current_price': round(current_price, 2),
+                'total_score': round(total_score, 2),
+                'technical_analysis': technical_analysis,
+                'sentiment_analysis': sentiment_analysis,
+                'risk_analysis': risk_analysis,
+                'risk_management': risk_management,
+                'advanced_metrics': {
+                    'volatility': risk_metrics.get('volatility', 0),
+                    'sharpe_ratio': risk_metrics.get('sharpe_ratio', 0),
+                    'max_drawdown': risk_metrics.get('max_drawdown', 0)
+                }
+            }
+            
+        except Exception as e:
+            print(f"❌ خطأ في توليد الإشارات: {e}")
+            return {
+                'signal': 'Hold',
+                'confidence': 'Low',
+                'action': 'خطأ في التحليل',
+                'error': str(e)
+            }
+    
+    def _analyze_technical_indicators(self, latest):
+        """تحليل المؤشرات الفنية"""
+        score = 0
+        analysis = []
+        
+        # RSI
+        rsi = latest.get('RSI', 50)
+        if rsi < 30:
+            score += 2
+            analysis.append(f"RSI ذروة بيع ({rsi:.1f})")
+        elif rsi > 70:
+            score -= 2
+            analysis.append(f"RSI تشبع ({rsi:.1f})")
+        
+        # MACD
+        macd = latest.get('MACD', 0)
+        macd_signal = latest.get('MACD_Signal', 0)
+        if macd > macd_signal:
+            score += 1
+            analysis.append("MACD إيجابي")
+        else:
+            score -= 1
+            analysis.append("MACD سلبي")
+        
+        # Bollinger Bands
+        bb_position = latest.get('BB_Position', 0.5)
+        if bb_position < 0.2:
+            score += 1
+            analysis.append("قرب بولينجر السفلي")
+        elif bb_position > 0.8:
+            score -= 1
+            analysis.append("قرب بولينجر العلوي")
+        
+        return {'score': score, 'analysis': analysis}
+    
+    def _analyze_sentiment(self, sentiment):
+        """تحليل المشاعر"""
+        score = sentiment.get('score', 0)
+        analysis = sentiment.get('factors', [])
+        
+        return {'score': score, 'analysis': analysis}
+    
+    def _analyze_risk(self, risk_metrics):
+        """تحليل المخاطر"""
+        score = 0
+        analysis = []
+        
+        risk_level = risk_metrics.get('current_risk_level', 'متوسط')
+        if risk_level == 'عالي جداً':
+            score -= 2
+            analysis.append("مخاطر عالية جداً")
+        elif risk_level == 'عالي':
+            score -= 1
+            analysis.append("مخاطر عالية")
+        elif risk_level == 'منخفض':
+            score += 1
+            analysis.append("مخاطر منخفضة")
+        
+        return {'score': score, 'analysis': analysis}
+    
+    def _generate_advanced_risk_management(self, current_price, risk_metrics, technical_analysis):
+        """توليد إدارة مخاطر متقدمة"""
+        try:
+            volatility = risk_metrics.get('volatility', 0.2)
+            atr = current_price * volatility / np.sqrt(252)
+            
+            # حساب مستويات وقف الخسارة المتقدمة
+            stop_loss_levels = {
+                'ultra_tight': round(current_price - (atr * 1), 2),
+                'tight': round(current_price - (atr * 1.5), 2),
+                'conservative': round(current_price - (atr * 2), 2),
+                'moderate': round(current_price - (atr * 2.5), 2),
+                'wide': round(current_price - (atr * 3), 2)
+            }
+            
+            # حساب أهداف الربح المتقدمة
+            profit_targets = {
+                'target_1': round(current_price + (atr * 2), 2),
+                'target_2': round(current_price + (atr * 3), 2),
+                'target_3': round(current_price + (atr * 4), 2),
+                'target_4': round(current_price + (atr * 5), 2)
+            }
+            
+            # حساب حجم المركز المتقدم
+            risk_level = risk_metrics.get('current_risk_level', 'متوسط')
+            position_size = self._calculate_advanced_position_size(risk_level, technical_analysis)
+            
+            return {
+                'stop_loss_levels': stop_loss_levels,
+                'profit_targets': profit_targets,
+                'position_size': position_size,
+                'max_risk_per_trade': self._get_advanced_risk_percentage(risk_level),
+                'risk_reward_ratio': round(3 / 2, 2),
+                'volatility_adjusted': True,
+                'atr_based': True
+            }
+        except Exception as e:
+            print(f"❌ خطأ في إدارة المخاطر: {e}")
+            return {}
+    
+    def _calculate_advanced_position_size(self, risk_level, technical_analysis):
+        """حساب حجم المركز المتقدم"""
+        base_size = {
+            'عالي جداً': '1-2%',
+            'عالي': '2-3%',
+            'متوسط': '3-5%',
+            'منخفض': '5-10%'
+        }.get(risk_level, '3-5%')
+        
+        technical_score = technical_analysis.get('score', 0)
+        if technical_score >= 2:
+            return f"{base_size} (معدل للأعلى)"
+        elif technical_score <= -2:
+            return f"{base_size} (معدل للأسفل)"
+        else:
+            return base_size
+    
+    def _get_advanced_risk_percentage(self, risk_level):
+        """الحصول على نسبة المخاطرة المتقدمة"""
+        risk_map = {
+            'عالي جداً': '0.5%',
+            'عالي': '1%',
+            'متوسط': '2%',
+            'منخفض': '3%'
+        }
+        return risk_map.get(risk_level, '2%')
+    
+    def generate_advanced_report_v6(self, analysis_result):
+        """توليد تقرير متقدم V6"""
+        try:
+            report = []
+            report.append("=" * 80)
+            report.append("📊 تقرير التحليل المتقدم للذهب - الإصدار 6.0")
+            report.append("=" * 80)
+            report.append(f"التاريخ: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            report.append("")
+            
+            # الإشارة الرئيسية
+            if 'signal' in analysis_result:
+                report.append("🎯 الإشارة الرئيسية:")
+                report.append(f"  • الإشارة: {analysis_result['signal']}")
+                report.append(f"  • الثقة: {analysis_result['confidence']}")
+                report.append(f"  • التوصية: {analysis_result['action']}")
+                report.append(f"  • السعر الحالي: ${analysis_result['current_price']}")
+                report.append(f"  • النتيجة الإجمالية: {analysis_result['total_score']}")
+                report.append("")
+            
+            # التحليل الفني
+            if 'technical_analysis' in analysis_result:
+                ta = analysis_result['technical_analysis']
+                report.append("📈 التحليل الفني:")
+                report.append(f"  • النتيجة: {ta['score']}")
+                for analysis in ta['analysis']:
+                    report.append(f"  • {analysis}")
+                report.append("")
+            
+            # تحليل المشاعر
+            if 'sentiment_analysis' in analysis_result:
+                sa = analysis_result['sentiment_analysis']
+                if sa['analysis']:
+                    report.append("😊 تحليل المشاعر:")
+                    report.append(f"  • النتيجة: {sa['score']}")
+                    for analysis in sa['analysis']:
+                        report.append(f"  • {analysis}")
+                    report.append("")
+            
+            # تحليل المخاطر
+            if 'risk_analysis' in analysis_result:
+                ra = analysis_result['risk_analysis']
+                if ra['analysis']:
+                    report.append("⚠️ تحليل المخاطر:")
+                    report.append(f"  • النتيجة: {ra['score']}")
+                    for analysis in ra['analysis']:
+                        report.append(f"  • {analysis}")
+                    report.append("")
+            
+            # المقاييس المتقدمة
+            if 'advanced_metrics' in analysis_result:
+                am = analysis_result['advanced_metrics']
+                report.append("📊 المقاييس المتقدمة:")
+                report.append(f"  • التذبذب السنوي: {am.get('volatility', 0):.2%}")
+                report.append(f"  • نسبة شارب: {am.get('sharpe_ratio', 0):.3f}")
+                report.append(f"  • أقصى انخفاض: {am.get('max_drawdown', 0):.2%}")
+                report.append("")
+            
+            # إدارة المخاطر المتقدمة
+            if 'risk_management' in analysis_result:
+                rm = analysis_result['risk_management']
+                report.append("⚠️ إدارة المخاطر المتقدمة:")
+                report.append(f"  • حجم المركز: {rm['position_size']}")
+                report.append(f"  • وقف الخسارة المحافظ: ${rm['stop_loss_levels']['conservative']}")
+                report.append(f"  • الهدف الأول: ${rm['profit_targets']['target_1']}")
+                report.append(f"  • المخاطرة القصوى: {rm['max_risk_per_trade']}")
+                report.append(f"  • نسبة المخاطرة/المكافأة: {rm['risk_reward_ratio']}")
+                report.append("")
+            
+            report.append("=" * 80)
+            report.append("انتهى التقرير - الإصدار 6.0")
+            report.append("تم تطوير: تحليل متقدم | مشاعر السوق | إدارة مخاطر شاملة")
+            
+            return "\n".join(report)
+            
+        except Exception as e:
+            return f"خطأ في توليد التقرير: {e}"
+    
+    def run_advanced_analysis_v6(self):
+        """تشغيل التحليل المتقدم V6"""
+        print("🚀 بدء التحليل المتقدم للذهب - الإصدار 6.0...")
+        print("=" * 80)
+        
+        try:
+            # 1. جلب البيانات المتقدمة
+            market_data = self.fetch_advanced_data()
+            if market_data is None:
+                raise ValueError("فشل في جلب بيانات السوق")
+            
+            # 2. حساب المؤشرات المتقدمة
+            technical_data = self.calculate_advanced_indicators(market_data)
+            
+            # 3. تحليل مشاعر السوق
+            sentiment = self.analyze_market_sentiment(technical_data)
+            
+            # 4. حساب مقاييس المخاطر المتقدمة
+            risk_metrics = self.calculate_advanced_risk_metrics(technical_data)
+            
+            # 5. توليد الإشارات المتقدمة V6
+            signals = self.generate_advanced_signals_v6(technical_data, sentiment, risk_metrics)
+            
+            # 6. تجميع النتائج
+            final_result = {
+                'timestamp': datetime.now().isoformat(),
+                'status': 'success',
+                'version': '6.0',
+                **signals
+            }
+            
+            # 7. حفظ النتائج
+            self.save_advanced_results_v6(final_result)
+            
+            # 8. توليد التقرير
+            report = self.generate_advanced_report_v6(final_result)
+            print(report)
+            
+            print("\n✅ تم إتمام التحليل المتقدم V6.0 بنجاح!")
+            return final_result
+            
+        except Exception as e:
+            error_message = f"❌ فشل التحليل: {e}"
+            print(error_message)
+            error_result = {
+                'timestamp': datetime.now().isoformat(),
+                'status': 'error',
+                'version': '6.0',
+                'error': str(e)
+            }
+            self.save_advanced_results_v6(error_result)
+            return error_result
+    
+    def save_advanced_results_v6(self, results):
+        """حفظ النتائج V6"""
+        try:
+            filename = "gold_analysis_advanced_v6.json"
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(results, f, ensure_ascii=False, indent=2, default=str)
+            print(f"💾 تم حفظ التحليل في: {filename}")
+        except Exception as e:
+            print(f"❌ خطأ في حفظ النتائج: {e}")
+
+def main():
+    """الدالة الرئيسية"""
+    analyzer = AdvancedGoldAnalyzerV6()
+    analyzer.run_advanced_analysis_v6()
+
+if __name__ == "__main__":
+    main()
+EOF
+        
+    - name: Run advanced analysis
+      run: |
+        python gold_analyzer_advanced.py
+        
+    - name: Commit results
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add gold_analysis_advanced_v6.json
+        git add gold_analyzer_advanced.py
+        git commit -m "📊 تحديث تحليل الذهب المتقدم V6.0 - $(date '+%Y-%m-%d %H:%M:%S')"
+        
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
