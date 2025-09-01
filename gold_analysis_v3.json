@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-09-01T12:47:46.527755",
+  "timestamp": "2025-09-01T15:21:38.712806",
   "status": "success",
   "version": "3.0",
   "gold_analysis": {
@@ -19,19 +19,19 @@
       "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3542.0,
+    "current_price": 3546.4,
     "risk_management": {
       "stop_loss_levels": {
-        "tight": 3507.75,
-        "conservative": 3496.34,
-        "moderate": 3473.5,
-        "wide": 3450.67
+        "tight": 3512.15,
+        "conservative": 3500.74,
+        "moderate": 3477.9,
+        "wide": 3455.07
       },
       "profit_targets": {
-        "target_1": 3587.66,
-        "target_2": 3633.33,
-        "target_3": 3694.21,
-        "target_4": 3785.54
+        "target_1": 3592.06,
+        "target_2": 3637.73,
+        "target_3": 3698.61,
+        "target_4": 3789.94
       },
       "position_size_recommendation": "متوسط-كبير (50-75%)",
       "risk_reward_ratio": 2.0,
@@ -84,19 +84,19 @@
       }
     ],
     "technical_summary": {
-      "rsi": 82.2,
-      "macd": 29.78,
-      "williams_r": -6.1,
-      "stoch_k": 93.9,
-      "bb_position": 1.22,
-      "volume_ratio": 14.9
+      "rsi": 82.5,
+      "macd": 30.13,
+      "williams_r": -4.3,
+      "stoch_k": 95.7,
+      "bb_position": 1.23,
+      "volume_ratio": 15.42
     },
     "key_levels": {
-      "sma_20": 3382.37,
-      "sma_50": 3355.55,
-      "sma_200": 3069.86,
-      "bb_upper": 3493.17,
-      "bb_lower": 3271.58
+      "sma_20": 3382.59,
+      "sma_50": 3355.63,
+      "sma_200": 3069.88,
+      "bb_upper": 3494.73,
+      "bb_lower": 3270.46
     }
   },
   "mtf_analysis": {},
@@ -109,7 +109,7 @@
     "fib_61_8": 3369.66,
     "fib_78_6": 3318.71,
     "analysis": "السعر قوي جداً فوق 23.6% - اتجاه صاعد قوي",
-    "current_position": 95.02
+    "current_position": 96.47
   },
   "support_resistance": {
     "resistance_levels": [
@@ -125,13 +125,13 @@
     "nearest_resistance": null,
     "nearest_support": 3282.0,
     "price_to_resistance": null,
-    "price_to_support": 7.34
+    "price_to_support": 7.46
   },
   "volume_analysis": {
-    "current_volume": 97962,
-    "avg_volume_5": 20831,
-    "avg_volume_20": 6575,
-    "volume_ratio": 14.9,
+    "current_volume": 113110,
+    "avg_volume_5": 23861,
+    "avg_volume_20": 7333,
+    "volume_ratio": 15.42,
     "volume_strength": "قوي جداً",
     "volume_signal": "حجم استثنائي - احتمال حركة قوية",
     "obv_trend": "صاعد",
@@ -164,7 +164,7 @@
   },
   "economic_data": {
     "status": "simulated",
-    "last_update": "2025-09-01T12:47:43.762104",
+    "last_update": "2025-09-01T15:21:37.186560",
     "indicators": {
       "US_CPI": {
         "value": 3.2,
@@ -317,24 +317,16 @@
         },
         {
           "type": "interest_rate",
-          "title": "How Trump Could Overhaul the Fed - The New York Times",
-          "source": "Slashdot.org",
-          "published": "2025-08-31T12:32:25Z",
+          "title": "WATCH: Peter Navarro reveals what Fed Governor Lisa Cook needs to do amid Trump’s push to fire her",
+          "source": "Wnd.com",
+          "published": "2025-08-31T15:17:01Z",
           "entities": [
             [
+              "Peter Navarro",
+              "PERSON"
+            ],
+            [
               "Fed",
-              "ORG"
-            ],
-            [
-              "The New York Times How Trump",
-              "ORG"
-            ],
-            [
-              "Federal Reserve",
-              "ORG"
-            ],
-            [
-              "News Opinion",
               "ORG"
             ],
             [
@@ -342,291 +334,392 @@
               "PERSON"
             ],
             [
-              "Washington Post",
+              "Trump",
+              "PERSON"
+            ],
+            [
+              "White House",
               "ORG"
             ],
             [
               "Trump",
-              "ORG"
+              "PERSON"
             ],
             [
-              "Fed",
-              "ORG"
+              "the United States'",
+              "GPE"
             ]
           ],
           "numbers": [],
-          "sentiment_score": 0.0909090909090909,
-          "impact_score": -0.27,
-          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178954860"
-        },
-        {
-          "type": "interest_rate",
-          "title": "10 Sunday Reads",
-          "source": "Biztoc.com",
-          "published": "2025-08-31T12:21:36Z",
-          "entities": [
-            [
-              "10",
-              "CARDINAL"
-            ],
-            [
-              "Reads Avert",
-              "PERSON"
-            ],
-            [
-              "Sunday",
-              "DATE"
-            ],
-            [
-              "morning",
-              "TIME"
-            ],
-            [
-              "• Powell",
-              "PERSON"
-            ],
-            [
-              "The Federal Reserve Has",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "Constitution",
-              "LAW"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "10",
-              "context": "10 Sunday Reads"
-            }
-          ],
-          "sentiment_score": -0.4,
-          "impact_score": 1.2,
-          "url": "https://biztoc.com/x/e576bfd3f42a6898"
-        },
-        {
-          "type": "interest_rate",
-          "title": "What it could mean for the Fed to lose its independence",
-          "source": "Biztoc.com",
-          "published": "2025-08-31T11:36:29Z",
-          "entities": [
-            [
-              "Fed",
-              "ORG"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": -0.3125,
-          "impact_score": 0.94,
-          "url": "https://biztoc.com/x/fbf32185a8ef5f95"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Best money market account rates today, August 31, 2025 (best account provides 4.41% APY)",
-          "source": "Biztoc.com",
-          "published": "2025-08-31T11:14:36Z",
-          "entities": [
-            [
-              "today",
-              "DATE"
-            ],
-            [
-              "August 31, 2025",
-              "DATE"
-            ],
-            [
-              "4.41%",
-              "PERCENT"
-            ],
-            [
-              "today",
-              "DATE"
-            ],
-            [
-              "The Federal Reserve",
-              "ORG"
-            ],
-            [
-              "three",
-              "CARDINAL"
-            ],
-            [
-              "2024",
-              "DATE"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "31",
-              "context": "today , August 31 , 2025"
-            },
-            {
-              "value": "2025",
-              "context": "August 31 , 2025 ( best"
-            },
-            {
-              "value": "4.41",
-              "context": "best account provides 4.41 % APY"
-            },
-            {
-              "value": "%",
-              "context": "account provides 4.41 % APY )"
-            },
-            {
-              "value": "three",
-              "context": "its target rate three times in"
-            },
-            {
-              "value": "2024",
-              "context": "three times in 2024 . So"
-            }
-          ],
-          "sentiment_score": 0.52,
-          "impact_score": -1.56,
-          "url": "https://biztoc.com/x/31f24c79bbb93141"
-        },
-        {
-          "type": "interest_rate",
-          "title": "10 Sunday Reads",
-          "source": "Ritholtz.com",
-          "published": "2025-08-31T10:30:37Z",
-          "entities": [
-            [
-              "10",
-              "CARDINAL"
-            ],
-            [
-              "Reads Avert",
-              "PERSON"
-            ],
-            [
-              "Sunday",
-              "DATE"
-            ],
-            [
-              "morning",
-              "TIME"
-            ],
-            [
-              "• Powell",
-              "PERSON"
-            ],
-            [
-              "The Federal Reserve Has",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ],
-            [
-              "Constitution",
-              "LAW"
-            ]
-          ],
-          "numbers": [
-            {
-              "value": "10",
-              "context": "10 Sunday Reads"
-            }
-          ],
-          "sentiment_score": -0.4,
-          "impact_score": 1.2,
-          "url": "https://ritholtz.com/2025/08/10-sunday-reads-197/"
-        },
-        {
-          "type": "interest_rate",
-          "title": "Fired Fed governor sues Trump — and she just might win",
-          "source": "Salon",
-          "published": "2025-08-31T10:15:38Z",
-          "entities": [
-            [
-              "Fired Fed",
-              "ORG"
-            ],
-            [
-              "Trump",
-              "ORG"
-            ],
-            [
-              "Lisa Cook",
-              "PERSON"
-            ]
-          ],
-          "numbers": [],
-          "sentiment_score": 0.21481481481481482,
-          "impact_score": -0.64,
-          "url": "https://www.salon.com/2025/08/31/fired-fed-governor-sues-trump-and-she-just-might-win/"
+          "sentiment_score": 0.14285714285714285,
+          "impact_score": -0.43,
+          "url": "https://www.wnd.com/2025/08/watch-peter-navarro-reveals-what-fed-governor-lisa/"
         },
         {
           "type": "geopolitical",
-          "title": "Stock bulls bracing for bout of September’s seasonal turbulence",
-          "source": "Financial Post",
-          "published": "2025-08-31T10:00:13Z",
+          "title": "ETH And BTC ETFs Reverse Gains With $291M In Outflows Ahead Of New Week",
+          "source": "newsBTC",
+          "published": "2025-08-31T15:00:19Z",
           "entities": [
             [
-              "September",
+              "ETH",
+              "ORG"
+            ],
+            [
+              "291",
+              "MONEY"
+            ],
+            [
+              "US",
+              "GPE"
+            ],
+            [
+              "crypto ETFs",
+              "PERSON"
+            ],
+            [
+              "August",
               "DATE"
+            ],
+            [
+              "Ethereum",
+              "ORG"
+            ],
+            [
+              "last week’s",
+              "DATE"
+            ],
+            [
+              "Friday",
+              "DATE"
+            ],
+            [
+              "Ethereum",
+              "ORG"
+            ],
+            [
+              "164",
+              "MONEY"
             ]
           ],
-          "numbers": [],
-          "sentiment_score": 0.5,
-          "impact_score": 1.25,
-          "url": "https://financialpost.com/investing/stock-bulls-septembers-seasonal-turbulence"
+          "numbers": [
+            {
+              "value": "291",
+              "context": "Gains With $ 291 M In"
+            },
+            {
+              "value": "164",
+              "context": "retreat with $ 164 . …"
+            }
+          ],
+          "sentiment_score": 0.2898989898989899,
+          "impact_score": 0.72,
+          "url": "http://www.newsbtc.com/altcoin/eth-and-btc-etfs-reverse-gains-with-291m-in-outflows-ahead-of-new-week/"
         },
         {
           "type": "interest_rate",
-          "title": "What the end of Federal Reserve independence could mean",
-          "source": "ABC News",
-          "published": "2025-08-31T09:34:39Z",
+          "title": "Fed governor Lisa Cook should release mortgage documents, Democratic lawmaker says",
+          "source": "USA Today",
+          "published": "2025-08-31T14:49:08Z",
           "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ],
+            [
+              "Democratic",
+              "NORP"
+            ],
             [
               "Federal Reserve",
               "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ],
+            [
+              "Trump",
+              "PERSON"
+            ],
+            [
+              "Ro Khanna",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://www.usatoday.com/story/news/politics/2025/08/31/fed-governor-lisa-cook-release-mortgage-documents/85919673007/"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Ro Khanna says Lisa Cook ‘should release’ her records despite Trump trying to ‘bully the Fed’",
+          "source": "Biztoc.com",
+          "published": "2025-08-31T14:25:39Z",
+          "entities": [
+            [
+              "Ro Khanna",
+              "PERSON"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ],
+            [
+              "Trump",
+              "ORG"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Ro Khanna",
+              "PERSON"
+            ],
+            [
+              "Calif.",
+              "GPE"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ],
+            [
+              "Trump",
+              "PERSON"
+            ],
+            [
+              "Richard Nixon",
+              "PERSON"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://biztoc.com/x/69c0411a80514964"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Rep. Ro Khanna says Trump is following Nixon's playbook in attempt to 'interfere' with the Federal Reserve",
+          "source": "Biztoc.com",
+          "published": "2025-08-31T14:14:11Z",
+          "entities": [
+            [
+              "Ro Khanna",
+              "PERSON"
+            ],
+            [
+              "Trump",
+              "PERSON"
+            ],
+            [
+              "Nixon",
+              "PERSON"
+            ],
+            [
+              "the Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Ro Khanna",
+              "PERSON"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ],
+            [
+              "Trump",
+              "ORG"
+            ],
+            [
+              "Nixon",
+              "PERSON"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://biztoc.com/x/94ed84c00ddabd35"
+        },
+        {
+          "type": "interest_rate",
+          "title": "The Fed’s Lisa Cook doesn’t get the joke: Trump can fire her for ANY reason",
+          "source": "New York Post",
+          "published": "2025-08-31T14:12:03Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
             ],
             [
               "Donald Trump",
               "PERSON"
             ],
             [
-              "the Federal Reserve’s",
+              "the Federal Reserve",
               "ORG"
-            ],
-            [
-              "decades",
-              "DATE"
             ]
           ],
           "numbers": [],
-          "sentiment_score": -0.0375,
-          "impact_score": 0.11,
-          "url": "https://abcnews.go.com/US/wireStory/end-federal-reserve-independence-125134189"
+          "sentiment_score": 0.1,
+          "impact_score": -0.3,
+          "url": "https://nypost.com/2025/08/31/opinion/the-feds-lisa-cook-doesnt-get-the-joke-trump-can-fire-her-for-any-reason/"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Gold's Record Run Faces Test As Focus Shifts To US Data, Fed Rate Cut Signals",
+          "source": "Ndtvprofit.com",
+          "published": "2025-08-31T14:07:47Z",
+          "entities": [
+            [
+              "Focus Shifts",
+              "PERSON"
+            ],
+            [
+              "US Data",
+              "ORG"
+            ],
+            [
+              "Fed Rate Cut Signals Gold",
+              "ORG"
+            ],
+            [
+              "last week",
+              "DATE"
+            ],
+            [
+              "the coming days",
+              "DATE"
+            ],
+            [
+              "US",
+              "GPE"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.1,
+          "impact_score": -0.3,
+          "url": "https://www.ndtvprofit.com/markets/golds-record-run-faces-test-as-focus-shifts-to-us-data-and-fed-rate-cut-signals-analysts"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Rep. Ro Khanna says Trump is following Nixon's playbook in attempt to 'interfere' with the Federal Reserve (Megan Lebowitz/NBC News)",
+          "source": "Memeorandum.com",
+          "published": "2025-08-31T14:05:00Z",
+          "entities": [
+            [
+              "Ro Khanna",
+              "PERSON"
+            ],
+            [
+              "Trump",
+              "PERSON"
+            ],
+            [
+              "Nixon",
+              "PERSON"
+            ],
+            [
+              "the Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Megan Lebowitz",
+              "ORG"
+            ],
+            [
+              "NBC News",
+              "ORG"
+            ],
+            [
+              "Megan Lebowitz",
+              "PERSON"
+            ],
+            [
+              "NBC News",
+              "ORG"
+            ],
+            [
+              "Ro Khanna",
+              "PERSON"
+            ],
+            [
+              "Trump",
+              "PERSON"
+            ],
+            [
+              "Nixon",
+              "PERSON"
+            ],
+            [
+              "the Federal Reserve",
+              "ORG"
+            ],
+            [
+              "California",
+              "GPE"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0,
+          "impact_score": -0.0,
+          "url": "https://www.memeorandum.com/250831/p55"
         }
       ],
       "event_summary": {
         "interest_rate": 24,
         "dollar": 3,
-        "geopolitical": 3,
-        "employment": 1,
-        "inflation": 4,
+        "geopolitical": 5,
+        "inflation": 5,
         "central_bank": 1
       },
-      "total_impact": -0.16,
+      "total_impact": -1.79,
       "dominant_theme": "geopolitical",
       "recommendation": "تأثير محايد أو مختلط"
     },
-    "articles_count": 89
+    "articles_count": 92
   },
   "backtest_results": {
     "initial_capital": 10000,
-    "final_value": -276095.37,
-    "total_return": -2860.95,
+    "final_value": -277278.48,
+    "total_return": -2872.78,
     "sharpe_ratio": -0.674,
-    "max_drawdown": 2049.85,
+    "max_drawdown": 2058.21,
     "total_trades": 2,
     "winning_trades": 0,
     "losing_trades": 1,
@@ -641,7 +734,7 @@
     "risk_reward_ratio": 0.0
   },
   "market_summary": {
-    "last_update": "2025-09-01 12:47:46",
+    "last_update": "2025-09-01 15:21:38",
     "data_points": 555,
     "timeframe": "Multi-timeframe",
     "market_condition": "صاعد قوي"
