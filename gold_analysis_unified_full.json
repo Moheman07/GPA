@@ -3,21 +3,26 @@
     "version": "unified-full-v1",
     "symbol": "GC=F",
     "period": "1y",
-    "analysis_date": "2025-09-01T22:36:27.639705",
+    "analysis_date": "2025-09-01T22:44:27.081498",
     "data_points": 252,
     "talib": false
+  },
+  "used_symbols": {
+    "GC=F": "GC=F",
+    "^DXY": "DX-Y.NYB",
+    "SPY": "SPY"
   },
   "current_market_data": {
     "current_price": 3542.0,
     "daily_change": 68.300048828125,
     "daily_change_percent": 1.9662046172146619,
-    "volume": 123170,
+    "volume": 123637,
     "high": 3557.10009765625,
     "low": 3506.0
   },
   "signals": {
     "current_price": 3542.0,
-    "timestamp": "2025-09-01T22:36:26.718518",
+    "timestamp": "2025-09-01T22:44:25.976740",
     "trend": "صاعد قوي",
     "rsi_signal": "بيع قوي",
     "macd_signal": "محايد",
@@ -43,7 +48,7 @@
     "bb_middle": 3382.3749877929686,
     "bb_lower": 3271.5837899083945,
     "atr": 30.442888532366073,
-    "obv": 724556.0,
+    "obv": 725023.0,
     "ad": null,
     "adosc": null,
     "mfi": null
@@ -109,19 +114,19 @@
       ]
     },
     "volume_profile": {
-      "current_volume": 123170,
-      "average_volume": 4892.238095238095,
-      "volume_ratio": 15.718278225137503,
+      "current_volume": 123637,
+      "average_volume": 4894.091269841269,
+      "volume_ratio": 15.730998988478838,
       "volume_profile": {
         "(3278.975, 3331.58]": 305999,
         "(2595.11, 2647.715]": 255544,
         "(2752.925, 2805.53]": 136390,
         "(3015.95, 3068.555]": 127630,
-        "(3489.395, 3542.0]": 123170,
+        "(3489.395, 3542.0]": 123637,
         "(2805.53, 2858.135]": 52526
       },
-      "price_volume_correlation": 0.08131420771029517,
-      "uptrend_volume": 6702.719178082192,
+      "price_volume_correlation": 0.08141549011461054,
+      "uptrend_volume": 6705.917808219178,
       "downtrend_volume": 2419.4380952380952,
       "volume_trend": "مرتفع"
     },
@@ -133,10 +138,102 @@
       "structure_confidence": "عالية"
     },
     "divergences": {
-      "total_divergences": 0,
-      "recent_divergences": 0,
-      "rsi_divergences": 0,
-      "macd_divergences": 0
+      "total_divergences": 40,
+      "recent_divergences": 10,
+      "positive_divergences": 5,
+      "negative_divergences": 5,
+      "latest_divergences": [
+        {
+          "type": "bullish",
+          "indicator": "RSI",
+          "price_idx": 191,
+          "price_date": "2025-06-06 00:00:00-04:00",
+          "price": 3322.699951171875,
+          "indicator_prev": 59.53494302969505,
+          "indicator_now": 63.70007307567778
+        },
+        {
+          "type": "bullish",
+          "indicator": "MACD",
+          "price_idx": 191,
+          "price_date": "2025-06-06 00:00:00-04:00",
+          "price": 3322.699951171875,
+          "indicator_prev": 28.73791891272549,
+          "indicator_now": 29.329781436470057
+        },
+        {
+          "type": "bearish",
+          "indicator": "RSI",
+          "price_idx": 196,
+          "price_date": "2025-06-13 00:00:00-04:00",
+          "price": 3431.199951171875,
+          "indicator_prev": 60.840334410422116,
+          "indicator_now": 57.88242675656425
+        },
+        {
+          "type": "bearish",
+          "indicator": "MACD",
+          "price_idx": 208,
+          "price_date": "2025-07-02 00:00:00-04:00",
+          "price": 3348.0,
+          "indicator_prev": 16.180334106198643,
+          "indicator_now": 5.403556231116909
+        },
+        {
+          "type": "bearish",
+          "indicator": "RSI",
+          "price_idx": 215,
+          "price_date": "2025-07-11 00:00:00-04:00",
+          "price": 3356.0,
+          "indicator_prev": 53.34167302736393,
+          "indicator_now": 46.41085880468834
+        },
+        {
+          "type": "bearish",
+          "indicator": "MACD",
+          "price_idx": 215,
+          "price_date": "2025-07-11 00:00:00-04:00",
+          "price": 3356.0,
+          "indicator_prev": 5.403556231116909,
+          "indicator_now": 1.437997930214351
+        },
+        {
+          "type": "bullish",
+          "indicator": "MACD",
+          "price_idx": 226,
+          "price_date": "2025-07-28 00:00:00-04:00",
+          "price": 3309.10009765625,
+          "indicator_prev": 3.91275702182611,
+          "indicator_now": 7.238622436990681
+        },
+        {
+          "type": "bearish",
+          "indicator": "MACD",
+          "price_idx": 232,
+          "price_date": "2025-08-05 00:00:00-04:00",
+          "price": 3381.89990234375,
+          "indicator_prev": 4.216755331826789,
+          "indicator_now": 3.5904168896618103
+        },
+        {
+          "type": "bullish",
+          "indicator": "MACD",
+          "price_idx": 237,
+          "price_date": "2025-08-12 00:00:00-04:00",
+          "price": 3348.89990234375,
+          "indicator_prev": 5.864356371543181,
+          "indicator_now": 9.619675747128895
+        },
+        {
+          "type": "bullish",
+          "indicator": "RSI",
+          "price_idx": 242,
+          "price_date": "2025-08-19 00:00:00-04:00",
+          "price": 3313.39990234375,
+          "indicator_prev": 43.88194270955189,
+          "indicator_now": 52.94114767140613
+        }
+      ]
     },
     "correlations": {
       "asset_correlations": {
@@ -209,115 +306,10 @@
     "fundamental_bias": "hawkish/bearish"
   },
   "news": {
-    "count": 18,
-    "average_sentiment": 0.0,
+    "count": 25,
+    "average_sentiment": 0.05333333333333333,
     "impact": "neutral",
     "articles": [
-      {
-        "title": "Chicago Cubs Agree to 1-Year Contract With First Baseman Carlos Santana",
-        "source": "Fox Sports",
-        "publishedAt": "2025-08-31T22:11:16Z",
-        "url": "https://www.foxsports.com/stories/mlb/chicago-cubs-agree-1-year-contract-first-baseman-carlos-santana",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Sarault, Dandjinou secure women's, men's titles at Canadian short track championships",
-        "source": "CBC News",
-        "publishedAt": "2025-08-31T22:10:57Z",
-        "url": "https://www.cbc.ca/sports/olympics/winter/short-track-speed-skating/canadian-short-track-speedskating-championship-montreal-aug-31-1.7622355",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Postgame P (UNLOCKED): Unicycles, Canadian rock bands and the Ott quandary",
-        "source": "On3.com",
-        "publishedAt": "2025-08-31T22:03:14Z",
-        "url": "https://www.on3.com/sites/ou-insider/news/postgame-p-unlocked-unicycles-canadian-rock-bands-and-the-ott-quandary/",
-        "sentiment": 0.0
-      },
-      {
-        "title": "How to Watch Notre Dame vs Miami: Live Stream NCAA College Football, TV Channel",
-        "source": "Newsweek",
-        "publishedAt": "2025-08-31T22:00:01Z",
-        "url": "https://www.newsweek.com/sports/ncaa/how-watch-notre-dame-vs-miami-live-stream-ncaa-college-football-tv-channel-2119966",
-        "sentiment": 0.0
-      },
-      {
-        "title": "When Men’s Jewelry Becomes A Personal Statement",
-        "source": "Forbes",
-        "publishedAt": "2025-08-31T21:57:06Z",
-        "url": "https://www.forbes.com/sites/katematthams/2025/08/31/when-mens-jewelry-becomes-a-personal-statement/",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Be a Good Girl, Get Good Girl Things",
-        "source": "Jenhatmaker.com",
-        "publishedAt": "2025-08-31T21:55:39Z",
-        "url": "https://jenhatmaker.com/blog/be-a-good-girl-get-good-girl-things/",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Canada settles for silver after lopsided loss to U.S. in women's Para hockey worlds final",
-        "source": "CBC News",
-        "publishedAt": "2025-08-31T21:35:10Z",
-        "url": "https://www.cbc.ca/sports/paralympics/winter-sports/para-ice-hockey/para-ice-hockey-womens-world-championships-final-canada-us-1.7622343",
-        "sentiment": 0.0
-      },
-      {
-        "title": "'Weapons' regains top spot as North American summer box office winds down",
-        "source": "Japan Today",
-        "publishedAt": "2025-08-31T21:22:38Z",
-        "url": "https://japantoday.com/category/entertainment/%27weapons%27-regains-the-top-spot-as-the-summer-box-office-winds-down",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Macquarie's top ASX 200 share picks in each of the 11 market sectors",
-        "source": "Motley Fool Australia",
-        "publishedAt": "2025-08-31T21:22:01Z",
-        "url": "https://www.fool.com.au/2025/09/01/macquaries-top-asx-200-share-picks-in-each-of-the-11-market-sectors/",
-        "sentiment": 0.0
-      },
-      {
-        "title": "PM in Mann Ki Baat: 2 sports milestones show changing face of Valley",
-        "source": "The Times of India",
-        "publishedAt": "2025-08-31T21:20:18Z",
-        "url": "https://timesofindia.indiatimes.com/india/pm-in-mann-ki-baat-2-sports-milestones-show-changing-face-of-valley/articleshow/123622154.cms",
-        "sentiment": -0.3333333333333333
-      },
-      {
-        "title": "Shi downs Kunlavut to win first men's world title; Yamaguchi takes women's crown",
-        "source": "Japan Today",
-        "publishedAt": "2025-08-31T21:19:28Z",
-        "url": "https://japantoday.com/category/sports/shi-downs-kunlavut-to-win-first-world-title-yamaguchi-takes-women%27s-crown",
-        "sentiment": 0.0
-      },
-      {
-        "title": "These were the best-performing ASX 200 shares in August",
-        "source": "Motley Fool Australia",
-        "publishedAt": "2025-08-31T21:18:00Z",
-        "url": "https://www.fool.com.au/2025/09/01/these-were-the-best-performing-asx-200-shares-in-august-5/",
-        "sentiment": 0.3333333333333333
-      },
-      {
-        "title": "The Flying Vet retires after 45 years treating cattle, rhinos and crocs",
-        "source": "ABC News (AU)",
-        "publishedAt": "2025-08-31T21:12:06Z",
-        "url": "https://www.abc.net.au/news/2025-09-01/the-flying-vet-peter-trembath-retires/105668480",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Live: ASX set to open lower after tech sell-off dragged Wall Street down",
-        "source": "ABC News (AU)",
-        "publishedAt": "2025-08-31T21:06:05Z",
-        "url": "https://www.abc.net.au/news/2025-09-01/asx-markets-business-news-live-updates/105718228",
-        "sentiment": 0.0
-      },
-      {
-        "title": "AI will make stocks obsolete, driving investors to Bitcoin: Analyst",
-        "source": "Cointelegraph",
-        "publishedAt": "2025-08-31T21:04:07Z",
-        "url": "https://cointelegraph.com/news/ai-stocks-obsolete-driving-investors-bitcoin",
-        "sentiment": 0.0
-      },
       {
         "title": "Capstone Copper Reports Temporary Production Interruption at Mantoverde Operation",
         "source": "Financial Post",
@@ -326,17 +318,171 @@
         "sentiment": 0.0
       },
       {
-        "title": "Antiques Roadshow UK S48E02 1080p HDTV H264-FTP",
-        "source": "Rlsbb.cc",
-        "publishedAt": "2025-08-31T21:00:16Z",
-        "url": "https://post.rlsbb.cc/antiques-roadshow-uk-s48e02-1080p-hdtv-h264-ftp/",
+        "title": "Elliott Recommended as Citgo Buyer In $5.9 Billion Proposal",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-31T18:08:51Z",
+        "url": "https://financialpost.com/pmn/business-pmn/elliott-recommended-as-citgo-buyer-in-5-9-billion-proposal",
         "sentiment": 0.0
       },
       {
-        "title": "1985 BMW R80 at No Reserve",
-        "source": "Bringatrailer.com",
-        "publishedAt": "2025-08-31T21:00:11Z",
-        "url": "https://bringatrailer.com/listing/1985-bmw-r80-4/",
+        "title": "Payment of dividends to BDR holders",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T23:39:34Z",
+        "url": "https://financialpost.com/globe-newswire/payment-of-dividends-to-bdr-holders",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Aura Announces a Change in the Company’s BDRs",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T23:34:23Z",
+        "url": "https://financialpost.com/globe-newswire/aura-announces-a-change-in-the-companys-bdrs",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Wall Street’s Momentum Train Hits Full Speed Into September",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T21:07:27Z",
+        "url": "https://financialpost.com/pmn/business-pmn/wall-streets-momentum-train-hits-full-speed-into-september",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Patagonia Gold Quarter 2, 2025 Financial Results",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T21:02:08Z",
+        "url": "https://financialpost.com/globe-newswire/patagonia-gold-quarter-2-2025-financial-results",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Q-Gold Announces $10,000,000 Financing to complete acquisition of Quartz Mountain Gold project in Oregon, USA and advance Mine Centre Camp in Ontario, Canada",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T18:14:36Z",
+        "url": "https://financialpost.com/globe-newswire/q-gold-announces-10000000-financing-to-complete-acquisition-of-quartz-mountain-gold-project-in-oregon-usa-and-advance-mine-centre-camp-in-ontario-canada",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Dundee Precious Metals Announces UK Court Approval of Acquisition of Adriatic Metals and ASX Listing Approval",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T15:06:36Z",
+        "url": "https://financialpost.com/globe-newswire/dundee-precious-metals-announces-uk-court-approval-of-acquisition-of-adriatic-metals-and-asx-listing-approval",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Gold’s weekly gain has prices nearing another record",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T13:45:04Z",
+        "url": "https://financialpost.com/commodities/golds-weekly-gain-nearer-record-inflation",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "NetworkNewsAudio Announces Audio Press Release (APR) on Rare, Near-Term Path to Mining Success in Colombia",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T12:34:22Z",
+        "url": "https://financialpost.com/globe-newswire/networknewsaudio-announces-audio-press-release-apr-on-rare-near-term-path-to-mining-success-in-colombia",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Rio2 Limited Announces Graduation to TSX",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T12:03:57Z",
+        "url": "https://financialpost.com/globe-newswire/rio2-limited-announces-graduation-to-tsx",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Dynacor Group Declares September 2025 Dividend",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T11:33:16Z",
+        "url": "https://financialpost.com/globe-newswire/dynacor-group-declares-september-2025-dividend",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Galantas Report Financial Results for the Quarter Ended June 30, 2025",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-29T06:03:32Z",
+        "url": "https://financialpost.com/globe-newswire/galantas-report-financial-results-for-the-quarter-ended-june-30-2025",
+        "sentiment": 0.0
+      },
+      {
+        "title": "NexGold Engages ICP Securities Inc. for Automated Market Making Services",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T22:01:19Z",
+        "url": "https://financialpost.com/globe-newswire/nexgold-engages-icp-securities-inc-for-automated-market-making-services",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Critical One Expands Howells Lake Property by 67% to Cover Numerous Newly Defined, High-Priority Antimony and Gold Targets",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T18:02:59Z",
+        "url": "https://financialpost.com/globe-newswire/critical-one-expands-howells-lake-property-by-67-to-cover-numerous-newly-defined-high-priority-antimony-and-gold-targets",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Orezone Gold Reports Trade Halt",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T17:52:29Z",
+        "url": "https://financialpost.com/globe-newswire/orezone-gold-reports-trade-halt",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Why this superconservative strategy is proving controversial — and how Vanguard is defending it",
+        "source": "MarketWatch",
+        "publishedAt": "2025-08-28T13:46:00Z",
+        "url": "https://www.marketwatch.com/story/how-vanguard-defends-a-super-conservative-strategy-that-has-proved-surprisingly-controversial-9e6199e0",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Kobo Resources to Recommence 2025 Drill Program at the Kossou Gold Project; Appoints Industry Veteran to Support Technical and Regional Growth Strategy",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T13:19:58Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/kobo-resources-to-recommence-2025-drill-program-at-the-kossou-gold-project-appoints-industry-veteran-to-support-technical-and-regional-growth-strategy",
+        "sentiment": 0.6666666666666666
+      },
+      {
+        "title": "Stocks Edge Up as Data Show Economy Is Holding Up: Markets Wrap",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T12:54:21Z",
+        "url": "https://financialpost.com/pmn/business-pmn/stocks-edge-up-as-data-show-economy-is-holding-up-markets-wrap",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "Elder Margaret Head-Steppan Appointed as Elder of Visionary and Osawi, Establishing First-of-Its-Kind Relationship in Canadian Exploration",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T12:31:48Z",
+        "url": "https://financialpost.com/globe-newswire/elder-margaret-head-steppan-appointed-as-elder-of-visionary-and-osawi-establishing-first-of-its-kind-relationship-in-canadian-exploration",
+        "sentiment": 0.0
+      },
+      {
+        "title": "ESGold Corp. (CSE: ESAU) (OTCQB: ESAUF) Pioneering Innovative Mining Approach, Demonstrating Next-Gen Processing Capabilities",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T12:31:39Z",
+        "url": "https://financialpost.com/globe-newswire/esgold-corp-cse-esau-otcqb-esauf-pioneering-innovative-mining-approach-demonstrating-next-gen-processing-capabilities",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Fancamp Exploration Announces Grant of Stock Options",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T12:05:02Z",
+        "url": "https://financialpost.com/globe-newswire/fancamp-exploration-announces-grant-of-stock-options",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Cartier Launches Ambitious 100,000-m Drill Program on Cadillac",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T11:19:16Z",
+        "url": "https://financialpost.com/globe-newswire/cartier-launches-ambitious-100000-m-drill-program-on-cadillac",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Tintina Announces Appointment of CEO and Changes to Board of Directors",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T11:04:23Z",
+        "url": "https://financialpost.com/globe-newswire/tintina-announces-appointment-of-ceo-and-changes-to-board-of-directors",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Abcourt Appoints a New Director and Grants Stock Options",
+        "source": "Financial Post",
+        "publishedAt": "2025-08-28T11:04:18Z",
+        "url": "https://financialpost.com/globe-newswire/abcourt-appoints-a-new-director-and-grants-stock-options-2",
         "sentiment": 0.0
       }
     ]
