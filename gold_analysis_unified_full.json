@@ -3,7 +3,7 @@
     "version": "unified-full-v1",
     "symbol": "GC=F",
     "period": "1y",
-    "analysis_date": "2025-09-01T22:44:27.081498",
+    "analysis_date": "2025-09-01T23:07:00.767619",
     "data_points": 252,
     "talib": false
   },
@@ -16,13 +16,13 @@
     "current_price": 3542.0,
     "daily_change": 68.300048828125,
     "daily_change_percent": 1.9662046172146619,
-    "volume": 123637,
+    "volume": 124252,
     "high": 3557.10009765625,
     "low": 3506.0
   },
   "signals": {
     "current_price": 3542.0,
-    "timestamp": "2025-09-01T22:44:25.976740",
+    "timestamp": "2025-09-01T23:06:59.389379",
     "trend": "صاعد قوي",
     "rsi_signal": "بيع قوي",
     "macd_signal": "محايد",
@@ -48,7 +48,7 @@
     "bb_middle": 3382.3749877929686,
     "bb_lower": 3271.5837899083945,
     "atr": 30.442888532366073,
-    "obv": 725023.0,
+    "obv": 725638.0,
     "ad": null,
     "adosc": null,
     "mfi": null
@@ -114,19 +114,19 @@
       ]
     },
     "volume_profile": {
-      "current_volume": 123637,
-      "average_volume": 4894.091269841269,
-      "volume_ratio": 15.730998988478838,
+      "current_volume": 124252,
+      "average_volume": 4896.5317460317465,
+      "volume_ratio": 15.747636308331854,
       "volume_profile": {
         "(3278.975, 3331.58]": 305999,
         "(2595.11, 2647.715]": 255544,
         "(2752.925, 2805.53]": 136390,
         "(3015.95, 3068.555]": 127630,
-        "(3489.395, 3542.0]": 123637,
+        "(3489.395, 3542.0]": 124252,
         "(2805.53, 2858.135]": 52526
       },
-      "price_volume_correlation": 0.08141549011461054,
-      "uptrend_volume": 6705.917808219178,
+      "price_volume_correlation": 0.08154849990670147,
+      "uptrend_volume": 6710.130136986301,
       "downtrend_volume": 2419.4380952380952,
       "volume_trend": "مرتفع"
     },
