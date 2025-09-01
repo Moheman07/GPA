@@ -37,12 +37,12 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "Gold Analysis Bot"
         
-        # إضافة الملف
-        git add gold_analysis.json
+        # إضافة الملف الصحيح الذي يولده السكربت
+        git add gold_analysis_v3.json # <--- هذا هو السطر الذي تم تعديله
         
         # التحقق من وجود تغييرات
         if git diff --staged --quiet; then
-          echo "لا توجد تغييرات للحفظ"
+          echo "No changes to commit"
         else
           git commit -m "🔄 Update gold analysis - $(date +'%Y-%m-%d %H:%M UTC')"
           git push
