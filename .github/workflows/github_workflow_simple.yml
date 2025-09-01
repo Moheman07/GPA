@@ -1,130 +1,43 @@
-name: Gold Unified Analysis (conda + ta-lib)
+name: Professional Gold Analysis
 
-# run on schedule and manual
 on:
-  workflow_dispatch:
+  workflow_dispatch: # يسمح بالتشغيل اليدوي
   schedule:
-    - cron: '0 */6 * * *'  # every 6 hours
-  push:
-    branches:
-      - main
+    # يعمل من الإثنين إلى الجمعة الساعة 21:00 بتوقيت UTC
+    # (أي بعد ساعة من إغلاق سوق نيويورك)
+    - cron: '0 21 * * 1-5'
 
 permissions:
-  contents: write   # enable commit/push from the workflow
+  contents: write
 
 jobs:
   analyze:
     runs-on: ubuntu-latest
     env:
-      # تأكد أن هذه المتغيّرات مخزنة في Settings -> Secrets (FRED_API_KEY, NEWS_API_KEY)
       FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
       NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+      
     steps:
-      - name: Checkout repo
+      - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Set up Python with Caching
+        uses: actions/setup-python@v5
         with:
-          fetch-depth: 0
+          python-version: '3.11' # يمكنك استخدام 3.10 إذا كنت تفضل
+          cache: 'pip' # تفعيل التخزين المؤقت للسرعة
 
-      - name: Ensure expected files exist (debug)
-        run: |
-          echo "Listing root files..."
-          ls -la
-          echo "Expecting: gold_analyzer_unified_full.py and requirements_simple.txt"
-          test -f gold_analyzer_unified_full.py || (echo "MISSING: gold_analyzer_unified_full.py" && exit 1)
-          test -f requirements_simple.txt || (echo "MISSING: requirements_simple.txt" && exit 1)
+      - name: Install Dependencies
+        run: pip install -r requirements.txt # تأكد من أن اسم الملف صحيح
 
-      - name: Create conda environment file
-        run: |
-          cat > environment.yml <<'YAML'
-          name: talib-env
-          channels:
-            - conda-forge
-          dependencies:
-            - python=3.10
-            - ta-lib
-            - pip
-            - pip:
-              - -r requirements_simple.txt
-          YAML
-          echo "environment.yml written."
+      - name: Run Professional Analyzer
+        # تأكد من أن اسم السكربت هنا يطابق اسم ملفك
+        run: python gold_analyzer_unified_full.py 
 
-      - name: Set up Miniconda & create environment (conda-forge ta-lib)
-        uses: conda-incubator/setup-miniconda@v2
+      - name: Commit and Push Results
+        # هذا الأكشن أفضل وأكثر أمانًا
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          auto-update-conda: false
-          python-version: "3.10"
-          environment-file: environment.yml
-          activate-environment: talib-env
-          use-mamba: true
-
-      - name: Install Python requirements into conda env (redundant safe step)
-        run: |
-          conda run -n talib-env --no-capture-output pip install --upgrade pip
-          conda run -n talib-env --no-capture-output pip install -r requirements_simple.txt
-        shell: bash
-
-      - name: Debug TA-Lib availability & environment info
-        run: |
-          conda run -n talib-env --no-capture-output python - <<'PY'
-          import sys, importlib
-          print("Python executable:", sys.executable)
-          print("Python version:", sys.version)
-          try:
-              import talib
-              print("TA-Lib OK:", getattr(talib, "__version__", "unknown"))
-          except Exception as e:
-              print("TA-Lib import FAILED:", e)
-          try:
-              import pandas as pd
-              print("pandas version:", pd.__version__)
-          except:
-              pass
-          PY
-
-      - name: Run unified analyzer script
-        run: |
-          # run the analyzer inside conda env; this should create gold_analysis_unified_full.json
-          conda run -n talib-env --no-capture-output python gold_analyzer_unified_full.py
-        shell: bash
-
-      - name: Show produced JSON (if present)
-        run: |
-          if [ -f gold_analysis_unified_full.json ]; then
-            echo "=== JSON preview ==="
-            head -n 200 gold_analysis_unified_full.json || true
-            echo "=== JSON exists ==="
-          else
-            echo "No JSON output found."
-            ls -la
-            exit 1
-          fi
-
-      - name: Upload JSON as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: gold-analysis-json
-          path: gold_analysis_unified_full.json
-
-      - name: Commit & push results back to repo (best-effort)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -e
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git fetch origin main
-          # make sure we are on main branch
-          git checkout -B main
-          # merge remote changes to avoid push rejection
-          git pull --rebase origin main || true
-          # add file if exists
-          if [ -f gold_analysis_unified_full.json ]; then
-            git add gold_analysis_unified_full.json
-            git commit -m "ci: update gold_analysis_unified_full.json - $(date -u +"%Y-%m-%dT%H:%M:%SZ")" || echo "No changes to commit"
-            # set remote with token and push
-            git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-            git push origin main || (echo "Push failed (maybe remote changed). Artifact still uploaded.")
-          else
-            echo "No JSON to commit."
-          fi
-        shell: bash
+          commit_message: '🏆 Update Professional Gold Analysis Report'
+          # يقوم بحفظ الملف الذي ينتجه السكربت
+          file_pattern: 'gold_analysis_unified_full.json'
