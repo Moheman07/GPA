@@ -1,52 +1,58 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Gold Market Analyzer - Unified Stable
-تحليل فني + محسّن + أساسي (FRED) + أخبار (NewsAPI) في ملف واحد JSON
+Gold Analyzer — Unified Full Powerful Script
+Features:
+ - Advanced technical indicators (TA-Lib if available, otherwise pure pandas)
+ - Candlestick & price-pattern detection
+ - Fibonacci levels, support/resistance, pivot points
+ - Volume profile, market structure, divergences, correlations
+ - Advanced risk metrics (VaR, Sharpe, Sortino, Calmar, drawdown)
+ - News analysis (NewsAPI) with simple sentiment scoring
+ - Fundamental indicators from FRED (FRED_API_KEY)
+ - Robust error handling; always produces a single JSON output
+ - Output: gold_analysis_unified_full.json (+ optional CSVs)
 """
 
 import os
-import json
-import time
+import sys
 import math
-import warnings
+import time
+import json
 import logging
 import datetime as dt
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Any
 
 import numpy as np
 import pandas as pd
 import requests
 
-# اختياري: TA-Lib
+# Optional TA-Lib
 try:
     import talib  # type: ignore
     TALIB_AVAILABLE = True
 except Exception:
     TALIB_AVAILABLE = False
 
-# إعدادات عامة
-warnings.filterwarnings("ignore")
+# Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-log = logging.getLogger("gold-unified")
+log = logging.getLogger("gold-full")
 
-# مفاتيح الـ API من Secrets (GitHub Actions → Settings → Secrets)
+# API keys from env (set them in GitHub Actions secrets)
 FRED_API_KEY = os.getenv("FRED_API_KEY", "")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
 
-# ============================= أدوات مساعدة =============================
-
+# -------------------- Helpers --------------------
 class NumpyEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, (np.integer,)):
             return int(obj)
         if isinstance(obj, (np.floating,)):
-            # تعامل مع NaN/inf
-            val = float(obj)
-            if math.isnan(val) or math.isinf(val):
+            v = float(obj)
+            if math.isnan(v) or math.isinf(v):
                 return None
-            return val
-        if isinstance(obj, (np.ndarray,)):
+            return v
+        if isinstance(obj, np.ndarray):
             return obj.tolist()
         if pd.isna(obj):
             return None
@@ -58,9 +64,8 @@ def clean_scalar(x):
             return None
         if isinstance(x, (np.generic,)):
             x = x.item()
-        if isinstance(x, float):
-            if math.isnan(x) or math.isinf(x):
-                return None
+        if isinstance(x, float) and (math.isnan(x) or math.isinf(x)):
+            return None
         return x
     except Exception:
         return None
@@ -78,56 +83,52 @@ def safe_pct_change(series: pd.Series) -> pd.Series:
     except Exception:
         return pd.Series(dtype=float)
 
-def now_iso():
-    return dt.datetime.now(dt.timezone.utc).isoformat()
-
-# ============================= جلب البيانات =============================
-
-def fetch_yfinance(symbol: str, period: str = "1y", tries: int = 2, pause: float = 1.0) -> pd.DataFrame:
-    """جلب بيانات من yfinance مع محاولات وتعافي"""
+# -------------------- Fetch market data --------------------
+def fetch_yfinance(symbol: str, period: str = "1y", tries: int = 3, pause: float = 1.0) -> pd.DataFrame:
     import yfinance as yf
     last_err = None
     for i in range(tries):
         try:
-            log.info(f"جاري جلب بيانات {symbol}...")
-            data = yf.Ticker(symbol).history(period=period, auto_adjust=False)
-            if not data.empty:
-                data = data.dropna()
-                # تأكد من الأعمدة المطلوبة
-                for col in ["Open", "High", "Low", "Close", "Volume"]:
-                    if col not in data.columns:
-                        raise ValueError(f"Missing column {col}")
-                log.info(f"تم جلب {len(data)} نقطة بيانات لـ {symbol}")
-                return data
-            last_err = Exception("Empty dataframe")
+            log.info(f"Fetching {symbol} (attempt {i+1}/{tries}) ...")
+            ticker = yf.Ticker(symbol)
+            df = ticker.history(period=period, auto_adjust=False)
+            if df is None or df.empty:
+                last_err = Exception("Empty dataframe")
+                time.sleep(pause)
+                continue
+            # Ensure columns
+            for col in ["Open", "High", "Low", "Close", "Volume"]:
+                if col not in df.columns:
+                    raise ValueError(f"Missing column {col} from {symbol}")
+            df = df.dropna(how="all")
+            log.info(f"Fetched {len(df)} rows for {symbol}")
+            return df
         except Exception as e:
             last_err = e
-            log.warning(f"محاولة {i+1}/{tries} فشلت: {e}")
+            log.warning(f"Fetch attempt {i+1} failed for {symbol}: {e}")
             time.sleep(pause)
-    log.error(f"فشل جلب {symbol}: {last_err}")
+    log.error(f"Failed to fetch {symbol}: {last_err}")
     return pd.DataFrame()
 
-def fetch_market_data(period: str = "1y") -> Dict[str, pd.DataFrame]:
-    """GC=F الذهب + ^DXY الدولار + SPY للمقارنة"""
-    return {
-        "GC=F": fetch_yfinance("GC=F", period),
-        "^DXY": fetch_yfinance("^DXY", period),
-        "SPY": fetch_yfinance("SPY", period),
-    }
+def fetch_market_universe(period: str = "1y") -> Dict[str, pd.DataFrame]:
+    symbols = {"GC=F": "gold", "^DXY": "dxy", "SPY": "spy"}
+    out = {}
+    for s in symbols:
+        out[s] = fetch_yfinance(s, period=period)
+    return out
 
-# ============================= المؤشرات الفنية =============================
-
+# -------------------- Technical indicators --------------------
 def ema(series: pd.Series, span: int) -> pd.Series:
     return series.ewm(span=span, adjust=False).mean()
 
-def calc_macd(price: pd.Series, fast=12, slow=26, signal=9) -> Tuple[pd.Series, pd.Series, pd.Series]:
-    macd_line = ema(price, fast) - ema(price, slow)
+def calc_macd(close: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9) -> Tuple[pd.Series, pd.Series, pd.Series]:
+    macd_line = ema(close, fast) - ema(close, slow)
     signal_line = ema(macd_line, signal)
     hist = macd_line - signal_line
     return macd_line, signal_line, hist
 
-def calc_rsi(price: pd.Series, period: int = 14) -> pd.Series:
-    delta = price.diff()
+def calc_rsi(prices: pd.Series, period: int = 14) -> pd.Series:
+    delta = prices.diff()
     gain = delta.clip(lower=0).rolling(period).mean()
     loss = (-delta.clip(upper=0)).rolling(period).mean()
     rs = gain / loss.replace(0, np.nan)
@@ -135,13 +136,13 @@ def calc_rsi(price: pd.Series, period: int = 14) -> pd.Series:
     return rsi
 
 def technical_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
-    ind = {}
+    ind: Dict[str, pd.Series] = {}
     close = df["Close"]
     high = df["High"]
     low = df["Low"]
     vol = df["Volume"]
 
-    # اتجاه
+    # trend
     if TALIB_AVAILABLE:
         ind["sma_20"] = talib.SMA(close, timeperiod=20)
         ind["sma_50"] = talib.SMA(close, timeperiod=50)
@@ -155,50 +156,66 @@ def technical_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
         ind["ema_12"] = ema(close, 12)
         ind["ema_26"] = ema(close, 26)
 
-    # زخم
+    # momentum
     if TALIB_AVAILABLE:
         ind["rsi"] = talib.RSI(close, timeperiod=14)
         macd, macd_sig, macd_hist = talib.MACD(close, fastperiod=12, slowperiod=26, signalperiod=9)
         ind["macd"], ind["macd_signal"], ind["macd_hist"] = macd, macd_sig, macd_hist
+        ind["stoch_k"], ind["stoch_d"] = talib.STOCH(high, low, close, fastk_period=14, slowk_period=3, slowd_period=3)
         ind["williams_r"] = talib.WILLR(high, low, close, timeperiod=14)
         ind["cci"] = talib.CCI(high, low, close, timeperiod=14)
         ind["adx"] = talib.ADX(high, low, close, timeperiod=14)
         ind["trix"] = talib.TRIX(close, timeperiod=30)
         ind["ultosc"] = talib.ULTOSC(high, low, close)
-        ind["stoch_k"], ind["stoch_d"] = talib.STOCH(high, low, close, 14, 3, 3)
     else:
         ind["rsi"] = calc_rsi(close, 14)
         macd, macd_sig, macd_hist = calc_macd(close)
         ind["macd"], ind["macd_signal"], ind["macd_hist"] = macd, macd_sig, macd_hist
 
-    # تذبذب/نطاق
-    if TALIB_AVAILABLE:
-        upper, mid, lower = talib.BBANDS(close, timeperiod=20, nbdevup=2, nbdevdn=2, matype=0)
-        ind["bb_upper"], ind["bb_middle"], ind["bb_lower"] = upper, mid, lower
-        ind["atr"] = talib.ATR(high, low, close, timeperiod=14)
-        ind["sar"] = talib.SAR(high, low)
-        ind["dmi_plus"] = talib.PLUS_DI(high, low, close, timeperiod=14)
-        ind["dmi_minus"] = talib.MINUS_DI(high, low, close, timeperiod=14)
-        ind["obv"] = talib.OBV(close, vol)
-        ind["mfi"] = talib.MFI(high, low, close, vol, timeperiod=14)
-    else:
-        # بولنجر بديل
-        m = close.rolling(20).mean()
-        s = close.rolling(20).std()
-        ind["bb_upper"], ind["bb_middle"], ind["bb_lower"] = m + 2*s, m, m - 2*s
-        # ATR بديل
-        tr = pd.concat([(high-low), (high-close.shift()).abs(), (low-close.shift()).abs()], axis=1).max(axis=1)
-        ind["atr"] = tr.rolling(14).mean()
+    # volatility / bands
+    try:
+        if TALIB_AVAILABLE:
+            upper, middle, lower = talib.BBANDS(close, timeperiod=20, nbdevup=2, nbdevdn=2, matype=0)
+            ind["bb_upper"], ind["bb_middle"], ind["bb_lower"] = upper, middle, lower
+            ind["atr"] = talib.ATR(high, low, close, timeperiod=14)
+            ind["sar"] = talib.SAR(high, low)
+        else:
+            m = close.rolling(20).mean()
+            s = close.rolling(20).std()
+            ind["bb_upper"] = m + 2 * s
+            ind["bb_middle"] = m
+            ind["bb_lower"] = m - 2 * s
+            tr = pd.concat([(high - low).abs(), (high - close.shift()).abs(), (low - close.shift()).abs()], axis=1).max(axis=1)
+            ind["atr"] = tr.rolling(14).mean()
+    except Exception as e:
+        log.warning(f"BB/ATR calc error: {e}")
+
+    # volume-based (attempts)
+    try:
+        if TALIB_AVAILABLE:
+            ind["obv"] = talib.OBV(close, vol)
+            ind["ad"] = talib.AD(high, low, close, vol)
+            ind["adosc"] = talib.ADOSC(high, low, close, vol)
+            ind["mfi"] = talib.MFI(high, low, close, vol, timeperiod=14)
+        else:
+            # simple OBV
+            obv = (np.sign(close.diff().fillna(0)) * vol).cumsum()
+            ind["obv"] = obv
+            ind["ad"] = None
+            ind["adosc"] = None
+            ind["mfi"] = None
+    except Exception as e:
+        log.warning(f"Volume indicators error: {e}")
 
     return ind
 
-# ============================= الأنماط =============================
-
-def detect_candles(df: pd.DataFrame) -> Dict[str, pd.Series]:
+# -------------------- Price patterns & candles --------------------
+def detect_candlestick_patterns(df: pd.DataFrame) -> Dict[str, Any]:
     if not TALIB_AVAILABLE:
-        return {"note": "TA-Lib غير متوفر: كاشف الشموع غير مفعّل"}
+        # fallback: return zero series or note
+        return {"note": "TA-Lib not available - candlestick patterns skipped"}
     o, h, l, c = df["Open"], df["High"], df["Low"], df["Close"]
-    return {
+    patterns = {
         "doji": talib.CDLDOJI(o, h, l, c),
         "hammer": talib.CDLHAMMER(o, h, l, c),
         "shooting_star": talib.CDLSHOOTINGSTAR(o, h, l, c),
@@ -206,414 +223,365 @@ def detect_candles(df: pd.DataFrame) -> Dict[str, pd.Series]:
         "morning_star": talib.CDLMORNINGSTAR(o, h, l, c),
         "evening_star": talib.CDLEVENINGSTAR(o, h, l, c),
     }
+    return patterns
 
 def detect_price_patterns(df: pd.DataFrame) -> Dict[str, List[int]]:
-    # تبسيط—أماكن اكتشافات قابلة للتطوير
-    highs = df["High"].rolling(5, center=True).max()
-    lows = df["Low"].rolling(5, center=True).min()
-    double_top, double_bottom = [], []
-    for i in range(20, len(df)-20):
+    highs = df["High"].rolling(window=5, center=True).max()
+    lows = df["Low"].rolling(window=5, center=True).min()
+    double_tops, double_bottoms = [], []
+    length = len(df)
+    for i in range(20, max(20, length - 20)):
         try:
-            if highs.iloc[i] == df["High"].iloc[i] and abs(df["High"].iloc[i]-df["High"].iloc[i-20:i].max()) < 0.01:
-                double_top.append(i)
-            if lows.iloc[i] == df["Low"].iloc[i] and abs(df["Low"].iloc[i]-df["Low"].iloc[i-20:i].min()) < 0.01:
-                double_bottom.append(i)
+            if highs.iloc[i] == df["High"].iloc[i] and abs(df["High"].iloc[i] - df["High"].iloc[i-20:i].max()) < 1e-6:
+                double_tops.append(i)
+            if lows.iloc[i] == df["Low"].iloc[i] and abs(df["Low"].iloc[i] - df["Low"].iloc[i-20:i].min()) < 1e-6:
+                double_bottoms.append(i)
         except Exception:
-            pass
-    return {
-        "double_top": double_top,
-        "double_bottom": double_bottom,
-        "head_shoulders": [],
-        "triangle": []
-    }
+            continue
+    return {"double_top": double_tops, "double_bottom": double_bottoms, "head_shoulders": [], "triangle": []}
 
-# ============================= التحليل المحسّن =============================
-
-def fibonacci_levels(low: float, high: float) -> Dict[str, float]:
+# -------------------- Enhancements --------------------
+def fibonacci_levels(low: float, high: float) -> Dict[str, Dict[str, float]]:
+    diff = high - low
     levels = {
         "0.0": low,
-        "0.236": low + 0.236*(high-low),
-        "0.382": low + 0.382*(high-low),
-        "0.5": (low + high)/2,
-        "0.618": low + 0.618*(high-low),
-        "0.786": low + 0.786*(high-low),
+        "0.236": low + 0.236 * diff,
+        "0.382": low + 0.382 * diff,
+        "0.5": low + 0.5 * diff,
+        "0.618": low + 0.618 * diff,
+        "0.786": low + 0.786 * diff,
         "1.0": high
     }
-    ex = {
-        "1.272": high + 0.272*(high-low),
-        "1.618": high + 0.618*(high-low),
-        "2.0": high + 1.0*(high-low),
-        "2.618": high + 1.618*(high-low)
+    extensions = {
+        "1.272": high + 0.272 * diff,
+        "1.618": high + 0.618 * diff,
+        "2.0": high + 1.0 * diff,
+        "2.618": high + 1.618 * diff
     }
-    return {"levels": levels, "extensions": ex}
+    return {"levels": levels, "extensions": extensions}
 
-def support_resistance(df: pd.DataFrame) -> Dict:
-    close = df["Close"]
-    # دعم/مقاومة تاريخية بسيطة عبر القمم/القيعان البارزة
-    window = 10
-    local_max = close[(close.shift(1) < close) & (close.shift(-1) < close)]
-    local_min = close[(close.shift(1) > close) & (close.shift(-1) > close)]
-    supports = local_min.rolling(window).min().dropna().iloc[-20:].sort_values().unique().tolist()[-7:]
-    resistances = local_max.rolling(window).max().dropna().iloc[-30:].sort_values().unique().tolist()[:8]
+def cluster_levels(levels: List[float], tol: float = 0.01) -> List[float]:
+    if not levels:
+        return []
+    levels = sorted(levels)
+    clusters = []
+    current = [levels[0]]
+    for lev in levels[1:]:
+        if abs(lev - current[-1]) / (current[-1] or 1) <= tol:
+            current.append(lev)
+        else:
+            clusters.append(float(np.mean(current)))
+            current = [lev]
+    if current:
+        clusters.append(float(np.mean(current)))
+    return clusters
 
-    # Pivot (كلاسيكي)
-    recent = df.tail(20)
-    P = (recent["High"].mean() + recent["Low"].mean() + recent["Close"].mean())/3
-    R1 = 2*P - recent["Low"].mean()
-    S1 = 2*P - recent["High"].mean()
-    R2 = P + (recent["High"].mean()-recent["Low"].mean())
-    S2 = P - (recent["High"].mean]-recent["Low"].mean())
-
-    return {
-        "pivot_points": {"pivot": P, "r1": R1, "s1": S1, "r2": R2, "s2": S2},
-        "historical_support": supports,
-        "historical_resistance": resistances,
-    }
-
-def volume_profile(df: pd.DataFrame, bins: int = 12) -> Dict:
-    close = df["Close"]
-    vol = df["Volume"].astype(float)
+def support_resistance(df: pd.DataFrame) -> Dict[str, Any]:
+    result = {}
     try:
+        n = len(df)
+        supports, resistances = [], []
+        for i in range(5, n-5):
+            if df["Low"].iloc[i] < df["Low"].iloc[i-1] and df["Low"].iloc[i] < df["Low"].iloc[i+1]:
+                supports.append(float(df["Low"].iloc[i]))
+            if df["High"].iloc[i] > df["High"].iloc[i-1] and df["High"].iloc[i] > df["High"].iloc[i+1]:
+                resistances.append(float(df["High"].iloc[i]))
+        clustered_support = cluster_levels(supports)
+        clustered_resistance = cluster_levels(resistances)
+        # pivot on last 20
+        recent = df.tail(20)
+        pivot = (recent["High"].mean() + recent["Low"].mean() + recent["Close"].mean()) / 3.0
+        r1 = 2 * pivot - recent["Low"].mean()
+        r2 = pivot + (recent["High"].mean() - recent["Low"].mean())
+        s1 = 2 * pivot - recent["High"].mean()
+        s2 = pivot - (recent["High"].mean() - recent["Low"].mean())
+        result = {
+            "pivot_points": {"pivot": pivot, "r1": r1, "r2": r2, "s1": s1, "s2": s2},
+            "historical_support": clustered_support,
+            "historical_resistance": clustered_resistance
+        }
+    except Exception as e:
+        log.warning(f"support_resistance error: {e}")
+        result = {"error": str(e)}
+    return result
+
+def volume_profile(df: pd.DataFrame, bins: int = 20) -> Dict[str, Any]:
+    try:
+        close = df["Close"]
+        vol = df["Volume"].astype(float)
         cats = pd.cut(close, bins=bins)
-        vp = vol.groupby(cats).sum().sort_values(ascending=False).head(5)
+        vp = vol.groupby(cats).sum().sort_values(ascending=False).head(6)
         profile = {str(k): int(v) for k, v in vp.items()}
-    except Exception:
-        profile = {}
-
-    # اتجاه الحجم
-    ret = safe_pct_change(close)
-    vol_aligned = vol.reindex(ret.index)
-    try:
-        corr = np.corrcoef(ret.values, vol_aligned.values)[0,1]
-        if math.isnan(corr):
+        # correlation price-volume
+        price_change = safe_pct_change(close)
+        vol_aligned = vol.reindex(price_change.index)
+        try:
+            corr = float(np.corrcoef(price_change.values, vol_aligned.values)[0,1])
+            if math.isnan(corr):
+                corr = None
+        except Exception:
             corr = None
-    except Exception:
-        corr = None
+        up_vol = float(vol_aligned[price_change > 0].mean()) if not price_change.empty else None
+        down_vol = float(vol_aligned[price_change < 0].mean()) if not price_change.empty else None
+        trend = "مرتفع" if vol.iloc[-1] > vol.rolling(20).mean().iloc[-1] * 1.5 else ("منخفض" if vol.iloc[-1] < vol.rolling(20).mean().iloc[-1] * 0.5 else "عادي")
+        return {"current_volume": int(vol.iloc[-1]), "average_volume": float(vol.mean()), "volume_ratio": float(vol.iloc[-1] / (vol.rolling(20).mean().iloc[-1] or 1)), "volume_profile": profile, "price_volume_correlation": corr, "uptrend_volume": up_vol, "downtrend_volume": down_vol, "volume_trend": trend}
+    except Exception as e:
+        log.warning(f"volume_profile error: {e}")
+        return {"error": str(e)}
 
-    up_vol = vol_aligned[ret > 0].mean() if not ret.empty else None
-    down_vol = vol_aligned[ret < 0].mean() if not ret.empty else None
-    v_trend = "مرتفع" if vol.iloc[-1] > vol.rolling(20).mean().iloc[-1]*1.5 else (
-              "منخفض" if vol.iloc[-1] < vol.rolling(20).mean().iloc[-1]*0.5 else "عادي")
+def market_structure(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict[str, Any]:
+    try:
+        close = df["Close"]
+        sma20 = ind.get("sma_20", pd.Series(dtype=float))
+        sma50 = ind.get("sma_50", pd.Series(dtype=float))
+        sma200 = ind.get("sma_200", pd.Series(dtype=float))
+        direction = "متذبذب"
+        if not sma20.empty and not sma50.empty and not sma200.empty:
+            if close.iloc[-1] > sma20.iloc[-1] > sma50.iloc[-1] > sma200.iloc[-1]:
+                direction = "اتجاه صاعد"
+            elif close.iloc[-1] < sma20.iloc[-1] < sma50.iloc[-1] < sma200.iloc[-1]:
+                direction = "اتجاه هابط"
+        peaks_count = int(((close.shift(1) < close) & (close.shift(-1) < close)).sum())
+        troughs_count = int(((close.shift(1) > close) & (close.shift(-1) > close)).sum())
+        rel_strength = float((sma20.iloc[-1] / sma50.iloc[-1]) if (not sma20.empty and not sma50.empty and sma50.iloc[-1] != 0) else 1.0)
+        conf = "عالية" if direction != "متذبذب" else "متوسطة"
+        return {"market_structure": direction, "peaks_count": peaks_count, "troughs_count": troughs_count, "relative_strength": rel_strength, "structure_confidence": conf}
+    except Exception as e:
+        log.warning(f"market_structure error: {e}")
+        return {"error": str(e)}
 
-    return {
-        "current_volume": int(vol.iloc[-1]),
-        "average_volume": float(vol.rolling(252//12).mean().iloc[-1]) if len(vol) >= 21 else float(vol.mean()),
-        "volume_ratio": float(vol.iloc[-1] / (vol.rolling(20).mean().iloc[-1] or 1.0)),
-        "volume_profile": profile,
-        "price_volume_correlation": corr,
-        "uptrend_volume": float(up_vol) if up_vol is not None and not math.isnan(up_vol) else None,
-        "downtrend_volume": float(down_vol) if down_vol is not None and not math.isnan(down_vol) else None,
-        "volume_trend": v_trend
-    }
+def detect_divergences(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict[str, Any]:
+    try:
+        def slope(s: pd.Series) -> float:
+            s = s.dropna()
+            if len(s) < 3:
+                return 0.0
+            y = s.values
+            x = np.arange(len(y))
+            return float(np.polyfit(x, y, 1)[0])
+        window = 20
+        price_slope = slope(df["Close"].tail(window))
+        rsi_slope = slope(ind.get("rsi", pd.Series(dtype=float)).tail(window))
+        macd_slope = slope(ind.get("macd", pd.Series(dtype=float)).tail(window))
+        rsi_div = int((price_slope > 0 and rsi_slope < 0) or (price_slope < 0 and rsi_slope > 0))
+        macd_div = int((price_slope > 0 and macd_slope < 0) or (price_slope < 0 and macd_slope > 0))
+        return {"total_divergences": rsi_div + macd_div, "recent_divergences": rsi_div + macd_div, "rsi_divergences": rsi_div, "macd_divergences": macd_div}
+    except Exception as e:
+        log.warning(f"divergence error: {e}")
+        return {"error": str(e)}
 
-def market_structure(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict:
-    close = df["Close"]
-    peaks = (close.shift(1) < close) & (close.shift(-1) < close)
-    troughs = (close.shift(1) > close) & (close.shift(-1) > close)
-    peaks_count = int(peaks.sum())
-    troughs_count = int(troughs.sum())
-
-    sma20 = ind.get("sma_20", pd.Series(dtype=float))
-    sma50 = ind.get("sma_50", pd.Series(dtype=float))
-    sma200 = ind.get("sma_200", pd.Series(dtype=float))
-
-    dirn = "متذبذب"
-    if not sma20.empty and not sma50.empty and not sma200.empty:
-        if close.iloc[-1] > sma20.iloc[-1] > sma50.iloc[-1] > sma200.iloc[-1]:
-            dirn = "اتجاه صاعد"
-        elif close.iloc[-1] < sma20.iloc[-1] < sma50.iloc[-1] < sma200.iloc[-1]:
-            dirn = "اتجاه هابط"
-
-    rs = float((sma20.iloc[-1] / sma50.iloc[-1]) if (not sma20.empty and not sma50.empty and sma50.iloc[-1]!=0) else 1.0)
-    conf = "عالية" if dirn != "متذبذب" else "متوسطة"
-    return {
-        "market_structure": dirn,
-        "peak_trend": "صاعد" if close[peaks].diff().dropna().mean() and (close[peaks].diff().dropna().mean()>0) else "صاعد",
-        "trough_trend": "صاعد" if close[troughs].diff().dropna().mean() and (close[troughs].diff().dropna().mean()>0) else "صاعد",
-        "peaks_count": peaks_count,
-        "troughs_count": troughs_count,
-        "relative_strength": rs,
-        "structure_confidence": conf
-    }
-
-def detect_divergences(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict:
-    # تبسيط: نحسب اختلاف اتجاه آخر 20 شمعة بين السعر ومؤشرين
-    def slope(x: pd.Series) -> float:
-        x = x.dropna()
-        if len(x) < 3: return 0.0
-        y = x.values
-        X = np.arange(len(y))
-        b = np.polyfit(X, y, 1)[0]
-        return float(b)
-
-    window = 20
-    price_slope = slope(df["Close"].tail(window))
-    rsi_slope = slope(ind.get("rsi", pd.Series(dtype=float)).tail(window))
-    macd_slope = slope(ind.get("macd", pd.Series(dtype=float)).tail(window))
-
-    rsi_div = (price_slope > 0 and rsi_slope < 0) or (price_slope < 0 and rsi_slope > 0)
-    macd_div = (price_slope > 0 and macd_slope < 0) or (price_slope < 0 and macd_slope > 0)
-
-    latest = []
-    if rsi_div: latest.append({"type": "RSI", "window": window})
-    if macd_div: latest.append({"type": "MACD", "window": window})
-
-    return {
-        "total_divergences": int(rsi_div) + int(macd_div),
-        "recent_divergences": int(rsi_div) + int(macd_div),
-        "positive_divergences": int(price_slope < 0 and (rsi_slope > 0 or macd_slope > 0)),
-        "negative_divergences": int(price_slope > 0 and (rsi_slope < 0 or macd_slope < 0)),
-        "rsi_divergences": int(rsi_div),
-        "macd_divergences": int(macd_div),
-        "latest_divergences": latest
-    }
-
-def correlation_block(data: Dict[str, pd.DataFrame]) -> Dict:
+def correlation_block(data: Dict[str, pd.DataFrame]) -> Dict[str, Any]:
     try:
         gold = data.get("GC=F", pd.DataFrame())
         dxy = data.get("^DXY", pd.DataFrame())
         spy = data.get("SPY", pd.DataFrame())
         out = {}
-
-        if not gold.empty:
-            gr = safe_pct_change(gold["Close"])
-            if not dxy.empty:
-                xr = safe_pct_change(dxy["Close"])
-                aligned = gr.align(xr, join="inner")
-                if len(aligned[0]) > 5:
-                    out["USD"] = float(np.corrcoef(aligned[0], aligned[1])[0,1])
-            if not spy.empty:
-                sr = safe_pct_change(spy["Close"])
-                aligned = gr.align(sr, join="inner")
-                if len(aligned[0]) > 5:
-                    out["SPY"] = float(np.corrcoef(aligned[0], aligned[1])[0,1])
+        if gold is None or gold.empty:
+            return {"asset_correlations": {}, "strongest_correlation": None, "weakest_correlation": None}
+        gr = safe_pct_change(gold["Close"])
+        if dxy is not None and not dxy.empty:
+            xr = safe_pct_change(dxy["Close"])
+            a, b = gr.align(xr, join="inner")
+            if len(a) > 5:
+                out["USD"] = float(np.corrcoef(a.values, b.values)[0,1])
+        if spy is not None and not spy.empty:
+            sr = safe_pct_change(spy["Close"])
+            a, b = gr.align(sr, join="inner")
+            if len(a) > 5:
+                out["SPY"] = float(np.corrcoef(a.values, b.values)[0,1])
         if not out:
-            return {"asset_correlations": {}, "time_correlation": None, "volume_correlation": None, "volatility_correlation": None,
-                    "strongest_correlation": None, "weakest_correlation": None}
+            return {"asset_correlations": {}, "strongest_correlation": None, "weakest_correlation": None}
         strongest = max(out.items(), key=lambda kv: abs(kv[1]))
         weakest = min(out.items(), key=lambda kv: abs(kv[1]))
-        return {
-            "asset_correlations": out,
-            "time_correlation": None,
-            "volume_correlation": None,
-            "volatility_correlation": None,
-            "strongest_correlation": list(strongest),
-            "weakest_correlation": list(weakest),
-        }
+        return {"asset_correlations": out, "strongest_correlation": list(strongest), "weakest_correlation": list(weakest)}
     except Exception as e:
-        log.warning(f"correlation error: {e}")
+        log.warning(f"correlation_block error: {e}")
         return {"error": str(e)}
 
-def advanced_metrics(df: pd.DataFrame) -> Dict:
+def advanced_metrics(df: pd.DataFrame) -> Dict[str, Any]:
     try:
         close = df["Close"]
         ret = safe_pct_change(close)
         if ret.empty:
             return {}
-
-        ann_ret = float((1+ret.mean())**252 - 1)
-        ann_vol = float(ret.std()*np.sqrt(252))
+        ann_ret = float((1 + ret.mean()) ** 252 - 1)
+        ann_vol = float(ret.std() * np.sqrt(252))
         rf = 0.02
-        sharpe = float(((ret.mean()-rf/252)/ret.std())*np.sqrt(252)) if ret.std()!=0 else None
-
-        # MDD
-        equity = (1+ret).cumprod()
+        sharpe = float(((ret.mean() - rf/252) / ret.std()) * np.sqrt(252)) if ret.std() != 0 else None
+        equity = (1 + ret).cumprod()
         run_max = equity.cummax()
-        dd = (equity-run_max)/run_max
-        mdd = float(dd.min()) if not dd.empty else None
-
-        # Sortino
+        drawdown = (equity - run_max) / run_max
+        mdd = float(drawdown.min()) if not drawdown.empty else None
         downside = ret[ret < 0]
-        d_vol = downside.std()*np.sqrt(252) if not downside.empty else None
-        sortino = float((ret.mean()-rf/252)/(downside.std() if downside.std()!=0 else np.nan)*np.sqrt(252)) if d_vol not in [None, 0, np.nan] else None
-
-        # Calmar
-        calmar = float(ann_ret/abs(mdd)) if (mdd not in [None, 0] and not math.isnan(mdd)) else None
-
-        # Win rate/Profit factor
+        down_std = downside.std() * np.sqrt(252) if not downside.empty else None
+        sortino = float(((ret.mean() - rf/252) / downside.std()) * np.sqrt(252)) if (not downside.empty and downside.std() != 0) else None
+        calmar = float(ann_ret / abs(mdd)) if (mdd not in (None, 0) and not math.isnan(mdd)) else None
         wins = ret[ret > 0]
         losses = ret[ret < 0]
-        win_rate = float(len(wins)/len(ret)) if len(ret) else None
+        win_rate = float(len(wins) / len(ret)) if len(ret) else None
         avg_win = float(wins.mean()) if not wins.empty else None
         avg_loss = float(losses.mean()) if not losses.empty else None
-        profit_factor = float(abs(wins.sum()/losses.sum())) if (not wins.empty and not losses.empty and losses.sum()!=0) else None
-
-        return {
-            "annualized_return": ann_ret,
-            "annualized_volatility": ann_vol,
-            "sharpe_ratio": sharpe,
-            "max_drawdown": mdd,
-            "var_95": float(np.percentile(ret, 5)),
-            "var_99": float(np.percentile(ret, 1)),
-            "skewness": float(ret.skew()),
-            "kurtosis": float(ret.kurtosis()),
-            "calmar_ratio": calmar,
-            "sortino_ratio": sortino,
-            "win_rate": win_rate,
-            "avg_win": avg_win,
-            "avg_loss": avg_loss,
-            "profit_factor": profit_factor
-        }
+        profit_factor = float(abs(wins.sum() / losses.sum())) if (not wins.empty and not losses.empty and losses.sum() != 0) else None
+        return {"annualized_return": ann_ret, "annualized_volatility": ann_vol, "sharpe_ratio": sharpe, "max_drawdown": mdd, "var_95": float(np.percentile(ret, 5)), "var_99": float(np.percentile(ret, 1)), "skewness": float(ret.skew()), "kurtosis": float(ret.kurtosis()), "calmar_ratio": calmar, "sortino_ratio": sortino, "win_rate": win_rate, "avg_win": avg_win, "avg_loss": avg_loss, "profit_factor": profit_factor}
     except Exception as e:
+        log.warning(f"advanced_metrics error: {e}")
         return {"error": str(e)}
 
-# ============================= إشارات + مشاعر =============================
+# -------------------- Sentiment & signals --------------------
+def technical_sentiment(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict[str, Any]:
+    try:
+        out = {}
+        close = df["Close"].iloc[-1]
+        rsi = ind.get("rsi", pd.Series(dtype=float))
+        bb_upper = ind.get("bb_upper", pd.Series(dtype=float))
+        bb_lower = ind.get("bb_lower", pd.Series(dtype=float))
+        macd = ind.get("macd", pd.Series(dtype=float))
+        macd_sig = ind.get("macd_signal", pd.Series(dtype=float))
+        adx = ind.get("adx", pd.Series(dtype=float))
+        vol_avg = df["Volume"].rolling(20).mean()
+        rsi_now = float(rsi.iloc[-1]) if (not rsi.empty and not math.isnan(rsi.iloc[-1])) else 50.0
+        out["rsi_sentiment"] = "مفرط في الشراء" if rsi_now > 70 else ("مفرط في البيع" if rsi_now < 30 else "محايد")
+        if not macd.empty and not macd_sig.empty:
+            out["macd_sentiment"] = "إيجابي" if macd.iloc[-1] >= macd_sig.iloc[-1] else "سلبي"
+        if not bb_upper.empty and not bb_lower.empty:
+            if close > bb_upper.iloc[-1]:
+                out["bb_sentiment"] = "مفرط في الشراء"
+            elif close < bb_lower.iloc[-1]:
+                out["bb_sentiment"] = "مفرط في البيع"
+            else:
+                out["bb_sentiment"] = "عادي"
+        if not adx.empty:
+            out["trend_strength"] = "قوي" if adx.iloc[-1] > 25 else "ضعيف"
+        v = int(df["Volume"].iloc[-1])
+        if not vol_avg.empty and not math.isnan(vol_avg.iloc[-1]) and vol_avg.iloc[-1] > 0:
+            out["volume_sentiment"] = "مرتفع" if v > 1.5 * vol_avg.iloc[-1] else ("منخفض" if v < 0.5 * vol_avg.iloc[-1] else "عادي")
+        return out
+    except Exception as e:
+        log.warning(f"technical_sentiment error: {e}")
+        return {"error": str(e)}
 
-def technical_sentiment(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict:
-    out = {}
-    close = df["Close"].iloc[-1]
-    rsi = ind.get("rsi", pd.Series(dtype=float))
-    bb_u = ind.get("bb_upper", pd.Series(dtype=float))
-    bb_l = ind.get("bb_lower", pd.Series(dtype=float))
-    macd = ind.get("macd", pd.Series(dtype=float))
-    macd_sig = ind.get("macd_signal", pd.Series(dtype=float))
-    adx = ind.get("adx", pd.Series(dtype=float))
-    vol_avg = df["Volume"].rolling(20).mean()
-
-    # RSI
-    rsi_now = rsi.iloc[-1] if not rsi.empty else 50.0
-    out["rsi_sentiment"] = "مفرط في الشراء" if rsi_now > 70 else ("مفرط في البيع" if rsi_now < 30 else "محايد")
-
-    # MACD
-    if not macd.empty and not macd_sig.empty:
-        out["macd_sentiment"] = "إيجابي" if macd.iloc[-1] >= macd_sig.iloc[-1] else "سلبي"
-
-    # Bollinger
-    if not bb_u.empty and not bb_l.empty:
-        if close > bb_u.iloc[-1]:
-            out["bb_sentiment"] = "مفرط في الشراء"
-        elif close < bb_l.iloc[-1]:
-            out["bb_sentiment"] = "مفرط في البيع"
+def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], patterns: Dict[str, Any]) -> Dict[str, Any]:
+    try:
+        close_price = float(df["Close"].iloc[-1])
+        out: Dict[str, Any] = {"current_price": close_price, "timestamp": dt.datetime.utcnow().isoformat()}
+        sma20 = ind.get("sma_20", pd.Series(dtype=float))
+        sma50 = ind.get("sma_50", pd.Series(dtype=float))
+        sma200 = ind.get("sma_200", pd.Series(dtype=float))
+        # Trend
+        if not sma20.empty and not sma50.empty and not sma200.empty:
+            if close_price > sma20.iloc[-1] > sma50.iloc[-1] > sma200.iloc[-1]:
+                out["trend"] = "صاعد قوي"
+            elif close_price > sma20.iloc[-1] > sma50.iloc[-1]:
+                out["trend"] = "صاعد"
+            elif close_price < sma20.iloc[-1] < sma50.iloc[-1] < sma200.iloc[-1]:
+                out["trend"] = "هابط قوي"
+            elif close_price < sma20.iloc[-1] < sma50.iloc[-1]:
+                out["trend"] = "هابط"
+            else:
+                out["trend"] = "متذبذب"
+        # RSI-based
+        rsi = ind.get("rsi", pd.Series(dtype=float))
+        if not rsi.empty:
+            rv = float(rsi.iloc[-1])
+            if rv < 30:
+                out["rsi_signal"] = "شراء قوي"
+            elif rv < 40:
+                out["rsi_signal"] = "شراء"
+            elif rv > 70:
+                out["rsi_signal"] = "بيع قوي"
+            elif rv > 60:
+                out["rsi_signal"] = "بيع"
+            else:
+                out["rsi_signal"] = "محايد"
+        # MACD cross
+        macd = ind.get("macd", pd.Series(dtype=float))
+        macd_sig = ind.get("macd_signal", pd.Series(dtype=float))
+        if not macd.empty and not macd_sig.empty and len(macd) > 2:
+            if macd.iloc[-1] > macd_sig.iloc[-1] and macd.iloc[-2] <= macd_sig.iloc[-2]:
+                out["macd_signal"] = "شراء"
+            elif macd.iloc[-1] < macd_sig.iloc[-1] and macd.iloc[-2] >= macd_sig.iloc[-2]:
+                out["macd_signal"] = "بيع"
+            else:
+                out["macd_signal"] = "محايد"
+        # Bollinger
+        bbu = ind.get("bb_upper", pd.Series(dtype=float))
+        bbl = ind.get("bb_lower", pd.Series(dtype=float))
+        if not bbu.empty and not bbl.empty:
+            out["bb_signal"] = "شراء" if close_price < bbl.iloc[-1] else ("بيع" if close_price > bbu.iloc[-1] else "محايد")
+        # Patterns
+        pt_signals = []
+        for k, v in patterns.items():
+            if isinstance(v, (pd.Series, np.ndarray)):
+                try:
+                    if len(v) > 0 and v[-1] != 0:
+                        pt_signals.append(k)
+                except Exception:
+                    pass
+            elif isinstance(v, list) and v:
+                if v[-1] == len(df) - 1:
+                    pt_signals.append(k)
+        out["patterns"] = pt_signals
+        # Aggregate recommendation
+        buy = 0.0
+        sell = 0.0
+        if out.get("rsi_signal") in ("شراء قوي", "شراء"): buy += 1
+        if out.get("rsi_signal") in ("بيع قوي", "بيع"): sell += 1
+        if out.get("macd_signal") == "شراء": buy += 1
+        if out.get("macd_signal") == "بيع": sell += 1
+        if out.get("bb_signal") == "شراء": buy += 1
+        if out.get("bb_signal") == "بيع": sell += 1
+        if out.get("trend") in ("صاعد", "صاعد قوي"): buy += 0.5
+        if out.get("trend") in ("هابط", "هابط قوي"): sell += 0.5
+        if buy > sell + 1:
+            out["recommendation"], out["confidence"] = "شراء قوي", "عالية"
+        elif buy > sell:
+            out["recommendation"], out["confidence"] = "شراء", "متوسطة"
+        elif sell > buy + 1:
+            out["recommendation"], out["confidence"] = "بيع قوي", "عالية"
+        elif sell > buy:
+            out["recommendation"], out["confidence"] = "بيع", "متوسطة"
         else:
-            out["bb_sentiment"] = "عادي"
+            out["recommendation"], out["confidence"] = "انتظار", "منخفضة"
+        # Risk via ATR
+        atr = ind.get("atr", pd.Series(dtype=float))
+        try:
+            if not atr.empty and not math.isnan(float(atr.iloc[-1])):
+                out["stop_loss"] = float(close_price - 2 * float(atr.iloc[-1]))
+                out["take_profit"] = float(close_price + 3 * float(atr.iloc[-1]))
+                out["risk_level"] = "عالية" if (atr.iloc[-1] / close_price) > 0.03 else ("متوسطة" if (atr.iloc[-1] / close_price) > 0.015 else "منخفضة")
+            else:
+                out["stop_loss"] = float(close_price * 0.95)
+                out["take_profit"] = float(close_price * 1.08)
+                out["risk_level"] = "متوسطة"
+        except Exception:
+            out["stop_loss"], out["take_profit"], out["risk_level"] = None, None, "متوسطة"
+        return out
+    except Exception as e:
+        log.warning(f"generate_signals error: {e}")
+        return {"error": str(e)}
 
-    # ADX
-    if not adx.empty:
-        out["trend_strength"] = "قوي" if adx.iloc[-1] > 25 else "ضعيف"
-
-    # حجم
-    v = df["Volume"].iloc[-1]
-    if not vol_avg.empty and not math.isnan(vol_avg.iloc[-1]) and vol_avg.iloc[-1] != 0:
-        out["volume_sentiment"] = "مرتفع" if v > 1.5*vol_avg.iloc[-1] else ("منخفض" if v < 0.5*vol_avg.iloc[-1] else "عادي")
-
-    return out
-
-def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], patterns_all: Dict) -> Dict:
-    close = df["Close"].iloc[-1]
-    out = {"current_price": float(close), "timestamp": now_iso()}
-
-    sma20, sma50, sma200 = (ind.get("sma_20", pd.Series(dtype=float)),
-                            ind.get("sma_50", pd.Series(dtype=float)),
-                            ind.get("sma_200", pd.Series(dtype=float)))
-    if not sma20.empty and not sma50.empty and not sma200.empty:
-        if close > sma20.iloc[-1] > sma50.iloc[-1] > sma200.iloc[-1]:
-            out["trend"] = "صاعد قوي"
-        elif close > sma20.iloc[-1] > sma50.iloc[-1]:
-            out["trend"] = "صاعد"
-        elif close < sma20.iloc[-1] < sma50.iloc[-1] < sma200.iloc[-1]:
-            out["trend"] = "هابط قوي"
-        elif close < sma20.iloc[-1] < sma50.iloc[-1]:
-            out["trend"] = "هابط"
-        else:
-            out["trend"] = "متذبذب"
-
-    # RSI signal
-    rsi = ind.get("rsi", pd.Series(dtype=float))
-    if not rsi.empty:
-        rv = rsi.iloc[-1]
-        out["rsi_signal"] = "شراء قوي" if rv < 30 else ("شراء" if rv < 40 else ("بيع قوي" if rv > 70 else ("بيع" if rv > 60 else "محايد")))
-
-    # MACD cross
-    macd = ind.get("macd", pd.Series(dtype=float))
-    macd_sig = ind.get("macd_signal", pd.Series(dtype=float))
-    if not macd.empty and not macd_sig.empty and len(macd) > 2:
-        if macd.iloc[-1] > macd_sig.iloc[-1] and macd.iloc[-2] <= macd_sig.iloc[-2]:
-            out["macd_signal"] = "شراء"
-        elif macd.iloc[-1] < macd_sig.iloc[-1] and macd.iloc[-2] >= macd_sig.iloc[-2]:
-            out["macd_signal"] = "بيع"
-        else:
-            out["macd_signal"] = "محايد"
-
-    # Bollinger
-    bbu = ind.get("bb_upper", pd.Series(dtype=float))
-    bbl = ind.get("bb_lower", pd.Series(dtype=float))
-    if not bbu.empty and not bbl.empty:
-        out["bb_signal"] = "شراء" if close < bbl.iloc[-1] else ("بيع" if close > bbu.iloc[-1] else "محايد")
-
-    # أنماط (شموع/سعر) – إذا آخر شمعة فيها إشارة
-    pt_signals = []
-    for name, val in patterns_all.items():
-        if isinstance(val, pd.Series) and not val.empty:
-            if val.iloc[-1] != 0:
-                pt_signals.append(name)
-        elif isinstance(val, list) and len(val)>0 and val[-1] == len(df)-1:
-            pt_signals.append(name)
-    out["patterns"] = pt_signals
-
-    # توصية ختامية موزونة
-    buy, sell = 0.0, 0.0
-    if out.get("rsi_signal") in ["شراء قوي", "شراء"]: buy += 1
-    if out.get("rsi_signal") in ["بيع قوي", "بيع"]:  sell += 1
-    if out.get("macd_signal") == "شراء": buy += 1
-    if out.get("macd_signal") == "بيع":  sell += 1
-    if out.get("bb_signal") == "شراء":   buy += 1
-    if out.get("bb_signal") == "بيع":    sell += 1
-    if out.get("trend") in ["صاعد", "صاعد قوي"]: buy += 0.5
-    if out.get("trend") in ["هابط", "هابط قوي"]: sell += 0.5
-
-    if buy > sell + 1:
-        out["recommendation"], out["confidence"] = "شراء قوي", "عالية"
-    elif buy > sell:
-        out["recommendation"], out["confidence"] = "شراء", "متوسطة"
-    elif sell > buy + 1:
-        out["recommendation"], out["confidence"] = "بيع قوي", "عالية"
-    elif sell > buy:
-        out["recommendation"], out["confidence"] = "بيع", "متوسطة"
-    else:
-        out["recommendation"], out["confidence"] = "انتظار", "منخفضة"
-
-    # إدارة المخاطر عبر ATR
-    atr = ind.get("atr", pd.Series(dtype=float))
-    if not atr.empty and not math.isnan(atr.iloc[-1]):
-        out["risk_level"] = "عالية" if atr.iloc[-1]/close > 0.015 else ("متوسطة" if atr.iloc[-1]/close > 0.01 else "منخفضة")
-        out["stop_loss"] = float(close - 2*atr.iloc[-1])
-        out["take_profit"] = float(close + 3*atr.iloc[-1])
-    else:
-        out["risk_level"] = "متوسطة"
-        out["stop_loss"] = float(close*0.95)
-        out["take_profit"] = float(close*1.08)
-
-    return out
-
-# ============================= أخبار (NewsAPI) =============================
-
-def simple_sentiment_score(text: str) -> float:
-    """تحليل مشاعر بسيط  -1..+1"""
-    if not text:
+# -------------------- News & Fundamentals --------------------
+def simple_sentiment_text(text: str) -> float:
+    if not isinstance(text, str) or not text:
         return 0.0
-    text = text.lower()
-    pos_kw = ["rally", "surge", "gain", "safe haven", "bull", "up", "beat", "strong"]
-    neg_kw = ["drop", "fall", "slump", "risk", "hawkish", "down", "miss", "weak", "selloff"]
+    txt = text.lower()
+    pos = ["rise", "rally", "surge", "gain", "bull", "safe haven", "cut", "dovish", "strong", "support"]
+    neg = ["fall", "drop", "decline", "slump", "selloff", "hawkish", "raise", "weak", "pressure"]
     score = 0
-    for w in pos_kw:
-        if w in text:
+    for w in pos:
+        if w in txt:
             score += 1
-    for w in neg_kw:
-        if w in text:
+    for w in neg:
+        if w in txt:
             score -= 1
-    return max(-1.0, min(1.0, score/3.0))
+    # normalize
+    return max(-1.0, min(1.0, score / 3.0))
 
-def fetch_news(news_api_key: str, q: str = "gold OR XAU OR bullion OR GC=F", page_size: int = 30) -> Dict:
-    if not news_api_key:
-        return {"error": "NEWS_API_KEY مفقود"}
+def fetch_news_articles(api_key: str, q: str = "gold OR XAU OR bullion OR \"precious metals\"", page_size: int = 20) -> Dict[str, Any]:
+    if not api_key:
+        return {"error": "NEWS_API_KEY missing"}
     url = "https://newsapi.org/v2/everything"
-    params = {
-        "q": q,
-        "language": "en",
-        "sortBy": "publishedAt",
-        "pageSize": page_size,
-        "apiKey": news_api_key,
-    }
+    params = {"q": q, "language": "en", "sortBy": "publishedAt", "pageSize": page_size, "apiKey": api_key}
     try:
         r = requests.get(url, params=params, timeout=15)
         r.raise_for_status()
@@ -624,209 +592,143 @@ def fetch_news(news_api_key: str, q: str = "gold OR XAU OR bullion OR GC=F", pag
         for a in arts:
             title = a.get("title") or ""
             desc = a.get("description") or ""
-            s = simple_sentiment_score(f"{title}. {desc}")
+            text = f"{title}. {desc}"
+            s = simple_sentiment_text(text)
             total += s
-            parsed.append({
-                "title": title,
-                "source": (a.get("source") or {}).get("name"),
-                "publishedAt": a.get("publishedAt"),
-                "url": a.get("url"),
-                "sentiment": s
-            })
-        avg = total/max(1, len(parsed))
-        # تقدير التأثير (بسيط)
-        impact = "داعم للذهب" if avg > 0.2 else ("ضاغط على الذهب" if avg < -0.2 else "محايد")
-        return {"count": len(parsed), "average_sentiment": avg, "impact": impact, "articles": parsed}
+            parsed.append({"title": title, "source": (a.get("source") or {}).get("name"), "publishedAt": a.get("publishedAt"), "url": a.get("url"), "sentiment": s})
+        avg = total / max(1, len(parsed))
+        impact = "dovish/bullish" if avg > 0.2 else ("hawkish/bearish" if avg < -0.2 else "neutral")
+        return {"count": len(parsed), "average_sentiment": float(avg), "impact": impact, "articles": parsed}
     except Exception as e:
+        log.warning(f"fetch_news_articles error: {e}")
         return {"error": str(e)}
 
-# ============================= بيانات أساسية (FRED) =============================
-
 FRED_SERIES = {
-    "FEDFUNDS": "Effective Federal Funds Rate",
-    "CPIAUCSL": "CPI (All Urban Consumers, SA)",
+    "FEDFUNDS": "Effective Fed Funds Rate",
+    "CPIAUCSL": "CPI (All Urban Consumers)",
     "DTWEXBGS": "Trade Weighted U.S. Dollar Index: Broad, Goods",
-    "DGS10": "10-Year Treasury Constant Maturity Rate",
-    "UNRATE": "Unemployment Rate",
+    "DGS10": "10-Year Treasury Rate",
+    "UNRATE": "Unemployment Rate"
 }
 
 def fetch_fred_series(series_id: str, api_key: str, obs: int = 24) -> Optional[pd.Series]:
+    if not api_key:
+        return None
     base = "https://api.stlouisfed.org/fred/series/observations"
-    params = {"series_id": series_id, "api_key": api_key, "file_type": "json", "observation_start": (dt.date.today()-dt.timedelta(days=4000)).isoformat()}
+    params = {"series_id": series_id, "api_key": api_key, "file_type": "json", "limit": obs}
     try:
         r = requests.get(base, params=params, timeout=15)
         r.raise_for_status()
         js = r.json()
         obs_list = js.get("observations", [])
-        if not obs_list:
-            return None
         df = pd.DataFrame(obs_list)
+        if df.empty or "value" not in df.columns:
+            return None
         df["value"] = pd.to_numeric(df["value"], errors="coerce")
         df["date"] = pd.to_datetime(df["date"])
         s = df.set_index("date")["value"].dropna().tail(obs)
         return s
-    except Exception:
+    except Exception as e:
+        log.warning(f"fetch_fred_series error: {e}")
         return None
 
-def fundamental_block(api_key: str) -> Dict:
+def fundamental_block(api_key: str) -> Dict[str, Any]:
     if not api_key:
-        return {"error": "FRED_API_KEY مفقود"}
+        return {"error": "FRED_API_KEY missing"}
     out = {}
     for sid, name in FRED_SERIES.items():
-        s = fetch_fred_series(sid, api_key)
+        s = fetch_fred_series(sid, api_key, obs=40)
         if s is None or s.empty:
             out[sid] = {"series": sid, "name": name, "error": "no data"}
             continue
         latest = clean_scalar(s.iloc[-1])
         prev_12 = clean_scalar(s.shift(12).iloc[-1]) if len(s) > 12 else None
         yoy = None
-        if latest is not None and prev_12 not in [None, 0]:
-            yoy = float((latest - prev_12)/prev_12) if prev_12 else None
-        out[sid] = {
-            "series": sid,
-            "name": name,
-            "latest": latest,
-            "yoy_change": yoy
-        }
-    # تقييم مبسّط لتأثير الأساسيات على الذهب:
+        if latest is not None and prev_12 not in (None, 0):
+            try:
+                yoy = float((latest - prev_12) / prev_12)
+            except Exception:
+                yoy = None
+        out[sid] = {"series": sid, "name": name, "latest": latest, "yoy_change": yoy}
+    # quick bias
+    bias = 0
+    fed = out.get("FEDFUNDS", {})
+    dxy = out.get("DTWEXBGS", {})
+    cpi = out.get("CPIAUCSL", {})
     try:
-        fed = out.get("FEDFUNDS", {})
-        dxy = out.get("DTWEXBGS", {})
-        cpi = out.get("CPIAUCSL", {})
-        bias = 0
-        if fed.get("latest") is not None and fed["latest"] > 3: bias -= 1  # تشدد نقدي سلبي للذهب
-        if dxy.get("yoy_change") is not None and dxy["yoy_change"] > 0.05: bias -= 1  # قوة الدولار سلبية
-        if cpi.get("yoy_change") is not None and cpi["yoy_change"] > 0.03: bias += 1  # تضخم داعم
-        stance = "داعم للذهب" if bias > 0 else ("ضاغط على الذهب" if bias < 0 else "محايد")
-        out["fundamental_bias"] = stance
+        if fed.get("latest") is not None and fed["latest"] > 3: bias -= 1
+        if dxy.get("yoy_change") is not None and dxy["yoy_change"] > 0.05: bias -= 1
+        if cpi.get("yoy_change") is not None and cpi["yoy_change"] > 0.03: bias += 1
     except Exception:
-        out["fundamental_bias"] = "محايد"
+        pass
+    out["fundamental_bias"] = "dovish/bullish" if bias > 0 else ("hawkish/bearish" if bias < 0 else "neutral")
     return out
 
-# ============================= إنشاء التقرير =============================
-
-def build_report(data: Dict[str, pd.DataFrame]) -> Dict:
+# -------------------- Build report --------------------
+def build_unified_report(data: Dict[str, pd.DataFrame]) -> Dict[str, Any]:
     gold = data.get("GC=F", pd.DataFrame())
-    if gold.empty:
-        return {"error": "لا توجد بيانات GC=F"}
-
+    if gold is None or gold.empty:
+        return {"error": "GC=F data unavailable"}
+    # indicators
     ind = technical_indicators(gold)
-    candles = detect_candles(gold) if TALIB_AVAILABLE else {}
-    price_pats = detect_price_patterns(gold)
-    patt_all = {**candles, **price_pats} if candles else price_pats
-
-    # محسّنات
-    lo, hi = float(gold["Low"].min()), float(gold["High"].max())
-    fibo = fibonacci_levels(lo, hi)
+    patterns_candles = detect_candlestick_patterns(gold)
+    patterns_price = detect_price_patterns(gold)
+    patterns_all = {**patterns_candles, **patterns_price} if isinstance(patterns_candles, dict) else patterns_price
+    # enhancements
+    low, high = float(gold["Low"].min()), float(gold["High"].max())
+    fibo = fibonacci_levels(low, high)
     sr = support_resistance(gold)
     vp = volume_profile(gold)
     ms = market_structure(gold, ind)
     divs = detect_divergences(gold, ind)
     corr = correlation_block(data)
     adv = advanced_metrics(gold)
-
-    # مشاعر وإشارات
     senti = technical_sentiment(gold, ind)
-    sig = generate_signals(gold, ind, patt_all)
-
-    # أساسيات + أخبار
+    sig = generate_signals(gold, ind, patterns_all)
     fred = fundamental_block(FRED_API_KEY)
-    news = fetch_news(NEWS_API_KEY)
-
+    news = fetch_news_articles(NEWS_API_KEY)
     report = {
-        "metadata": {
-            "version": "unified-stable",
-            "symbol": "GC=F",
-            "period": "1y",
-            "analysis_date": now_iso(),
-            "data_points": int(gold.shape[0]),
-            "talib": TALIB_AVAILABLE
-        },
-        "current_market_data": {
-            "current_price": clean_scalar(gold["Close"].iloc[-1]),
-            "daily_change": clean_scalar(gold["Close"].iloc[-1] - gold["Close"].iloc[-2]) if gold.shape[0] > 1 else None,
-            "daily_change_percent": clean_scalar(((gold["Close"].iloc[-1] / gold["Close"].iloc[-2]) - 1) * 100) if gold.shape[0] > 1 else None,
-            "volume": clean_scalar(gold["Volume"].iloc[-1]),
-            "high": clean_scalar(gold["High"].iloc[-1]),
-            "low": clean_scalar(gold["Low"].iloc[-1]),
-        },
+        "metadata": {"version": "unified-full-v1", "symbol": "GC=F", "period": "1y", "analysis_date": dt.datetime.utcnow().isoformat(), "data_points": int(gold.shape[0]), "talib": TALIB_AVAILABLE},
+        "current_market_data": {"current_price": clean_scalar(gold["Close"].iloc[-1]), "daily_change": clean_scalar(gold["Close"].iloc[-1] - gold["Close"].iloc[-2]) if gold.shape[0] > 1 else None, "daily_change_percent": clean_scalar(((gold["Close"].iloc[-1] / gold["Close"].iloc[-2]) - 1) * 100) if gold.shape[0] > 1 else None, "volume": clean_scalar(int(gold["Volume"].iloc[-1])), "high": clean_scalar(gold["High"].iloc[-1]), "low": clean_scalar(gold["Low"].iloc[-1])},
         "signals": convert_numpy_types(sig),
-        "technical_indicators": convert_numpy_types({
-            "rsi": ind.get("rsi", pd.Series(dtype=float)).iloc[-1] if not ind.get("rsi", pd.Series(dtype=float)).empty else None,
-            "macd": ind.get("macd", pd.Series(dtype=float)).iloc[-1] if not ind.get("macd", pd.Series(dtype=float)).empty else None,
-            "macd_signal": ind.get("macd_signal", pd.Series(dtype=float)).iloc[-1] if not ind.get("macd_signal", pd.Series(dtype=float)).empty else None,
-            "sma_20": ind.get("sma_20", pd.Series(dtype=float)).iloc[-1] if not ind.get("sma_20", pd.Series(dtype=float)).empty else None,
-            "sma_50": ind.get("sma_50", pd.Series(dtype=float)).iloc[-1] if not ind.get("sma_50", pd.Series(dtype=float)).empty else None,
-            "sma_200": ind.get("sma_200", pd.Series(dtype=float)).iloc[-1] if not ind.get("sma_200", pd.Series(dtype=float)).empty else None,
-            "bb_upper": ind.get("bb_upper", pd.Series(dtype=float)).iloc[-1] if not ind.get("bb_upper", pd.Series(dtype=float)).empty else None,
-            "bb_lower": ind.get("bb_lower", pd.Series(dtype=float)).iloc[-1] if not ind.get("bb_lower", pd.Series(dtype=float)).empty else None,
-            "atr": ind.get("atr", pd.Series(dtype=float)).iloc[-1] if not ind.get("atr", pd.Series(dtype=float)).empty else None
-        }),
-        "patterns": {k: (v.tolist() if isinstance(v, pd.Series) else v) for k, v in patt_all.items()},
-        "enhancements": {
-            "fibonacci_analysis": {
-                **fibo,
-                "current_price": clean_scalar(gold["Close"].iloc[-1]),
-                "nearest_support": min(fibo["levels"].keys(), key=lambda k: abs(fibo["levels"][k] - gold["Close"].iloc[-1] )) if fibo["levels"] else None,
-                "nearest_resistance": "1.0" if fibo["levels"].get("1.0", 0) >= gold["Close"].iloc[-1] else None,
-            },
-            "support_resistance_analysis": {**sr, "current_price": clean_scalar(gold["Close"].iloc[-1])},
-            "volume_profile_analysis": vp,
-            "market_structure_analysis": ms,
-            "divergence_analysis": divs,
-            "correlation_analysis": corr,
-            "advanced_metrics": adv
-        },
+        "technical_indicators": convert_numpy_types({k: (v.iloc[-1] if (isinstance(v, pd.Series) and not v.empty) else None) for k, v in ind.items()}),
+        "patterns": {k: (v.tolist() if isinstance(v, (pd.Series, np.ndarray)) else v) for k, v in patterns_all.items()},
+        "enhancements": {"fibonacci": fibo, "support_resistance": sr, "volume_profile": vp, "market_structure": ms, "divergences": divs, "correlations": corr, "advanced_metrics": adv},
         "sentiment": convert_numpy_types(senti),
-        "fundamentals_fred": fred,
-        "news_analysis": news,
-        "summary": {
-            "overall_recommendation": sig.get("recommendation"),
-            "confidence_level": sig.get("confidence"),
-            "risk_level": sig.get("risk_level"),
-            "trend_direction": sig.get("trend"),
-            "key_support": sig.get("stop_loss"),
-            "key_resistance": sig.get("take_profit"),
-            "fundamental_bias": fred.get("fundamental_bias", "محايد"),
-            "news_impact": news.get("impact") if isinstance(news, dict) else None
-        }
+        "fundamentals": fred,
+        "news": news,
+        "summary": {"overall_recommendation": sig.get("recommendation"), "confidence": sig.get("confidence"), "risk_level": sig.get("risk_level"), "trend": sig.get("trend"), "key_support": sig.get("stop_loss"), "key_resistance": sig.get("take_profit"), "fundamental_bias": fred.get("fundamental_bias") if isinstance(fred, dict) else None, "news_impact": news.get("impact") if isinstance(news, dict) else None}
     }
     return convert_numpy_types(report)
 
-# ============================= حفظ وتشغيل =============================
-
-def save_report(report: Dict, filename: str = "gold_analysis_unified.json") -> bool:
+# -------------------- Save --------------------
+def save_report(report: Dict[str, Any], filename: str = "gold_analysis_unified_full.json") -> bool:
     try:
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(report, f, ensure_ascii=False, indent=2, cls=NumpyEncoder)
-        log.info(f"تم حفظ التقرير في {filename}")
+        log.info(f"Saved {filename}")
+        # Optional CSV outputs for indicators (uncomment if desired)
+        # try:
+        #     pd.DataFrame(report['technical_indicators']).to_csv('indicators_snapshot.csv', index=False)
+        # except Exception:
+        #     pass
         return True
     except Exception as e:
-        log.error(f"خطأ في حفظ التقرير: {e}")
+        log.error(f"save_report error: {e}")
         return False
 
+# -------------------- Main --------------------
 def main():
-    log.info("بدء التحليل الموحد للذهب (نسخة مستقرة)...")
-    data = fetch_market_data(period="1y")
-    gold = data.get("GC=F", pd.DataFrame())
-    if gold.empty:
-        log.error("فشل الحصول على بيانات GC=F. سيتم إنهاء العملية.")
-        report = {"error": "GC=F data unavailable"}
-        save_report(report)
-        print("❌ فشل التحليل - لا توجد بيانات GC=F")
-        return
-
-    report = build_report(data)
-    if not report:
-        log.error("فشل بناء التقرير")
-        print("❌ فشل بناء التقرير")
-        return
-
-    if save_report(report):
-        log.info("تم إكمال التحليل الموحد بنجاح!")
-        print("✅ تم حفظ التقرير: gold_analysis_unified.json")
+    log.info("Starting unified full gold analysis...")
+    data = fetch_market_universe(period="1y")
+    report = build_unified_report(data)
+    ok = save_report(report)
+    if ok:
+        log.info("Analysis complete. Output: gold_analysis_unified_full.json")
+        print("✅ Done. File: gold_analysis_unified_full.json")
     else:
-        print("⚠️ تم إنشاء التقرير لكن فشل الحفظ")
+        log.error("Failed to save report.")
+        print("❌ Failed to save report.")
 
 if __name__ == "__main__":
     main()
