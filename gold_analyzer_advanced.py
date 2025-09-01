@@ -597,7 +597,7 @@ class AdvancedGoldAnalyzerV6:
                     'symbol': self.symbol,
                     'period': self.period,
                     'analysis_date': datetime.datetime.now().isoformat(),
-                    'data_points': len(self.data) if self.data is not None else 0
+                    'data_points': self.data.shape[0] if self.data is not None else 0
                 },
                 'current_market_data': {
                     'current_price': convert_numpy_types(self.data['Close'].iloc[-1]) if self.data is not None else 0,
