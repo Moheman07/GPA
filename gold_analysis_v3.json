@@ -1,58 +1,649 @@
 {
-  "timestamp": "2025-08-22T21:17:47.783399",
-  "version": "3.0",
+  "timestamp": "2025-09-01T12:47:46.527755",
   "status": "success",
+  "version": "3.0",
   "gold_analysis": {
     "signal": "Buy",
     "confidence": "High",
-    "total_score": 1.6,
+    "action_recommendation": "شراء - حجم متوسط",
+    "total_score": 1.95,
     "component_scores": {
-      "trend": 2,
-      "momentum": 1,
+      "trend": 4,
+      "momentum": 0,
       "volume": 4,
       "fibonacci": 2,
       "correlation": 1,
+      "support_resistance": 0,
       "economic": 3,
-      "news": 0.54,
+      "news": 0,
+      "ma_cross": 3,
       "mtf_coherence": 0
     },
-    "current_price": 3417.2,
-    "technical_summary": {
-      "rsi": 59.7,
-      "macd": 2.88
+    "current_price": 3542.0,
+    "risk_management": {
+      "stop_loss_levels": {
+        "tight": 3507.75,
+        "conservative": 3496.34,
+        "moderate": 3473.5,
+        "wide": 3450.67
+      },
+      "profit_targets": {
+        "target_1": 3587.66,
+        "target_2": 3633.33,
+        "target_3": 3694.21,
+        "target_4": 3785.54
+      },
+      "position_size_recommendation": "متوسط-كبير (50-75%)",
+      "risk_reward_ratio": 2.0,
+      "max_risk_per_trade": "2%",
+      "volatility_adjusted": true,
+      "ml_adjusted": false
+    },
+    "entry_strategy": {
+      "entry_type": "دخول تدريجي",
+      "entry_zones": [
+        "قسّم الدخول على 2-3 مراحل"
+      ],
+      "conditions": [
+        "انتظر RSI < 70"
+      ],
+      "warnings": [
+        "⚠️ قرب الحد العلوي لبولينجر - احتمال تصحيح"
+      ],
+      "mtf_confirmation": ""
     },
     "ml_prediction": {
       "probability": null,
       "interpretation": ""
+    },
+    "mtf_summary": "",
+    "upcoming_events": [
+      {
+        "type": "economic",
+        "name": "US_CPI",
+        "date": "2025-02-12",
+        "expected_impact": "إيجابي للذهب - تضخم منخفض"
+      },
+      {
+        "type": "economic",
+        "name": "US_Interest_Rate",
+        "date": "2025-01-29 FOMC",
+        "expected_impact": "إيجابي للذهب - خفض الفائدة"
+      },
+      {
+        "type": "economic",
+        "name": "US_NFP",
+        "date": "2025-02-07",
+        "expected_impact": "سلبي للذهب - سوق عمل قوي"
+      },
+      {
+        "type": "news_theme",
+        "name": "geopolitical",
+        "impact": "مستمر",
+        "recommendation": "تأثير محايد أو مختلط"
+      }
+    ],
+    "technical_summary": {
+      "rsi": 82.2,
+      "macd": 29.78,
+      "williams_r": -6.1,
+      "stoch_k": 93.9,
+      "bb_position": 1.22,
+      "volume_ratio": 14.9
+    },
+    "key_levels": {
+      "sma_20": 3382.37,
+      "sma_50": 3355.55,
+      "sma_200": 3069.86,
+      "bb_upper": 3493.17,
+      "bb_lower": 3271.58
     }
   },
-  "backtest_results": {
-    "total_return": 0.37,
-    "total_trades": 140
+  "mtf_analysis": {},
+  "fibonacci_levels": {
+    "high": 3557.1,
+    "low": 3253.8,
+    "fib_23_6": 3485.52,
+    "fib_38_2": 3441.24,
+    "fib_50_0": 3405.45,
+    "fib_61_8": 3369.66,
+    "fib_78_6": 3318.71,
+    "analysis": "السعر قوي جداً فوق 23.6% - اتجاه صاعد قوي",
+    "current_position": 95.02
+  },
+  "support_resistance": {
+    "resistance_levels": [
+      3477.0,
+      3444.0,
+      3441.0
+    ],
+    "support_levels": [
+      3253.8,
+      3263.9,
+      3282.0
+    ],
+    "nearest_resistance": null,
+    "nearest_support": 3282.0,
+    "price_to_resistance": null,
+    "price_to_support": 7.34
+  },
+  "volume_analysis": {
+    "current_volume": 97962,
+    "avg_volume_5": 20831,
+    "avg_volume_20": 6575,
+    "volume_ratio": 14.9,
+    "volume_strength": "قوي جداً",
+    "volume_signal": "حجم استثنائي - احتمال حركة قوية",
+    "obv_trend": "صاعد",
+    "volume_price_correlation": "إيجابي"
   },
   "market_correlations": {
     "correlations": {
-      "gold": 1.0,
-      "gold_etf": 0.976,
-      "dxy": -0.609,
-      "vix": -0.032,
-      "treasury": -0.236,
-      "oil": 0.36,
-      "spy": 0.234,
-      "silver": 0.551
+      "dxy": -0.517,
+      "vix": -0.015,
+      "treasury": 0.458,
+      "oil": -0.722,
+      "spy": 0.905,
+      "usdeur": 0.623,
+      "silver": 0.958
+    },
+    "strength_analysis": {
+      "dxy": "قوي",
+      "vix": "ضعيف",
+      "treasury": "متوسط",
+      "oil": "قوي جداً",
+      "spy": "قوي جداً",
+      "usdeur": "قوي",
+      "silver": "قوي جداً"
+    },
+    "interpretation": {
+      "dxy": "ارتباط عكسي قوي - إيجابي للذهب عند ضعف الدولار",
+      "vix": "تأثير محدود من التقلبات",
+      "oil": "ارتباط قوي - مؤشر على التضخم"
     }
   },
-  "news_analysis": {
-    "total_impact": 0.54
-  },
-  "mtf_analysis": {},
-  "volume_analysis": {
-    "volume_strength": "قوي جداً"
-  },
   "economic_data": {
+    "status": "simulated",
+    "last_update": "2025-09-01T12:47:43.762104",
+    "indicators": {
+      "US_CPI": {
+        "value": 3.2,
+        "previous": 3.4,
+        "impact": "إيجابي للذهب - تضخم منخفض",
+        "next_release": "2025-02-12"
+      },
+      "US_Interest_Rate": {
+        "value": 4.5,
+        "previous": 4.75,
+        "impact": "إيجابي للذهب - خفض الفائدة",
+        "next_release": "2025-01-29 FOMC"
+      },
+      "US_NFP": {
+        "value": 256000,
+        "previous": 227000,
+        "impact": "سلبي للذهب - سوق عمل قوي",
+        "next_release": "2025-02-07"
+      },
+      "DXY_Index": {
+        "value": 108.5,
+        "trend": "هابط",
+        "impact": "إيجابي للذهب - ضعف الدولار"
+      },
+      "Geopolitical_Risk": {
+        "level": "متوسط",
+        "events": [
+          "توترات تجارية",
+          "قلق من التضخم"
+        ],
+        "impact": "محايد إلى إيجابي للذهب"
+      }
+    },
+    "overall_impact": "إيجابي للذهب",
     "score": 3
   },
-  "fibonacci_levels": {
-    "current_position": 73.21
+  "news_analysis": {
+    "status": "success",
+    "events_analysis": {
+      "events": [
+        {
+          "type": "interest_rate",
+          "title": "Gold price hits record high",
+          "source": "Khabarhub.com",
+          "published": "2025-08-31T05:15:11Z",
+          "entities": [
+            [
+              "KATHMANDU",
+              "ORG"
+            ],
+            [
+              "Rs 200,000",
+              "PRODUCT"
+            ],
+            [
+              "Friday",
+              "DATE"
+            ],
+            [
+              "Sunday",
+              "DATE"
+            ],
+            [
+              "the Nepal Gold",
+              "ORG"
+            ],
+            [
+              "Silver Traders Federation",
+              "ORG"
+            ],
+            [
+              "Rs 3,000",
+              "PRODUCT"
+            ],
+            [
+              "a single day",
+              "DATE"
+            ],
+            [
+              "Rs 203,600",
+              "PRODUCT"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "200,000",
+              "context": "which surpassed Rs 200,000 per tola"
+            },
+            {
+              "value": "3,000",
+              "context": "increased by Rs 3,000 in a"
+            },
+            {
+              "value": "203,600",
+              "context": ", reaching Rs 203,600 per tola"
+            }
+          ],
+          "sentiment_score": 0.164987012987013,
+          "impact_score": -0.49,
+          "url": "https://english.khabarhub.com/2025/31/493566/"
+        },
+        {
+          "type": "dollar",
+          "title": "Gold prices rally to 3-week high; silver hits new peak above Rs 1.17 lakh/kg. Should you buy?",
+          "source": "The Times of India",
+          "published": "2025-08-29T06:48:34Z",
+          "entities": [
+            [
+              "3-week",
+              "DATE"
+            ],
+            [
+              "Rs 1.17",
+              "PRODUCT"
+            ],
+            [
+              "MCX",
+              "ORG"
+            ],
+            [
+              "October",
+              "DATE"
+            ],
+            [
+              "Rs 1,02,226/10",
+              "PRODUCT"
+            ],
+            [
+              "Friday",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "3",
+              "context": "prices rally to 3 - week"
+            },
+            {
+              "value": "1.17",
+              "context": "peak above Rs 1.17 lakh /"
+            },
+            {
+              "value": "1,02,226/10",
+              "context": "futures hit Rs 1,02,226/10 g on"
+            }
+          ],
+          "sentiment_score": 0.44593939393939397,
+          "impact_score": 0.67,
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-prices-rally-to-3-week-high-silver-hits-new-peak-above-rs-1-17-lakh/kg-should-you-buy/articleshow/123579016.cms"
+        },
+        {
+          "type": "interest_rate",
+          "title": "How Trump Could Overhaul the Fed - The New York Times",
+          "source": "Slashdot.org",
+          "published": "2025-08-31T12:32:25Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ],
+            [
+              "The New York Times How Trump",
+              "ORG"
+            ],
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "News Opinion",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ],
+            [
+              "Washington Post",
+              "ORG"
+            ],
+            [
+              "Trump",
+              "ORG"
+            ],
+            [
+              "Fed",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.0909090909090909,
+          "impact_score": -0.27,
+          "url": "https://slashdot.org/firehose.pl?op=view&amp;id=178954860"
+        },
+        {
+          "type": "interest_rate",
+          "title": "10 Sunday Reads",
+          "source": "Biztoc.com",
+          "published": "2025-08-31T12:21:36Z",
+          "entities": [
+            [
+              "10",
+              "CARDINAL"
+            ],
+            [
+              "Reads Avert",
+              "PERSON"
+            ],
+            [
+              "Sunday",
+              "DATE"
+            ],
+            [
+              "morning",
+              "TIME"
+            ],
+            [
+              "• Powell",
+              "PERSON"
+            ],
+            [
+              "The Federal Reserve Has",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ],
+            [
+              "Constitution",
+              "LAW"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "10",
+              "context": "10 Sunday Reads"
+            }
+          ],
+          "sentiment_score": -0.4,
+          "impact_score": 1.2,
+          "url": "https://biztoc.com/x/e576bfd3f42a6898"
+        },
+        {
+          "type": "interest_rate",
+          "title": "What it could mean for the Fed to lose its independence",
+          "source": "Biztoc.com",
+          "published": "2025-08-31T11:36:29Z",
+          "entities": [
+            [
+              "Fed",
+              "ORG"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": -0.3125,
+          "impact_score": 0.94,
+          "url": "https://biztoc.com/x/fbf32185a8ef5f95"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Best money market account rates today, August 31, 2025 (best account provides 4.41% APY)",
+          "source": "Biztoc.com",
+          "published": "2025-08-31T11:14:36Z",
+          "entities": [
+            [
+              "today",
+              "DATE"
+            ],
+            [
+              "August 31, 2025",
+              "DATE"
+            ],
+            [
+              "4.41%",
+              "PERCENT"
+            ],
+            [
+              "today",
+              "DATE"
+            ],
+            [
+              "The Federal Reserve",
+              "ORG"
+            ],
+            [
+              "three",
+              "CARDINAL"
+            ],
+            [
+              "2024",
+              "DATE"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "31",
+              "context": "today , August 31 , 2025"
+            },
+            {
+              "value": "2025",
+              "context": "August 31 , 2025 ( best"
+            },
+            {
+              "value": "4.41",
+              "context": "best account provides 4.41 % APY"
+            },
+            {
+              "value": "%",
+              "context": "account provides 4.41 % APY )"
+            },
+            {
+              "value": "three",
+              "context": "its target rate three times in"
+            },
+            {
+              "value": "2024",
+              "context": "three times in 2024 . So"
+            }
+          ],
+          "sentiment_score": 0.52,
+          "impact_score": -1.56,
+          "url": "https://biztoc.com/x/31f24c79bbb93141"
+        },
+        {
+          "type": "interest_rate",
+          "title": "10 Sunday Reads",
+          "source": "Ritholtz.com",
+          "published": "2025-08-31T10:30:37Z",
+          "entities": [
+            [
+              "10",
+              "CARDINAL"
+            ],
+            [
+              "Reads Avert",
+              "PERSON"
+            ],
+            [
+              "Sunday",
+              "DATE"
+            ],
+            [
+              "morning",
+              "TIME"
+            ],
+            [
+              "• Powell",
+              "PERSON"
+            ],
+            [
+              "The Federal Reserve Has",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ],
+            [
+              "Constitution",
+              "LAW"
+            ]
+          ],
+          "numbers": [
+            {
+              "value": "10",
+              "context": "10 Sunday Reads"
+            }
+          ],
+          "sentiment_score": -0.4,
+          "impact_score": 1.2,
+          "url": "https://ritholtz.com/2025/08/10-sunday-reads-197/"
+        },
+        {
+          "type": "interest_rate",
+          "title": "Fired Fed governor sues Trump — and she just might win",
+          "source": "Salon",
+          "published": "2025-08-31T10:15:38Z",
+          "entities": [
+            [
+              "Fired Fed",
+              "ORG"
+            ],
+            [
+              "Trump",
+              "ORG"
+            ],
+            [
+              "Lisa Cook",
+              "PERSON"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.21481481481481482,
+          "impact_score": -0.64,
+          "url": "https://www.salon.com/2025/08/31/fired-fed-governor-sues-trump-and-she-just-might-win/"
+        },
+        {
+          "type": "geopolitical",
+          "title": "Stock bulls bracing for bout of September’s seasonal turbulence",
+          "source": "Financial Post",
+          "published": "2025-08-31T10:00:13Z",
+          "entities": [
+            [
+              "September",
+              "DATE"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": 0.5,
+          "impact_score": 1.25,
+          "url": "https://financialpost.com/investing/stock-bulls-septembers-seasonal-turbulence"
+        },
+        {
+          "type": "interest_rate",
+          "title": "What the end of Federal Reserve independence could mean",
+          "source": "ABC News",
+          "published": "2025-08-31T09:34:39Z",
+          "entities": [
+            [
+              "Federal Reserve",
+              "ORG"
+            ],
+            [
+              "Donald Trump",
+              "PERSON"
+            ],
+            [
+              "the Federal Reserve’s",
+              "ORG"
+            ],
+            [
+              "decades",
+              "DATE"
+            ]
+          ],
+          "numbers": [],
+          "sentiment_score": -0.0375,
+          "impact_score": 0.11,
+          "url": "https://abcnews.go.com/US/wireStory/end-federal-reserve-independence-125134189"
+        }
+      ],
+      "event_summary": {
+        "interest_rate": 24,
+        "dollar": 3,
+        "geopolitical": 3,
+        "employment": 1,
+        "inflation": 4,
+        "central_bank": 1
+      },
+      "total_impact": -0.16,
+      "dominant_theme": "geopolitical",
+      "recommendation": "تأثير محايد أو مختلط"
+    },
+    "articles_count": 89
+  },
+  "backtest_results": {
+    "initial_capital": 10000,
+    "final_value": -276095.37,
+    "total_return": -2860.95,
+    "sharpe_ratio": -0.674,
+    "max_drawdown": 2049.85,
+    "total_trades": 2,
+    "winning_trades": 0,
+    "losing_trades": 1,
+    "win_rate": 0.0,
+    "avg_trade_return": -Infinity,
+    "best_trade": 0.0,
+    "worst_trade": -1.5,
+    "avg_win": 0.0,
+    "avg_loss": -1.5,
+    "profit_factor": 0.0,
+    "recovery_factor": -1.4,
+    "risk_reward_ratio": 0.0
+  },
+  "market_summary": {
+    "last_update": "2025-09-01 12:47:46",
+    "data_points": 555,
+    "timeframe": "Multi-timeframe",
+    "market_condition": "صاعد قوي"
   }
 }
