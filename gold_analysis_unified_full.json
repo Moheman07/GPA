@@ -3,7 +3,7 @@
     "version": "unified-full-v1",
     "symbol": "GC=F",
     "period": "1y",
-    "analysis_date": "2025-09-02T00:13:04.673411",
+    "analysis_date": "2025-09-02T21:09:14.220960",
     "data_points": 252,
     "talib": true
   },
@@ -13,16 +13,16 @@
     "SPY": "SPY"
   },
   "current_market_data": {
-    "current_price": 3552.300048828125,
-    "daily_change": 78.60009765625,
-    "daily_change_percent": 2.2627198307595187,
-    "volume": 127425,
-    "high": 3557.10009765625,
+    "current_price": 3599.89990234375,
+    "daily_change": 126.199951171875,
+    "daily_change_percent": 3.633012434747007,
+    "volume": 363733,
+    "high": 3602.39990234375,
     "low": 3506.0
   },
   "signals": {
-    "current_price": 3552.300048828125,
-    "timestamp": "2025-09-02T00:13:02.480545",
+    "current_price": 3599.89990234375,
+    "timestamp": "2025-09-02T21:09:13.401545",
     "trend": "صاعد قوي",
     "rsi_signal": "بيع قوي",
     "macd_signal": "محايد",
@@ -30,36 +30,36 @@
     "patterns": [],
     "recommendation": "بيع قوي",
     "confidence": "عالية",
-    "stop_loss": 3476.462801173774,
-    "take_profit": 3666.055920309651,
+    "stop_loss": 3517.5912540197564,
+    "take_profit": 3723.36287482974,
     "risk_level": "منخفضة"
   },
   "technical_indicators": {
-    "sma_20": 3382.889990234375,
-    "sma_50": 3355.7519921875,
-    "sma_200": 3069.913498535156,
-    "ema_12": 3415.7365085481283,
-    "ema_26": 3385.133783800369,
-    "rsi": 74.70272542587024,
-    "macd": 30.602724747759112,
-    "macd_signal": 12.23705467408024,
-    "macd_hist": 18.36567007367887,
-    "stoch_k": 98.21983347539515,
-    "stoch_d": 83.25433479733836,
-    "williams_r": -1.94333960652834,
-    "cci": 243.6495253653753,
-    "adx": 14.28956238903209,
-    "trix": 0.04302882268771846,
-    "ultosc": 80.3767191546218,
-    "bb_upper": 3493.9700087406036,
-    "bb_middle": 3382.889990234375,
-    "bb_lower": 3271.8099717281466,
-    "atr": 37.91862382717534,
+    "sma_20": 3385.269982910156,
+    "sma_50": 3356.7039892578123,
+    "sma_200": 3070.1514978027344,
+    "ema_12": 3423.059562935148,
+    "ema_26": 3388.659698875601,
+    "rsi": 77.60617961009261,
+    "macd": 34.39986405954687,
+    "macd_signal": 12.996482536437792,
+    "macd_hist": 21.40338152310908,
+    "stoch_k": 98.5825179319354,
+    "stoch_d": 83.37522961618511,
+    "williams_r": -0.8552862369076056,
+    "cci": 270.050845131769,
+    "adx": 14.70930490874953,
+    "trix": 0.04341318238902936,
+    "ultosc": 82.77489737378242,
+    "bb_upper": 3511.740611322462,
+    "bb_middle": 3385.269982910156,
+    "bb_lower": 3258.7993544978503,
+    "atr": 41.15432416199677,
     "sar": 3313.41009765625,
-    "obv": 729017.0,
-    "ad": 108268.24220204273,
-    "adosc": 35095.47014165437,
-    "mfi": 97.2884741908839
+    "obv": 965325.0,
+    "ad": 349649.54460668983,
+    "adosc": 111898.61181586026,
+    "mfi": 98.99227402732575
   },
   "patterns": {
     "doji": [
@@ -1595,27 +1595,27 @@
     "fibonacci": {
       "levels": {
         "0.0": 2476.300048828125,
-        "0.236": 2731.3688603515625,
-        "0.382": 2889.165667480469,
-        "0.5": 3016.7000732421875,
-        "0.618": 3144.234479003906,
-        "0.786": 3325.808887207031,
-        "1.0": 3557.10009765625
+        "0.236": 2742.0596142578124,
+        "0.382": 2906.470192871094,
+        "0.5": 3039.3499755859375,
+        "0.618": 3172.229758300781,
+        "0.786": 3361.414533691406,
+        "1.0": 3602.39990234375
       },
       "extensions": {
-        "1.272": 3851.0777109375,
-        "1.618": 4225.034527832031,
-        "2.0": 4637.900146484375,
-        "2.618": 5305.834576660156
+        "1.272": 3908.6990625,
+        "1.618": 4298.329611816406,
+        "2.0": 4728.499755859375,
+        "2.618": 5424.429465332031
       }
     },
     "support_resistance": {
       "pivot_points": {
-        "pivot": 3380.4716593424478,
-        "r1": 3396.668330891927,
-        "r2": 3410.446671549479,
-        "s1": 3366.6933186848955,
-        "s2": 3350.4966471354164
+        "pivot": 3382.019986979167,
+        "r1": 3399.764986165365,
+        "r2": 3414.259989420573,
+        "s1": 3367.5249837239585,
+        "s2": 3349.7799845377604
       },
       "historical_support": [
         2502.300048828125,
@@ -1645,19 +1645,19 @@
       ]
     },
     "volume_profile": {
-      "current_volume": 127425,
-      "average_volume": 4909.123015873016,
-      "volume_ratio": 15.831454182895692,
+      "current_volume": 363733,
+      "average_volume": 5846.853174603175,
+      "volume_ratio": 18.310935474533395,
       "volume_profile": {
-        "(3286.7, 3339.82]": 314759,
-        "(2596.14, 2649.26]": 255611,
-        "(2755.5, 2808.62]": 134951,
-        "(3499.18, 3552.3]": 127425,
-        "(3021.1, 3074.22]": 127396,
-        "(2808.62, 2861.74]": 52526
+        "(3544.4, 3599.9]": 363733,
+        "(2600.9, 2656.4]": 257779,
+        "(3266.9, 3322.4]": 190932,
+        "(3044.9, 3100.4]": 163256,
+        "(3322.4, 3377.9]": 149300,
+        "(2767.4, 2822.9]": 133886
       },
-      "price_volume_correlation": 0.08813156139152224,
-      "uptrend_volume": 6731.86301369863,
+      "price_volume_correlation": 0.17566441315441492,
+      "uptrend_volume": 8350.410958904109,
       "downtrend_volume": 2419.4380952380952,
       "volume_trend": "مرتفع"
     },
@@ -1665,7 +1665,7 @@
       "market_structure": "اتجاه صاعد",
       "peaks_count": 67,
       "troughs_count": 67,
-      "relative_strength": 1.0080870094423113,
+      "relative_strength": 1.0085101318864462,
       "structure_confidence": "عالية"
     },
     "divergences": {
@@ -1768,33 +1768,33 @@
     },
     "correlations": {
       "asset_correlations": {
-        "USD": -0.45810202452974835,
-        "SPY": -0.0056389389054689425
+        "USD": -0.4378548359676351,
+        "SPY": -0.01345309317101497
       },
       "strongest_correlation": [
         "USD",
-        -0.45810202452974835
+        -0.4378548359676351
       ],
       "weakest_correlation": [
         "SPY",
-        -0.0056389389054689425
+        -0.01345309317101497
       ]
     },
     "advanced_metrics": {
-      "annualized_return": 0.4522999443576219,
-      "annualized_volatility": 0.18134019497807274,
-      "sharpe_ratio": 1.948960483785281,
+      "annualized_return": 0.4723875353228031,
+      "annualized_volatility": 0.18345824339248495,
+      "sharpe_ratio": 2.001449412765575,
       "max_drawdown": -0.07989960510242895,
       "var_95": -0.017970805246110555,
       "var_99": -0.03154989261694058,
-      "skewness": -0.3839207438160819,
-      "kurtosis": 1.2120244250814998,
-      "calmar_ratio": 5.660853314328483,
-      "sortino_ratio": 2.678001415166193,
+      "skewness": -0.29920827259911403,
+      "kurtosis": 1.3176284140911085,
+      "calmar_ratio": 5.9122637053989955,
+      "sortino_ratio": 2.7822460765930312,
       "win_rate": 0.5816733067729084,
-      "avg_win": 0.008759689912803015,
+      "avg_win": 0.008853545570610378,
       "avg_loss": -0.008637825694035105,
-      "profit_factor": 1.4100933141216436
+      "profit_factor": 1.4252017525348821
     }
   },
   "sentiment": {
@@ -1839,9 +1839,23 @@
   },
   "news": {
     "count": 25,
-    "average_sentiment": 0.05333333333333333,
+    "average_sentiment": 0.06666666666666667,
     "impact": "neutral",
     "articles": [
+      {
+        "title": "Three powerful forces that could destabilize financial markets",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-01T10:00:12Z",
+        "url": "https://financialpost.com/investing/three-powerful-forces-that-could-destabilize-financial-markets",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Silver Climbs Past $40 as US Rate-Cut Bets Fuel Investor Demand",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-01T02:52:07Z",
+        "url": "https://financialpost.com/pmn/business-pmn/silver-climbs-past-40-as-us-rate-cut-bets-fuel-investor-demand",
+        "sentiment": 0.3333333333333333
+      },
       {
         "title": "Capstone Copper Reports Temporary Production Interruption at Mantoverde Operation",
         "source": "Financial Post",
@@ -2002,20 +2016,6 @@
         "publishedAt": "2025-08-28T11:19:16Z",
         "url": "https://financialpost.com/globe-newswire/cartier-launches-ambitious-100000-m-drill-program-on-cadillac",
         "sentiment": 0.0
-      },
-      {
-        "title": "Tintina Announces Appointment of CEO and Changes to Board of Directors",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T11:04:23Z",
-        "url": "https://financialpost.com/globe-newswire/tintina-announces-appointment-of-ceo-and-changes-to-board-of-directors",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Abcourt Appoints a New Director and Grants Stock Options",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T11:04:18Z",
-        "url": "https://financialpost.com/globe-newswire/abcourt-appoints-a-new-director-and-grants-stock-options-2",
-        "sentiment": 0.0
       }
     ]
   },
@@ -2024,8 +2024,8 @@
     "confidence": "عالية",
     "risk_level": "منخفضة",
     "trend": "صاعد قوي",
-    "key_support": 3476.462801173774,
-    "key_resistance": 3666.055920309651,
+    "key_support": 3517.5912540197564,
+    "key_resistance": 3723.36287482974,
     "fundamental_bias": "hawkish/bearish",
     "news_impact": "neutral"
   }
