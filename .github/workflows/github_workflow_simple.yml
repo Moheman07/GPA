@@ -1,10 +1,9 @@
-name: Gold Analysis Runner
+name: Gold Unified Analysis (with TA-Lib)
 
 on:
-  workflow_dispatch: # للتشغيل اليدوي
+  workflow_dispatch:
   schedule:
-    # يعمل مرة واحدة يوميًا (من الإثنين للجمعة) الساعة 21:00 بتوقيت UTC
-    # (أي بعد ساعة من إغلاق سوق نيويورك)
+    # يعمل مرة واحدة يوميًا (من الإثنين للجمعة) الساعة 21:00 UTC
     - cron: '0 21 * * 1-5'
 
 permissions:
@@ -21,25 +20,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python with Caching
-        uses: actions/setup-python@v5
+      - name: Set up Miniconda Environment with TA-Lib
+        uses: conda-incubator/setup-miniconda@v3
         with:
-          python-version: '3.10'
-          cache: 'pip'
-          # ✅ تم تحديث المسار ليطابق اسم ملفك
-          cache-dependency-path: requirements_simple.txt
+          auto-update-conda: true
+          python-version: "3.10"
+          environment-file: environment.yml # <-- يستخدم الملف الجديد لإعداد البيئة
+          activate-environment: talib-env
+          use-mamba: true # أسرع في تثبيت الحزم
 
-      - name: Install Dependencies
-        # ✅ تم تحديث الأمر ليستخدم اسم ملفك
-        run: pip install -r requirements_simple.txt
-        
       - name: Run Gold Analyzer Script
-        # ✅ تم تحديث الأمر ليستخدم اسم السكربت الخاص بك
-        run: python gold_analyzer_unified_full.py
+        shell: bash -l {0} # مهم جدًا لتفعيل بيئة conda
+        run: |
+          echo "Running analysis inside conda environment..."
+          python gold_analyzer_unified_full.py
 
       - name: Commit and Push Results
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: '🏆 Update Gold Analysis Report'
-          # ✅ تم تحديث اسم الملف ليطابق مخرجات السكربت الخاص بك
+          commit_message: '🏆 Update TA-Lib Unified Analysis'
           file_pattern: 'gold_analysis_unified_full.json'
