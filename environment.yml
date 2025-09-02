@@ -1,0 +1,9 @@
+name: talib-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - ta-lib
+  - pip
+  - pip:
+    - -r requirements_simple.txt
