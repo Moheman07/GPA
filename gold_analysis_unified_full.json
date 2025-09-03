@@ -3,8 +3,8 @@
     "version": "unified-full-v1",
     "symbol": "GC=F",
     "period": "1y",
-    "analysis_date": "2025-09-02T21:09:14.220960",
-    "data_points": 252,
+    "analysis_date": "2025-09-03T21:09:05.853313",
+    "data_points": 253,
     "talib": true
   },
   "used_symbols": {
@@ -13,16 +13,16 @@
     "SPY": "SPY"
   },
   "current_market_data": {
-    "current_price": 3599.89990234375,
-    "daily_change": 126.199951171875,
-    "daily_change_percent": 3.633012434747007,
-    "volume": 363733,
-    "high": 3602.39990234375,
-    "low": 3506.0
+    "current_price": 3619.199951171875,
+    "daily_change": 69.800048828125,
+    "daily_change_percent": 1.966530984069581,
+    "volume": 215694,
+    "high": 3640.10009765625,
+    "low": 3592.39990234375
   },
   "signals": {
-    "current_price": 3599.89990234375,
-    "timestamp": "2025-09-02T21:09:13.401545",
+    "current_price": 3619.199951171875,
+    "timestamp": "2025-09-03T21:09:04.419915",
     "trend": "صاعد قوي",
     "rsi_signal": "بيع قوي",
     "macd_signal": "محايد",
@@ -30,36 +30,36 @@
     "patterns": [],
     "recommendation": "بيع قوي",
     "confidence": "عالية",
-    "stop_loss": 3517.5912540197564,
-    "take_profit": 3723.36287482974,
+    "stop_loss": 3535.54392702265,
+    "take_profit": 3744.6839873957124,
     "risk_level": "منخفضة"
   },
   "technical_indicators": {
-    "sma_20": 3385.269982910156,
-    "sma_50": 3356.7039892578123,
-    "sma_200": 3070.1514978027344,
-    "ema_12": 3423.059562935148,
-    "ema_26": 3388.659698875601,
-    "rsi": 77.60617961009261,
-    "macd": 34.39986405954687,
-    "macd_signal": 12.996482536437792,
-    "macd_hist": 21.40338152310908,
-    "stoch_k": 98.5825179319354,
-    "stoch_d": 83.37522961618511,
-    "williams_r": -0.8552862369076056,
-    "cci": 270.050845131769,
-    "adx": 14.70930490874953,
-    "trix": 0.04341318238902936,
-    "ultosc": 82.77489737378242,
-    "bb_upper": 3511.740611322462,
-    "bb_middle": 3385.269982910156,
-    "bb_lower": 3258.7993544978503,
-    "atr": 41.15432416199677,
-    "sar": 3313.41009765625,
-    "obv": 965325.0,
-    "ad": 349649.54460668983,
-    "adosc": 111898.61181586026,
-    "mfi": 98.99227402732575
+    "sma_20": 3394.6099853515625,
+    "sma_50": 3361.729990234375,
+    "sma_200": 3075.1539978027345,
+    "ema_12": 3446.661042782218,
+    "ema_26": 3402.2731057672318,
+    "rsi": 78.86344337023931,
+    "macd": 44.387937014986164,
+    "macd_signal": 18.630215027589053,
+    "macd_hist": 25.75772198739711,
+    "stoch_k": 96.19477087046842,
+    "stoch_d": 92.71961909791436,
+    "williams_r": -6.333377722537879,
+    "cci": 233.10117286343265,
+    "adx": 17.56688822207491,
+    "trix": 0.04619352716384029,
+    "ultosc": 77.59902890372281,
+    "bb_upper": 3545.4833674227552,
+    "bb_middle": 3394.6099853515625,
+    "bb_lower": 3243.7366032803698,
+    "atr": 41.82801207461243,
+    "sar": 3323.241691796875,
+    "obv": 816251.0,
+    "ad": 30506.235961597,
+    "adosc": 10040.848689976108,
+    "mfi": 98.34977967212394
   },
   "patterns": {
     "doji": [
@@ -314,6 +314,7 @@
       0,
       0,
       0,
+      0,
       0
     ],
     "hammer": [
@@ -555,6 +556,7 @@
       0,
       0,
       100,
+      0,
       0,
       0,
       0,
@@ -822,6 +824,7 @@
       0,
       0,
       0,
+      0,
       0
     ],
     "engulfing": [
@@ -1076,6 +1079,7 @@
       0,
       0,
       0,
+      0,
       0
     ],
     "morning_star": [
@@ -1310,6 +1314,7 @@
       0,
       0,
       100,
+      0,
       0,
       0,
       0,
@@ -1584,6 +1589,7 @@
       0,
       0,
       0,
+      0,
       0
     ],
     "double_top": [],
@@ -1595,27 +1601,27 @@
     "fibonacci": {
       "levels": {
         "0.0": 2476.300048828125,
-        "0.236": 2742.0596142578124,
-        "0.382": 2906.470192871094,
-        "0.5": 3039.3499755859375,
-        "0.618": 3172.229758300781,
-        "0.786": 3361.414533691406,
-        "1.0": 3602.39990234375
+        "0.236": 2750.9568603515627,
+        "0.382": 2920.8716674804687,
+        "0.5": 3058.2000732421875,
+        "0.618": 3195.5284790039063,
+        "0.786": 3391.0468872070314,
+        "1.0": 3640.10009765625
       },
       "extensions": {
-        "1.272": 3908.6990625,
-        "1.618": 4298.329611816406,
-        "2.0": 4728.499755859375,
-        "2.618": 5424.429465332031
+        "1.272": 3956.6537109375,
+        "1.618": 4359.328527832031,
+        "2.0": 4803.900146484375,
+        "2.618": 5523.128576660156
       }
     },
     "support_resistance": {
       "pivot_points": {
-        "pivot": 3382.019986979167,
-        "r1": 3399.764986165365,
-        "r2": 3414.259989420573,
-        "s1": 3367.5249837239585,
-        "s2": 3349.7799845377604
+        "pivot": 3392.309989420573,
+        "r1": 3409.2999959309896,
+        "r2": 3423.9900065104166,
+        "s1": 3377.619978841146,
+        "s2": 3360.6299723307293
       },
       "historical_support": [
         2502.300048828125,
@@ -1645,19 +1651,19 @@
       ]
     },
     "volume_profile": {
-      "current_volume": 363733,
-      "average_volume": 5846.853174603175,
-      "volume_ratio": 18.310935474533395,
+      "current_volume": 215694,
+      "average_volume": 5234.517786561265,
+      "volume_ratio": 17.44419642857143,
       "volume_profile": {
-        "(3544.4, 3599.9]": 363733,
-        "(2600.9, 2656.4]": 257779,
-        "(3266.9, 3322.4]": 190932,
-        "(3044.9, 3100.4]": 163256,
-        "(3322.4, 3377.9]": 149300,
-        "(2767.4, 2822.9]": 133886
+        "(3280.41, 3336.875]": 314779,
+        "(2602.83, 2659.295]": 264552,
+        "(3562.735, 3619.2]": 215694,
+        "(3054.55, 3111.015]": 163256,
+        "(2715.76, 2772.225]": 143126,
+        "(2772.225, 2828.69]": 45408
       },
-      "price_volume_correlation": 0.17566441315441492,
-      "uptrend_volume": 8350.410958904109,
+      "price_volume_correlation": 0.09454863962480335,
+      "uptrend_volume": 7279.496598639455,
       "downtrend_volume": 2419.4380952380952,
       "volume_trend": "مرتفع"
     },
@@ -1665,7 +1671,7 @@
       "market_structure": "اتجاه صاعد",
       "peaks_count": 67,
       "troughs_count": 67,
-      "relative_strength": 1.0085101318864462,
+      "relative_strength": 1.0097806769766466,
       "structure_confidence": "عالية"
     },
     "divergences": {
@@ -1768,33 +1774,33 @@
     },
     "correlations": {
       "asset_correlations": {
-        "USD": -0.4378548359676351,
-        "SPY": -0.01345309317101497
+        "USD": -0.44811366886826026,
+        "SPY": -0.007806304259357597
       },
       "strongest_correlation": [
         "USD",
-        -0.4378548359676351
+        -0.44811366886826026
       ],
       "weakest_correlation": [
         "SPY",
-        -0.01345309317101497
+        -0.007806304259357597
       ]
     },
     "advanced_metrics": {
-      "annualized_return": 0.4723875353228031,
-      "annualized_volatility": 0.18345824339248495,
-      "sharpe_ratio": 2.001449412765575,
+      "annualized_return": 0.4776762925404785,
+      "annualized_volatility": 0.18179455734591118,
+      "sharpe_ratio": 2.039518992086047,
       "max_drawdown": -0.07989960510242895,
-      "var_95": -0.017970805246110555,
-      "var_99": -0.03154989261694058,
-      "skewness": -0.29920827259911403,
-      "kurtosis": 1.3176284140911085,
-      "calmar_ratio": 5.9122637053989955,
-      "sortino_ratio": 2.7822460765930312,
-      "win_rate": 0.5816733067729084,
-      "avg_win": 0.008853545570610378,
+      "var_95": -0.017967636490754786,
+      "var_99": -0.031493781300153956,
+      "skewness": -0.38450001589033905,
+      "kurtosis": 1.1807486683543464,
+      "calmar_ratio": 5.978456238026602,
+      "sortino_ratio": 2.8094565572715657,
+      "win_rate": 0.5833333333333334,
+      "avg_win": 0.008828198300942502,
       "avg_loss": -0.008637825694035105,
-      "profit_factor": 1.4252017525348821
+      "profit_factor": 1.4308551780402796
     }
   },
   "sentiment": {
@@ -1839,9 +1845,114 @@
   },
   "news": {
     "count": 25,
-    "average_sentiment": 0.06666666666666667,
+    "average_sentiment": 0.12,
     "impact": "neutral",
     "articles": [
+      {
+        "title": "Markets off to ‘rocky’ September start as stocks engulfed in tech swoon",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T17:51:40Z",
+        "url": "https://financialpost.com/investing/stock-markets-rocky-september",
+        "sentiment": -0.3333333333333333
+      },
+      {
+        "title": "Critical One Energy Acquires 18.5% Interest in Dark Star Minerals, Bolstering Support for Uranium Development in Namibia",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T15:16:48Z",
+        "url": "https://financialpost.com/globe-newswire/critical-one-energy-acquires-18-5-interest-in-dark-star-minerals-bolstering-support-for-uranium-development-in-namibia",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "Sparton Annual General Meeting Elects Two New Strategic Directors Bringing New Expertise to the Board",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T13:35:14Z",
+        "url": "https://financialpost.com/globe-newswire/sparton-annual-general-meeting-elects-two-new-strategic-directors-bringing-new-expertise-to-the-board",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Orezone Gold Provides Market Update Following Government Meeting",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T13:14:54Z",
+        "url": "https://financialpost.com/globe-newswire/orezone-gold-provides-market-update-following-government-meeting",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Globex Consolidates 100% Ownership of Blackcliff Gold Zone",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T13:04:52Z",
+        "url": "https://financialpost.com/globe-newswire/globex-consolidates-100-ownership-of-blackcliff-gold-zone",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "Visionary Targets Expansion of Pt. Leamington Deposit, Central Newfoundland",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T12:34:43Z",
+        "url": "https://financialpost.com/globe-newswire/visionary-targets-expansion-of-pt-leamington-deposit-central-newfoundland",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Erdene Completes Share Consolidation",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T11:03:49Z",
+        "url": "https://financialpost.com/globe-newswire/erdene-completes-share-consolidation",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Inventus Secures $1.47 Million Gold Pre-Payment from 007 North Bulk Sample at the Pardo Gold Project",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T11:03:34Z",
+        "url": "https://financialpost.com/globe-newswire/inventus-secures-1-47-million-gold-pre-payment-from-007-north-bulk-sample-at-the-pardo-gold-project",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Fury Announces Results of Preliminary Economic Assessment for the Eau Claire Gold Deposit with a Base Case After-Tax NPV (5%) of $554M and After-Tax IRR of 41%",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T11:03:18Z",
+        "url": "https://financialpost.com/globe-newswire/fury-announces-results-of-preliminary-economic-assessment-for-the-eau-claire-gold-deposit-with-a-base-case-after-tax-npv-5-of-554m-and-after-tax-irr-of-41",
+        "sentiment": 0.0
+      },
+      {
+        "title": "NorthWest Announces Drilling Underway at Kwanika",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T10:32:18Z",
+        "url": "https://financialpost.com/globe-newswire/northwest-announces-drilling-underway-at-kwanika",
+        "sentiment": 0.0
+      },
+      {
+        "title": "McEwen Reports Attractive Gold Intercepts at Grey Fox; Results Support Resource Growth Ahead of Upcoming Resource Estimate; Gibson: 10.1 g/t Gold Over 5.8 m (25GF-1597) and 10.4 g/t Gold Over 5.6 m (25GF-1564), GFS: 4.8 g/t Gold Over 14.9 m (25GF-1575)",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T10:01:57Z",
+        "url": "https://financialpost.com/globe-newswire/mcewen-reports-attractive-gold-intercepts-at-grey-fox-results-support-resource-growth-ahead-of-upcoming-resource-estimate-gibson-10-1-g-t-gold-over-5-8-m-25gf-1597-and-10-4-g-t-gold-over-5-6-m-2",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "Fortuna to present at Mining Forum Americas 2025 in Colorado Springs, USA",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T09:00:53Z",
+        "url": "https://financialpost.com/globe-newswire/fortuna-to-present-at-mining-forum-americas-2025-in-colorado-springs-usa",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Gold Punches Through $3,500 to Hit Record High on Rate-Cut Bets",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T03:00:54Z",
+        "url": "https://financialpost.com/pmn/business-pmn/gold-punches-through-3500-to-hit-record-high-on-rate-cut-bets",
+        "sentiment": 0.6666666666666666
+      },
+      {
+        "title": "Gold Holds Close to Record as Demand for Precious Metals Surges",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-02T00:33:45Z",
+        "url": "https://financialpost.com/pmn/business-pmn/gold-holds-close-to-record-as-demand-for-precious-metals-surges",
+        "sentiment": 1.0
+      },
+      {
+        "title": "Australia’s No. 2 Pension Cuts Treasuries Bet on Rising US Risks",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-01T21:20:18Z",
+        "url": "https://financialpost.com/pmn/business-pmn/australias-no-2-pension-cuts-treasuries-bet-on-rising-us-risks",
+        "sentiment": 0.3333333333333333
+      },
       {
         "title": "Three powerful forces that could destabilize financial markets",
         "source": "Financial Post",
@@ -1911,111 +2022,6 @@
         "publishedAt": "2025-08-29T15:06:36Z",
         "url": "https://financialpost.com/globe-newswire/dundee-precious-metals-announces-uk-court-approval-of-acquisition-of-adriatic-metals-and-asx-listing-approval",
         "sentiment": 0.0
-      },
-      {
-        "title": "Gold’s weekly gain has prices nearing another record",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T13:45:04Z",
-        "url": "https://financialpost.com/commodities/golds-weekly-gain-nearer-record-inflation",
-        "sentiment": 0.3333333333333333
-      },
-      {
-        "title": "NetworkNewsAudio Announces Audio Press Release (APR) on Rare, Near-Term Path to Mining Success in Colombia",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T12:34:22Z",
-        "url": "https://financialpost.com/globe-newswire/networknewsaudio-announces-audio-press-release-apr-on-rare-near-term-path-to-mining-success-in-colombia",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Rio2 Limited Announces Graduation to TSX",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T12:03:57Z",
-        "url": "https://financialpost.com/globe-newswire/rio2-limited-announces-graduation-to-tsx",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Dynacor Group Declares September 2025 Dividend",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T11:33:16Z",
-        "url": "https://financialpost.com/globe-newswire/dynacor-group-declares-september-2025-dividend",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Galantas Report Financial Results for the Quarter Ended June 30, 2025",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T06:03:32Z",
-        "url": "https://financialpost.com/globe-newswire/galantas-report-financial-results-for-the-quarter-ended-june-30-2025",
-        "sentiment": 0.0
-      },
-      {
-        "title": "NexGold Engages ICP Securities Inc. for Automated Market Making Services",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T22:01:19Z",
-        "url": "https://financialpost.com/globe-newswire/nexgold-engages-icp-securities-inc-for-automated-market-making-services",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Critical One Expands Howells Lake Property by 67% to Cover Numerous Newly Defined, High-Priority Antimony and Gold Targets",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T18:02:59Z",
-        "url": "https://financialpost.com/globe-newswire/critical-one-expands-howells-lake-property-by-67-to-cover-numerous-newly-defined-high-priority-antimony-and-gold-targets",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Orezone Gold Reports Trade Halt",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T17:52:29Z",
-        "url": "https://financialpost.com/globe-newswire/orezone-gold-reports-trade-halt",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Why this superconservative strategy is proving controversial — and how Vanguard is defending it",
-        "source": "MarketWatch",
-        "publishedAt": "2025-08-28T13:46:00Z",
-        "url": "https://www.marketwatch.com/story/how-vanguard-defends-a-super-conservative-strategy-that-has-proved-surprisingly-controversial-9e6199e0",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Kobo Resources to Recommence 2025 Drill Program at the Kossou Gold Project; Appoints Industry Veteran to Support Technical and Regional Growth Strategy",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T13:19:58Z",
-        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/kobo-resources-to-recommence-2025-drill-program-at-the-kossou-gold-project-appoints-industry-veteran-to-support-technical-and-regional-growth-strategy",
-        "sentiment": 0.6666666666666666
-      },
-      {
-        "title": "Stocks Edge Up as Data Show Economy Is Holding Up: Markets Wrap",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T12:54:21Z",
-        "url": "https://financialpost.com/pmn/business-pmn/stocks-edge-up-as-data-show-economy-is-holding-up-markets-wrap",
-        "sentiment": 0.3333333333333333
-      },
-      {
-        "title": "Elder Margaret Head-Steppan Appointed as Elder of Visionary and Osawi, Establishing First-of-Its-Kind Relationship in Canadian Exploration",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T12:31:48Z",
-        "url": "https://financialpost.com/globe-newswire/elder-margaret-head-steppan-appointed-as-elder-of-visionary-and-osawi-establishing-first-of-its-kind-relationship-in-canadian-exploration",
-        "sentiment": 0.0
-      },
-      {
-        "title": "ESGold Corp. (CSE: ESAU) (OTCQB: ESAUF) Pioneering Innovative Mining Approach, Demonstrating Next-Gen Processing Capabilities",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T12:31:39Z",
-        "url": "https://financialpost.com/globe-newswire/esgold-corp-cse-esau-otcqb-esauf-pioneering-innovative-mining-approach-demonstrating-next-gen-processing-capabilities",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Fancamp Exploration Announces Grant of Stock Options",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T12:05:02Z",
-        "url": "https://financialpost.com/globe-newswire/fancamp-exploration-announces-grant-of-stock-options",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Cartier Launches Ambitious 100,000-m Drill Program on Cadillac",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-28T11:19:16Z",
-        "url": "https://financialpost.com/globe-newswire/cartier-launches-ambitious-100000-m-drill-program-on-cadillac",
-        "sentiment": 0.0
       }
     ]
   },
@@ -2024,8 +2030,8 @@
     "confidence": "عالية",
     "risk_level": "منخفضة",
     "trend": "صاعد قوي",
-    "key_support": 3517.5912540197564,
-    "key_resistance": 3723.36287482974,
+    "key_support": 3535.54392702265,
+    "key_resistance": 3744.6839873957124,
     "fundamental_bias": "hawkish/bearish",
     "news_impact": "neutral"
   }
