@@ -3,7 +3,7 @@
     "version": "unified-full-v1",
     "symbol": "GC=F",
     "period": "1y",
-    "analysis_date": "2025-09-03T21:09:05.853313",
+    "analysis_date": "2025-09-04T21:09:47.025858",
     "data_points": 253,
     "talib": true
   },
@@ -13,16 +13,16 @@
     "SPY": "SPY"
   },
   "current_market_data": {
-    "current_price": 3619.199951171875,
-    "daily_change": 69.800048828125,
-    "daily_change_percent": 1.966530984069581,
-    "volume": 215694,
-    "high": 3640.10009765625,
-    "low": 3592.39990234375
+    "current_price": 3602.199951171875,
+    "daily_change": 9.0,
+    "daily_change_percent": 0.25047311928925176,
+    "volume": 229911,
+    "high": 3621.60009765625,
+    "low": 3573.699951171875
   },
   "signals": {
-    "current_price": 3619.199951171875,
-    "timestamp": "2025-09-03T21:09:04.419915",
+    "current_price": 3602.199951171875,
+    "timestamp": "2025-09-04T21:09:45.854765",
     "trend": "صاعد قوي",
     "rsi_signal": "بيع قوي",
     "macd_signal": "محايد",
@@ -30,36 +30,36 @@
     "patterns": [],
     "recommendation": "بيع قوي",
     "confidence": "عالية",
-    "stop_loss": 3535.54392702265,
-    "take_profit": 3744.6839873957124,
+    "stop_loss": 3523.83160068862,
+    "take_profit": 3719.7524768967573,
     "risk_level": "منخفضة"
   },
   "technical_indicators": {
-    "sma_20": 3394.6099853515625,
-    "sma_50": 3361.729990234375,
-    "sma_200": 3075.1539978027345,
-    "ema_12": 3446.661042782218,
-    "ema_26": 3402.2731057672318,
-    "rsi": 78.86344337023931,
-    "macd": 44.387937014986164,
-    "macd_signal": 18.630215027589053,
-    "macd_hist": 25.75772198739711,
-    "stoch_k": 96.19477087046842,
-    "stoch_d": 92.71961909791436,
-    "williams_r": -6.333377722537879,
-    "cci": 233.10117286343265,
-    "adx": 17.56688822207491,
-    "trix": 0.04619352716384029,
-    "ultosc": 77.59902890372281,
-    "bb_upper": 3545.4833674227552,
-    "bb_middle": 3394.6099853515625,
-    "bb_lower": 3243.7366032803698,
-    "atr": 41.82801207461243,
-    "sar": 3323.241691796875,
-    "obv": 816251.0,
-    "ad": 30506.235961597,
-    "adosc": 10040.848689976108,
-    "mfi": 98.34977967212394
+    "sma_20": 3404.4199829101562,
+    "sma_50": 3366.7119873046877,
+    "sma_200": 3080.2064978027342,
+    "ema_12": 3467.2054902267805,
+    "ema_26": 3415.2992370613592,
+    "rsi": 77.98347378380022,
+    "macd": 51.906253165421276,
+    "macd_signal": 24.953570695995154,
+    "macd_hist": 26.952682469426122,
+    "stoch_k": 96.55384465097676,
+    "stoch_d": 97.45239718577737,
+    "williams_r": -6.22797639947833,
+    "cci": 165.1209225645257,
+    "adx": 20.121616183817224,
+    "trix": 0.05007273711583604,
+    "ultosc": 79.53064342112246,
+    "bb_upper": 3573.9880400793486,
+    "bb_middle": 3404.4199829101562,
+    "bb_lower": 3234.851925740964,
+    "atr": 39.184175241627486,
+    "sar": 3339.4691873593747,
+    "obv": 831578.0,
+    "ad": 48615.66281281872,
+    "adosc": 15693.443873087785,
+    "mfi": 98.67054074069428
   },
   "patterns": {
     "doji": [
@@ -73,7 +73,6 @@
       0,
       0,
       0,
-      0,
       100,
       0,
       0,
@@ -305,6 +304,7 @@
       0,
       0,
       100,
+      0,
       0,
       0,
       0,
@@ -367,7 +367,6 @@
       0,
       0,
       0,
-      0,
       100,
       0,
       0,
@@ -556,6 +555,7 @@
       0,
       0,
       100,
+      0,
       0,
       0,
       0,
@@ -605,7 +605,6 @@
       0,
       0,
       0,
-      0,
       -100,
       0,
       0,
@@ -812,6 +811,7 @@
       0,
       0,
       -100,
+      0,
       0,
       0,
       0,
@@ -833,7 +833,6 @@
       0,
       0,
       0,
-      0,
       -100,
       0,
       0,
@@ -1072,6 +1071,7 @@
       0,
       0,
       100,
+      0,
       0,
       0,
       0,
@@ -1312,8 +1312,8 @@
       0,
       0,
       0,
-      0,
       100,
+      0,
       0,
       0,
       0,
@@ -1600,28 +1600,28 @@
   "enhancements": {
     "fibonacci": {
       "levels": {
-        "0.0": 2476.300048828125,
-        "0.236": 2750.9568603515627,
-        "0.382": 2920.8716674804687,
-        "0.5": 3058.2000732421875,
-        "0.618": 3195.5284790039063,
-        "0.786": 3391.0468872070314,
-        "1.0": 3640.10009765625
+        "0.0": 2483.5,
+        "0.236": 2752.091623046875,
+        "0.382": 2918.2542373046876,
+        "0.5": 3052.550048828125,
+        "0.618": 3186.8458603515624,
+        "0.786": 3378.0466767578127,
+        "1.0": 3621.60009765625
       },
       "extensions": {
-        "1.272": 3956.6537109375,
-        "1.618": 4359.328527832031,
-        "2.0": 4803.900146484375,
-        "2.618": 5523.128576660156
+        "1.272": 3931.16332421875,
+        "1.618": 4324.945958007813,
+        "2.0": 4759.7001953125,
+        "2.618": 5463.046055664063
       }
     },
     "support_resistance": {
       "pivot_points": {
-        "pivot": 3392.309989420573,
-        "r1": 3409.2999959309896,
-        "r2": 3423.9900065104166,
-        "s1": 3377.619978841146,
-        "s2": 3360.6299723307293
+        "pivot": 3401.6649861653646,
+        "r1": 3419.349991861979,
+        "r2": 3434.280000813802,
+        "s1": 3386.7349772135417,
+        "s2": 3369.049971516927
       },
       "historical_support": [
         2502.300048828125,
@@ -1651,19 +1651,19 @@
       ]
     },
     "volume_profile": {
-      "current_volume": 215694,
-      "average_volume": 5234.517786561265,
-      "volume_ratio": 17.44419642857143,
+      "current_volume": 229911,
+      "average_volume": 5295.098814229249,
+      "volume_ratio": 17.594982723456685,
       "volume_profile": {
-        "(3280.41, 3336.875]": 314779,
-        "(2602.83, 2659.295]": 264552,
-        "(3562.735, 3619.2]": 215694,
-        "(3054.55, 3111.015]": 163256,
-        "(2715.76, 2772.225]": 143126,
-        "(2772.225, 2828.69]": 45408
+        "(3269.56, 3325.0]": 304157,
+        "(2604.28, 2659.72]": 264552,
+        "(3546.76, 3602.2]": 231227,
+        "(3047.8, 3103.24]": 163256,
+        "(2715.16, 2770.6]": 143126,
+        "(2770.6, 2826.04]": 45408
       },
-      "price_volume_correlation": 0.09454863962480335,
-      "uptrend_volume": 7279.496598639455,
+      "price_volume_correlation": 0.040244825565505855,
+      "uptrend_volume": 7381.965986394558,
       "downtrend_volume": 2419.4380952380952,
       "volume_trend": "مرتفع"
     },
@@ -1671,7 +1671,7 @@
       "market_structure": "اتجاه صاعد",
       "peaks_count": 67,
       "troughs_count": 67,
-      "relative_strength": 1.0097806769766466,
+      "relative_strength": 1.0112002439613663,
       "structure_confidence": "عالية"
     },
     "divergences": {
@@ -1683,124 +1683,124 @@
         {
           "type": "bearish",
           "indicator": "MACD",
-          "price_idx": 163,
+          "price_idx": 162,
           "price_date": "2025-04-28 00:00:00-04:00",
           "price": 3332.5,
-          "indicator_prev": 94.62621945796582,
-          "indicator_now": 88.5370784318311
+          "indicator_prev": 94.6261190863388,
+          "indicator_now": 88.53699237923456
         },
         {
           "type": "bearish",
           "indicator": "MACD",
-          "price_idx": 169,
+          "price_idx": 168,
           "price_date": "2025-05-06 00:00:00-04:00",
           "price": 3411.39990234375,
-          "indicator_prev": 88.5370784318311,
-          "indicator_now": 66.68516352882261
+          "indicator_prev": 88.53699237923456,
+          "indicator_now": 66.6851093009509
         },
         {
           "type": "bearish",
           "indicator": "MACD",
-          "price_idx": 180,
+          "price_idx": 179,
           "price_date": "2025-05-21 00:00:00-04:00",
           "price": 3309.300048828125,
-          "indicator_prev": 22.87893188081125,
-          "indicator_now": 17.03216302072451
+          "indicator_prev": 22.87890023931641,
+          "indicator_now": 17.032139763267423
         },
         {
           "type": "bearish",
           "indicator": "RSI",
-          "price_idx": 189,
+          "price_idx": 188,
           "price_date": "2025-06-04 00:00:00-04:00",
           "price": 3373.5,
-          "indicator_prev": 58.01372493655666,
-          "indicator_now": 57.814772633606694
+          "indicator_prev": 58.01372592682621,
+          "indicator_now": 57.81477356419137
         },
         {
           "type": "bullish",
           "indicator": "MACD",
-          "price_idx": 191,
+          "price_idx": 190,
           "price_date": "2025-06-06 00:00:00-04:00",
           "price": 3322.699951171875,
-          "indicator_prev": 28.73795652408944,
-          "indicator_now": 29.329811293578587
+          "indicator_prev": 28.737943958801225,
+          "indicator_now": 29.32980131884642
         },
         {
           "type": "bearish",
           "indicator": "MACD",
-          "price_idx": 208,
+          "price_idx": 207,
           "price_date": "2025-07-02 00:00:00-04:00",
           "price": 3348.0,
-          "indicator_prev": 16.180345084592318,
-          "indicator_now": 5.4035643005631755
+          "indicator_prev": 16.180341416902593,
+          "indicator_now": 5.40356160470219
         },
         {
           "type": "bearish",
           "indicator": "MACD",
-          "price_idx": 215,
+          "price_idx": 214,
           "price_date": "2025-07-11 00:00:00-04:00",
           "price": 3356.0,
-          "indicator_prev": 5.4035643005631755,
-          "indicator_now": 1.4380026386588725
+          "indicator_prev": 5.40356160470219,
+          "indicator_now": 1.438001065649587
         },
         {
           "type": "bullish",
           "indicator": "MACD",
-          "price_idx": 226,
+          "price_idx": 225,
           "price_date": "2025-07-28 00:00:00-04:00",
           "price": 3309.10009765625,
-          "indicator_prev": 3.912760482673548,
-          "indicator_now": 7.238624456363141
+          "indicator_prev": 3.9127593264647658,
+          "indicator_now": 7.238623781725892
         },
         {
           "type": "bearish",
           "indicator": "MACD",
-          "price_idx": 232,
+          "price_idx": 231,
           "price_date": "2025-08-05 00:00:00-04:00",
           "price": 3381.89990234375,
-          "indicator_prev": 4.2167572016155646,
-          "indicator_now": 3.5904181622081524
+          "indicator_prev": 4.216756576951411,
+          "indicator_now": 3.590417737071675
         },
         {
           "type": "bullish",
           "indicator": "MACD",
-          "price_idx": 237,
+          "price_idx": 236,
           "price_date": "2025-08-12 00:00:00-04:00",
           "price": 3348.89990234375,
-          "indicator_prev": 5.864357549826764,
-          "indicator_now": 9.6196766132025
+          "indicator_prev": 5.864357156181995,
+          "indicator_now": 9.619676323861768
         }
       ]
     },
     "correlations": {
       "asset_correlations": {
-        "USD": -0.44811366886826026,
-        "SPY": -0.007806304259357597
+        "USD": -0.44893429368998444,
+        "SPY": -0.008079573576052407
       },
       "strongest_correlation": [
         "USD",
-        -0.44811366886826026
+        -0.44893429368998444
       ],
       "weakest_correlation": [
         "SPY",
-        -0.007806304259357597
+        -0.008079573576052407
       ]
     },
     "advanced_metrics": {
-      "annualized_return": 0.4776762925404785,
-      "annualized_volatility": 0.18179455734591118,
-      "sharpe_ratio": 2.039518992086047,
-      "max_drawdown": -0.07989960510242895,
+      "annualized_return": 0.46851871334586015,
+      "annualized_volatility": 0.18121100493656356,
+      "sharpe_ratio": 2.0117283868323255,
+      "max_drawdown": -0.07989960510242936,
       "var_95": -0.017967636490754786,
       "var_99": -0.031493781300153956,
-      "skewness": -0.38450001589033905,
-      "kurtosis": 1.1807486683543464,
-      "calmar_ratio": 5.978456238026602,
-      "sortino_ratio": 2.8094565572715657,
+      "skewness": -0.3943361605208999,
+      "kurtosis": 1.2092145192248918,
+      "calmar_ratio": 5.863842665370255,
+      "sortino_ratio": 2.7622793905193044,
       "win_rate": 0.5833333333333334,
-      "avg_win": 0.008828198300942502,
+      "avg_win": 0.008785843676945466,
       "avg_loss": -0.008637825694035105,
-      "profit_factor": 1.4308551780402796
+      "profit_factor": 1.4239904327101212
     }
   },
   "sentiment": {
@@ -1845,9 +1845,135 @@
   },
   "news": {
     "count": 25,
-    "average_sentiment": 0.12,
+    "average_sentiment": 0.04,
     "impact": "neutral",
     "articles": [
+      {
+        "title": "Atico Announces Completion of The Environmental Consultation Process at La Plata Project",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T20:33:53Z",
+        "url": "https://financialpost.com/globe-newswire/atico-announces-completion-of-the-environmental-consultation-process-at-la-plata-project",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Drilling Commences at Sherlock Crossing Gold-Antimony Prospect",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T20:18:47Z",
+        "url": "https://financialpost.com/globe-newswire/drilling-commences-at-sherlock-crossing-gold-antimony-prospect",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Hudbay Announces Board Appointment",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T20:03:53Z",
+        "url": "https://financialpost.com/globe-newswire/hudbay-announces-board-appointment",
+        "sentiment": 0.0
+      },
+      {
+        "title": "What's behind gold's record-breaking rise, and how high could it go?",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T18:13:59Z",
+        "url": "https://financialpost.com/commodities/whats-behind-gold-record-breaking-rise",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "Voyageur Mineral Explorers Corp. and Evolve Strategic Element Royalties Ltd. Announce $20 Million Financing",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T14:02:31Z",
+        "url": "https://financialpost.com/globe-newswire/voyageur-mineral-explorers-corp-and-evolve-strategic-element-royalties-ltd-announce-20-million-financing",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Royal Gold Announces Filing of Proxy Statement for the Acquisition of Sandstorm Gold Ltd.",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T13:25:45Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/royal-gold-announces-filing-of-proxy-statement-for-the-acquisition-of-sandstorm-gold-ltd",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Global X Selects ICE Indices for Four New ETFs in Canada",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T12:33:58Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/global-x-selects-ice-indices-for-four-new-etfs-in-canada",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Posthaste: There's a new force driving the Canadian dollar — and it's pure gold",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T12:00:57Z",
+        "url": "https://financialpost.com/news/gold-force-driving-canadian-dollar",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Great Quest Gold Provides Update Regarding Proposed Reverse Takeover Transaction With Lotus Gold",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T11:42:28Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/great-quest-gold-provides-update-regarding-proposed-reverse-takeover-transaction-with-lotus-gold",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Multiple Mineralized Skarn Horizons Intersected at the Birch Copper-Gold Project",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T11:05:22Z",
+        "url": "https://financialpost.com/globe-newswire/multiple-mineralized-skarn-horizons-intersected-at-the-birch-copper-gold-project",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Talisker Receives Preliminary Results from the Second Phase of Ore Sorting Studies for the Bralorne Gold Project",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T11:05:06Z",
+        "url": "https://financialpost.com/globe-newswire/talisker-receives-preliminary-results-from-the-second-phase-of-ore-sorting-studies-for-the-bralorne-gold-project",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Coeur Reports High-Grade Exploration Results at Las Chispas and Kensington",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T11:01:20Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/coeur-reports-high-grade-exploration-results-at-las-chispas-and-kensington",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Vista Gold Corp. to Participate in Upcoming Mining Investment Conferences",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T10:50:46Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/vista-gold-corp-to-participate-in-upcoming-mining-investment-conferences",
+        "sentiment": 0.0
+      },
+      {
+        "title": "New High-Grade Gold Zone at Windfall Project",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T10:03:45Z",
+        "url": "https://financialpost.com/globe-newswire/new-high-grade-gold-zone-at-windfall-project",
+        "sentiment": -0.3333333333333333
+      },
+      {
+        "title": "Gold Rises Again, Extending Record-Breaking Rally",
+        "source": "Barron's",
+        "publishedAt": "2025-09-03T09:10:26Z",
+        "url": "https://www.barrons.com/livecoverage/stock-market-news-today-090325",
+        "sentiment": 0.6666666666666666
+      },
+      {
+        "title": "Dundee Precious Metals Completes Acquisition of Adriatic Metals and Confirms Name Change and ASX Listing",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T07:26:17Z",
+        "url": "https://financialpost.com/globe-newswire/dundee-precious-metals-completes-acquisition-of-adriatic-metals-and-confirms-name-change-and-asx-listing",
+        "sentiment": 0.0
+      },
+      {
+        "title": "China’s Chemicals Makers Reap Reward of Shift From Oil to Coal",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T02:36:19Z",
+        "url": "https://financialpost.com/pmn/business-pmn/chinas-chemicals-makers-reap-reward-of-shift-from-oil-to-coal",
+        "sentiment": -0.3333333333333333
+      },
+      {
+        "title": "Gold Holds After Surging to Record on Rate-Cut Bets, Debt Fears",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-03T00:08:53Z",
+        "url": "https://financialpost.com/pmn/business-pmn/gold-holds-after-surging-to-record-on-rate-cut-bets-debt-fears",
+        "sentiment": 0.3333333333333333
+      },
       {
         "title": "Markets off to ‘rocky’ September start as stocks engulfed in tech swoon",
         "source": "Financial Post",
@@ -1896,132 +2022,6 @@
         "publishedAt": "2025-09-02T11:03:49Z",
         "url": "https://financialpost.com/globe-newswire/erdene-completes-share-consolidation",
         "sentiment": 0.0
-      },
-      {
-        "title": "Inventus Secures $1.47 Million Gold Pre-Payment from 007 North Bulk Sample at the Pardo Gold Project",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-02T11:03:34Z",
-        "url": "https://financialpost.com/globe-newswire/inventus-secures-1-47-million-gold-pre-payment-from-007-north-bulk-sample-at-the-pardo-gold-project",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Fury Announces Results of Preliminary Economic Assessment for the Eau Claire Gold Deposit with a Base Case After-Tax NPV (5%) of $554M and After-Tax IRR of 41%",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-02T11:03:18Z",
-        "url": "https://financialpost.com/globe-newswire/fury-announces-results-of-preliminary-economic-assessment-for-the-eau-claire-gold-deposit-with-a-base-case-after-tax-npv-5-of-554m-and-after-tax-irr-of-41",
-        "sentiment": 0.0
-      },
-      {
-        "title": "NorthWest Announces Drilling Underway at Kwanika",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-02T10:32:18Z",
-        "url": "https://financialpost.com/globe-newswire/northwest-announces-drilling-underway-at-kwanika",
-        "sentiment": 0.0
-      },
-      {
-        "title": "McEwen Reports Attractive Gold Intercepts at Grey Fox; Results Support Resource Growth Ahead of Upcoming Resource Estimate; Gibson: 10.1 g/t Gold Over 5.8 m (25GF-1597) and 10.4 g/t Gold Over 5.6 m (25GF-1564), GFS: 4.8 g/t Gold Over 14.9 m (25GF-1575)",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-02T10:01:57Z",
-        "url": "https://financialpost.com/globe-newswire/mcewen-reports-attractive-gold-intercepts-at-grey-fox-results-support-resource-growth-ahead-of-upcoming-resource-estimate-gibson-10-1-g-t-gold-over-5-8-m-25gf-1597-and-10-4-g-t-gold-over-5-6-m-2",
-        "sentiment": 0.3333333333333333
-      },
-      {
-        "title": "Fortuna to present at Mining Forum Americas 2025 in Colorado Springs, USA",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-02T09:00:53Z",
-        "url": "https://financialpost.com/globe-newswire/fortuna-to-present-at-mining-forum-americas-2025-in-colorado-springs-usa",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Gold Punches Through $3,500 to Hit Record High on Rate-Cut Bets",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-02T03:00:54Z",
-        "url": "https://financialpost.com/pmn/business-pmn/gold-punches-through-3500-to-hit-record-high-on-rate-cut-bets",
-        "sentiment": 0.6666666666666666
-      },
-      {
-        "title": "Gold Holds Close to Record as Demand for Precious Metals Surges",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-02T00:33:45Z",
-        "url": "https://financialpost.com/pmn/business-pmn/gold-holds-close-to-record-as-demand-for-precious-metals-surges",
-        "sentiment": 1.0
-      },
-      {
-        "title": "Australia’s No. 2 Pension Cuts Treasuries Bet on Rising US Risks",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-01T21:20:18Z",
-        "url": "https://financialpost.com/pmn/business-pmn/australias-no-2-pension-cuts-treasuries-bet-on-rising-us-risks",
-        "sentiment": 0.3333333333333333
-      },
-      {
-        "title": "Three powerful forces that could destabilize financial markets",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-01T10:00:12Z",
-        "url": "https://financialpost.com/investing/three-powerful-forces-that-could-destabilize-financial-markets",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Silver Climbs Past $40 as US Rate-Cut Bets Fuel Investor Demand",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-01T02:52:07Z",
-        "url": "https://financialpost.com/pmn/business-pmn/silver-climbs-past-40-as-us-rate-cut-bets-fuel-investor-demand",
-        "sentiment": 0.3333333333333333
-      },
-      {
-        "title": "Capstone Copper Reports Temporary Production Interruption at Mantoverde Operation",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-31T21:00:49Z",
-        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/capstone-copper-reports-temporary-production-interruption-at-mantoverde-operation",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Elliott Recommended as Citgo Buyer In $5.9 Billion Proposal",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-31T18:08:51Z",
-        "url": "https://financialpost.com/pmn/business-pmn/elliott-recommended-as-citgo-buyer-in-5-9-billion-proposal",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Payment of dividends to BDR holders",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T23:39:34Z",
-        "url": "https://financialpost.com/globe-newswire/payment-of-dividends-to-bdr-holders",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Aura Announces a Change in the Company’s BDRs",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T23:34:23Z",
-        "url": "https://financialpost.com/globe-newswire/aura-announces-a-change-in-the-companys-bdrs",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Wall Street’s Momentum Train Hits Full Speed Into September",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T21:07:27Z",
-        "url": "https://financialpost.com/pmn/business-pmn/wall-streets-momentum-train-hits-full-speed-into-september",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Patagonia Gold Quarter 2, 2025 Financial Results",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T21:02:08Z",
-        "url": "https://financialpost.com/globe-newswire/patagonia-gold-quarter-2-2025-financial-results",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Q-Gold Announces $10,000,000 Financing to complete acquisition of Quartz Mountain Gold project in Oregon, USA and advance Mine Centre Camp in Ontario, Canada",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T18:14:36Z",
-        "url": "https://financialpost.com/globe-newswire/q-gold-announces-10000000-financing-to-complete-acquisition-of-quartz-mountain-gold-project-in-oregon-usa-and-advance-mine-centre-camp-in-ontario-canada",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Dundee Precious Metals Announces UK Court Approval of Acquisition of Adriatic Metals and ASX Listing Approval",
-        "source": "Financial Post",
-        "publishedAt": "2025-08-29T15:06:36Z",
-        "url": "https://financialpost.com/globe-newswire/dundee-precious-metals-announces-uk-court-approval-of-acquisition-of-adriatic-metals-and-asx-listing-approval",
-        "sentiment": 0.0
       }
     ]
   },
@@ -2030,8 +2030,8 @@
     "confidence": "عالية",
     "risk_level": "منخفضة",
     "trend": "صاعد قوي",
-    "key_support": 3535.54392702265,
-    "key_resistance": 3744.6839873957124,
+    "key_support": 3523.83160068862,
+    "key_resistance": 3719.7524768967573,
     "fundamental_bias": "hawkish/bearish",
     "news_impact": "neutral"
   }
