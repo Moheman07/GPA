@@ -4,7 +4,6 @@
 Gold Analyzer V5 — n8n-ready
 - Modes: analyze | backtest
 - Outputs: gold_analysis_v5.json (+ compact), gold_backtest_v5.json
-- Optional Webhook POST to n8n
 """
 import os
 import math
