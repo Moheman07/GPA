@@ -1,0 +1,42 @@
+name: Gold Unified Analysis (with TA-Lib)
+
+on:
+  workflow_dispatch:
+  schedule:
+    # يعمل مرة واحدة يوميًا (من الإثنين للجمعة) الساعة 21:00 UTC
+    - cron: '0 21 * * 1-5'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    env:
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+      
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Miniconda Environment with TA-Lib
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: "3.10"
+          environment-file: environment.yml # <-- يستخدم الملف الجديد لإعداد البيئة
+          activate-environment: talib-env
+          use-mamba: true # أسرع في تثبيت الحزم
+
+      - name: Run Gold Analyzer Script
+        shell: bash -l {0} # مهم جدًا لتفعيل بيئة conda
+        run: |
+          echo "Running analysis inside conda environment..."
+          python gold_analyzer_unified_full.py
+
+      - name: Commit and Push Results
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: '🏆 Update TA-Lib Unified Analysis'
+          file_pattern: 'gold_analysis_unified_full.json'
