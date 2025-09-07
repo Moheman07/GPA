@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Gold Analyzer V5 — n8n-ready
+- Modes: analyze | backtest
+- Outputs: gold_analysis_v5.json (+ compact), gold_backtest_v5.json
+- Optional Webhook POST to n8n
+"""
 import os
 import math
 import time
@@ -5,13 +13,12 @@ import json
 import argparse
 import logging
 import datetime as dt
-from typing import Dict, Any, List, Tuple, Optional
+from typing import Dict, Any, List, Optional
 
 import numpy as np
 import pandas as pd
 import requests
 
-# Optional deps
 try:
     import talib  # type: ignore
     TALIB_AVAILABLE = True
@@ -90,11 +97,9 @@ def fetch_yf(symbol: str, period: str = "1y", tries: int = 3, pause: float = 1.0
 
 def fetch_market(period: str, gold_sym: str, usd_syms: List[str], spy_sym: str) -> Dict[str, Any]:
     out: Dict[str, Any] = {"used_symbols": {}}
-    # Gold
     g = fetch_yf(gold_sym, period)
     out["GC=F"] = g
     out["used_symbols"]["GC=F"] = gold_sym if not g.empty else None
-    # USD
     used = None
     usd_df = pd.DataFrame()
     for s in usd_syms:
@@ -104,7 +109,6 @@ def fetch_market(period: str, gold_sym: str, usd_syms: List[str], spy_sym: str) 
             break
     out["^DXY"] = usd_df
     out["used_symbols"]["^DXY"] = used
-    # SPY
     sp = fetch_yf(spy_sym, period)
     out["SPY"] = sp
     out["used_symbols"]["SPY"] = spy_sym if not sp.empty else None
@@ -156,7 +160,6 @@ def volume_profile(df: pd.DataFrame, bins: int = 20) -> Dict[str, Any]:
     try:
         c = df["Close"]
         v = df["Volume"].astype(float)
-        # clip outliers (IQR)
         q1, q3 = v.quantile(0.25), v.quantile(0.75)
         iqr = q3 - q1
         v_cap = v.clip(lower=max(0.0, q1 - 3 * iqr), upper=q3 + 3 * iqr)
@@ -519,14 +522,7 @@ def emit_webhook(url: Optional[str], payload: Dict[str, Any]) -> None:
     except Exception as e:
         log.warning(f"Webhook post failed: {e}")
 
-# -------- Backtest (simple template) --------
 def backtest_macd_adx_bb_atr(df: pd.DataFrame, ind: Dict[str, pd.Series], params: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Rules:
-    - Entry long: MACD cross up AND ADX>=adx_min; avoid longs if RSI>rsi_sell or price>BB upper.
-    - Entry short: MACD cross down AND ADX>=adx_min; avoid shorts if RSI<rsi_buy or price<BB lower.
-    - SL/TP via ATR multiples; 1 concurrent position.
-    """
     c = df["Close"].astype(float)
     macd, macd_sig = ind["macd"], ind["macd_signal"]
     rsi = ind["rsi"]
@@ -666,7 +662,6 @@ def parse_args():
     p.add_argument("--out", default="gold_analysis_v5.json")
     p.add_argument("--compact", action="store_true")
     p.add_argument("--emit-webhook", default=None)
-    # backtest params
     p.add_argument("--adx-min", dest="adx_min", type=float, default=20.0)
     p.add_argument("--rsi-buy", dest="rsi_buy", type=float, default=35.0)
     p.add_argument("--rsi-sell", dest="rsi_sell", type=float, default=65.0)
