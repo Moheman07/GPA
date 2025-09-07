@@ -1,3 +1,19 @@
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Miniconda (with TA-Lib)
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: "3.10"
+          environment-file: environment.yml
+          activate-environment: talib-env
+          use-mamba: true
+
       - name: Sanitize gold_analyzer_v5.py (remove leading JSON blob)
         shell: bash -l {0}
         run: |
@@ -13,3 +29,7 @@
           fi
           mv gold_analyzer_v5.cleaned gold_analyzer_v5.py
           sed -n '1,40p' gold_analyzer_v5.py | cat
+
+      - name: Run V5 Analyzer
+        shell: bash -l {0}
+        run: python gold_analyzer_v5.py --mode analyze --period 1y --compact
