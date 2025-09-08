@@ -479,6 +479,7 @@ def build_report(data: Dict[str, Any]) -> Dict[str, Any]:
         "enhancements": {"divergences": divs, "correlations": corr, "volume_profile": vp},
         "sentiment": senti,
         "fundamentals": fred,
+        "news": news
     }
     trend = sig.get("trend")
     rec = sig.get("recommendation")
@@ -527,7 +528,7 @@ def backtest_macd_adx_bb_atr(df: pd.DataFrame, ind: Dict[str, pd.Series], params
     rsi = ind["rsi"]
     bbu, bbl = ind["bb_upper"], ind["bb_lower"]
     adx = ind["adx"]
-    atr = ind["atr"].fillna(method="ffill")
+    atr = ind["atr"].ffill()
     adx_min = params.get("adx_min", 20)
     rsi_buy = params.get("rsi_buy", 35)
     rsi_sell = params.get("rsi_sell", 65)
