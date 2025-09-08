@@ -3,7 +3,7 @@
     "version": "v5",
     "symbol": "GC=F",
     "period": "1y",
-    "analysis_date": "2025-09-08T12:27:03.157656",
+    "analysis_date": "2025-09-08T12:41:53.958058",
     "talib": true
   },
   "used_symbols": {
@@ -12,39 +12,39 @@
     "SPY": "SPY"
   },
   "current_market_data": {
-    "price": 3655.199951171875,
-    "chg": 42.0,
-    "chg_pct": 1.1624045324803545,
+    "price": 3660.0,
+    "chg": 46.800048828125,
+    "chg_pct": 1.2952521161455843,
     "high": 3662.5,
     "low": 3621.699951171875,
-    "volume": 110540
+    "volume": 113868
   },
   "signals": {
-    "current_price": 3655.199951171875,
-    "timestamp": "2025-09-08T12:27:01.627326",
+    "current_price": 3660.0,
+    "timestamp": "2025-09-08T12:41:51.793528",
     "trend": "صاعد قوي",
     "rsi_signal": "بيع قوي",
     "macd_signal": "محايد",
     "bb_signal": "بيع",
     "recommendation": "بيع قوي",
     "confidence": "عالية",
-    "stop_loss": 3574.8632646507785,
-    "take_profit": 3775.70498095352,
+    "stop_loss": 3579.6633134789035,
+    "take_profit": 3780.505029781645,
     "risk_level": "منخفضة"
   },
   "technical": {
-    "sma_20": 3424.0499755859373,
-    "sma_50": 3379.20798828125,
-    "sma_200": 3090.1779968261717,
-    "ema_12": 3511.1234543881606,
-    "ema_26": 3444.3314644072148,
-    "rsi": 77.6958405236892,
-    "macd": 66.7919899809458,
-    "macd_signal": 38.15152872384948,
-    "macd_hist": 28.64046125709632,
-    "bb_upper": 3637.7069394578493,
-    "bb_middle": 3424.0499755859373,
-    "bb_lower": 3210.3930117140253,
+    "sma_20": 3424.2899780273438,
+    "sma_50": 3379.3039892578126,
+    "sma_200": 3090.2019970703127,
+    "ema_12": 3511.8619234386415,
+    "ema_26": 3444.687023579668,
+    "rsi": 77.95056561171367,
+    "macd": 67.17489985897328,
+    "macd_signal": 38.22811069945497,
+    "macd_hist": 28.946789159518303,
+    "bb_upper": 3638.9932345648167,
+    "bb_middle": 3424.2899780273438,
+    "bb_lower": 3209.586721489871,
     "atr": 40.16834326054834,
     "adx": 25.479949478705656
   },
@@ -149,23 +149,23 @@
     },
     "correlations": {
       "asset_correlations": {
-        "USD": -0.4528531858779971,
+        "USD": -0.45283680492720935,
         "SPY": -0.016371409159349506
       }
     },
     "volume_profile": {
-      "current_volume": 110540,
+      "current_volume": 113868,
       "average_volume": 1280.610119047619,
-      "volume_ratio": 89.67034749896065,
+      "volume_ratio": 92.37003011590059,
       "volume_profile": {
-        "(3309.18, 3366.85]": 50535,
-        "(2617.14, 2674.81]": 45449,
-        "(2905.49, 2963.16]": 29436,
-        "(3366.85, 3424.52]": 25921,
-        "(2732.48, 2790.15]": 25667,
-        "(3251.51, 3309.18]": 25287
+        "(3312.54, 3370.45]": 49907,
+        "(2617.62, 2675.53]": 44807,
+        "(2907.17, 2965.08]": 29436,
+        "(3254.63, 3312.54]": 26624,
+        "(2733.44, 2791.35]": 25667,
+        "(3370.45, 3428.36]": 25212
       },
-      "price_volume_correlation": 0.06754553994612335,
+      "price_volume_correlation": 0.06892661459135384,
       "volume_trend": "مرتفع"
     }
   },
@@ -207,13 +207,160 @@
     },
     "fundamental_bias": "hawkish/bearish"
   },
+  "news": {
+    "count": 20,
+    "average_sentiment": 0.1,
+    "impact": "neutral",
+    "articles": [
+      {
+        "title": "NexGold Announces Amendments to Omnibus Equity Incentive Plan",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T22:01:44Z",
+        "url": "https://financialpost.com/globe-newswire/nexgold-announces-amendments-to-omnibus-equity-incentive-plan",
+        "sentiment": 0.0
+      },
+      {
+        "title": "A bad year just got much, much worse for Lululemon shareholders",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T21:58:39Z",
+        "url": "https://financialpost.com/investing/bad-year-got-much-worse-lululemon-shareholders",
+        "sentiment": 0.0
+      },
+      {
+        "title": "10-year Treasury tumbles to early April low as weak jobs report raises chances of a half-point Fed rate cut",
+        "source": "MarketWatch",
+        "publishedAt": "2025-09-05T20:19:00Z",
+        "url": "https://www.marketwatch.com/story/bond-yields-tumble-as-weak-jobs-report-raises-chances-of-a-half-point-fed-rate-cut-996d8abb",
+        "sentiment": -0.3333333333333333
+      },
+      {
+        "title": "Watch out, retirees: President Trump doesn’t understand interest rates",
+        "source": "MarketWatch",
+        "publishedAt": "2025-09-05T18:29:00Z",
+        "url": "https://www.marketwatch.com/story/watch-out-retirees-president-trump-doesnt-understand-interest-rates-e1d9a571",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Westkam Gold Corp. Extends Private Placement Closing Date",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T15:55:25Z",
+        "url": "https://financialpost.com/globe-newswire/westkam-gold-corp-extends-private-placement-closing-date",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Gold Stocks Break 2011 Record High as Investors Seek Safe Havens",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T15:53:13Z",
+        "url": "https://financialpost.com/pmn/business-pmn/gold-stocks-break-2011-record-high-as-investors-seek-safe-havens",
+        "sentiment": 0.6666666666666666
+      },
+      {
+        "title": "Northisle Announces Appointment of Kevin O’Kane as Executive Vice President and Chief Operating Officer",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T11:07:54Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/northisle-announces-appointment-of-kevin-okane-as-executive-vice-president-and-chief-operating-officer",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "Aldebaran Announces Intention to Spin Out Northern Argentina Exploration Projects into a New Argentine-Focused Exploration Company and Provides an Update on the Altar PEA",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T11:00:38Z",
+        "url": "https://financialpost.com/globe-newswire/aldebaran-announces-intention-to-spin-out-northern-argentina-exploration-projects-into-a-new-argentine-focused-exploration-company-and-provides-an-update-on-the-altar-pea",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Gold Holds Near Record High With Focus on Key US Jobs Data",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T00:10:12Z",
+        "url": "https://financialpost.com/pmn/business-pmn/gold-holds-near-record-high-with-focus-on-key-us-jobs-data",
+        "sentiment": 0.6666666666666666
+      },
+      {
+        "title": "Blue Jay Gold Corp. Announces Non-Brokered Private Placement of Up to $5 Million",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T21:52:31Z",
+        "url": "https://financialpost.com/globe-newswire/blue-jay-gold-corp-announces-non-brokered-private-placement-of-up-to-5-million",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Metalsource announces OTCQB LISTING",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T21:17:01Z",
+        "url": "https://financialpost.com/globe-newswire/metalsource-announces-otcqb-listing",
+        "sentiment": 0.0
+      },
+      {
+        "title": "US Trade Gap Widens to Largest in Four Months on Import Flurry",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T13:18:17Z",
+        "url": "https://financialpost.com/pmn/business-pmn/us-trade-gap-widens-to-largest-in-four-months-on-import-flurry",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Gold could hit $5,000 if Fed’s independence damaged, says Goldman Sachs",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T13:13:23Z",
+        "url": "https://financialpost.com/investing/gold-5000-if-fed-independence-damaged-goldman",
+        "sentiment": 0.6666666666666666
+      },
+      {
+        "title": "Miata Metals Intersects 18 m at 2.58 g/t Gold Near Surface at Puma Target, Sela Creek",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T12:33:38Z",
+        "url": "https://financialpost.com/globe-newswire/miata-metals-intersects-18-m-at-2-58-g-t-gold-near-surface-at-puma-target-sela-creek",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Robex Announces Amendments to Sprott Facility Agreement",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T12:04:05Z",
+        "url": "https://financialpost.com/globe-newswire/robex-announces-amendments-to-sprott-facility-agreement",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Red Pine Drilling Intersects 9.03 g/t gold over 14.00 m core length, further supporting Open Pit Potential",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T11:45:43Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/red-pine-drilling-intersects-9-03-g-t-gold-over-14-00-m-core-length-further-supporting-open-pit-potential",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "Dynacor Provides Corporate Update Including Expansion Progress",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T11:33:11Z",
+        "url": "https://financialpost.com/globe-newswire/dynacor-provides-corporate-update-including-expansion-progress",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Koryx Announces Updated PEA Results for the Haib Copper Project, Southern Namibia",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T11:03:38Z",
+        "url": "https://financialpost.com/globe-newswire/koryx-announces-updated-pea-results-for-the-haib-copper-project-southern-namibia",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Churchill Resources to Commence Fall Drilling & Trenching Program at the Past-Producing Frost Cove Antimony Mine",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T11:02:44Z",
+        "url": "https://financialpost.com/globe-newswire/churchill-resources-to-commence-fall-drilling-trenching-program-at-the-past-producing-frost-cove-antimony-mine",
+        "sentiment": -0.3333333333333333
+      },
+      {
+        "title": "Fury Intercepts 59 Metres of 1.59 g/t Gold and 1.5 Metres of 546 g/t Silver at the Sakami Gold Project in Quebec",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T11:02:31Z",
+        "url": "https://financialpost.com/globe-newswire/fury-intercepts-59-metres-of-1-59-g-t-gold-and-1-5-metres-of-546-g-t-silver-at-the-sakami-gold-project-in-quebec",
+        "sentiment": 0.0
+      }
+    ]
+  },
   "ai": {
     "nl_summary_ar": "الاتجاه: صاعد قوي. التوصية: بيع قوي (ثقة عالية). راقب التشبّع/التذبذب قبل الدخول.",
     "actions": {
       "signal_type": "بيع قوي",
       "size_hint": 2,
-      "sl": 3574.8632646507785,
-      "tp": 3775.70498095352
+      "sl": 3579.6633134789035,
+      "tp": 3780.505029781645
     }
   }
 }
