@@ -24,7 +24,6 @@ import numpy as np
 import pandas as pd
 import requests
 
-# Optional deps
 try:
     import talib  # type: ignore
     TALIB_AVAILABLE = True
@@ -43,7 +42,6 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 FRED_API_KEY = os.getenv("FRED_API_KEY", "")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY", "")
 
-# ----------------------- JSON Utils -----------------------
 class NumpyEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, (np.integer,)):
@@ -80,7 +78,6 @@ def safe_pct_change(series: pd.Series) -> pd.Series:
     except Exception:
         return pd.Series(dtype=float)
 
-# ----------------------- Data -----------------------
 def fetch_yf(symbol: str, period: str = "1y", tries: int = 3, pause: float = 1.0) -> pd.DataFrame:
     import yfinance as yf
     last_err = None
@@ -117,7 +114,6 @@ def fetch_market(period: str, gold_sym: str, usd_syms: List[str], spy_sym: str) 
     out["SPY"] = sp; out["used_symbols"]["SPY"] = spy_sym if not sp.empty else None
     return out
 
-# ----------------------- Indicators -----------------------
 def ema(series: pd.Series, span: int) -> pd.Series:
     return series.ewm(span=span, adjust=False).mean()
 
@@ -154,7 +150,6 @@ def calc_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
         tr = pd.concat([(h-l).abs(), (h-c.shift()).abs(), (l-c.shift()).abs()], axis=1).max(axis=1)
         ind["atr"] = tr.rolling(14).mean()
         ind["adx"] = pd.Series(index=df.index, dtype=float)
-    # Bollinger Bandwidth (اتساع الباند) + %B
     bb_u, bb_m, bb_l = ind.get("bb_upper"), ind.get("bb_middle"), ind.get("bb_lower")
     if bb_u is not None and bb_m is not None and bb_l is not None:
         width = (bb_u - bb_l) / bb_m.replace(0,np.nan)
@@ -163,21 +158,14 @@ def calc_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
     return ind
 
 def compute_regime(ind: Dict[str, pd.Series]) -> pd.Series:
-    """
-    Regime filter:
-    - trend if: ADX >= 20 and BB width >= median(width)
-    - range otherwise
-    Returns series: "trend" or "range"
-    """
     adx = ind.get("adx", pd.Series(dtype=float)).fillna(0)
-    width = ind.get("bb_width", pd.Series(dtype=float)).fillna(method="ffill")
+    width = ind.get("bb_width", pd.Series(dtype=float)).ffill()
     med = width.rolling(60, min_periods=10).median()
     regime = pd.Series(index=adx.index, dtype=object)
     regime[(adx >= 20) & (width >= med.fillna(width.median()))] = "trend"
     regime[(adx < 20) | (width < med.fillna(width.median()))] = "range"
     return regime.fillna("range")
 
-# ----------------------- Volume/Correlation -----------------------
 def volume_profile(df: pd.DataFrame, bins: int = 20) -> Dict[str, Any]:
     try:
         c = df["Close"]; v = df["Volume"].astype(float)
@@ -210,7 +198,6 @@ def correlation_block(data: Dict[str, pd.DataFrame]) -> Dict[str, Any]:
     except Exception as e:
         log.warning(f"correlation_block error: {e}"); return {"asset_correlations": {}}
 
-# ----------------------- Divergences -----------------------
 def detect_divergences(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict[str, Any]:
     try:
         close = df["Close"].astype(float); dates = df.index
@@ -246,7 +233,6 @@ def detect_divergences(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict[str,
     except Exception as e:
         log.warning(f"divergence error: {e}"); return {"error": str(e)}
 
-# ----------------------- Sentiment & Signals -----------------------
 def technical_sentiment(df: pd.DataFrame, ind: Dict[str, pd.Series]) -> Dict[str, Any]:
     out: Dict[str,Any] = {}
     c = float(df["Close"].iloc[-1])
@@ -286,12 +272,10 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Ser
     weak = (not adx.empty and pd.notna(adx.iloc[-1]) and adx.iloc[-1] < 20)
     regime_now = regime.iloc[-1] if not regime.empty else "range"
     buy=sell=0.0
-    # وزن سياقي
     rsi_w = 0.6 if weak else 1.0
     macd_w = 1.0 if regime_now=="trend" else 0.7
     bb_w = 1.0 if regime_now=="range" else 0.6
     trend_w = 0.7 if regime_now=="trend" else 0.3
-
     if out.get("rsi_signal") in ("شراء قوي","شراء"): buy += rsi_w
     if out.get("rsi_signal") in ("بيع قوي","بيع"): sell += rsi_w
     if out.get("macd_signal")=="شراء": buy += macd_w
@@ -300,13 +284,11 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Ser
     if out.get("bb_signal")=="بيع": sell += bb_w
     if out.get("trend") in ("صاعد","صاعد قوي"): buy += trend_w
     if out.get("trend") in ("هابط","هابط قوي"): sell += trend_w
-
     if buy > sell + 1: out["recommendation"],out["confidence"]="شراء قوي","عالية"
     elif buy > sell: out["recommendation"],out["confidence"]="شراء","متوسطة"
     elif sell > buy + 1: out["recommendation"],out["confidence"]="بيع قوي","عالية"
     elif sell > buy: out["recommendation"],out["confidence"]="بيع","متوسطة"
     else: out["recommendation"],out["confidence"]="انتظار","منخفضة"
-
     atr = ind.get("atr", pd.Series(dtype=float))
     try:
         if not atr.empty and pd.notna(atr.iloc[-1]):
@@ -320,7 +302,6 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Ser
     out["regime"] = regime_now
     return out
 
-# ----------------------- News & Fundamentals -----------------------
 def fetch_news(api_key: str, page_size: int = 20) -> Dict[str, Any]:
     if not api_key: return {"error":"NEWS_API_KEY missing"}
     q = '(gold OR "gold price" OR XAU OR bullion) AND (fed OR inflation OR dollar OR usd OR etf OR mining OR "safe haven")'
@@ -400,7 +381,6 @@ def fundamentals_block() -> Dict[str, Any]:
     out["fundamental_bias"] = "dovish/bullish" if bias>0 else ("hawkish/bearish" if bias<0 else "neutral")
     return out
 
-# ----------------------- Report -----------------------
 def build_report(data: Dict[str, Any]) -> Dict[str, Any]:
     gold = data.get("GC=F", pd.DataFrame())
     if gold.empty: return {"error":"GC=F data unavailable"}
@@ -469,171 +449,95 @@ def emit_webhook(url: Optional[str], payload: Dict[str,Any]) -> None:
     except Exception as e:
         log.warning(f"Webhook post failed: {e}")
 
-# ----------------------- Backtest (Pro) -----------------------
-def backtest_engine(
-    df: pd.DataFrame,
-    ind: Dict[str, pd.Series],
-    regime: pd.Series,
-    params: Dict[str, Any]
-) -> Dict[str, Any]:
-    """
-    - Rules:
-      trend regime: استخدم إشارات MACD مع فلتر ADX، وتجاهل إشارات BB الضعيفة
-      range regime: استخدم mean-reversion من BB/RSI وتخفيف MACD
-    - Risk:
-      حجم صفقة = risk_per_trade من رأس المال / مسافة الوقف (ATR*atr_sl)
-      عمولة + انزلاق
-      وقف متتالي ATR Trailing
-    """
+def backtest_engine(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Series, params: Dict[str, Any]) -> Dict[str, Any]:
     close = df["Close"].astype(float)
     rsi = ind["rsi"]; macd, macd_sig = ind["macd"], ind["macd_signal"]
     bb_u, bb_l = ind["bb_upper"], ind["bb_lower"]
     adx = ind.get("adx", pd.Series(dtype=float))
     atr = ind["atr"].ffill()
-
     adx_min = params.get("adx_min", 20.0)
     rsi_buy = params.get("rsi_buy", 35.0)
     rsi_sell = params.get("rsi_sell", 65.0)
     atr_sl_mult = params.get("atr_mult_sl", 2.0)
     atr_tp_mult = params.get("atr_mult_tp", 3.0)
     trail_mult = params.get("atr_trail_mult", 1.5)
-    commission = params.get("commission_perc", 0.0005)    # 5 bps
-    slippage = params.get("slippage_perc", 0.0005)       # 5 bps
-    risk_per_trade = params.get("risk_per_trade", 0.01)  # 1%
-    equity = 1.0
-    max_equity = equity
-
+    commission = params.get("commission_perc", 0.0005)
+    slippage = params.get("slippage_perc", 0.0005)
+    risk_per_trade = params.get("risk_per_trade", 0.01)
+    equity = 1.0; max_equity = equity
     in_pos = False; side=None; entry=None; size=0.0; sl=None; tp=None; trail=None
     trades=[]
-
     def apply_cost(price: float, is_buy: bool) -> float:
-        # إدراج عمولة وانزلاق
-        adj = price * (1 + commission + slippage) if is_buy else price * (1 - commission - slippage)
-        return adj
-
+        return price * (1 + commission + slippage) if is_buy else price * (1 - commission - slippage)
     for i in range(2, len(close)):
         price = close.iat[i]
         reg_now = regime.iat[i] if i < len(regime) and pd.notna(regime.iat[i]) else "range"
-
-        # إدارة الصفقة المفتوحة
         if in_pos:
-            # وقف متتالي
             if side=="long":
                 trail = max(trail, price - trail_mult*atr.iat[i]) if trail is not None else price - trail_mult*atr.iat[i]
-                hit_trail = price <= trail
-                hit_sl = price <= sl
-                hit_tp = price >= tp
-                exit_price = None
-                if hit_trail or hit_sl or hit_tp:
-                    exit_price = apply_cost(price, is_buy=False)
+                hit_trail = price <= trail; hit_sl = price <= sl; hit_tp = price >= tp
+                exit_price = apply_cost(price, is_buy=False) if (hit_trail or hit_sl or hit_tp) else None
             else:
                 trail = min(trail, price + trail_mult*atr.iat[i]) if trail is not None else price + trail_mult*atr.iat[i]
-                hit_trail = price >= trail
-                hit_sl = price >= sl
-                hit_tp = price <= tp
-                exit_price = None
-                if hit_trail or hit_sl or hit_tp:
-                    exit_price = apply_cost(price, is_buy=True)
-
+                hit_trail = price >= trail; hit_sl = price >= sl; hit_tp = price <= tp
+                exit_price = apply_cost(price, is_buy=True) if (hit_trail or hit_sl or hit_tp) else None
             if exit_price is not None:
                 pnl = (exit_price - entry) / entry if side=="long" else (entry - exit_price) / entry
-                equity *= (1 + pnl * size)  # size يمثل نسبة التعرض من رأس المال
+                equity *= (1 + pnl * size)
                 trades.append({"i": i, "side": side, "entry": float(entry), "exit": float(exit_price), "size": float(size), "pnl_pct": float(pnl)})
                 in_pos=False; side=None; entry=None; size=0.0; sl=None; tp=None; trail=None
                 max_equity = max(max_equity, equity)
-
-        # إشارات جديدة
         if in_pos:
-            max_equity = max(max_equity, equity)
-            continue
-
-        # تحقق توفر المؤشرات
+            max_equity = max(max_equity, equity); continue
         if any(pd.isna(x) for x in [macd.iat[i], macd_sig.iat[i], atr.iat[i]]) or atr.iat[i] <= 0:
             max_equity = max(max_equity, equity); continue
-
         cross_up = macd.iat[i] > macd_sig.iat[i] and macd.iat[i-1] <= macd_sig.iat[i-1]
         cross_dn = macd.iat[i] < macd_sig.iat[i] and macd.iat[i-1] >= macd_sig.iat[i-1]
         strong = (pd.notna(adx.iat[i]) and adx.iat[i] >= adx_min) if not adx.empty else True
-
         avoid_long = (pd.notna(rsi.iat[i]) and rsi.iat[i] > rsi_sell) or (pd.notna(bb_u.iat[i]) and price > bb_u.iat[i])
         avoid_short = (pd.notna(rsi.iat[i]) and rsi.iat[i] < rsi_buy) or (pd.notna(bb_l.iat[i]) and price < bb_l.iat[i])
-
         enter_long = enter_short = False
         if reg_now == "trend":
             enter_long = cross_up and strong and not avoid_long
             enter_short = cross_dn and strong and not avoid_short
-        else:  # range
-            # mean-reversion: شراء قرب BB_L وRSI منخفض؛ بيع قرب BB_U وRSI مرتفع
-            enter_long = (pd.notna(bb_l.iat[i]) and price <= bb_l.iat[i]) or (pd.notna(rsi.iat[i]) and rsi.iat[i] <= rsi_buy)
-            enter_long = enter_long and not avoid_long
-            enter_short = (pd.notna(bb_u.iat[i]) and price >= bb_u.iat[i]) or (pd.notna(rsi.iat[i]) and rsi.iat[i] >= rsi_sell)
-            enter_short = enter_short and not avoid_short
-
+        else:
+            enter_long = ((pd.notna(bb_l.iat[i]) and price <= bb_l.iat[i]) or (pd.notna(rsi.iat[i]) and rsi.iat[i] <= rsi_buy)) and not avoid_long
+            enter_short = ((pd.notna(bb_u.iat[i]) and price >= bb_u.iat[i]) or (pd.notna(rsi.iat[i]) and rsi.iat[i] >= rsi_sell)) and not avoid_short
         if enter_long or enter_short:
-            # حجم الصفقة كنسبة مخاطرة ثابتة
             stop_dist = atr_sl_mult * atr.iat[i]
             if stop_dist <= 0:
                 max_equity = max(max_equity, equity); continue
-            # نسبة التعرض = المخاطرة / (مسافة الوقف / السعر)
-            # تقريبًا: لو تحرك السعر بمقدار stop_dist ضدنا نخسر risk_per_trade من رأس المال
             size = min(1.0, max(0.0, risk_per_trade / (stop_dist / max(price, 1e-8))))
             if size <= 0: 
                 max_equity = max(max_equity, equity); continue
-
             if enter_long:
-                raw_entry = price
-                entry = apply_cost(raw_entry, is_buy=True)
-                side="long"
-                sl = entry - atr_sl_mult*atr.iat[i]
-                tp = entry + atr_tp_mult*atr.iat[i]
-                trail = entry - trail_mult*atr.iat[i]
+                entry = apply_cost(price, is_buy=True); side="long"
+                sl = entry - atr_sl_mult*atr.iat[i]; tp = entry + atr_tp_mult*atr.iat[i]; trail = entry - trail_mult*atr.iat[i]
                 in_pos=True
             elif enter_short:
-                raw_entry = price
-                entry = apply_cost(raw_entry, is_buy=False)
-                side="short"
-                sl = entry + atr_sl_mult*atr.iat[i]
-                tp = entry - atr_tp_mult*atr.iat[i]
-                trail = entry + trail_mult*atr.iat[i]
+                entry = apply_cost(price, is_buy=False); side="short"
+                sl = entry + atr_sl_mult*atr.iat[i]; tp = entry - atr_tp_mult*atr.iat[i]; trail = entry + trail_mult*atr.iat[i]
                 in_pos=True
-
             max_equity = max(max_equity, equity)
-
-    # Metrics
     rets = pd.Series([t["pnl_pct"]*t["size"] for t in trades], dtype=float)
     win = rets[rets>0]; loss = rets[rets<0]
-    # Approx max drawdown from equity path
     eq_path=[1.0]; eq=1.0
-    for r in rets:
-        eq *= (1+r); eq_path.append(eq)
-    path = pd.Series(eq_path)
-    run_max = path.cummax(); dd_series = (path-run_max)/run_max
+    for r in rets: eq *= (1+r); eq_path.append(eq)
+    path = pd.Series(eq_path); run_max = path.cummax(); dd_series = (path-run_max)/run_max
     dd = float(dd_series.min()) if len(dd_series)>0 else 0.0
     sharpe = float((rets.mean()/rets.std())*np.sqrt(252)) if len(rets)>2 and rets.std()!=0 else None
     downside = rets[rets<0]
     sortino = float((rets.mean()/downside.std())*np.sqrt(252)) if len(downside)>1 and downside.std()!=0 else None
     pf = float(abs(win.sum()/loss.sum())) if len(win)>0 and len(loss)>0 and loss.sum()!=0 else None
-
-    perf = {
-        "trades": int(len(trades)),
-        "win_rate": float(len(win)/len(rets)) if len(rets)>0 else None,
-        "profit_factor": pf,
-        "cagr": None,
-        "max_drawdown": dd,
-        "sharpe": sharpe,
-        "sortino": sortino,
-        "final_equity": float(eq_path[-1]) if eq_path else 1.0
-    }
+    perf = {"trades": int(len(trades)), "win_rate": float(len(win)/len(rets)) if len(rets)>0 else None, "profit_factor": pf, "cagr": None, "max_drawdown": dd, "sharpe": sharpe, "sortino": sortino, "final_equity": float(eq_path[-1]) if eq_path else 1.0}
     return {"performance": perf, "last_trades_sample": trades[-10:]}
 
-# ----------------------- CLI ops -----------------------
 def run_analyze(args):
     usd_candidates = args.usd if args.usd else ["DX-Y.NYB","^DXY","DXY","DX=F","USDX"]
     data = fetch_market(args.period, args.gold, usd_candidates, args.spy)
     report = build_report(data)
     save_json(report, args.out)
-    if args.compact:
-        save_json(to_compact(report), args.out.replace(".json","_compact.json"))
+    if args.compact: save_json(to_compact(report), args.out.replace(".json","_compact.json"))
     if args.emit_webhook: emit_webhook(args.emit_webhook, report)
     print(f"✅ analyze done -> {args.out}{' + compact' if args.compact else ''}")
 
@@ -642,19 +546,8 @@ def run_backtest(args):
     gold = data.get("GC=F", pd.DataFrame())
     if gold.empty: print("❌ no gold data"); return
     gold = gold.copy(); gold.index = pd.to_datetime(gold.index).tz_localize(None)
-    ind = calc_indicators(gold)
-    regime = compute_regime(ind)
-    params = {
-        "adx_min": args.adx_min,
-        "rsi_buy": args.rsi_buy,
-        "rsi_sell": args.rsi_sell,
-        "atr_mult_sl": args.atr_sl,
-        "atr_mult_tp": args.atr_tp,
-        "atr_trail_mult": args.atr_trail,
-        "commission_perc": args.commission,
-        "slippage_perc": args.slippage,
-        "risk_per_trade": args.risk
-    }
+    ind = calc_indicators(gold); regime = compute_regime(ind)
+    params = {"adx_min": args.adx_min, "rsi_buy": args.rsi_buy, "rsi_sell": args.rsi_sell, "atr_mult_sl": args.atr_sl, "atr_mult_tp": args.atr_tp, "atr_trail_mult": args.atr_trail, "commission_perc": args.commission, "slippage_perc": args.slippage, "risk_per_trade": args.risk}
     res = backtest_engine(gold, ind, regime, params)
     out = {"metadata": {"version":"v6","symbol": args.gold,"period": args.period,"strategy":"Regime_MACD_BB_RSI_ATR_Pro"}, "params": params, **res}
     path = args.out.replace(".json","").replace("analysis","backtest") + ".json"
@@ -672,7 +565,6 @@ def parse_args():
     p.add_argument("--out", default="gold_analysis_v6.json")
     p.add_argument("--compact", action="store_true")
     p.add_argument("--emit-webhook", default=None)
-    # backtest params (pro)
     p.add_argument("--adx-min", dest="adx_min", type=float, default=20.0)
     p.add_argument("--rsi-buy", dest="rsi_buy", type=float, default=35.0)
     p.add_argument("--rsi-sell", dest="rsi_sell", type=float, default=65.0)
@@ -686,10 +578,8 @@ def parse_args():
 
 def main():
     args = parse_args()
-    if args.mode == "analyze":
-        run_analyze(args)
-    else:
-        run_backtest(args)
+    if args.mode == "analyze": run_analyze(args)
+    else: run_backtest(args)
 
 if __name__ == "__main__":
     main()
