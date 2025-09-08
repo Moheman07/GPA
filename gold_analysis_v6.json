@@ -1,0 +1,369 @@
+{
+  "metadata": {
+    "version": "v6",
+    "symbol": "GC=F",
+    "period": "1y",
+    "analysis_date": "2025-09-08T13:38:27.002775",
+    "talib": true
+  },
+  "used_symbols": {
+    "GC=F": "GC=F",
+    "^DXY": "DX-Y.NYB",
+    "SPY": "SPY"
+  },
+  "current_market_data": {
+    "price": 3663.60009765625,
+    "chg": 50.400146484375,
+    "chg_pct": 1.3948894931216982,
+    "high": 3671.5,
+    "low": 3621.699951171875,
+    "volume": 128819
+  },
+  "signals": {
+    "current_price": 3663.60009765625,
+    "timestamp": "2025-09-08T13:38:25.055281",
+    "trend": "صاعد قوي",
+    "rsi_signal": "بيع قوي",
+    "macd_signal": "محايد",
+    "bb_signal": "بيع",
+    "recommendation": "بيع",
+    "confidence": "متوسطة",
+    "stop_loss": 3585.0857979910716,
+    "take_profit": 3781.3715471540177,
+    "risk_level": "منخفضة",
+    "regime": "trend"
+  },
+  "technical": {
+    "sma_20": 3424.4699829101564,
+    "sma_50": 3379.3759912109376,
+    "sma_200": 3090.2199975585936,
+    "ema_12": 3512.415784616526,
+    "ema_26": 3444.9536974801313,
+    "rsi": 78.1378268176977,
+    "macd": 67.46208713639453,
+    "macd_signal": 38.28554815493922,
+    "macd_hist": 29.17653898145531,
+    "bb_upper": 3639.9679702335698,
+    "bb_middle": 3424.4699829101564,
+    "bb_lower": 3208.971995586743,
+    "atr": 39.257149832589285,
+    "adx": 25.54052280395788,
+    "bb_width": 0.1258577171935264,
+    "bb_percent_b": 1.0548314341962133
+  },
+  "enhancements": {
+    "divergences": {
+      "total_divergences": 24,
+      "recent_divergences": 10,
+      "positive_divergences": 3,
+      "negative_divergences": 7,
+      "latest_divergences": [
+        {
+          "type": "bullish",
+          "indicator": "MACD",
+          "price_idx": 156,
+          "price_date": "2025-04-23 00:00:00",
+          "price": 3276.300048828125,
+          "indicator_prev": 77.75905671286318,
+          "indicator_now": 94.68694247273015
+        },
+        {
+          "type": "bearish",
+          "indicator": "RSI",
+          "price_idx": 159,
+          "price_date": "2025-04-28 00:00:00",
+          "price": 3332.5,
+          "indicator_prev": 64.18993325855791,
+          "indicator_now": 62.44062303899695
+        },
+        {
+          "type": "bearish",
+          "indicator": "MACD",
+          "price_idx": 159,
+          "price_date": "2025-04-28 00:00:00",
+          "price": 3332.5,
+          "indicator_prev": 94.625868657708,
+          "indicator_now": 88.5367776771891
+        },
+        {
+          "type": "bearish",
+          "indicator": "MACD",
+          "price_idx": 165,
+          "price_date": "2025-05-06 00:00:00",
+          "price": 3411.39990234375,
+          "indicator_prev": 88.5367776771891,
+          "indicator_now": 66.68497400243177
+        },
+        {
+          "type": "bearish",
+          "indicator": "MACD",
+          "price_idx": 176,
+          "price_date": "2025-05-21 00:00:00",
+          "price": 3309.300048828125,
+          "indicator_prev": 22.878821294002137,
+          "indicator_now": 17.03208173612211
+        },
+        {
+          "type": "bearish",
+          "indicator": "RSI",
+          "price_idx": 185,
+          "price_date": "2025-06-04 00:00:00",
+          "price": 3373.5,
+          "indicator_prev": 58.01373271397634,
+          "indicator_now": 57.81477988184586
+        },
+        {
+          "type": "bullish",
+          "indicator": "MACD",
+          "price_idx": 187,
+          "price_date": "2025-06-06 00:00:00",
+          "price": 3322.699951171875,
+          "indicator_prev": 28.737912608551596,
+          "indicator_now": 29.329776432009567
+        },
+        {
+          "type": "bearish",
+          "indicator": "MACD",
+          "price_idx": 204,
+          "price_date": "2025-07-02 00:00:00",
+          "price": 3348.0,
+          "indicator_prev": 16.18033226606576,
+          "indicator_now": 5.403554878563227
+        },
+        {
+          "type": "bearish",
+          "indicator": "MACD",
+          "price_idx": 211,
+          "price_date": "2025-07-11 00:00:00",
+          "price": 3356.0,
+          "indicator_prev": 5.403554878563227,
+          "indicator_now": 1.437997141012147
+        },
+        {
+          "type": "bullish",
+          "indicator": "MACD",
+          "price_idx": 222,
+          "price_date": "2025-07-28 00:00:00",
+          "price": 3309.10009765625,
+          "indicator_prev": 3.9127564417385656,
+          "indicator_now": 7.238622098515407
+        }
+      ]
+    },
+    "correlations": {
+      "asset_correlations": {
+        "USD": -0.4538261439292918,
+        "SPY": -0.015742276023333
+      }
+    },
+    "volume_profile": {
+      "current_volume": 128819,
+      "average_volume": 1280.610119047619,
+      "volume_ratio": 104.49832182439489,
+      "volume_profile": {
+        "(3315.06, 3373.15]": 50403,
+        "(2617.98, 2676.07]": 44807,
+        "(2908.43, 2966.52]": 29436,
+        "(3256.97, 3315.06]": 28279,
+        "(3373.15, 3431.24]": 23560,
+        "(3082.7, 3140.79]": 23082
+      },
+      "price_volume_correlation": 0.06995921625470228,
+      "volume_trend": "مرتفع"
+    }
+  },
+  "sentiment": {
+    "rsi_sentiment": "مفرط في الشراء",
+    "bb_sentiment": "مفرط في الشراء",
+    "trend_strength": "قوي"
+  },
+  "fundamentals": {
+    "FEDFUNDS": {
+      "series": "FEDFUNDS",
+      "name": "Effective Fed Funds Rate",
+      "latest": 3.5,
+      "yoy_change": 0.18243243243243246
+    },
+    "CPIAUCSL": {
+      "series": "CPIAUCSL",
+      "name": "CPI (All Urban Consumers)",
+      "latest": 23.65,
+      "yoy_change": -0.01128762541806033
+    },
+    "DTWEXBGS": {
+      "series": "DTWEXBGS",
+      "name": "Trade Weighted U.S. Dollar Index: Broad, Goods",
+      "latest": 100.2594,
+      "yoy_change": -0.0022739056145067897
+    },
+    "DGS10": {
+      "series": "DGS10",
+      "name": "10-Year Treasury Rate",
+      "latest": 4.0,
+      "yoy_change": -0.014778325123152615
+    },
+    "UNRATE": {
+      "series": "UNRATE",
+      "name": "Unemployment Rate",
+      "latest": 3.1,
+      "yoy_change": -0.46551724137931033
+    },
+    "fundamental_bias": "hawkish/bearish"
+  },
+  "news": {
+    "count": 20,
+    "average_sentiment": 0.1,
+    "impact": "neutral",
+    "articles": [
+      {
+        "title": "New Thai PM’s Seasoned Cabinet Picks May Reassure Investors",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-07T12:59:10Z",
+        "url": "https://financialpost.com/pmn/business-pmn/new-thai-pms-seasoned-cabinet-picks-may-reassure-investors",
+        "sentiment": 0.0
+      },
+      {
+        "title": "NexGold Announces Amendments to Omnibus Equity Incentive Plan",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T22:01:44Z",
+        "url": "https://financialpost.com/globe-newswire/nexgold-announces-amendments-to-omnibus-equity-incentive-plan",
+        "sentiment": 0.0
+      },
+      {
+        "title": "A bad year just got much, much worse for Lululemon shareholders",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T21:58:39Z",
+        "url": "https://financialpost.com/investing/bad-year-got-much-worse-lululemon-shareholders",
+        "sentiment": 0.0
+      },
+      {
+        "title": "10-year Treasury tumbles to early April low as weak jobs report raises chances of a half-point Fed rate cut",
+        "source": "MarketWatch",
+        "publishedAt": "2025-09-05T20:19:00Z",
+        "url": "https://www.marketwatch.com/story/bond-yields-tumble-as-weak-jobs-report-raises-chances-of-a-half-point-fed-rate-cut-996d8abb",
+        "sentiment": -0.3333333333333333
+      },
+      {
+        "title": "Watch out, retirees: President Trump doesn’t understand interest rates",
+        "source": "MarketWatch",
+        "publishedAt": "2025-09-05T18:29:00Z",
+        "url": "https://www.marketwatch.com/story/watch-out-retirees-president-trump-doesnt-understand-interest-rates-e1d9a571",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Westkam Gold Corp. Extends Private Placement Closing Date",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T15:55:25Z",
+        "url": "https://financialpost.com/globe-newswire/westkam-gold-corp-extends-private-placement-closing-date",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Gold Stocks Break 2011 Record High as Investors Seek Safe Havens",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T15:53:13Z",
+        "url": "https://financialpost.com/pmn/business-pmn/gold-stocks-break-2011-record-high-as-investors-seek-safe-havens",
+        "sentiment": 0.6666666666666666
+      },
+      {
+        "title": "Northisle Announces Appointment of Kevin O’Kane as Executive Vice President and Chief Operating Officer",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T11:07:54Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/northisle-announces-appointment-of-kevin-okane-as-executive-vice-president-and-chief-operating-officer",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "Aldebaran Announces Intention to Spin Out Northern Argentina Exploration Projects into a New Argentine-Focused Exploration Company and Provides an Update on the Altar PEA",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T11:00:38Z",
+        "url": "https://financialpost.com/globe-newswire/aldebaran-announces-intention-to-spin-out-northern-argentina-exploration-projects-into-a-new-argentine-focused-exploration-company-and-provides-an-update-on-the-altar-pea",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Gold Holds Near Record High With Focus on Key US Jobs Data",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-05T00:10:12Z",
+        "url": "https://financialpost.com/pmn/business-pmn/gold-holds-near-record-high-with-focus-on-key-us-jobs-data",
+        "sentiment": 0.6666666666666666
+      },
+      {
+        "title": "Blue Jay Gold Corp. Announces Non-Brokered Private Placement of Up to $5 Million",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T21:52:31Z",
+        "url": "https://financialpost.com/globe-newswire/blue-jay-gold-corp-announces-non-brokered-private-placement-of-up-to-5-million",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Metalsource announces OTCQB LISTING",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T21:17:01Z",
+        "url": "https://financialpost.com/globe-newswire/metalsource-announces-otcqb-listing",
+        "sentiment": 0.0
+      },
+      {
+        "title": "US Trade Gap Widens to Largest in Four Months on Import Flurry",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T13:18:17Z",
+        "url": "https://financialpost.com/pmn/business-pmn/us-trade-gap-widens-to-largest-in-four-months-on-import-flurry",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Gold could hit $5,000 if Fed’s independence damaged, says Goldman Sachs",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T13:13:23Z",
+        "url": "https://financialpost.com/investing/gold-5000-if-fed-independence-damaged-goldman",
+        "sentiment": 0.6666666666666666
+      },
+      {
+        "title": "Miata Metals Intersects 18 m at 2.58 g/t Gold Near Surface at Puma Target, Sela Creek",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T12:33:38Z",
+        "url": "https://financialpost.com/globe-newswire/miata-metals-intersects-18-m-at-2-58-g-t-gold-near-surface-at-puma-target-sela-creek",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Robex Announces Amendments to Sprott Facility Agreement",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T12:04:05Z",
+        "url": "https://financialpost.com/globe-newswire/robex-announces-amendments-to-sprott-facility-agreement",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Red Pine Drilling Intersects 9.03 g/t gold over 14.00 m core length, further supporting Open Pit Potential",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T11:45:43Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/red-pine-drilling-intersects-9-03-g-t-gold-over-14-00-m-core-length-further-supporting-open-pit-potential",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "Dynacor Provides Corporate Update Including Expansion Progress",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T11:33:11Z",
+        "url": "https://financialpost.com/globe-newswire/dynacor-provides-corporate-update-including-expansion-progress",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Koryx Announces Updated PEA Results for the Haib Copper Project, Southern Namibia",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T11:03:38Z",
+        "url": "https://financialpost.com/globe-newswire/koryx-announces-updated-pea-results-for-the-haib-copper-project-southern-namibia",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Churchill Resources to Commence Fall Drilling & Trenching Program at the Past-Producing Frost Cove Antimony Mine",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-04T11:02:44Z",
+        "url": "https://financialpost.com/globe-newswire/churchill-resources-to-commence-fall-drilling-trenching-program-at-the-past-producing-frost-cove-antimony-mine",
+        "sentiment": -0.3333333333333333
+      }
+    ]
+  },
+  "ai": {
+    "nl_summary_ar": "النظام: trend. الاتجاه: صاعد قوي. التوصية: بيع (ثقة متوسطة). راقب التشبّع واتساع البولنجر وقوة الاتجاه قبل الدخول.",
+    "actions": {
+      "signal_type": "بيع",
+      "size_hint": 2,
+      "sl": 3585.0857979910716,
+      "tp": 3781.3715471540177
+    }
+  }
+}
