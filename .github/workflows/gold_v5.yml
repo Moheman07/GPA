@@ -1,4 +1,4 @@
-name: Gold Analyzer V5 (GitHub Only)
+name: Gold Analyzer V6 (GitHub Only)
 
 on:
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
           activate-environment: talib-env
           use-mamba: true
 
-      - name: Sanitize gold_analyzer_v5.py (remove leading JSON blob)
+      - name: Sanitize gold_analyzer_v6.py (remove leading non-Python if any)
         shell: bash -l {0}
         run: |
           awk 'BEGIN{keep=0}
@@ -36,30 +36,27 @@ jobs:
                /^[[:space:]]*import[[:space:]]/ || \
                /^[[:space:]]*def[[:space:]]/ || \
                /^[[:space:]]*class[[:space:]]/ {keep=1}
-               {if(keep) print $0}' gold_analyzer_v5.py > gold_analyzer_v5.cleaned
-          if [ ! -s gold_analyzer_v5.cleaned ]; then
-            echo "Sanitizer produced empty file. Aborting."; exit 1
-          fi
-          mv gold_analyzer_v5.cleaned gold_analyzer_v5.py
-          sed -n '1,40p' gold_analyzer_v5.py | cat
+               {if(keep) print $0}' gold_analyzer_v6.py > gold_analyzer_v6.cleaned
+          if [ -s gold_analyzer_v6.cleaned ]; then mv gold_analyzer_v6.cleaned gold_analyzer_v6.py; fi
+          sed -n '1,40p' gold_analyzer_v6.py | cat
 
-      - name: Run V5 Analyzer (daily, with compact)
+      - name: Run V6 Analyzer (daily, with compact)
         shell: bash -l {0}
-        run: python gold_analyzer_v5.py --mode analyze --period 1y --compact
+        run: python gold_analyzer_v6.py --mode analyze --period 1y --compact
 
       - name: Commit JSON results
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "🏆 Update Gold Analysis V5"
-          file_pattern: "gold_analysis_v5.json gold_analysis_v5_compact.json"
+          commit_message: "🏆 Update Gold Analysis V6"
+          file_pattern: "gold_analysis_v6.json gold_analysis_v6_compact.json"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: gold-analysis-v5
+          name: gold-analysis-v6
           path: |
-            gold_analysis_v5.json
-            gold_analysis_v5_compact.json
+            gold_analysis_v6.json
+            gold_analysis_v6_compact.json
 
   backtest:
     if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -78,7 +75,7 @@ jobs:
           activate-environment: talib-env
           use-mamba: true
 
-      - name: Sanitize gold_analyzer_v5.py (remove leading JSON blob)
+      - name: Sanitize gold_analyzer_v6.py (remove leading non-Python if any)
         shell: bash -l {0}
         run: |
           awk 'BEGIN{keep=0}
@@ -87,12 +84,12 @@ jobs:
                /^[[:space:]]*import[[:space:]]/ || \
                /^[[:space:]]*def[[:space:]]/ || \
                /^[[:space:]]*class[[:space:]]/ {keep=1}
-               {if(keep) print $0}' gold_analyzer_v5.py > gold_analyzer_v5.cleaned
-          if [ -s gold_analyzer_v5.cleaned ]; then mv gold_analyzer_v5.cleaned gold_analyzer_v5.py; fi
+               {if(keep) print $0}' gold_analyzer_v6.py > gold_analyzer_v6.cleaned
+          if [ -s gold_analyzer_v6.cleaned ]; then mv gold_analyzer_v6.cleaned gold_analyzer_v6.py; fi
 
-      - name: Run V5 Backtest (manual trigger)
+      - name: Run V6 Backtest (manual trigger)
         shell: bash -l {0}
-        run: python gold_analyzer_v5.py --mode backtest --period 3y --adx-min 20 --rsi-buy 35 --rsi-sell 65 --atr-sl 2 --atr-tp 3
+        run: python gold_analyzer_v6.py --mode backtest --period 3y --adx-min 20 --rsi-buy 35 --rsi-sell 65 --atr-sl 2 --atr-tp 3
 
       - name: Sync main before commit (rebase)
         shell: bash -l {0}
@@ -104,11 +101,11 @@ jobs:
       - name: Commit Backtest results
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "📈 Update Gold Backtest V5"
-          file_pattern: "gold_backtest_v5.json"
+          commit_message: "📈 Update Gold Backtest V6"
+          file_pattern: "gold_backtest_v6.json"
 
       - name: Upload backtest artifact
         uses: actions/upload-artifact@v4
         with:
-          name: gold-backtest-v5
-          path: gold_backtest_v5.json
+          name: gold-backtest-v6
+          path: gold_backtest_v6.json
