@@ -94,6 +94,13 @@ jobs:
         shell: bash -l {0}
         run: python gold_analyzer_v5.py --mode backtest --period 3y --adx-min 20 --rsi-buy 35 --rsi-sell 65 --atr-sl 2 --atr-tp 3
 
+      - name: Sync main before commit (rebase)
+        shell: bash -l {0}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main || true
+
       - name: Commit Backtest results
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
