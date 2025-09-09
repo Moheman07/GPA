@@ -3,7 +3,7 @@
     "version": "v6",
     "symbol": "GC=F",
     "period": "1y",
-    "analysis_date": "2025-09-08T21:13:19.120857",
+    "analysis_date": "2025-09-09T21:12:34.862155",
     "talib": true
   },
   "used_symbols": {
@@ -12,44 +12,44 @@
     "SPY": "SPY"
   },
   "current_market_data": {
-    "price": 3677.60009765625,
-    "chg": 64.400146484375,
-    "chg_pct": 1.7823576706151645,
-    "high": 3685.699951171875,
-    "low": 3621.699951171875,
-    "volume": 220410
+    "price": 3663.800048828125,
+    "chg": 25.699951171875,
+    "chg_pct": 0.7064113268469896,
+    "high": 3715.199951171875,
+    "low": 3663.699951171875,
+    "volume": 257257
   },
   "signals": {
-    "current_price": 3677.60009765625,
-    "timestamp": "2025-09-08T21:13:17.064645",
+    "current_price": 3663.800048828125,
+    "timestamp": "2025-09-09T21:12:33.835453",
     "trend": "صاعد قوي",
     "rsi_signal": "بيع قوي",
     "macd_signal": "محايد",
-    "bb_signal": "بيع",
+    "bb_signal": "محايد",
     "recommendation": "بيع",
     "confidence": "متوسطة",
-    "stop_loss": 3597.0572335379466,
-    "take_profit": 3798.414393833705,
+    "stop_loss": 3579.6143624441966,
+    "take_profit": 3790.0785784040177,
     "risk_level": "منخفضة",
     "regime": "trend"
   },
   "technical": {
-    "sma_20": 3425.1699829101562,
-    "sma_50": 3379.6559912109374,
-    "sma_200": 3090.2899975585938,
-    "ema_12": 3514.569630770372,
-    "ema_26": 3445.990734517168,
-    "rsi": 78.83677653621181,
-    "macd": 68.57889625320377,
-    "macd_signal": 38.50890997830107,
-    "macd_hist": 30.069986274902696,
-    "bb_upper": 3643.8381131510146,
-    "bb_middle": 3425.1699829101562,
-    "bb_lower": 3206.501852669298,
-    "atr": 40.271432059151785,
-    "adx": 25.6305104863456,
-    "bb_width": 0.12768308220140914,
-    "bb_percent_b": 1.077199142984502
+    "sma_20": 3438.72998046875,
+    "sma_50": 3386.253994140625,
+    "sma_200": 3095.170498046875,
+    "ema_12": 3532.3861447910917,
+    "ema_26": 3459.415567127308,
+    "rsi": 78.24952277732598,
+    "macd": 72.97057766378384,
+    "macd_signal": 44.89708397123807,
+    "macd_hist": 28.073493692545775,
+    "bb_upper": 3670.578981404249,
+    "bb_middle": 3438.72998046875,
+    "bb_lower": 3206.880979533251,
+    "atr": 42.092843191964285,
+    "adx": 28.427770038742743,
+    "bb_width": 0.13484571469836354,
+    "bb_percent_b": 0.9853807164387781
   },
   "enhancements": {
     "divergences": {
@@ -152,29 +152,29 @@
     },
     "correlations": {
       "asset_correlations": {
-        "USD": -0.4544212574498023,
-        "SPY": -0.015524474435751461
+        "USD": -0.4517162212799954,
+        "SPY": -0.016129555324807865
       }
     },
     "volume_profile": {
-      "current_volume": 220410,
-      "average_volume": 1280.610119047619,
-      "volume_ratio": 178.79718918261187,
+      "current_volume": 257257,
+      "average_volume": 1281.7312252964427,
+      "volume_ratio": 207.6662899580239,
       "volume_profile": {
-        "(2619.38, 2678.17]": 45601,
-        "(3266.07, 3324.86]": 45480,
-        "(3324.86, 3383.65]": 41380,
-        "(2913.33, 2972.12]": 26509,
-        "(2854.54, 2913.33]": 23667,
-        "(3383.65, 3442.44]": 22918
+        "(3315.2, 3373.3]": 50396,
+        "(2618.0, 2676.1]": 44796,
+        "(2908.5, 2966.6]": 29436,
+        "(3257.1, 3315.2]": 28272,
+        "(3373.3, 3431.4]": 23560,
+        "(3082.8, 3140.9]": 23079
       },
-      "price_volume_correlation": 0.07394682086941547,
+      "price_volume_correlation": 0.0640228514559248,
       "volume_trend": "مرتفع"
     }
   },
   "sentiment": {
     "rsi_sentiment": "مفرط في الشراء",
-    "bb_sentiment": "مفرط في الشراء",
+    "bb_sentiment": "عادي",
     "trend_strength": "قوي"
   },
   "fundamentals": {
@@ -212,9 +212,114 @@
   },
   "news": {
     "count": 20,
-    "average_sentiment": 0.1,
+    "average_sentiment": -0.016666666666666666,
     "impact": "neutral",
     "articles": [
+      {
+        "title": "NOVAGOLD’s 2025 Donlin Gold Drill Program Returns High-Grade Gold Intercepts, Strengthens Resource Conversion, and Supports Bankable Feasibility Study Progression",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T21:10:18Z",
+        "url": "https://financialpost.com/globe-newswire/novagolds-2025-donlin-gold-drill-program-returns-high-grade-gold-intercepts-strengthens-resource-conversion-and-supports-bankable-feasibility-study-progression",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "U.S. firm agrees $500 million investment deal with Pakistan for critical minerals",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T20:16:16Z",
+        "url": "https://financialpost.com/pmn/u-s-firm-agrees-500-million-investment-deal-with-pakistan-for-critical-minerals",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Pecoy Copper Debuts on TSX Venture with Large-Scale Copper Gold Project and 24 month Growth Strategy",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T18:47:44Z",
+        "url": "https://financialpost.com/globe-newswire/pecoy-copper-debuts-on-tsx-venture-with-large-scale-copper-gold-project-and-24-month-growth-strategy",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Kinross sells portion of Asante Gold shares",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T13:07:03Z",
+        "url": "https://financialpost.com/globe-newswire/kinross-sells-portion-of-asante-gold-shares",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Opus One Gold Corp Noyell Gold Project, Zone 1 Discovery, Company Update",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T13:02:14Z",
+        "url": "https://financialpost.com/globe-newswire/opus-one-gold-corp-noyell-gold-project-zone-1-discovery-company-update",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Gold climbs to new record on expectations of Fed rate cuts",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T12:05:36Z",
+        "url": "https://financialpost.com/commodities/gold-fresh-record-bets-fed-rate-cut",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Sparton Resources Inc. Pense Critical Metals Project Exploration Permits Received",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T11:30:43Z",
+        "url": "https://financialpost.com/globe-newswire/sparton-resources-inc-pense-critical-metals-project-exploration-permits-received",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Revival Gold Progresses Drilling and Development Activities at Mercur",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T11:30:34Z",
+        "url": "https://financialpost.com/globe-newswire/revival-gold-progresses-drilling-and-development-activities-at-mercur",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Northisle Reports Additional Results from 2025 Drilling at West Goodspeed at its North Island Project",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T10:58:27Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/northisle-reports-additional-results-from-2025-drilling-at-west-goodspeed-at-its-north-island-project",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Americas Gold and Silver Achieves Breakthrough With 99%+ Antimony Extraction From Its Copper Concentrate, Supporting Potential Primary Production in the United States",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T10:37:59Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/americas-gold-and-silver-achieves-breakthrough-with-99-antimony-extraction-from-its-copper-concentrate-supporting-potential-primary-production-in-the-united-states",
+        "sentiment": 0.3333333333333333
+      },
+      {
+        "title": "Pan American Silver Reports Discovery of Multiple High-Grade Silver Zones at the La Colorada Mine",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T10:37:53Z",
+        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/pan-american-silver-reports-discovery-of-multiple-high-grade-silver-zones-at-the-la-colorada-mine",
+        "sentiment": 0.0
+      },
+      {
+        "title": "GFG Launches 3,000-Metre Program at Aljo; Advances Regional Pipeline Across Goldarm and Pen",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T10:04:27Z",
+        "url": "https://financialpost.com/globe-newswire/gfg-launches-3000-metre-program-at-aljo-advances-regional-pipeline-across-goldarm-and-pen",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Aura to Voluntarily Delist from Toronto Stock Exchange",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T10:04:14Z",
+        "url": "https://financialpost.com/globe-newswire/aura-to-voluntarily-delist-from-toronto-stock-exchange",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Liberty Gold Announces Strategic 9.9% Investment by Centerra Gold Inc.",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-08T10:03:58Z",
+        "url": "https://financialpost.com/globe-newswire/liberty-gold-announces-strategic-9-9-investment-by-centerra-gold-inc",
+        "sentiment": 0.0
+      },
+      {
+        "title": "Yen Weakens as Ishiba Departure Fuels Uncertainty: Markets Wrap",
+        "source": "Financial Post",
+        "publishedAt": "2025-09-07T22:59:31Z",
+        "url": "https://financialpost.com/pmn/business-pmn/yen-weakens-as-ishiba-departure-fuels-uncertainty-markets-wrap",
+        "sentiment": -0.6666666666666666
+      },
       {
         "title": "New Thai PM’s Seasoned Cabinet Picks May Reassure Investors",
         "source": "Financial Post",
@@ -249,111 +354,6 @@
         "publishedAt": "2025-09-05T18:29:00Z",
         "url": "https://www.marketwatch.com/story/watch-out-retirees-president-trump-doesnt-understand-interest-rates-e1d9a571",
         "sentiment": 0.0
-      },
-      {
-        "title": "Westkam Gold Corp. Extends Private Placement Closing Date",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-05T15:55:25Z",
-        "url": "https://financialpost.com/globe-newswire/westkam-gold-corp-extends-private-placement-closing-date",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Gold Stocks Break 2011 Record High as Investors Seek Safe Havens",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-05T15:53:13Z",
-        "url": "https://financialpost.com/pmn/business-pmn/gold-stocks-break-2011-record-high-as-investors-seek-safe-havens",
-        "sentiment": 0.6666666666666666
-      },
-      {
-        "title": "Northisle Announces Appointment of Kevin O’Kane as Executive Vice President and Chief Operating Officer",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-05T11:07:54Z",
-        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/northisle-announces-appointment-of-kevin-okane-as-executive-vice-president-and-chief-operating-officer",
-        "sentiment": 0.3333333333333333
-      },
-      {
-        "title": "Aldebaran Announces Intention to Spin Out Northern Argentina Exploration Projects into a New Argentine-Focused Exploration Company and Provides an Update on the Altar PEA",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-05T11:00:38Z",
-        "url": "https://financialpost.com/globe-newswire/aldebaran-announces-intention-to-spin-out-northern-argentina-exploration-projects-into-a-new-argentine-focused-exploration-company-and-provides-an-update-on-the-altar-pea",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Gold Holds Near Record High With Focus on Key US Jobs Data",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-05T00:10:12Z",
-        "url": "https://financialpost.com/pmn/business-pmn/gold-holds-near-record-high-with-focus-on-key-us-jobs-data",
-        "sentiment": 0.6666666666666666
-      },
-      {
-        "title": "Blue Jay Gold Corp. Announces Non-Brokered Private Placement of Up to $5 Million",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-04T21:52:31Z",
-        "url": "https://financialpost.com/globe-newswire/blue-jay-gold-corp-announces-non-brokered-private-placement-of-up-to-5-million",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Metalsource announces OTCQB LISTING",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-04T21:17:01Z",
-        "url": "https://financialpost.com/globe-newswire/metalsource-announces-otcqb-listing",
-        "sentiment": 0.0
-      },
-      {
-        "title": "US Trade Gap Widens to Largest in Four Months on Import Flurry",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-04T13:18:17Z",
-        "url": "https://financialpost.com/pmn/business-pmn/us-trade-gap-widens-to-largest-in-four-months-on-import-flurry",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Gold could hit $5,000 if Fed’s independence damaged, says Goldman Sachs",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-04T13:13:23Z",
-        "url": "https://financialpost.com/investing/gold-5000-if-fed-independence-damaged-goldman",
-        "sentiment": 0.6666666666666666
-      },
-      {
-        "title": "Miata Metals Intersects 18 m at 2.58 g/t Gold Near Surface at Puma Target, Sela Creek",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-04T12:33:38Z",
-        "url": "https://financialpost.com/globe-newswire/miata-metals-intersects-18-m-at-2-58-g-t-gold-near-surface-at-puma-target-sela-creek",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Robex Announces Amendments to Sprott Facility Agreement",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-04T12:04:05Z",
-        "url": "https://financialpost.com/globe-newswire/robex-announces-amendments-to-sprott-facility-agreement",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Red Pine Drilling Intersects 9.03 g/t gold over 14.00 m core length, further supporting Open Pit Potential",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-04T11:45:43Z",
-        "url": "https://financialpost.com/pmn/business-wire-news-releases-pmn/red-pine-drilling-intersects-9-03-g-t-gold-over-14-00-m-core-length-further-supporting-open-pit-potential",
-        "sentiment": 0.3333333333333333
-      },
-      {
-        "title": "Dynacor Provides Corporate Update Including Expansion Progress",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-04T11:33:11Z",
-        "url": "https://financialpost.com/globe-newswire/dynacor-provides-corporate-update-including-expansion-progress",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Koryx Announces Updated PEA Results for the Haib Copper Project, Southern Namibia",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-04T11:03:38Z",
-        "url": "https://financialpost.com/globe-newswire/koryx-announces-updated-pea-results-for-the-haib-copper-project-southern-namibia",
-        "sentiment": 0.0
-      },
-      {
-        "title": "Churchill Resources to Commence Fall Drilling & Trenching Program at the Past-Producing Frost Cove Antimony Mine",
-        "source": "Financial Post",
-        "publishedAt": "2025-09-04T11:02:44Z",
-        "url": "https://financialpost.com/globe-newswire/churchill-resources-to-commence-fall-drilling-trenching-program-at-the-past-producing-frost-cove-antimony-mine",
-        "sentiment": -0.3333333333333333
       }
     ]
   },
@@ -362,8 +362,8 @@
     "actions": {
       "signal_type": "بيع",
       "size_hint": 2,
-      "sl": 3597.0572335379466,
-      "tp": 3798.414393833705
+      "sl": 3579.6143624441966,
+      "tp": 3790.0785784040177
     }
   }
 }
