@@ -85,6 +85,23 @@ CONFIG = {
 log = logging.getLogger("gold_analyzer")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
+# --- Dynamic Parameter Loading ---
+# Automatically load best parameters if they exist.
+def load_best_params():
+    best_params_file = "best_params.json"
+    try:
+        if os.path.exists(best_params_file):
+            with open(best_params_file, "r") as f:
+                best_params = json.load(f)
+                # Update the backtest parameters in the global config
+                CONFIG["backtest_params"].update(best_params)
+                log.info(f"*** Successfully loaded and applied optimized parameters from {best_params_file} ***")
+    except Exception as e:
+        log.error(f"Could not load or apply {best_params_file}: {e}")
+
+load_best_params() # Load on script startup
+
+
 
 # --- JSON and Data Cleaning Utilities ---
 class NumpyEncoder(json.JSONEncoder):
