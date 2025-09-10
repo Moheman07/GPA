@@ -683,10 +683,12 @@ def run_cli_backtest(args):
     
     # Use default backtest params from CONFIG
     params = CONFIG["backtest_params"]
-    # Allow overriding params with CLI arguments if they are provided
+    # Allow overriding params with CLI arguments if they are explicitly provided
     for key in params:
-        if hasattr(args, key):
-            params[key] = getattr(args, key)
+        cli_value = getattr(args, key, None)
+        if cli_value is not None:
+            log.info(f"Overriding backtest parameter '{key}' with CLI value: {cli_value}")
+            params[key] = cli_value
 
     results = backtest_engine(gold_df, indicators, regime, params)
     
