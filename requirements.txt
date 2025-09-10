@@ -1,0 +1,17 @@
+# Core Libraries
+pandas
+numpy
+requests
+yfinance
+
+# For the API server
+Flask
+
+# For loading local environment variables from .env file
+python-dotenv
+
+# Optional, but recommended for full functionality
+# Note: TA-Lib can be complex to install. 
+# See official documentation for instructions: https://github.com/mrjbq7/ta-lib
+TA-Lib
+scipy
