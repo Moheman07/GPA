@@ -1,0 +1,8 @@
+{
+  "last_best_params": {
+    "adx_min": 30,
+    "rsi_buy": 35,
+    "rsi_sell": 70,
+    "atr_mult_sl": 3.0
+  }
+}
