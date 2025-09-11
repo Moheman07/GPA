@@ -17,10 +17,14 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install TA-Lib dependency
+      - name: Install TA-Lib from source
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ta-lib-dev
+          wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz
+          tar -xzf ta-lib-0.4.0-src.tar.gz
+          cd ta-lib/
+          ./configure --prefix=/usr
+          make
+          sudo make install
 
       - name: Install Python dependencies
         run: pip install -r requirements.txt
