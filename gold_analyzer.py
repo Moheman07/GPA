@@ -1,36 +1,34 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Gold Analyzer V7 — Professional, API-Ready, and Backtest-Enabled
+Gold Analyzer V7+ — MTF, Caching, Backoff, API-ready, Backtest-enabled
 
-This script provides a comprehensive analysis and backtesting engine for gold (or other assets).
-It can be run in two modes:
-1. analyze: Generates a full JSON report with technical, fundamental, and news analysis.
-2. backtest: Runs a trading strategy over historical data to evaluate performance.
-
-Designed to be imported as a module by an API server (e.g., Flask) or run as a standalone CLI tool.
+وصف مختصر:
+- تحليل فني + أساسي (FRED) + أخبار + إشارات + إدارة مخاطر.
+- تأكيد متعدد الأطر الزمنية (Daily + 4H).
+- Caching للبيانات + Backoff لجلب البيانات.
+- Backtesting ومحرك إشارات.
+- دوال API وCLI.
 """
 import os
 import math
-from dotenv import load_dotenv
-
-# Load environment variables from .env file for local development
-# This line does nothing in GitHub Actions, which is exactly what we want.
-load_dotenv()
-
 import time
 import json
 import argparse
 import logging
 import datetime as dt
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict, Any, List, Optional
+from dotenv import load_dotenv
 
-# --- Third-party libraries ---
+# تحميل متغيرات البيئة محليًا
+load_dotenv()
+
+# --- مكتبات طرف ثالث ---
 import numpy as np
 import pandas as pd
 import requests
 
-# --- Optional Imports with Fallbacks for wider compatibility ---
+# محاولات استيراد اختيارية
 try:
     import talib
     TALIB_AVAILABLE = True
@@ -43,8 +41,7 @@ try:
 except ImportError:
     SCIPY_AVAILABLE = False
 
-# --- Global Configuration ---
-# Centralized configuration for easy management and tuning.
+# --- إعدادات عامة ---
 CONFIG = {
     "symbols": {
         "gold": "GC=F",
@@ -80,32 +77,26 @@ CONFIG = {
     }
 }
 
-# --- Logging Setup ---
-# Consistent logging format for better debugging and monitoring.
+# --- تسجيل ---
 log = logging.getLogger("gold_analyzer")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
-# --- Dynamic Parameter Loading ---
-# Automatically load best parameters if they exist.
+# --- تحميل أفضل المعاملات (إن وجدت) ---
 def load_best_params():
     best_params_file = "best_params.json"
     try:
         if os.path.exists(best_params_file):
-            with open(best_params_file, "r") as f:
+            with open(best_params_file, "r", encoding="utf-8") as f:
                 best_params = json.load(f)
-                # Update the backtest parameters in the global config
                 CONFIG["backtest_params"].update(best_params)
                 log.info(f"*** Successfully loaded and applied optimized parameters from {best_params_file} ***")
     except Exception as e:
         log.error(f"Could not load or apply {best_params_file}: {e}")
 
-load_best_params() # Load on script startup
+load_best_params()
 
-
-
-# --- JSON and Data Cleaning Utilities ---
+# --- أدوات JSON وتنظيف ---
 class NumpyEncoder(json.JSONEncoder):
-    """ Custom JSON encoder for numpy types. """
     def default(self, obj):
         if isinstance(obj, (np.integer,)):
             return int(obj)
@@ -114,28 +105,54 @@ class NumpyEncoder(json.JSONEncoder):
             return None if math.isnan(v) or math.isinf(v) else v
         if isinstance(obj, np.ndarray):
             return obj.tolist()
-        if pd.isna(obj):
+        if 'pandas' in str(type(obj)) and pd.isna(obj):
             return None
         return super().default(obj)
 
 def clean_scalar(x: Any) -> Optional[Any]:
-    """ Safely convert numpy/pandas scalars to native Python types. """
-    if x is None or pd.isna(x):
+    if x is None or (isinstance(x, float) and (math.isnan(x) or math.isinf(x))):
         return None
     if isinstance(x, (np.generic,)):
         x = x.item()
-    if isinstance(x, float) and (math.isnan(x) or math.isinf(x)):
-        return None
     return x
 
 def safe_pct_change(series: pd.Series) -> pd.Series:
-    """ Calculate percentage change, replacing inf/-inf with NaN. """
     return series.pct_change().replace([np.inf, -np.inf], np.nan)
 
+# --- Backoff + Cache ---
+def _retry_sleep(base: float, attempt: int) -> float:
+    import random
+    return base * (2 ** attempt) + random.uniform(0, base)
 
-# --- Core Data Fetching Functions ---
+CACHE_DIR = ".cache"
+os.makedirs(CACHE_DIR, exist_ok=True)
+
+def _cache_path(symbol: str, period: str) -> str:
+    safe = symbol.replace("=", "_").replace("^", "")
+    return os.path.join(CACHE_DIR, f"{safe}_{period}.csv")
+
+def _read_cache(path: str, max_age_seconds: int) -> Optional[pd.DataFrame]:
+    try:
+        if os.path.exists(path) and (time.time() - os.path.getmtime(path) < max_age_seconds):
+            df = pd.read_csv(path)
+            if "Date" in df.columns:
+                df["Date"] = pd.to_datetime(df["Date"])
+                df = df.set_index("Date")
+            return df
+    except Exception as e:
+        log.warning(f"Cache read failed: {e}")
+    return None
+
+def _write_cache(path: str, df: pd.DataFrame):
+    try:
+        out = df.copy()
+        out.index = pd.to_datetime(out.index)
+        out.to_csv(path, index_label="Date")
+    except Exception as e:
+        log.warning(f"Cache write failed: {e}")
+
+# --- جلب البيانات من ياهو ---
 def fetch_yf(symbol: str, period: str, tries: int = 3, pause: float = 1.0) -> pd.DataFrame:
-    """ Fetches historical data from Yahoo Finance with retries. """
     import yfinance as yf
     last_err = None
     for i in range(tries):
@@ -145,56 +162,86 @@ def fetch_yf(symbol: str, period: str, tries: int = 3, pause: float = 1.0) -> pd
             df = ticker.history(period=period, auto_adjust=False)
             if df is None or df.empty:
                 raise ValueError("Empty dataframe returned from yfinance")
-            
-            # Ensure essential columns are present
             for col in ["Open", "High", "Low", "Close", "Volume"]:
                 if col not in df.columns:
                     raise ValueError(f"Missing required column: {col}")
-            
             df.dropna(how="all", inplace=True)
             log.info(f"Successfully fetched {len(df)} rows for {symbol}")
             return df
         except Exception as e:
             last_err = e
             log.warning(f"Failed to fetch {symbol} on attempt {i+1}: {e}")
-            time.sleep(pause * (i + 1))
+            time.sleep(_retry_sleep(pause, i))
     log.error(f"All attempts to fetch {symbol} failed. Last error: {last_err}")
     return pd.DataFrame()
 
+def fetch_yf_cached(symbol: str, period: str, ttl_seconds: int = 10800) -> pd.DataFrame:
+    path = _cache_path(symbol, period)
+    cached = _read_cache(path, ttl_seconds)
+    if cached is not None and not cached.empty:
+        log.info(f"Loading cached {symbol} {period}")
+        return cached
+    df = fetch_yf(symbol, period)
+    if not df.empty:
+        _write_cache(path, df)
+    return df
+
+def fetch_yf_intraday(symbol: str, period: str = "60d", interval: str = "60m") -> pd.DataFrame:
+    import yfinance as yf
+    try:
+        log.info(f"Fetching intraday {symbol} period={period} interval={interval}")
+        df = yf.download(symbol, period=period, interval=interval, auto_adjust=False, progress=False)
+        if df is None or df.empty:
+            return pd.DataFrame()
+        df.dropna(how="all", inplace=True)
+        return df
+    except Exception as e:
+        log.warning(f"Intraday fetch failed for {symbol}: {e}")
+        return pd.DataFrame()
+
+def resample_ohlc(df: pd.DataFrame, rule: str = "4H") -> pd.DataFrame:
+    if df.empty:
+        return df
+    r = pd.DataFrame()
+    r["Open"]  = df["Open"].resample(rule).first()
+    r["High"]  = df["High"].resample(rule).max()
+    r["Low"]   = df["Low"].resample(rule).min()
+    r["Close"] = df["Close"].resample(rule).last()
+    r["Volume"]= df["Volume"].resample(rule).sum()
+    return r.dropna(how="any")
+
+# --- تجميع بيانات السوق ---
 def fetch_market_data(period: str) -> Dict[str, Any]:
-    """ Fetches all required market data (Gold, DXY, SPY). """
     log.info("--- Starting Market Data Fetch ---")
     out: Dict[str, Any] = {"used_symbols": {}}
-    
-    # Fetch Gold
+
+    # الذهب
     gold_sym = CONFIG["symbols"]["gold"]
-    g_df = fetch_yf(gold_sym, period)
+    g_df = fetch_yf_cached(gold_sym, period)
     out["GC=F"] = g_df
     out["used_symbols"]["GC=F"] = gold_sym if not g_df.empty else None
-    
-    # Fetch Dollar Index from candidates
+
+    # الدولار (محاولة عدة بدائل)
     usd_df = pd.DataFrame()
     used_usd_sym = None
     for s in CONFIG["symbols"]["usd_candidates"]:
-        d = fetch_yf(s, period)
+        d = fetch_yf_cached(s, period)
         if not d.empty:
             used_usd_sym, usd_df = s, d
             break
     out["^DXY"] = usd_df
     out["used_symbols"]["^DXY"] = used_usd_sym
-    
-    # Fetch SPY
+
+    # SPY
     spy_sym = CONFIG["symbols"]["spy"]
-    sp_df = fetch_yf(spy_sym, period)
+    sp_df = fetch_yf_cached(spy_sym, period)
     out["SPY"] = sp_df
     out["used_symbols"]["SPY"] = spy_sym if not sp_df.empty else None
-    
+
     log.info("--- Market Data Fetch Complete ---")
     return out
 
-# ... (The rest of your well-written analysis functions: ema, calc_indicators, compute_regime, etc. would go here)
-# I will paste them in for completeness, without significant changes as they are well-written.
-
+# --- مؤشرات ---
 def ema(series: pd.Series, span: int) -> pd.Series:
     return series.ewm(span=span, adjust=False).mean()
 
@@ -222,19 +269,23 @@ def calc_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
         ind["sma_20"] = c.rolling(20).mean()
         ind["sma_50"] = c.rolling(50).mean()
         ind["sma_200"] = c.rolling(200).mean()
-        ind["ema_12"] = ema(c, 12); ind["ema_26"] = ema(c, 26)
+        ind["ema_12"] = ema(c, 12)
+        ind["ema_26"] = ema(c, 26)
         delta = c.diff()
         gain = delta.clip(lower=0).rolling(14).mean()
         loss = (-delta.clip(upper=0)).rolling(14).mean()
         rs = gain / loss.replace(0, np.nan)
         ind["rsi"] = 100 - (100 / (1 + rs))
-        macd = ind["ema_12"] - ind["ema_26"]; ind["macd"]=macd; ind["macd_signal"]=ema(macd,9); ind["macd_hist"]=macd-ind["macd_signal"]
-        m=c.rolling(20).mean(); s=c.rolling(20).std()
+        macd = ind["ema_12"] - ind["ema_26"]
+        ind["macd"] = macd
+        ind["macd_signal"] = ema(macd, 9)
+        ind["macd_hist"] = macd - ind["macd_signal"]
+        m = c.rolling(20).mean(); s = c.rolling(20).std()
         ind["bb_upper"], ind["bb_middle"], ind["bb_lower"] = m+2*s, m, m-2*s
         tr = pd.concat([(h-l).abs(), (h-c.shift()).abs(), (l-c.shift()).abs()], axis=1).max(axis=1)
         ind["atr"] = tr.rolling(14).mean()
-        ind["adx"] = pd.Series(index=df.index, dtype=float) # ADX fallback
-    
+        ind["adx"] = pd.Series(index=df.index, dtype=float)
+    # اشتقاقات بولنجر
     bb_u, bb_m, bb_l = ind.get("bb_upper"), ind.get("bb_middle"), ind.get("bb_lower")
     if all(s is not None for s in [bb_u, bb_m, bb_l]):
         width = (bb_u - bb_l) / bb_m.replace(0,np.nan)
@@ -243,7 +294,6 @@ def calc_indicators(df: pd.DataFrame) -> Dict[str, pd.Series]:
     log.info("Indicators calculation complete.")
     return ind
 
-# ... (All other analysis functions like compute_regime, volume_profile, etc. remain the same)
 def compute_regime(ind: Dict[str, pd.Series]) -> pd.Series:
     adx = ind.get("adx", pd.Series(dtype=float)).fillna(0)
     width = ind.get("bb_width", pd.Series(dtype=float)).ffill()
@@ -253,6 +303,7 @@ def compute_regime(ind: Dict[str, pd.Series]) -> pd.Series:
     regime[(adx < 20) | (width < med.fillna(width.median()))] = "range"
     return regime.fillna("range")
 
+# --- تحسينات ---
 def volume_profile(df: pd.DataFrame, bins: int = 20) -> Dict[str, Any]:
     try:
         c = df["Close"]; v = df["Volume"].astype(float)
@@ -391,9 +442,26 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Ser
     log.info(f"Signal generation complete. Recommendation: {out['recommendation']}")
     return out
 
+# --- تأكيد متعدد الأطر الزمنية ---
+def mtf_confirmation(_: pd.DataFrame) -> Dict[str, Any]:
+    try:
+        intraday = fetch_yf_intraday(CONFIG["symbols"]["gold"], period="60d", interval="60m")
+        if intraday.empty:
+            return {"mtf_used": False}
+        intraday.index = pd.to_datetime(intraday.index).tz_localize(None)
+        gold_4h = resample_ohlc(intraday, "4H")
+        ind4 = calc_indicators(gold_4h)
+        reg4 = compute_regime(ind4)
+        sig4 = generate_signals(gold_4h, ind4, reg4)
+        return {"mtf_used": True, "lower_tf": "4h", "lower_signal": sig4}
+    except Exception as e:
+        log.warning(f"MTF confirmation failed: {e}")
+        return {"mtf_used": False}
+
+# --- أخبار وFRED مع Backoff ---
 def fetch_news(api_key: str, page_size: int = 20) -> Dict[str, Any]:
     log.info("Fetching news...")
-    if not api_key: 
+    if not api_key:
         log.warning("NEWS_API_KEY is missing.")
         return {"error":"NEWS_API_KEY missing"}
     q = '(gold OR "gold price" OR XAU OR bullion) AND (fed OR inflation OR dollar OR usd OR etf OR mining OR "safe haven")'
@@ -412,8 +480,14 @@ def fetch_news(api_key: str, page_size: int = 20) -> Dict[str, Any]:
             if w in t: s-=1
         return max(-1.0,min(1.0,s/3.0))
     try:
-        r = requests.get(url, params=params, timeout=15)
-        r.raise_for_status()
+        for i in range(3):
+            try:
+                r = requests.get(url, params=params, timeout=15)
+                r.raise_for_status()
+                break
+            except Exception:
+                if i==2: raise
+                time.sleep(_retry_sleep(1.0, i))
         arts = (r.json().get("articles", []) or [])[:page_size]
         parsed=[]; total=0.0
         for a in arts:
@@ -429,13 +503,19 @@ def fetch_news(api_key: str, page_size: int = 20) -> Dict[str, Any]:
         return {"error": f"news_fetch_failed: {e}"}
 
 def fetch_fred_series(series_id: str, api_key: str, obs: int = 24) -> Optional[pd.Series]:
-    if not api_key: 
+    if not api_key:
         log.warning(f"FRED_API_KEY is missing, cannot fetch {series_id}.")
         return None
     base = "https://api.stlouisfed.org/fred/series/observations"
     params = {"series_id":series_id,"api_key":api_key,"file_type":"json","limit":obs}
     try:
-        r = requests.get(base, params=params, timeout=15); r.raise_for_status()
+        for i in range(3):
+            try:
+                r = requests.get(base, params=params, timeout=15); r.raise_for_status()
+                break
+            except Exception:
+                if i==2: raise
+                time.sleep(_retry_sleep(1.0, i))
         df = pd.DataFrame((r.json() or {}).get("observations", []))
         if df.empty or "value" not in df.columns: return None
         df["value"]=pd.to_numeric(df["value"], errors="coerce"); df["date"]=pd.to_datetime(df["date"])
@@ -470,38 +550,41 @@ def get_fundamentals() -> Dict[str, Any]:
     log.info(f"Fundamental bias is {bias_text}")
     return out
 
-
-# --- Report Building and Orchestration ---
+# --- بناء التقرير ---
 def build_full_report(data: Dict[str, Any]) -> Dict[str, Any]:
-    """ Orchestrates the analysis and builds the final JSON report. """
     log.info("--- Building Full Analysis Report ---")
     gold_df = data.get("GC=F", pd.DataFrame())
     if gold_df.empty:
         log.error("Gold data is unavailable, cannot build report.")
         return {"error": "GC=F data unavailable"}
-    
+
     gold_df = gold_df.copy()
     gold_df.index = pd.to_datetime(gold_df.index).tz_localize(None)
-    
-    # --- Run all analysis components ---
+
     indicators = calc_indicators(gold_df)
     regime = compute_regime(indicators)
     signals = generate_signals(gold_df, indicators, regime)
-    
-    # Enhancements
+
+    # تأكيد متعدد الأطر الزمنية (Daily + 4H)
+    mtf = mtf_confirmation(gold_df)
+    if mtf.get("mtf_used"):
+        ls = mtf["lower_signal"].get("recommendation")
+        if ls and signals.get("recommendation") and ls.split()[0] == signals["recommendation"].split()[0]:
+            signals["confidence"] = "عالية"
+            signals["mtf_confirmed"] = True
+        else:
+            signals["mtf_confirmed"] = False
+
     volume = volume_profile(gold_df)
     divergences = detect_divergences(gold_df, indicators)
     correlations = correlation_block(data)
-    
-    # Sentiment and Macro
     tech_sentiment = technical_sentiment(gold_df, indicators)
     fundamentals = get_fundamentals()
     news = fetch_news(CONFIG["api_keys"]["news"])
-    
-    # --- Assemble the report ---
+
     report = {
         "metadata": {
-            "version": "v7",
+            "version": "v7+",
             "symbol": CONFIG["symbols"]["gold"],
             "analysis_date": dt.datetime.utcnow().isoformat(),
             "talib_enabled": TALIB_AVAILABLE,
@@ -519,16 +602,15 @@ def build_full_report(data: Dict[str, Any]) -> Dict[str, Any]:
         "signals": signals,
         "technical_snapshot": {k: clean_scalar(v.iloc[-1]) for k, v in indicators.items()},
         "enhancements": {
-            "divergences": divergences, 
-            "correlations": correlations, 
+            "divergences": divergences,
+            "correlations": correlations,
             "volume_profile": volume
         },
         "sentiment": tech_sentiment,
         "fundamentals": fundamentals,
         "news": news
     }
-    
-    # --- AI Summary Generation ---
+
     trend = signals.get("trend", "N/A")
     rec = signals.get("recommendation", "N/A")
     conf = signals.get("confidence", "N/A")
@@ -546,7 +628,6 @@ def build_full_report(data: Dict[str, Any]) -> Dict[str, Any]:
     return report
 
 def to_compact_report(report: Dict[str, Any]) -> Dict[str, Any]:
-    """ Creates a compact version of the report for quick overviews. """
     signals = report.get("signals", {})
     return {
         "symbol": report.get("metadata", {}).get("symbol"),
@@ -560,11 +641,8 @@ def to_compact_report(report: Dict[str, Any]) -> Dict[str, Any]:
         "ai_text_ar": report.get("ai_summary", {}).get("nl_summary_ar")
     }
 
-
-# --- Backtesting Engine ---
+# --- Backtesting ---
 def backtest_engine(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Series, params: Dict[str, Any]) -> Dict[str, Any]:
-    """ Your excellent and detailed backtesting engine. No changes needed here. """
-    # ... (Your full backtest_engine code)
     log.info("Starting backtest...")
     close = df["Close"].astype(float)
     rsi = ind["rsi"]; macd, macd_sig = ind["macd"], ind["macd_signal"]
@@ -593,7 +671,7 @@ def backtest_engine(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Seri
                 trail = max(trail, price - trail_mult*atr.iat[i]) if trail is not None else price - trail_mult*atr.iat[i]
                 hit_trail = price <= trail; hit_sl = price <= sl; hit_tp = price >= tp
                 exit_price = apply_cost(price, is_buy=False) if (hit_trail or hit_sl or hit_tp) else None
-            else: # short
+            else:
                 trail = min(trail, price + trail_mult*atr.iat[i]) if trail is not None else price + trail_mult*atr.iat[i]
                 hit_trail = price >= trail; hit_sl = price >= sl; hit_tp = price <= tp
                 exit_price = apply_cost(price, is_buy=True) if (hit_trail or hit_sl or hit_tp) else None
@@ -616,7 +694,7 @@ def backtest_engine(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Seri
         if reg_now == "trend":
             enter_long = cross_up and strong and not avoid_long
             enter_short = cross_dn and strong and not avoid_short
-        else: # range
+        else:
             enter_long = ((pd.notna(bb_l.iat[i]) and price <= bb_l.iat[i]) or (pd.notna(rsi.iat[i]) and rsi.iat[i] <= rsi_buy)) and not avoid_long
             enter_short = ((pd.notna(bb_u.iat[i]) and price >= bb_u.iat[i]) or (pd.notna(rsi.iat[i]) and rsi.iat[i] >= rsi_sell)) and not avoid_short
         if enter_long or enter_short:
@@ -635,7 +713,6 @@ def backtest_engine(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Seri
                 sl = entry + atr_sl_mult*atr.iat[i]; tp = entry - atr_tp_mult*atr.iat[i]; trail = entry + trail_mult*atr.iat[i]
                 in_pos=True
         max_equity = max(max_equity, equity)
-    
     rets = pd.Series([t["pnl_pct"]*t["size"] for t in trades], dtype=float)
     win = rets[rets>0]; loss = rets[rets<0]
     eq_path=[1.0]; eq=1.0
@@ -647,17 +724,11 @@ def backtest_engine(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Seri
     sortino = float((rets.mean()/downside.std())*np.sqrt(252)) if len(downside)>1 and downside.std()!=0 else None
     pf = float(abs(win.sum()/loss.sum())) if len(win)>0 and len(loss)>0 and loss.sum()!=0 else None
     perf = {"trades": int(len(trades)), "win_rate": float(len(win)/len(rets)) if len(rets)>0 else None, "profit_factor": pf, "cagr": None, "max_drawdown": dd, "sharpe": sharpe, "sortino": sortino, "final_equity": float(eq_path[-1]) if eq_path else 1.0}
-    log.info(f"Backtest complete. Trades: {perf['trades']}, Win Rate: {perf['win_rate']:.2%}, Final Equity: {perf['final_equity']:.4f}")
+    log.info(f"Backtest complete. Trades: {perf['trades']}, Final Equity: {perf['final_equity']:.4f}")
     return {"performance": perf, "last_trades_sample": trades[-10:]}
 
-
-# --- API and CLI Execution Logic ---
-
+# --- API + CLI ---
 def run_analysis_for_api(period: Optional[str] = None) -> Dict[str, Any]:
-    """
-    Primary function for API calls. Runs a full analysis and returns the report.
-    """
-    # Use the provided period or fall back to the default from CONFIG
     analysis_period = period if period else CONFIG["defaults"]["period"]
     log.info(f"--- Starting API Analysis Run (Period: {analysis_period}) ---")
     market_data = fetch_market_data(analysis_period)
@@ -666,17 +737,13 @@ def run_analysis_for_api(period: Optional[str] = None) -> Dict[str, Any]:
     return report
 
 def run_cli_analyze(args):
-    """ Executes the analysis from CLI arguments. """
     log.info(f"--- Starting CLI Analysis (Period: {args.period}) ---")
     market_data = fetch_market_data(args.period)
     report = build_full_report(market_data)
-    
-    # Save the report
     output_file = args.out or CONFIG["defaults"]["analysis_file"]
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2, cls=NumpyEncoder)
     log.info(f"Full report saved to {output_file}")
-
     if args.compact:
         compact_file = output_file.replace(".json", "_compact.json")
         with open(compact_file, "w", encoding="utf-8") as f:
@@ -684,69 +751,43 @@ def run_cli_analyze(args):
         log.info(f"Compact report saved to {compact_file}")
 
 def run_cli_backtest(args):
-    """ Executes the backtest from CLI arguments. """
     log.info(f"--- Starting CLI Backtest (Period: {args.period}) ---")
     market_data = fetch_market_data(args.period)
     gold_df = market_data.get("GC=F", pd.DataFrame())
     if gold_df.empty:
         log.critical("Cannot run backtest without gold data.")
         return
-
     gold_df = gold_df.copy()
     gold_df.index = pd.to_datetime(gold_df.index).tz_localize(None)
-    
     indicators = calc_indicators(gold_df)
     regime = compute_regime(indicators)
-    
-    # Use default backtest params from CONFIG
     params = CONFIG["backtest_params"]
-    # Allow overriding params with CLI arguments if they are explicitly provided
     for key in params:
         cli_value = getattr(args, key, None)
         if cli_value is not None:
             log.info(f"Overriding backtest parameter '{key}' with CLI value: {cli_value}")
             params[key] = cli_value
-
     results = backtest_engine(gold_df, indicators, regime, params)
-    
-    output = {
-        "metadata": {
-            "version": "v7", 
-            "symbol": CONFIG["symbols"]["gold"],
-            "period": args.period,
-            "strategy": "Regime_MACD_BB_RSI_ATR_Pro"
-        }, 
-        "params": params, 
-        **results
-    }
-    
+    output = {"metadata": {"version": "v7+", "symbol": CONFIG["symbols"]["gold"], "period": args.period, "strategy": "Regime_MACD_BB_RSI_ATR_Pro"}, "params": params, **results}
     output_file = args.out or CONFIG["defaults"]["backtest_file"]
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2, cls=NumpyEncoder)
     log.info(f"Backtest report saved to {output_file}")
 
-
 def main():
-    """ Main entry point for the CLI. """
-    parser = argparse.ArgumentParser(description="Gold Analyzer V7")
+    parser = argparse.ArgumentParser(description="Gold Analyzer V7+")
     subparsers = parser.add_subparsers(dest="mode", required=True, help="Execution mode")
-
-    # --- Analyze Mode Parser ---
-    parser_analyze = subparsers.add_parser("analyze", help="Run a full analysis and save the report.")
-    parser_analyze.add_argument("--period", default=CONFIG["defaults"]["period"], help="Data period (e.g., 1y, 6mo)")
-    parser_analyze.add_argument("--out", default=CONFIG["defaults"]["analysis_file"], help="Output file for the report.")
-    parser_analyze.add_argument("--compact", action="store_true", help="Save a compact version of the report.")
-    parser_analyze.set_defaults(func=run_cli_analyze)
-
-    # --- Backtest Mode Parser ---
-    parser_backtest = subparsers.add_parser("backtest", help="Run a backtest of the trading strategy.")
-    parser_backtest.add_argument("--period", default="3y", help="Data period for backtesting (e.g., 5y, 10y)")
-    parser_backtest.add_argument("--out", default=CONFIG["defaults"]["backtest_file"], help="Output file for backtest results.")
-    # Add arguments to override default backtest parameters
+    p_an = subparsers.add_parser("analyze", help="Run a full analysis and save the report.")
+    p_an.add_argument("--period", default=CONFIG["defaults"]["period"], help="Data period (e.g., 1y, 6mo)")
+    p_an.add_argument("--out", default=CONFIG["defaults"]["analysis_file"], help="Output file for the report.")
+    p_an.add_argument("--compact", action="store_true", help="Save a compact version of the report.")
+    p_an.set_defaults(func=run_cli_analyze)
+    p_bt = subparsers.add_parser("backtest", help="Run a backtest of the trading strategy.")
+    p_bt.add_argument("--period", default="3y", help="Data period for backtesting (e.g., 5y, 10y)")
+    p_bt.add_argument("--out", default=CONFIG["defaults"]["backtest_file"], help="Output file for backtest results.")
     for param, value in CONFIG["backtest_params"].items():
-        parser_backtest.add_argument(f"--{param.replace('_', '-')}", type=type(value), default=None, help=f"Override {param} (default: {value})")
-    parser_backtest.set_defaults(func=run_cli_backtest)
-
+        p_bt.add_argument(f"--{param.replace('_', '-')}", type=type(value), default=None, help=f"Override {param} (default: {value})")
+    p_bt.set_defaults(func=run_cli_backtest)
     args = parser.parse_args()
     args.func(args)
 
