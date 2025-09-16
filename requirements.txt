@@ -1,9 +1,17 @@
-pandas==2.2.2
-numpy==1.26.4
-requests==2.32.3
-yfinance==0.2.40
-Flask==3.0.0
-python-dotenv==1.0.1
-scipy==1.13.1
-gunicorn==21.2.0
-# TA-Lib اختياري (ثبّته فقط إذا كانت بيئتك تدعمه)
+# Core Libraries
+pandas
+numpy
+requests
+yfinance
+
+# For the API server
+Flask
+
+# For loading local environment variables from .env file
+python-dotenv
+
+# Optional, but recommended for full functionality
+# Note: TA-Lib can be complex to install. 
+# See official documentation for instructions: https://github.com/mrjbq7/ta-lib
+TA-Lib
+scipy
