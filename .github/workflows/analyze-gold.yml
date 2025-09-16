@@ -1,0 +1,37 @@
+name: analyze-gold
+on:
+  schedule:
+    - cron: "0 */4 * * *"  # كل 4 ساعات
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    env:
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run analysis
+        run: python gold_analyzer.py analyze --period 1y --compact
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gold-analysis
+          path: |
+            gold_analysis_v7.json
+            gold_analysis_v7_compact.json
+          if-no-files-found: warn
+          retention-days: 7
