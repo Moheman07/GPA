@@ -1,7 +1,7 @@
 name: analyze-gold
 on:
   schedule:
-    - cron: "0 */4 * * *"  # كل 4 ساعات
+    - cron: "0 */4 * * *"
   workflow_dispatch:
 
 jobs:
@@ -20,8 +20,9 @@ jobs:
           python-version: "3.10"
           cache: "pip"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Install dependencies (pin yfinance)
+        run: |
+          pip install -r requirements.txt
 
       - name: Run analysis
         run: python gold_analyzer.py analyze --period 1y --compact
