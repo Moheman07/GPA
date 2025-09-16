@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Gold Analyzer V7+ — MTF, Caching, Backoff, API-ready, Backtest-enabled
+Gold Analyzer — resilient fetch (Yahoo fallbacks), caching, backoff, API/CLI/backtest
 
-وصف مختصر:
-- تحليل فني + أساسي (FRED) + أخبار + إشارات + إدارة مخاطر.
-- تأكيد متعدد الأطر الزمنية (Daily + 4H).
-- Caching للبيانات + Backoff لجلب البيانات.
-- Backtesting ومحرك إشارات.
-- دوال API وCLI.
+- يحل مشكلة فشل yfinance داخل GitHub Actions عبر:
+  1) تجربة طريقتين للجلب + User-Agent.
+  2) استخدام بدائل للرموز (GC=F -> XAUUSD=X -> GLD | ^DXY -> DX-Y.NYB -> DX=F -> UUP | SPY -> ^GSPC -> ES=F).
+  3) تفعيل كاش بسيط لتقليل عدد النداءات وتجاوز الانقطاعات المؤقتة.
 """
 import os
 import math
@@ -17,10 +15,10 @@ import json
 import argparse
 import logging
 import datetime as dt
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 from dotenv import load_dotenv
 
-# تحميل متغيرات البيئة محليًا
+# تحميل متغيرات البيئة محليًا (لن تؤثر داخل Actions حيث تؤخذ من env)
 load_dotenv()
 
 # --- مكتبات طرف ثالث ---
@@ -44,9 +42,10 @@ except ImportError:
 # --- إعدادات عامة ---
 CONFIG = {
     "symbols": {
-        "gold": "GC=F",
-        "usd_candidates": ["DX-Y.NYB", "^DXY", "DXY", "DX=F", "USDX"],
-        "spy": "SPY"
+        # بدائل متسلسلة: نختار أول واحد ينجح
+        "gold_alts": ["GC=F", "XAUUSD=X", "GLD"],
+        "usd_alts": ["^DXY", "DX-Y.NYB", "DX=F", "UUP"],
+        "spy_alts": ["SPY", "^GSPC", "ES=F"]
     },
     "api_keys": {
         "fred": os.getenv("FRED_API_KEY", ""),
@@ -105,15 +104,21 @@ class NumpyEncoder(json.JSONEncoder):
             return None if math.isnan(v) or math.isinf(v) else v
         if isinstance(obj, np.ndarray):
             return obj.tolist()
-        if 'pandas' in str(type(obj)) and pd.isna(obj):
-            return None
+        try:
+            import pandas as _pd  # lazy
+            if _pd.isna(obj):
+                return None
+        except Exception:
+            pass
         return super().default(obj)
 
 def clean_scalar(x: Any) -> Optional[Any]:
-    if x is None or (isinstance(x, float) and (math.isnan(x) or math.isinf(x))):
+    if x is None:
         return None
     if isinstance(x, (np.generic,)):
         x = x.item()
+    if isinstance(x, float) and (math.isnan(x) or math.isinf(x)):
+        return None
     return x
 
 def safe_pct_change(series: pd.Series) -> pd.Series:
@@ -151,15 +156,22 @@ def _write_cache(path: str, df: pd.DataFrame):
     except Exception as e:
         log.warning(f"Cache write failed: {e}")
 
-# --- جلب البيانات من ياهو ---
+# --- جلب البيانات من ياهو (مع بدائل طريقة الجلب + User-Agent) ---
 def fetch_yf(symbol: str, period: str, tries: int = 3, pause: float = 1.0) -> pd.DataFrame:
     import yfinance as yf
+    import requests as rq
     last_err = None
+    sess = rq.Session()
+    sess.headers.update({"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"})
     for i in range(tries):
         try:
             log.info(f"Fetching {symbol} for period {period} (Attempt {i+1}/{tries})")
-            ticker = yf.Ticker(symbol)
-            df = ticker.history(period=period, auto_adjust=False)
+            # طريقة 1: download
+            df = yf.download(symbol, period=period, interval="1d", auto_adjust=False, progress=False, session=sess)
+            # طريقة 2: history
+            if df is None or df.empty:
+                tk = yf.Ticker(symbol, session=sess)
+                df = tk.history(period=period, auto_adjust=False)
             if df is None or df.empty:
                 raise ValueError("Empty dataframe returned from yfinance")
             for col in ["Open", "High", "Low", "Close", "Volume"]:
@@ -186,57 +198,26 @@ def fetch_yf_cached(symbol: str, period: str, ttl_seconds: int = 10800) -> pd.Da
         _write_cache(path, df)
     return df
 
-def fetch_yf_intraday(symbol: str, period: str = "60d", interval: str = "60m") -> pd.DataFrame:
-    import yfinance as yf
-    try:
-        log.info(f"Fetching intraday {symbol} period={period} interval={interval}")
-        df = yf.download(symbol, period=period, interval=interval, auto_adjust=False, progress=False)
-        if df is None or df.empty:
-            return pd.DataFrame()
-        df.dropna(how="all", inplace=True)
-        return df
-    except Exception as e:
-        log.warning(f"Intraday fetch failed for {symbol}: {e}")
-        return pd.DataFrame()
+def fetch_any(symbols: List[str], period: str) -> Tuple[pd.DataFrame, Optional[str]]:
+    for s in symbols:
+        df = fetch_yf_cached(s, period)
+        if not df.empty:
+            return df, s
+    return pd.DataFrame(), None
 
-def resample_ohlc(df: pd.DataFrame, rule: str = "4H") -> pd.DataFrame:
-    if df.empty:
-        return df
-    r = pd.DataFrame()
-    r["Open"]  = df["Open"].resample(rule).first()
-    r["High"]  = df["High"].resample(rule).max()
-    r["Low"]   = df["Low"].resample(rule).min()
-    r["Close"] = df["Close"].resample(rule).last()
-    r["Volume"]= df["Volume"].resample(rule).sum()
-    return r.dropna(how="any")
-
-# --- تجميع بيانات السوق ---
+# --- تجميع بيانات السوق باستخدام بدائل ---
 def fetch_market_data(period: str) -> Dict[str, Any]:
     log.info("--- Starting Market Data Fetch ---")
     out: Dict[str, Any] = {"used_symbols": {}}
 
-    # الذهب
-    gold_sym = CONFIG["symbols"]["gold"]
-    g_df = fetch_yf_cached(gold_sym, period)
-    out["GC=F"] = g_df
-    out["used_symbols"]["GC=F"] = gold_sym if not g_df.empty else None
+    g_df, g_used = fetch_any(CONFIG["symbols"]["gold_alts"], period)
+    out["GC=F"] = g_df; out["used_symbols"]["GC=F"] = g_used
 
-    # الدولار (محاولة عدة بدائل)
-    usd_df = pd.DataFrame()
-    used_usd_sym = None
-    for s in CONFIG["symbols"]["usd_candidates"]:
-        d = fetch_yf_cached(s, period)
-        if not d.empty:
-            used_usd_sym, usd_df = s, d
-            break
-    out["^DXY"] = usd_df
-    out["used_symbols"]["^DXY"] = used_usd_sym
+    d_df, d_used = fetch_any(CONFIG["symbols"]["usd_alts"], period)
+    out["^DXY"] = d_df; out["used_symbols"]["^DXY"] = d_used
 
-    # SPY
-    spy_sym = CONFIG["symbols"]["spy"]
-    sp_df = fetch_yf_cached(spy_sym, period)
-    out["SPY"] = sp_df
-    out["used_symbols"]["SPY"] = spy_sym if not sp_df.empty else None
+    s_df, s_used = fetch_any(CONFIG["symbols"]["spy_alts"], period)
+    out["SPY"] = s_df; out["used_symbols"]["SPY"] = s_used
 
     log.info("--- Market Data Fetch Complete ---")
     return out
@@ -439,26 +420,10 @@ def generate_signals(df: pd.DataFrame, ind: Dict[str, pd.Series], regime: pd.Ser
     except Exception:
         out["stop_loss"],out["take_profit"],out["risk_level"]=None,None,"متوسطة"
     out["regime"] = regime_now
-    log.info(f"Signal generation complete. Recommendation: {out['recommendation']}")
+    log.info(f"Signal generation complete. Recommendation: {out.get('recommendation')}")
     return out
 
-# --- تأكيد متعدد الأطر الزمنية ---
-def mtf_confirmation(_: pd.DataFrame) -> Dict[str, Any]:
-    try:
-        intraday = fetch_yf_intraday(CONFIG["symbols"]["gold"], period="60d", interval="60m")
-        if intraday.empty:
-            return {"mtf_used": False}
-        intraday.index = pd.to_datetime(intraday.index).tz_localize(None)
-        gold_4h = resample_ohlc(intraday, "4H")
-        ind4 = calc_indicators(gold_4h)
-        reg4 = compute_regime(ind4)
-        sig4 = generate_signals(gold_4h, ind4, reg4)
-        return {"mtf_used": True, "lower_tf": "4h", "lower_signal": sig4}
-    except Exception as e:
-        log.warning(f"MTF confirmation failed: {e}")
-        return {"mtf_used": False}
-
-# --- أخبار وFRED مع Backoff ---
+# --- أخبار وFRED مع Backoff بسيط ---
 def fetch_news(api_key: str, page_size: int = 20) -> Dict[str, Any]:
     log.info("Fetching news...")
     if not api_key:
@@ -565,16 +530,6 @@ def build_full_report(data: Dict[str, Any]) -> Dict[str, Any]:
     regime = compute_regime(indicators)
     signals = generate_signals(gold_df, indicators, regime)
 
-    # تأكيد متعدد الأطر الزمنية (Daily + 4H)
-    mtf = mtf_confirmation(gold_df)
-    if mtf.get("mtf_used"):
-        ls = mtf["lower_signal"].get("recommendation")
-        if ls and signals.get("recommendation") and ls.split()[0] == signals["recommendation"].split()[0]:
-            signals["confidence"] = "عالية"
-            signals["mtf_confirmed"] = True
-        else:
-            signals["mtf_confirmed"] = False
-
     volume = volume_profile(gold_df)
     divergences = detect_divergences(gold_df, indicators)
     correlations = correlation_block(data)
@@ -584,8 +539,8 @@ def build_full_report(data: Dict[str, Any]) -> Dict[str, Any]:
 
     report = {
         "metadata": {
-            "version": "v7+",
-            "symbol": CONFIG["symbols"]["gold"],
+            "version": "v7-resilient",
+            "symbol": data.get("used_symbols", {}).get("GC=F"),
             "analysis_date": dt.datetime.utcnow().isoformat(),
             "talib_enabled": TALIB_AVAILABLE,
             "scipy_enabled": SCIPY_AVAILABLE
@@ -616,7 +571,7 @@ def build_full_report(data: Dict[str, Any]) -> Dict[str, Any]:
     conf = signals.get("confidence", "N/A")
     regime_now = signals.get("regime", "N/A")
     report["ai_summary"] = {
-        "nl_summary_ar": f"النظام: {regime_now}. الاتجاه: {trend}. التوصية: {rec} (ثقة {conf}). راقب التشبّع واتساع البولنجر وقوة الاتجاه قبل الدخول.",
+        "nl_summary_ar": f"النظام: {regime_now}. الاتجاه: {trend}. التوصية: {rec} (ثقة {conf}).",
         "actions": {
             "signal_type": rec,
             "size_hint": 0 if rec in ("انتظار", "محايد") else (1 if conf == "منخفضة" else 2),
@@ -768,14 +723,14 @@ def run_cli_backtest(args):
             log.info(f"Overriding backtest parameter '{key}' with CLI value: {cli_value}")
             params[key] = cli_value
     results = backtest_engine(gold_df, indicators, regime, params)
-    output = {"metadata": {"version": "v7+", "symbol": CONFIG["symbols"]["gold"], "period": args.period, "strategy": "Regime_MACD_BB_RSI_ATR_Pro"}, "params": params, **results}
+    output = {"metadata": {"version": "v7-resilient", "symbol": market_data.get("used_symbols", {}).get("GC=F"), "period": args.period, "strategy": "Regime_MACD_BB_RSI_ATR_Pro"}, "params": params, **results}
     output_file = args.out or CONFIG["defaults"]["backtest_file"]
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2, cls=NumpyEncoder)
     log.info(f"Backtest report saved to {output_file}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Gold Analyzer V7+")
+    parser = argparse.ArgumentParser(description="Gold Analyzer (resilient fetch)")
     subparsers = parser.add_subparsers(dest="mode", required=True, help="Execution mode")
     p_an = subparsers.add_parser("analyze", help="Run a full analysis and save the report.")
     p_an.add_argument("--period", default=CONFIG["defaults"]["period"], help="Data period (e.g., 1y, 6mo)")
