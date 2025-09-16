@@ -6,4 +6,4 @@ Flask==3.0.0
 python-dotenv==1.0.1
 scipy==1.13.1
 gunicorn==21.2.0
-# TA-Lib اختياري: ثبّته عبر conda (environment.yml) أو wheel مناسب حسب نظامك
+# TA-Lib اختياري (ثبّته فقط إذا كانت بيئتك تدعمه)
