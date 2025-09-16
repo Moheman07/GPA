@@ -2,11 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Gold Analyzer — resilient fetch with Yahoo + Stooq fallbacks, caching, backoff, API/CLI/backtest
-
-- يحل أعطال yfinance داخل GitHub Actions عبر:
-  1) تجربة طريقتين في Yahoo + User-Agent + backoff.
-  2) بدائل رموز + مصدر بديل Stooq (CSV مباشر) للذهب/الدولار/الأسهم.
-  3) كاش بسيط لتقليل النداءات.
 """
 import os
 import math
@@ -147,13 +142,12 @@ def _write_cache(path: str, df: pd.DataFrame):
     except Exception as e:
         log.warning(f"Cache write failed: {e}")
 
-# ---------- Yahoo ----------
 def fetch_yahoo(symbol: str, period: str, tries: int = 3, pause: float = 1.0) -> pd.DataFrame:
     import yfinance as yf
     import requests as rq
     last_err = None
     sess = rq.Session()
-    sess.headers.update({"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Safari"})
+    sess.headers.update({"User-Agent":"Mozilla/5.0"})
     for i in range(tries):
         try:
             log.info(f"Fetching {symbol} for period {period} via Yahoo (Attempt {i+1}/{tries})")
@@ -175,9 +169,7 @@ def fetch_yahoo(symbol: str, period: str, tries: int = 3, pause: float = 1.0) ->
     log.error(f"Yahoo: all attempts failed for {symbol}. Last error: {last_err}")
     return pd.DataFrame()
 
-# ---------- Stooq (CSV مباشر) ----------
 def _stooq_url(stq_symbol: str) -> str:
-    # مثال: spy.us, gld.us, uup.us, xauusd, dxy, ^spx, es.f
     return f"https://stooq.com/q/d/l/?s={stq_symbol}&i=d"
 
 def fetch_stooq_symbol(stq_symbol: str) -> pd.DataFrame:
@@ -190,28 +182,31 @@ def fetch_stooq_symbol(stq_symbol: str) -> pd.DataFrame:
         df = pd.read_csv(StringIO(r.text))
         if df is None or df.empty or "Date" not in df.columns:
             return pd.DataFrame()
+        # توحيد الأعمدة وتوليد Volume عند غيابه
+        df.columns = [c.capitalize() for c in df.columns]
+        for col in ["Open","High","Low","Close"]:
+            if col not in df.columns:
+                return pd.DataFrame()
+        if "Volume" not in df.columns:
+            df["Volume"] = 0
         df["Date"] = pd.to_datetime(df["Date"])
-        df = df.rename(columns={"Open":"Open","High":"High","Low":"Low","Close":"Close","Volume":"Volume"})
         df = df.set_index("Date").sort_index()
-        # بعض مؤشرات Stooq ترجع Volume = 0، هذا مقبول
-        return df[["Open","High","Low","Close","Volume"]].dropna(how="any")
+        out = df[["Open","High","Low","Close","Volume"]].copy()
+        out = out.dropna(subset=["Open","High","Low","Close"])
+        return out
     except Exception as e:
         log.warning(f"Stooq failed {stq_symbol}: {e}")
         return pd.DataFrame()
 
 def stooq_candidates_for(y_symbol: str) -> List[str]:
-    # خرائط عملية للبدائل في Stooq
     mapping = {
-        # الذهب
-        "GC=F": ["xauusd"],         # ذهب/دولار فوري
+        "GC=F": ["xauusd"],
         "XAUUSD=X": ["xauusd"],
         "GLD": ["gld.us"],
-        # الدولار
         "^DXY": ["dxy", "uup.us"],
         "DX-Y.NYB": ["dxy", "uup.us"],
         "DX=F": ["dxy", "uup.us"],
         "UUP": ["uup.us"],
-        # أسهم/مؤشرات
         "SPY": ["spy.us", "^spx"],
         "^GSPC": ["^spx"],
         "ES=F": ["es.f", "^spx"]
@@ -219,7 +214,6 @@ def stooq_candidates_for(y_symbol: str) -> List[str]:
     return mapping.get(y_symbol, [])
 
 def fetch_any_with_fallback(symbols: List[str], period: str, ttl_seconds: int = 10800) -> Tuple[pd.DataFrame, Optional[str], str]:
-    # 1) جرّب Yahoo لكل رمز
     for s in symbols:
         cache_path = _cache_path(s, period, "yahoo")
         cached = _read_cache(cache_path, ttl_seconds)
@@ -230,7 +224,6 @@ def fetch_any_with_fallback(symbols: List[str], period: str, ttl_seconds: int = 
         if not df.empty:
             _write_cache(cache_path, df)
             return df, s, "yahoo"
-        # إذا فشل، جرّب Stooq لرمز مطابق
         for stq in stooq_candidates_for(s):
             cache_path_s = _cache_path(stq, period, "stooq")
             cached_s = _read_cache(cache_path_s, ttl_seconds)
@@ -241,7 +234,6 @@ def fetch_any_with_fallback(symbols: List[str], period: str, ttl_seconds: int = 
             if not df_s.empty:
                 _write_cache(cache_path_s, df_s)
                 return df_s, s, "stooq"
-    # 2) إذا فشل الجميع، حاول مباشرة رموز Stooq الشائعة بدون خرائط
     generic = ["xauusd","gld.us","dxy","uup.us","spy.us","^spx","es.f"]
     for stq in generic:
         cache_path_s = _cache_path(stq, period, "stooq")
@@ -257,16 +249,12 @@ def fetch_any_with_fallback(symbols: List[str], period: str, ttl_seconds: int = 
 def fetch_market_data(period: str) -> Dict[str, Any]:
     log.info("--- Starting Market Data Fetch ---")
     out: Dict[str, Any] = {"used_symbols": {}, "used_sources": {}}
-
     g_df, g_used, g_src = fetch_any_with_fallback(CONFIG["symbols"]["gold_alts"], period)
     out["GC=F"] = g_df; out["used_symbols"]["GC=F"] = g_used; out["used_sources"]["GC=F"] = g_src
-
     d_df, d_used, d_src = fetch_any_with_fallback(CONFIG["symbols"]["usd_alts"], period)
     out["^DXY"] = d_df; out["used_symbols"]["^DXY"] = d_used; out["used_sources"]["^DXY"] = d_src
-
     s_df, s_used, s_src = fetch_any_with_fallback(CONFIG["symbols"]["spy_alts"], period)
     out["SPY"] = s_df; out["used_symbols"]["SPY"] = s_used; out["used_sources"]["SPY"] = s_src
-
     log.info(f"--- Market Data Fetch Complete (sources: gold={g_src}, usd={d_src}, spy={s_src}) ---")
     return out
 
