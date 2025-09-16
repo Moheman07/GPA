@@ -1,0 +1,45 @@
+name: Run Monthly Adaptive Optimizer
+
+on:
+  workflow_dispatch: # Allows manual triggering
+  schedule:
+    - cron: '0 5 1 * *' # Runs at 05:00 on the 1st day of every month
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install TA-Lib from source
+        run: |
+          wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz
+          tar -xzf ta-lib-0.4.0-src.tar.gz
+          cd ta-lib/
+          ./configure --prefix=/usr
+          make
+          sudo make install
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run the adaptive optimizer script
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+        run: python optimizer.py
+
+      - name: Commit and push results
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add best_params.json optimization_results.csv optimizer_state.json
+          # Commit only if there are changes
+          git diff --staged --quiet || git commit -m "Auto-update strategy with adaptive optimizer results"
+          git push
