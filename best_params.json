@@ -1,6 +1,6 @@
 {
-  "adx_min": 30,
-  "rsi_buy": 35,
-  "rsi_sell": 70,
-  "atr_mult_sl": 3.0
+  "adx_min": 33,
+  "rsi_buy": 38,
+  "rsi_sell": 75,
+  "atr_mult_sl": 3.3
 }
