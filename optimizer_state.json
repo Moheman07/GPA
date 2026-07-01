@@ -2,7 +2,7 @@
   "last_best_params": {
     "adx_min": 36,
     "rsi_buy": 38,
-    "rsi_sell": 89,
-    "atr_mult_sl": 7.06
+    "rsi_sell": 75,
+    "atr_mult_sl": 7.77
   }
 }
